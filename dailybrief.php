@@ -16,6 +16,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
     
     class DailyBrief_CLI_Command extends WP_CLI_Command {
 
+    function help( $args, $assoc_args ) {
+        WP_CLI::line( '=== Daily Brief Help ===' );
+        
+    }
+
     function test( $args, $assoc_args ) {
         WP_CLI::line( '=== Test successful ===' );
         $tomorrow = strtotime("+1 day");
@@ -23,6 +28,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
         $today = date('Y-m-d');
         WP_CLI::line( 'Today: '.$today);
         WP_CLI::line( 'Tomorrow: '. $tomorrow);
+
     }
 
     function posts( $args, $assoc_args ) {
