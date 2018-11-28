@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
 
 // Only accessible from WP-CLI
 if ( defined('WP_CLI') && WP_CLI ) {
-    class FortRuss_CLI_Command extends WP_CLI_Command {
+    class DailyBrief_CLI_Command extends WP_CLI_Command {
 
     function test( $args, $assoc_args ) {
         WP_CLI::line( '=== Test successful ===' );
@@ -72,5 +72,5 @@ if ( defined('WP_CLI') && WP_CLI ) {
     }
 
     }
-WP_CLI::add_command( 'fortruss', 'FortRuss_CLI_Command' );
+WP_CLI::add_command( 'dailybrief', 'DailyBrief_CLI_Command' );
 }
