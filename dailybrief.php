@@ -5,7 +5,7 @@
  * Author:      Danny Froberg
  * License:     GNU General Public License v3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
- * GitLab Plugin URI: https://gitlab.froberg.com/dfroberg/dailybrief
+ * GitLab Plugin URI: https://gitlab.froberg.org/dfroberg/dailybrief
  */
 
 // Basic security, prevents file from being loaded directly.
