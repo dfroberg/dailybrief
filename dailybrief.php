@@ -18,16 +18,19 @@ if ( defined('WP_CLI') && WP_CLI ) {
     function test( $args, $assoc_args ) {
         WP_CLI::line( '=== Test successful ===' );
         $tomorrow = strtotime("+1 day");
-        $tomorrow = date('y-m-d',$tomorrow);
-        $today = date('y-m-d');
+        $tomorrow = date('Y-m-d',$tomorrow);
+        $today = date('Y-m-d');
         WP_CLI::line( 'Today: '.$today);
         WP_CLI::line( 'Tomorrow: '. $tomorrow);
     }
 
     function posts( $args, $assoc_args ) {
         global $wpdb;
-        $before_date = '2018-11-29';
-        $after_date = '2018-11-28';
+        $tomorrow = strtotime("+1 day");
+        $tomorrow = date('Y-m-d',$tomorrow);
+        $today = date('Y-m-d');
+        $before_date = $tomorrow;
+        $after_date = $today;
         $exclude_posts = array();
         $failed_posts = array();
         $status = array( 'publish' );
