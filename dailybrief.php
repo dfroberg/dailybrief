@@ -17,6 +17,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
     function test( $args, $assoc_args ) {
         WP_CLI::line( '=== Test successful ===' );
+        $tomorrow = strtotime("+1 day");
+        $tomorrow = date('y-m-d',$tomorrow);
+        $today = date('y-m-d');
+        WP_CLI::line( 'Today: '.$today);
+        WP_CLI::line( 'Tomorrow: '. $tomorrow);
     }
 
     function posts( $args, $assoc_args ) {
