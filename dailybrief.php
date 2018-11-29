@@ -78,7 +78,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     'post_content'      =>   wp_slash($this->content_buffer),
                     'post_status'       =>   $this->post_status,
                     'post_type'         =>   $this->post_type,
-                    'post_category'     =>   explode(',', $this->post_category )
+                    'post_category'     =>   @explode(',', $this->post_category )
                 )
             );
             return $post_id;
@@ -155,20 +155,6 @@ if ( defined('WP_CLI') && WP_CLI ) {
         /**
          * Create list of posts with dates between before and after dates
          *
-         * ## OPTIONS
-         *
-         * --days=<days>
-         * : Default 'today' +-X days
-         *
-         * --post=<boolean>
-         * : Turn on post buffer
-         *
-         * --focus=<categories>
-         * : Only include posts from these category ids
-         *
-         * ## EXAMPLES
-         *
-         * wp dialybrief posts --days="-1 days' --buffer
          *
          * @param 	$args
          * @param 	$assoc_args --skip-posts 	    Skip including specific posts 1,2,3,4
@@ -195,9 +181,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
 			// Parse some flags
             $buffer = WP_CLI\Utils\get_flag_value($assoc_args, 'buffer', false );
 	        $post = WP_CLI\Utils\get_flag_value($assoc_args, 'post', false );
-	        $focus = explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'focus', array() ));
-	        $exclude_posts = explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', array() ));
-	        $exclude_categories = explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', array() ));
+	        $focus = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'focus', array() ));
+	        $exclude_posts = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', array() ));
+	        $exclude_categories = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', array() ));
 
             // Output Header
             if(!empty($this->options['header']))
