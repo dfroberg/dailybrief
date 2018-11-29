@@ -25,7 +25,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
         WP_CLI::line( '=== Testing ===' );
         $days = $assoc_args['days'];
         if(is_null($days))
-            $days = "+1 days";
+            $days = "1 days";
 
         $today = strtotime($days);
         $tomorrow = strtotime("+1 day",$today);
