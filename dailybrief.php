@@ -16,11 +16,15 @@ if ( defined('WP_CLI') && WP_CLI ) {
     
     class DailyBrief_CLI_Command extends WP_CLI_Command {
 
+	    /**
+	     * DailyBrief_CLI_Command constructor.
+	     */
         public function __construct() {
 
             // constructor called when plugin loads
             $this->options          = get_option( 'dailybrief_options', array());
             $this->content_buffer   = "";
+	        $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
             $this->post_title       = $this->get_option_default("post_title","The Daily Brief");
             $this->author_id        = $this->get_option_default("author_id",1);
             $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
@@ -74,7 +78,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     'post_content'      =>   wp_slash($this->content_buffer),
                     'post_status'       =>   $this->post_status,
                     'post_type'         =>   $this->post_type,
-                    'post_category'     =>   array( $this->post_category )
+                    'post_category'     =>   explode(',', $this->post_category )
                 )
             );
             return $post_id;
@@ -151,9 +155,23 @@ if ( defined('WP_CLI') && WP_CLI ) {
         /**
          * Create list of posts with dates between before and after dates
          *
-         * @example wp dialybrief posts
+         * ## OPTIONS
+         *
+         * --days=<days>
+         * : Default 'today' +-X days
+         *
+         * --buffer
+         * : Turn on post buffer
+         *
+         * --focus=<categories>
+         * : Only include posts from these category ids
+         *
+         * ## EXAMPLES
+         *
+         * wp dialybrief posts --days="-1 days' --buffer
+         *
          * @param 	$args
-         * @param 	$assoc_args --skip-posts 		Skip including specific posts
+         * @param 	$assoc_args --skip-posts 	    Skip including specific posts 1,2,3,4
          * @param 	$assoc_args --skip-categories	Skip including specific categories
          * @param 	$assoc_args --days 	            Include posts from '-1 days' etc default is 'today'
          */
@@ -174,7 +192,12 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $status = array( 'publish' );
             $types = array( 'post' );
 
+			// Parse some flags
             $buffer = WP_CLI\Utils\get_flag_value($assoc_args, 'buffer', false );
+	        $post = WP_CLI\Utils\get_flag_value($assoc_args, 'post', false );
+	        $focus = explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'focus', array() ));
+	        $exclude_posts = explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', array() ));
+	        $exclude_categories = explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', array() ));
 
             // Output Header
             if(!empty($this->options['header']))
@@ -195,6 +218,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                             'inclusive' => true,
                         ),
                     ),
+                    'category__not_in' => $exclude_categories ,
                 ) );
 
                 while ( $query->have_posts() ) {
@@ -203,7 +227,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $content = $query->post->post_content;
 
                     if ( ! has_excerpt() ) {
-                        $excerpt =  wp_trim_words( $content, 100 , '... <a href="'.get_permalink( $id).'" target="dailybrief">Continue -&gt;</a>');
+                        $excerpt =  wp_trim_words( $content, $this->excerpt_words, '... <a href="'.get_permalink( $id).'" target="dailybrief">Continue -&gt;</a>');
                     } else {
                         $excerpt =  the_excerpt();
                     }
@@ -214,7 +238,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                             continue;
                     // Spit out some posts
                     $this->output( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">',$buffer);
-                    $this->output( '<h2><a href="'.get_permalink( $id).'" target="dailybrief">'.$title.'</a></h2>',$buffer );
+                    $this->output( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).'" target="dailybrief">'.$title.'</a></h2>',$buffer );
                     $this->output( 'Published '.$date.' by '.get_the_author(),$buffer );
                     $this->output( '<p>'.$excerpt.'</p>',$buffer );
                     $this->output( '<p>&nbsp;</p>',$buffer);
