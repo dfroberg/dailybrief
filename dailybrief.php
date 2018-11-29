@@ -160,7 +160,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * --days=<days>
          * : Default 'today' +-X days
          *
-         * --buffer
+         * --post=<boolean>
          * : Turn on post buffer
          *
          * --focus=<categories>
