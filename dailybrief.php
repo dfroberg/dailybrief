@@ -58,6 +58,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
         WP_CLI::line( 'Today: '.$today);
         WP_CLI::line( 'Tomorrow: '. $tomorrow);
 
+        $options = get_option( 'dailybrief_options');
+        WP_CLI::line( print_r($options,true) );
+
     }
     /**
      * Create list of posts with dates between before and after dates
