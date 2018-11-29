@@ -22,10 +22,16 @@ if ( defined('WP_CLI') && WP_CLI ) {
     }
 
     function test( $args, $assoc_args ) {
-        WP_CLI::line( '=== Test successful ===' );
-        $tomorrow = strtotime("+1 day");
+        WP_CLI::line( '=== Testing ===' );
+        $days = $assoc_args['days'];
+        if(is_null($days))
+            $days = "+1 days";
+        
+        $today = strtotime($days);
+        $today = date('Y-m-d',$today);
+        $tomorrow = strtotime("+1 day",$today);
         $tomorrow = date('Y-m-d',$tomorrow);
-        $today = date('Y-m-d');
+
         WP_CLI::line( 'Today: '.$today);
         WP_CLI::line( 'Tomorrow: '. $tomorrow);
 
