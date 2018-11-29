@@ -26,10 +26,10 @@ if ( defined('WP_CLI') && WP_CLI ) {
         $days = $assoc_args['days'];
         if(is_null($days))
             $days = "+1 days";
-        
+
         $today = strtotime($days);
-        $today = date('Y-m-d',$today);
         $tomorrow = strtotime("+1 day",$today);
+        $today = date('Y-m-d',$today);
         $tomorrow = date('Y-m-d',$tomorrow);
 
         WP_CLI::line( 'Today: '.$today);
