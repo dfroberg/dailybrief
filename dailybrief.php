@@ -21,6 +21,30 @@ if ( defined('WP_CLI') && WP_CLI ) {
         
     }
 
+    function set( $args, $assoc_args ) {
+        $option_name = $assoc_args['option'];
+        $option_value = $assoc_args['value'];
+        $options = array();
+
+
+        if ( get_option( 'dailybrief_options' ) !== false ) {
+            $options = get_option( 'dailybrief_options');
+            $options[$option_name] = $option_value;
+            // The option already exists, so we just update it.
+            update_option( 'dailybrief_options', $options );
+            WP_CLI::line( 'Updated '.$option_name.' = '.$option_value );
+        } else {
+            // The option hasn't been added yet. We'll add it with $autoload set to 'no'.
+            $deprecated = null;
+            $autoload = 'no';
+            $options[$option_name] = $option_value;
+            add_option( 'dailybrief_options', $options, $deprecated, $autoload );
+            WP_CLI::line( 'Added '.$option_name.' = '.$option_value );
+        }
+
+
+    }
+
     function test( $args, $assoc_args ) {
         WP_CLI::line( '=== Testing ===' );
         $days = $assoc_args['days'];
@@ -60,6 +84,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
         $failed_posts = array();
         $status = array( 'publish' );
         $types = array( 'post' );
+        $options = get_option('dailybrief_options', array() );
+
+        // Output Header
+        if(!empty($options['header']))
+            WP_CLI::line( $options['header'] );
 
         // Retrieve posts
         $page = 1;
@@ -102,9 +131,16 @@ if ( defined('WP_CLI') && WP_CLI ) {
             }
         $page++;
         } while ( $query->have_posts() );
+
+        // Output Footer
+        if(!empty($options['footer']))
+            WP_CLI::line( $options['footer'] );
+
     }
 
     }
+
+
 
     // Finally add the command to WP_CLI
     WP_CLI::add_command( 'dailybrief', 'DailyBrief_CLI_Command' );
