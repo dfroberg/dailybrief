@@ -24,11 +24,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
     function set( $args, $assoc_args ) {
         $option_name = $assoc_args['option'];
         $option_value = $assoc_args['value'];
-        $options = array();
+        $options = get_option( 'dailybrief_options', array());
 
-
-        if ( get_option( 'dailybrief_options' ) !== false ) {
-            $options = get_option( 'dailybrief_options');
+        if ( !empty($options) ) {
             $options[$option_name] = $option_value;
             // The option already exists, so we just update it.
             update_option( 'dailybrief_options', $options );
@@ -58,7 +56,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
         WP_CLI::line( 'Today: '.$today);
         WP_CLI::line( 'Tomorrow: '. $tomorrow);
 
-        $options = get_option( 'dailybrief_options');
+        $options = get_option( 'dailybrief_options', array());
         WP_CLI::line( print_r($options,true) );
 
     }
