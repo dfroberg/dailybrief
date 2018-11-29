@@ -35,7 +35,15 @@ if ( defined('WP_CLI') && WP_CLI ) {
         WP_CLI::line( 'Tomorrow: '. $tomorrow);
 
     }
-
+    /**
+     * Create list of posts with dates between before and after dates
+     *
+     * @example wp dialybrief posts
+     * @param 	$args
+     * @param 	$assoc_args --skip-posts 		Skip including specific posts
+     * @param 	$assoc_args --skip-categories	Skip including specific categories
+     * @param 	$assoc_args --days 	            Include posts from '-1 days' etc default is 'today'
+     */
     function posts( $args, $assoc_args ) {
         global $wpdb;
         $days = $assoc_args['days'];
