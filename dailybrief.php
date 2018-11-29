@@ -181,9 +181,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
 			// Parse some flags
             $buffer = WP_CLI\Utils\get_flag_value($assoc_args, 'buffer', false );
 	        $post = WP_CLI\Utils\get_flag_value($assoc_args, 'post', false );
-	        $focus = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'focus', array() ));
-	        $exclude_posts = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', array() ));
-	        $exclude_categories = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', array() ));
+	        $focus = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'focus', '' ));
+	        $exclude_posts = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', '' ));
+	        $exclude_categories = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' ));
 
             // Output Header
             if(!empty($this->options['header']))
