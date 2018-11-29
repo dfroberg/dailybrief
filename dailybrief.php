@@ -21,9 +21,12 @@ if ( defined('WP_CLI') && WP_CLI ) {
         
     }
 
-    function set( $args, $assoc_args ) {
-        $option_name = $assoc_args['option'];
-        $option_value = $assoc_args['value'];
+    public function set( $args, $assoc_args ) {
+        $option_name = $args[0];  // value: "arg1"
+        $option_value = $args[1]; // value: 42
+
+        //$option_name = $assoc_args['option'];
+        //$option_value = $assoc_args['value'];
         $options = get_option( 'dailybrief_options', array());
 
         if ( !empty($options) ) {
@@ -43,7 +46,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
     }
 
-    function test( $args, $assoc_args ) {
+    public function test( $args, $assoc_args ) {
         WP_CLI::line( '=== Testing ===' );
         $days = $assoc_args['days'];
         if(is_null($days))
@@ -69,7 +72,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
      * @param 	$assoc_args --skip-categories	Skip including specific categories
      * @param 	$assoc_args --days 	            Include posts from '-1 days' etc default is 'today'
      */
-    function posts( $args, $assoc_args ) {
+    public function posts( $args, $assoc_args ) {
         global $wpdb;
         $days = $assoc_args['days'];
         if(is_null($days))
