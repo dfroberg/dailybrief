@@ -21,6 +21,23 @@ if ( defined('WP_CLI') && WP_CLI ) {
         
     }
 
+        /**
+         * Sets Daily Brief options
+         *
+         * ## OPTIONS
+         * <option>
+         * : The name of the option to set i.e. header or footer
+         * <value>
+         * : The value for values that contains spaces encapsulate in single quotes.
+         *
+         * ## EXAMPLES
+         *
+         *      wp daily brief set header '<h1>This is the header.</h1>
+         *      wp daily brief set footer '<h1>This is the footer.</h1>
+         *
+         * @param $args
+         * @param $assoc_args
+         */
     public function set( $args, $assoc_args ) {
         $option_name = $args[0];  // value: "arg1"
         $option_value = $args[1]; // value: 42
