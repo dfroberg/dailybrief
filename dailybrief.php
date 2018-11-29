@@ -19,18 +19,65 @@ if ( defined('WP_CLI') && WP_CLI ) {
         public function __construct() {
 
             // constructor called when plugin loads
-            $this->options = get_option( 'dailybrief_options', array());
-
+            $this->options          = get_option( 'dailybrief_options', array());
+            $this->content_buffer   = "";
+            $this->post_title       = $this->get_option_default("post_title","The Daily Brief");
+            $this->author_id        = $this->get_option_default("author_id",1);
+            $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
+            $this->slug             = $this->get_option_default("slug","the-daily-brief-").date('Y-m-d',strtotime("today"));
+            $this->comment_status   = $this->get_option_default("comment_status",'open');
+            $this->ping_status      = $this->get_option_default("ping_status",'closed');
+            $this->post_status      = $this->get_option_default("post_status",'publish');
+            $this->post_type        = $this->get_option_default("post_type",'post');
         }
 
         /**
          * Prepare for buffering output to a new post
+         *
          * @param $output
          * @param bool $buffer
          */
         private function output( $output, $buffer = false ) {
-            WP_CLI::line( $output );
+            if($buffer === false) {
+                WP_CLI::line($output);
+            } else {
+                $this->content_buffer += $output;
+            }
+        }
 
+        /**
+         * Return an dailybrief_options value if exists otherwise return the default.
+         *
+         * @param $option
+         * @param $default
+         * @return mixed
+         */
+        private function get_option_default($option,$default) {
+            if(!isset($this->options[$option]))
+                return $default;
+            return $this->options[$option];
+        }
+
+        /**
+         * Creates a new wordpress post with all the specified arguments set by options
+         *
+         * @return mixed post_id
+         */
+        private function create_post () {
+            $post_id = wp_insert_post(
+                array(
+                    'comment_status'    =>   $this->comment_status,
+                    'ping_status'       =>   $this->ping_status,
+                    'post_author'       =>   $this->author_id,
+                    'post_name'         =>   $this->slug,
+                    'post_title'        =>   $this->post_title,
+                    'post_content'      =>   wp_slash($this->content_buffer),
+                    'post_status'       =>   $this->post_status,
+                    'post_type'         =>   $this->post_type,
+                    'post_category'     =>   array( $this->post_category )
+                )
+            );
+            return $post_id;
         }
 
         /**
@@ -45,8 +92,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
          *
          * ## EXAMPLES
          *
-         *      wp daily brief set header '<h1>This is the header.</h1>
-         *      wp daily brief set footer '<h1>This is the footer.</h1>
+         *      wp dailybrief set header '<h1>This is the header.</h1>'
+         *      wp dailybrief set footer '<h1>This is the footer.</h1>'
+         *      wp dailybrief set post_title 'The Daily Brief'
          *
          * @param $args
          * @param $assoc_args
@@ -76,6 +124,12 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
         }
 
+        /**
+         * Runs some tests and output debug values, mostly intended for development
+         *
+         * @param $args
+         * @param $assoc_args
+         */
         public function test( $args, $assoc_args ) {
             $this->output( '=== Testing ===' );
             $days = $assoc_args['days'];
@@ -120,10 +174,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $status = array( 'publish' );
             $types = array( 'post' );
 
+            $buffer = WP_CLI\Utils\get_flag_value($assoc_args, 'buffer', false );
 
             // Output Header
             if(!empty($this->options['header']))
-                $this->output( $this->options['header'] );
+                $this->output( $this->options['header'],$buffer );
 
             // Retrieve posts
             $page = 1;
@@ -158,18 +213,18 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     if ( in_array( $id, $exclude_posts ) )
                             continue;
                     // Spit out some posts
-                    $this->output( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">');
-                    $this->output( '<h2><a href="'.get_permalink( $id).'" target="dailybrief">'.$title.'</a></h2>' );
-                    $this->output( 'Published '.$date.' by '.get_the_author() );
-                    $this->output( '<p>'.$excerpt.'</p>' );
-                    $this->output( '<p>&nbsp;</p>');
+                    $this->output( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">',$buffer);
+                    $this->output( '<h2><a href="'.get_permalink( $id).'" target="dailybrief">'.$title.'</a></h2>',$buffer );
+                    $this->output( 'Published '.$date.' by '.get_the_author(),$buffer );
+                    $this->output( '<p>'.$excerpt.'</p>',$buffer );
+                    $this->output( '<p>&nbsp;</p>',$buffer);
                 }
             $page++;
             } while ( $query->have_posts() );
 
             // Output Footer
             if(!empty($this->options['footer']))
-                $this->output( $this->options['footer'] );
+                $this->output( $this->options['footer'],$buffer );
 
         }
 
