@@ -25,8 +25,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
         WP_CLI::line( '=== Testing ===' );
         $days = $assoc_args['days'];
         if(is_null($days))
-            $days = "1 days";
-
+            $days = "today";
         $today = strtotime($days);
         $tomorrow = strtotime("+1 day",$today);
         $today = date('Y-m-d',$today);
@@ -39,10 +38,14 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
     function posts( $args, $assoc_args ) {
         global $wpdb;
-        $days = 0 + $assoc_args['days'];
-        $tomorrow = strtotime("+1 day");
+        $days = $assoc_args['days'];
+        if(is_null($days))
+            $days = "today";
+        $today = strtotime($days);
+        $tomorrow = strtotime("+1 day",$today);
+        $today = date('Y-m-d',$today);
         $tomorrow = date('Y-m-d',$tomorrow);
-        $today = date('Y-m-d');
+
         $before_date = $tomorrow;
         $after_date = $today;
         $exclude_posts = array();
