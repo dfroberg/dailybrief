@@ -33,6 +33,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->ping_status      = $this->get_option_default("ping_status",'closed');
             $this->post_status      = $this->get_option_default("post_status",'publish');
             $this->post_type        = $this->get_option_default("post_type",'post');
+	        $this->article_delimiter= $this->get_option_default("article_delimiter",'<p>&nbsp;</p>');
         }
 
         /**
@@ -227,7 +228,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $this->output( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).'" target="dailybrief">'.$title.'</a></h2>',$buffer );
                     $this->output( 'Published '.$date.' by '.get_the_author(),$buffer );
                     $this->output( '<p>'.$excerpt.'</p>',$buffer );
-                    $this->output( '<p>&nbsp;</p>',$buffer);
+                    $this->output( $this->article_delimiter, $buffer);
                 }
             $page++;
             } while ( $query->have_posts() );
