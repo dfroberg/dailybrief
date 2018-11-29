@@ -33,6 +33,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
     function posts( $args, $assoc_args ) {
         global $wpdb;
+        $days = 0 + $assoc_args['days'];
         $tomorrow = strtotime("+1 day");
         $tomorrow = date('Y-m-d',$tomorrow);
         $today = date('Y-m-d');
