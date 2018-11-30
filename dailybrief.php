@@ -234,10 +234,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     if ( in_array( $id, $exclude_posts ) )
                             continue;
                     // Spit out some posts
+                    $c = get_the_category();
                     $article_count++;
                     $this->output( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">',$buffer);
                     $this->output( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).'" target="dailybrief">'.$title.'</a></h2>',$buffer );
-                    $this->output( 'Published '.$date.' by '.get_the_author(),$buffer );
+                    $this->output( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.$c[0]->category_nicename.'</strong>',$buffer );
                     $this->output( '<p>'.$excerpt.'</p>',$buffer );
                     $this->output( $this->article_delimiter, $buffer);
                 }
