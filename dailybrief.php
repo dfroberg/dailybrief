@@ -90,7 +90,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $dailybrief_featured_image_id = attachment_url_to_postid( $this->featured_image_url );
 	        if($dailybrief_featured_image_id === false) {
 		        WP_CLI::error( 'Unable to set featured image, make sure you have uploaded the image you want to use to your sites media library and set the featured_image_url option with its complete URL.');
-		        return $post_id
+		        return $post_id;
 	        }
 	        // Set Featured image if available.
 	        set_post_thumbnail( $post_id, $dailybrief_featured_image_id );
