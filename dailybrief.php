@@ -28,13 +28,15 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->post_title       = $this->get_option_default("post_title","The Daily Brief");
             $this->author_id        = $this->get_option_default("author_id",1);
             $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
+            $this->always_skip_category
+                                    = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
             $this->slug             = $this->get_option_default("slug","the-daily-brief-").date('Y-m-d',strtotime("today"));
             $this->comment_status   = $this->get_option_default("comment_status",'open');
             $this->ping_status      = $this->get_option_default("ping_status",'closed');
             $this->post_status      = $this->get_option_default("post_status",'publish');
             $this->post_type        = $this->get_option_default("post_type",'post');
 	        $this->article_delimiter= $this->get_option_default("article_delimiter",'<hr>');
-            $this->article_continue = $this->get_option_default("article_continue",'Continue -&gt;');
+            $this->article_continue = $this->get_option_default("article_continue",'Continue&nbsp;-&gt;');
             $this->article_stats_txt= $this->get_option_default("article_stats_txt",'Articles in this brief: ');
         }
 
