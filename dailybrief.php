@@ -24,6 +24,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             // constructor called when plugin loads
             $this->options          = get_option( 'dailybrief_options', array());
             $this->content_buffer   = "";
+	        $this->temp_featured_image_url = "";
 	        $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
             $this->post_title       = $this->get_option_default("post_title","The Daily Brief");
             $this->author_id        = $this->get_option_default("author_id",1);
@@ -37,8 +38,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->post_type        = $this->get_option_default("post_type",'post');
 	        $this->article_delimiter= $this->get_option_default("article_delimiter",'<hr>');
             $this->article_continue = $this->get_option_default("article_continue",'Continue&nbsp;-&gt;');
-            $this->article_stats_txt= $this->get_option_default("article_stats_txt",'Articles in this brief: ');
-	        $this->featured_image_url= $this->get_option_default("featured_image_url",'https://www.fort-russ.com/wp-content/uploads/2018/11/nativity-header-600x338-300x169.jpg');
+            $this->article_stats_txt= $this->get_option_default("article_stats_txt",'<hr>Articles in this brief: ');
+	        $this->featured_image_url= $this->get_option_default("featured_image_url",'');
         }
 
         /**
@@ -87,9 +88,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     'post_category'     =>   @explode(',', $this->post_category )
                 )
             );
-	        $dailybrief_featured_image_id = attachment_url_to_postid( $this->featured_image_url );
+            if($this->featured_image_url != '') {
+	            $dailybrief_featured_image_id = attachment_url_to_postid( $this->featured_image_url );
+            } else {
+	            $dailybrief_featured_image_id = attachment_url_to_postid( $this->temp_featured_image_url );
+            }
 	        if($dailybrief_featured_image_id === false) {
-		        WP_CLI::error( 'Unable to set featured image, make sure you have uploaded the image you want to use to your sites media library and set the featured_image_url option with its complete URL.');
+		        WP_CLI::warning( 'Unable to set featured image, make sure you have uploaded the image you want to use to your sites media library and set the featured_image_url option with its complete URL.');
 		        return $post_id;
 	        }
 	        // Set Featured image if available.
@@ -249,6 +254,10 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     // Spit out some posts
                     $c = get_the_category();
                     $article_count++;
+                    // Pick a temporary featured image from the posts in the brief to use if featured_image_url is not set.
+                    if($this->temp_featured_image_url == '' && $this->featured_image_url == '')
+	                    $this->temp_featured_image_url = get_the_post_thumbnail_url($id, 'full');
+
                     $this->output( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">',$buffer);
                     $this->output( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).'" target="dailybrief">'.$title.'</a></h2>',$buffer );
                     $this->output( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.strtoupper($c[0]->category_nicename).'</strong>',$buffer );
