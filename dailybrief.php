@@ -33,7 +33,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->ping_status      = $this->get_option_default("ping_status",'closed');
             $this->post_status      = $this->get_option_default("post_status",'publish');
             $this->post_type        = $this->get_option_default("post_type",'post');
-	        $this->article_delimiter= $this->get_option_default("article_delimiter",'<p>&nbsp;</p>');
+	        $this->article_delimiter= $this->get_option_default("article_delimiter",'<hr>');
         }
 
         /**
