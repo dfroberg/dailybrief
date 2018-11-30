@@ -34,6 +34,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->post_status      = $this->get_option_default("post_status",'publish');
             $this->post_type        = $this->get_option_default("post_type",'post');
 	        $this->article_delimiter= $this->get_option_default("article_delimiter",'<hr>');
+            $this->article_continue = $this->get_option_default("article_continue",'Continue -&gt;');
+            $this->article_stats_txt= $this->get_option_default("article_stats_txt",'Articles in this brief: ');
         }
 
         /**
@@ -194,7 +196,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $exclude_posts = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', '' ));
 	        // Exclude some category ids for whatever reason
 	        $exclude_categories = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' ));
-
+            // Parse some flags
+            $include_stats = WP_CLI\Utils\get_flag_value($assoc_args, 'stats', true );
             // Output Header
             if(!empty($this->options['header']))
                 $this->output( $this->options['header'],$buffer );
@@ -224,7 +227,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $content = $query->post->post_content;
 
                     if ( ! has_excerpt() ) {
-                        $excerpt =  wp_trim_words( $content, $this->excerpt_words, '... <a href="'.get_permalink( $id).'" target="dailybrief">Continue -&gt;</a>');
+                        $excerpt =  wp_trim_words( $content, $this->excerpt_words, '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>');
                     } else {
                         $excerpt =  the_excerpt();
                     }
@@ -238,7 +241,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $article_count++;
                     $this->output( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">',$buffer);
                     $this->output( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).'" target="dailybrief">'.$title.'</a></h2>',$buffer );
-                    $this->output( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.$c[0]->category_nicename.'</strong>',$buffer );
+                    $this->output( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.strtoupper($c[0]->category_nicename).'</strong>',$buffer );
                     $this->output( '<p>'.$excerpt.'</p>',$buffer );
                     $this->output( $this->article_delimiter, $buffer);
                 }
@@ -250,7 +253,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 $this->output( $this->options['footer'],$buffer );
 
             // Add stats
-            $this->output( 'Articles in this brief: '.$article_count ,$buffer );
+            if($include_stats)
+                $this->output( $this->article_stats_txt.' '.$article_count ,$buffer );
             // End of post preparation
 
             if ($post) {
