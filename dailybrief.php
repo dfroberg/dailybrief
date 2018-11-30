@@ -269,11 +269,16 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
             if ($post) {
                 // Ok create the post
-                WP_CLI::line( '* Creating post' );
+                WP_CLI::line( '* Creating post with '.$article_count.' articles.' );
                 // Do some sanity checks
 
                 // Call create_post here
-
+	            $post_id_created = $this->create_post();
+	            if($post_id_created > 0) {
+		            WP_CLI::line( '* Done ' . $post_id_created );
+	            } else {
+		            WP_CLI::error( '*** Error - could not create the post...');
+	            }
             }
         }
 
