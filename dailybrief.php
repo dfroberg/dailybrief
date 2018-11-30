@@ -162,7 +162,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * @param 	$assoc_args --skip-categories	Skip including specific categories
          * @param 	$assoc_args --days 	            Include posts from '-1 days' etc default is 'today'
          */
-        public function posts( $args, $assoc_args ) {
+        public function brief( $args, $assoc_args ) {
             global $wpdb;
             $days = $assoc_args['days'];
             if(is_null($days))
@@ -176,14 +176,23 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $after_date = $today;
             $exclude_posts = array();
             $failed_posts = array();
+            $exclude_categories = array();
             $status = array( 'publish' );
             $types = array( 'post' );
+            $buffer = false ;
 
 			// Parse some flags
-            $buffer = WP_CLI\Utils\get_flag_value($assoc_args, 'buffer', false );
 	        $post = WP_CLI\Utils\get_flag_value($assoc_args, 'post', false );
+	        if ($post) {
+	            // Ok prepare the post
+                $buffer = true;
+                WP_CLI::line( '* Preparing post' );
+            }
+	        // Do you wish to focus on a particular category?
 	        $focus = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'focus', '' ));
+	        // Exclude some post_ids for whatever reason
 	        $exclude_posts = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', '' ));
+	        // Exclude some category ids for whatever reason
 	        $exclude_categories = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' ));
 
             // Output Header
@@ -192,6 +201,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
             // Retrieve posts
             $page = 1;
+            $article_count = 0;
             do {
                 $query = new WP_Query( array(
                     'posts_per_page' => 30,
@@ -224,6 +234,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     if ( in_array( $id, $exclude_posts ) )
                             continue;
                     // Spit out some posts
+                    $article_count++;
                     $this->output( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">',$buffer);
                     $this->output( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).'" target="dailybrief">'.$title.'</a></h2>',$buffer );
                     $this->output( 'Published '.$date.' by '.get_the_author(),$buffer );
@@ -237,6 +248,17 @@ if ( defined('WP_CLI') && WP_CLI ) {
             if(!empty($this->options['footer']))
                 $this->output( $this->options['footer'],$buffer );
 
+            // Add stats
+            $this->output( 'Articles in this brief: '.$article_count ,$buffer );
+            // End of post preparation
+
+            if ($post) {
+                // Ok create the post
+                WP_CLI::line( '* Creating post' );
+                // Do some sanity checks
+
+                // Call create_post here
+            }
         }
 
     }
