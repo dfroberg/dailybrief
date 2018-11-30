@@ -38,6 +38,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $this->article_delimiter= $this->get_option_default("article_delimiter",'<hr>');
             $this->article_continue = $this->get_option_default("article_continue",'Continue&nbsp;-&gt;');
             $this->article_stats_txt= $this->get_option_default("article_stats_txt",'Articles in this brief: ');
+	        $this->featured_image_url= $this->get_option_default("featured_image_url",'https://www.fort-russ.com/wp-content/uploads/2018/11/nativity-header-600x338-300x169.jpg');
         }
 
         /**
@@ -86,6 +87,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     'post_category'     =>   @explode(',', $this->post_category )
                 )
             );
+	        $dailybrief_featured_image_id = attachment_url_to_postid( $this->featured_image_url );
+	        if($dailybrief_featured_image_id === false) {
+		        WP_CLI::error( 'Unable to set featured image, make sure you have uploaded the image you want to use to your sites media library and set the featured_image_url option with its complete URL.');
+		        return $post_id
+	        }
+	        // Set Featured image if available.
+	        set_post_thumbnail( $post_id, $dailybrief_featured_image_id );
             return $post_id;
         }
 
@@ -265,6 +273,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 // Do some sanity checks
 
                 // Call create_post here
+
             }
         }
 
