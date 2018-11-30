@@ -196,8 +196,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $focus = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'focus', '' ));
 	        // Exclude some post_ids for whatever reason
 	        $exclude_posts = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', '' ));
-	        // Exclude some category ids for whatever reason
-	        $exclude_categories = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' ));
+	        // Exclude some category ids for whatever reason and merge with the always_skip_category option
+	        $exclude_categories = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' )),@explode(',',$this->always_skip_category));
             // Parse some flags
             $include_stats = WP_CLI\Utils\get_flag_value($assoc_args, 'stats', true );
             // Output Header
