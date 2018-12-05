@@ -198,7 +198,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $today = date('Y-m-d',$today);
             $tomorrow = date('Y-m-d',$tomorrow);
             $this->date_suffix = $today; // used for post-title & slug suffix, contains the date it relates to.
-            $before_date = $tomorrow;
+            $before_date = $today;
             $after_date = $today;
             $exclude_posts = array();
             $failed_posts = array();
@@ -212,7 +212,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        if ($post) {
 	            // Ok prepare the post
                 $buffer = true;
-                WP_CLI::line( '* Preparing post' );
+                WP_CLI::line( '* Preparing post for '.$today );
             }
 	        // Do you wish to focus on a particular category?
 	        $focus = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'focus', '' ));
