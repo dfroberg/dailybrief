@@ -32,6 +32,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
         private function update_globals() {
 	        $this->options          = get_option( 'dailybrief_options', array());
 	        $this->debug            = $this->get_option_default("debug",0); // 1 for on
+	        $this->url_suffix       = $this->get_option_default("url_suffix",''); // set '?campaign=steempress&utm=dailybrief'
 	        $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
 	        $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
 	        $this->author_id        = $this->get_option_default("author_id",1);
@@ -268,7 +269,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	                    $this->temp_featured_image_url = get_the_post_thumbnail_url($id, 'full');
 
                     $this->output( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">',$buffer);
-                    $this->output( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).'" target="dailybrief">'.$title.'</a></h2>',$buffer );
+                    $this->output( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$title.'</a></h2>',$buffer );
                     $this->output( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.strtoupper($c[0]->category_nicename).'</strong>',$buffer );
                     $this->output( '<p>'.$excerpt.'</p>',$buffer );
                     $this->output( $this->article_delimiter, $buffer);
