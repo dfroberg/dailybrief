@@ -51,7 +51,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * @param bool $buffer
          */
         private function output( $output, $buffer = false ) {
-            if($buffer === false) {
+            if($buffer == false) {
                 WP_CLI::line($output);
             } else {
                 $this->content_buffer += $output;
@@ -84,7 +84,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     'post_author'       =>   $this->author_id,
                     'post_name'         =>   $this->slug,
                     'post_title'        =>   $this->post_title,
-                    'post_content'      =>   wp_slash($this->content_buffer),
+                    'post_content'      =>   ($this->content_buffer),
                     'post_status'       =>   $this->post_status,
                     'post_type'         =>   $this->post_type,
                     'post_category'     =>   @explode(',', $this->post_category )
