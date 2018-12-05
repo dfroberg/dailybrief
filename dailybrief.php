@@ -6,6 +6,7 @@
  * License:     GNU General Public License v3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * GitLab Plugin URI: https://gitlab.froberg.org/dfroberg/dailybrief
+ * Version: 0.0.5
  */
 
 // Basic security, prevents file from being loaded directly.
@@ -22,16 +23,17 @@ if ( defined('WP_CLI') && WP_CLI ) {
         public function __construct() {
 
             // constructor called when plugin loads
+            $this->day              = '';
             $this->options          = get_option( 'dailybrief_options', array());
             $this->content_buffer   = "";
 	        $this->temp_featured_image_url = "";
 	        $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
-            $this->post_title       = $this->get_option_default("post_title","The Daily Brief");
+            $this->post_title       = $this->get_option_default("post_title","The Daily Brief ".$this->day);
             $this->author_id        = $this->get_option_default("author_id",1);
             $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
             $this->always_skip_category
                                     = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
-            $this->slug             = $this->get_option_default("slug","the-daily-brief-").date('Y-m-d',strtotime("today"));
+            $this->slug             = $this->get_option_default("slug","the-daily-brief-").$this->day;
             $this->comment_status   = $this->get_option_default("comment_status",'open');
             $this->ping_status      = $this->get_option_default("ping_status",'closed');
             $this->post_status      = $this->get_option_default("post_status",'publish');
@@ -188,7 +190,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $tomorrow = strtotime("+1 day",$today);
             $today = date('Y-m-d',$today);
             $tomorrow = date('Y-m-d',$tomorrow);
-
+            $this->day = $today; // used for post-title & slug suffix, contains the date it relates to.
             $before_date = $tomorrow;
             $after_date = $today;
             $exclude_posts = array();
