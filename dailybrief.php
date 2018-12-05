@@ -55,9 +55,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
             if($buffer == false) {
                 WP_CLI::line($output);
             } else {
-	            if($this->debug) WP_CLI::line('* Buffer '.strlen( $this->content_buffer.' bytes'));
                 $this->content_buffer .= $output;
-	            if($this->debug) WP_CLI::line('+ Added '.strlen($output).' bytes');
+	            if($this->debug) WP_CLI::line('+ Added '.strlen($output).' bytes, buffer is now '.strlen( $this->content_buffer.' bytes'));
             }
         }
 
@@ -289,7 +288,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 // Call create_post here
 	            $post_id_created = $this->create_post();
 	            if($post_id_created > 0) {
-		            WP_CLI::line( '* Done ' . $post_id_created );
+		            WP_CLI::line( '* Done ' . $post_id_created .' - "'.$this->post_title.'" on '.$this->slug);
 	            } else {
 		            WP_CLI::error( '*** Error - could not create the post...');
 	            }
