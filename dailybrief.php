@@ -165,10 +165,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $tomorrow = strtotime("+1 day",$today);
             $today = date('Y-m-d',$today);
             $tomorrow = date('Y-m-d',$tomorrow);
+	        $this->day = $today; // used for post-title & slug suffix, contains the date it relates to.
 
             $this->output( 'Today: '.$today);
             $this->output( 'Tomorrow: '. $tomorrow);
-
+			$this->output( 'Day is set to:'. $this->day);
 
             $this->output( print_r($this->options,true) );
 
