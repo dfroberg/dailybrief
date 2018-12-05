@@ -25,10 +25,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
             // constructor called when plugin loads
             $this->day              = '';
             $this->options          = get_option( 'dailybrief_options', array());
+	        $this->debug            = $this->get_option_default("debug",0); // 1 for on
             $this->content_buffer   = "";
 	        $this->temp_featured_image_url = "";
 	        $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
-            $this->post_title       = $this->get_option_default("post_title","The Daily Brief ".$this->day);
+            $this->post_title       = $this->get_option_default("post_title","The Daily Brief ").$this->day;
             $this->author_id        = $this->get_option_default("author_id",1);
             $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
             $this->always_skip_category
@@ -54,7 +55,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
             if($buffer == false) {
                 WP_CLI::line($output);
             } else {
+	            if($this->debug) WP_CLI::line('* Buffer '.strlen( $this->content_buffer.' bytes'));
                 $this->content_buffer += $output;
+	            if($this->debug) WP_CLI::line('+ Added '.strlen($output).' bytes');
             }
         }
 
