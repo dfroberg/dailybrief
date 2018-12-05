@@ -23,25 +23,29 @@ if ( defined('WP_CLI') && WP_CLI ) {
         public function __construct() {
 
             // constructor called when plugin loads
-            $this->day              = '';
-            $this->options          = get_option( 'dailybrief_options', array());
-	        $this->debug            = $this->get_option_default("debug",0); // 1 for on
-            $this->content_buffer   = "";
+            $this->date_suffix      = '';
+	        $this->content_buffer   = "";
 	        $this->temp_featured_image_url = "";
+	        $this->update_globals();
+        }
+
+        private function update_globals() {
+	        $this->options          = get_option( 'dailybrief_options', array());
+	        $this->debug            = $this->get_option_default("debug",0); // 1 for on
 	        $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
-            $this->post_title       = $this->get_option_default("post_title","The Daily Brief ").$this->day;
-            $this->author_id        = $this->get_option_default("author_id",1);
-            $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
-            $this->always_skip_category
-                                    = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
-            $this->slug             = $this->get_option_default("slug","the-daily-brief-").$this->day;
-            $this->comment_status   = $this->get_option_default("comment_status",'open');
-            $this->ping_status      = $this->get_option_default("ping_status",'closed');
-            $this->post_status      = $this->get_option_default("post_status",'publish');
-            $this->post_type        = $this->get_option_default("post_type",'post');
+	        $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
+	        $this->author_id        = $this->get_option_default("author_id",1);
+	        $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
+	        $this->always_skip_category
+		        = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
+	        $this->slug             = $this->get_option_default("slug","the-daily-brief").'-'.$this->date_suffix;
+	        $this->comment_status   = $this->get_option_default("comment_status",'open');
+	        $this->ping_status      = $this->get_option_default("ping_status",'closed');
+	        $this->post_status      = $this->get_option_default("post_status",'publish');
+	        $this->post_type        = $this->get_option_default("post_type",'post');
 	        $this->article_delimiter= $this->get_option_default("article_delimiter",'<hr>');
-            $this->article_continue = $this->get_option_default("article_continue",'Continue&nbsp;-&gt;');
-            $this->article_stats_txt= $this->get_option_default("article_stats_txt",'<hr>Articles in this brief: ');
+	        $this->article_continue = $this->get_option_default("article_continue",'Continue&nbsp;-&gt;');
+	        $this->article_stats_txt= $this->get_option_default("article_stats_txt",'<hr>Articles in this brief: ');
 	        $this->featured_image_url= $this->get_option_default("featured_image_url",'');
         }
 
@@ -165,11 +169,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $tomorrow = strtotime("+1 day",$today);
             $today = date('Y-m-d',$today);
             $tomorrow = date('Y-m-d',$tomorrow);
-	        $this->day = $today; // used for post-title & slug suffix, contains the date it relates to.
+	        $this->date_suffix = $today; // used for post-title & slug suffix, contains the date it relates to.
 
             $this->output( 'Today: '.$today);
             $this->output( 'Tomorrow: '. $tomorrow);
-			$this->output( 'Day is set to:'. $this->day);
+			$this->output( 'Day is set to :'. $this->date_suffix);
 
             $this->output( print_r($this->options,true) );
 
@@ -193,7 +197,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $tomorrow = strtotime("+1 day",$today);
             $today = date('Y-m-d',$today);
             $tomorrow = date('Y-m-d',$tomorrow);
-            $this->day = $today; // used for post-title & slug suffix, contains the date it relates to.
+            $this->date_suffix = $today; // used for post-title & slug suffix, contains the date it relates to.
             $before_date = $tomorrow;
             $after_date = $today;
             $exclude_posts = array();
@@ -282,6 +286,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
             // End of post preparation
 
             if ($post) {
+            	// Update the globals to recreate slugs and titles etc if anythign changed via args
+	            $this->update_globals();
                 // Ok create the post
                 WP_CLI::line( '* Creating post with '.$article_count.' articles.' );
                 // Do some sanity checks
