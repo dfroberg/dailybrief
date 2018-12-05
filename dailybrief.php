@@ -56,7 +56,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 WP_CLI::line($output);
             } else {
 	            if($this->debug) WP_CLI::line('* Buffer '.strlen( $this->content_buffer.' bytes'));
-                $this->content_buffer += $output;
+                $this->content_buffer .= $output;
 	            if($this->debug) WP_CLI::line('+ Added '.strlen($output).' bytes');
             }
         }
