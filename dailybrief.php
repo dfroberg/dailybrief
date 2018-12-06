@@ -190,7 +190,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
 		    //* Remove action so it doesn't fire on wp_update_post()
 		    remove_action( 'save_post', 'dailybrief_trigger_save_post', 10 );
 		    $postarr = array( 'ID' => $this->post_id_created, 'post_content' => $this->content_buffer, );
-		    wp_update_post( $postarr );
+		    $wpupd_status = wp_update_post( $postarr );
+		    if($this->debuug) WP_CLI::line( '*** wp_update: '.$wpupd_status);
 	    }
 
         /**
