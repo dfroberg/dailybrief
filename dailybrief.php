@@ -26,6 +26,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->date_suffix      = '';
 	        $this->content_buffer   = "";
 	        $this->temp_featured_image_url = "";
+	        $this->post_id_created  = 0;
 	        $this->update_globals();
         }
 
@@ -180,6 +181,18 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
         }
 
+	    /**
+	     * @param $post_ID
+	     * @param $post
+	     * @param $update
+	     */
+	    function dailybrief_trigger_save_post( $post_ID, $post, $update ) {
+		    //* Remove action so it doesn't fire on wp_update_post()
+		    remove_action( 'save_post', 'dailybrief_trigger_save_post', 10 );
+		    $postarr = array( 'ID' => $this->post_id_created, 'post_content' => $this->content_buffer, );
+		    wp_update_post( $postarr );
+	    }
+
         /**
          * Create list of posts with dates between before and after dates
          *
@@ -294,9 +307,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 // Do some sanity checks
 
                 // Call create_post here
-	            $post_id_created = $this->create_post();
-	            if($post_id_created > 0) {
-		            WP_CLI::line( '* Done ' . $post_id_created .' - "'.$this->post_title.'" on '.$this->slug);
+	            $this->post_id_created = $this->create_post();
+	            if($this->post_id_created > 0) {
+		            WP_CLI::line( '* Done ' . $this->post_id_created .' - "'.$this->post_title.'" on '.$this->slug);
+		            //* save_post fires *after* the post has been saved to the database
+		            add_action( 'save_post', 'dailybrief_trigger_save_post', 10, 3 );
 	            } else {
 		            WP_CLI::error( '*** Error - could not create the post...');
 	            }
