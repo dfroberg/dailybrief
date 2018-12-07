@@ -289,7 +289,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     if ( ! has_excerpt() ) {
                         $excerpt =  wp_trim_words( wp_strip_all_tags($content,true), $this->excerpt_words, '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>');
                     } else {
-                        $excerpt =  wp_trim_words( wp_strip_all_tags(get_the_excerpt($query),true));
+                        $excerpt =  wp_trim_words( wp_strip_all_tags(get_the_excerpt($query),true), $this->excerpt_words, '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>');
                     }
                     $title = $query->post->post_title;
                     $date = $query->post->post_date;
