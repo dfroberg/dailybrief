@@ -27,7 +27,26 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $this->content_buffer   = "";
 	        $this->temp_featured_image_url = "";
 	        $this->post_id_created  = 0;
-	        $this->update_globals();
+
+            $this->options          = get_option( 'dailybrief_options', array());
+            $this->debug            = $this->get_option_default("debug",0); // 1 for on
+            $this->url_suffix       = $this->get_option_default("url_suffix",''); // set '?campaign=steempress&utm=dailybrief'
+            $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
+            $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
+            $this->author_id        = $this->get_option_default("author_id",1);
+            $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
+            $this->always_skip_category
+                                    = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
+            $this->slug             = $this->get_option_default("slug","the-daily-brief").'-'.$this->date_suffix;
+            $this->comment_status   = $this->get_option_default("comment_status",'open');
+            $this->ping_status      = $this->get_option_default("ping_status",'closed');
+            $this->post_status      = $this->get_option_default("post_status",'publish');
+            $this->post_type        = $this->get_option_default("post_type",'post');
+            $this->article_delimiter= $this->get_option_default("article_delimiter",'<hr>');
+            $this->article_continue = $this->get_option_default("article_continue",'Continue&nbsp;-&gt;');
+            $this->article_stats_txt= $this->get_option_default("article_stats_txt",'<hr>Articles in this brief: ');
+            $this->featured_image_url= $this->get_option_default("featured_image_url",'');
+
         }
 
         /**
@@ -42,7 +61,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $this->author_id        = $this->get_option_default("author_id",1);
 	        $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
 	        $this->always_skip_category
-		        = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
+		                            = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
 	        $this->slug             = $this->get_option_default("slug","the-daily-brief").'-'.$this->date_suffix;
 	        $this->comment_status   = $this->get_option_default("comment_status",'open');
 	        $this->ping_status      = $this->get_option_default("ping_status",'closed');
@@ -165,7 +184,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          *
          * ## OPTIONS
          *
-         * [--days=<number of days>]
+         * [--days=<days>]
          * : Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
          * ---
          * default: today
@@ -289,7 +308,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     if ( ! has_excerpt() ) {
                         $excerpt =  wp_trim_words( wp_strip_all_tags($content,true), $this->excerpt_words, '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>');
                     } else {
-                        $excerpt =  wp_trim_words( wp_strip_all_tags(get_the_excerpt($query),true), $this->excerpt_words, '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>');
+                        $excerpt =  wp_trim_words( wp_strip_all_tags( get_the_excerpt($query),true), $this->excerpt_words, '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>');
                     }
                     $title = $query->post->post_title;
                     $date = $query->post->post_date;
