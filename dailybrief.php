@@ -32,7 +32,6 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->debug            = $this->get_option_default("debug",0); // 1 for on
             $this->url_suffix       = $this->get_option_default("url_suffix",''); // set '?campaign=steempress&utm=dailybrief'
             $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
-            $this->use_excerpts     = $this->get_option_default("use_excerpts",false);
             $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
             $this->author_id        = $this->get_option_default("author_id",1);
             $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
@@ -58,7 +57,6 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $this->debug            = $this->get_option_default("debug",0); // 1 for on
 	        $this->url_suffix       = $this->get_option_default("url_suffix",''); // set '?campaign=steempress&utm=dailybrief'
 	        $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
-            $this->use_excerpts     = $this->get_option_default("use_excerpts",false);
 	        $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
 	        $this->author_id        = $this->get_option_default("author_id",1);
 	        $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
@@ -234,6 +232,12 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * [--post]
          * : Create the post in Wordpress
          *
+         * [--use-excerpts]
+         * : Do you want to use the excepts of the summarized Wordpress posts
+         * ---
+         * default: true
+         * ---
+         *
          * [--days=<days>]
          * : Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
          * ---
@@ -271,6 +275,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 $buffer = true;
                 WP_CLI::line( '* Preparing post for '.$today );
             }
+	        // Use excerpts or not
+            $use_excerpts = WP_CLI\Utils\get_flag_value($assoc_args, 'use-excerpts', true );
 	        // Do you wish to focus on a particular category?
 	        $focus = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'focus', '' ));
 	        // Exclude some post_ids for whatever reason
@@ -308,7 +314,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $content = $query->post->post_content;
                     $more = '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>';
 
-                    if ( ! has_excerpt() || !$this->use_excerpts) {
+                    if ( ! has_excerpt() || ! $use_excerpts) {
                         $excerpt =  wp_trim_words( wp_strip_all_tags($content,true), $this->excerpt_words, $more);
                     } else {
                         $excerpt =  wp_trim_words( wp_strip_all_tags( get_the_excerpt($query),true), $this->excerpt_words, $more);
