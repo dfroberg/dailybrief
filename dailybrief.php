@@ -213,7 +213,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * [--post]
          * : Create the post in Wordpress
          *
-         * [--days=<number of days>]
+         * [--days=<days>]
          * : Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
          * ---
          * default: today
