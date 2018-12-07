@@ -6,7 +6,7 @@
  * License:     GNU General Public License v3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * GitLab Plugin URI: https://gitlab.froberg.org/dfroberg/dailybrief
- * Version: 0.0.5
+ * Version: 0.0.6
  */
 
 // Basic security, prevents file from being loaded directly.
@@ -30,6 +30,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $this->update_globals();
         }
 
+        /**
+         * Re applies the defaults with options
+         */
         private function update_globals() {
 	        $this->options          = get_option( 'dailybrief_options', array());
 	        $this->debug            = $this->get_option_default("debug",0); // 1 for on
@@ -126,7 +129,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
          *
          *      wp dailybrief set header '<h1>This is the header.</h1>'
          *      wp dailybrief set footer '<h1>This is the footer.</h1>'
-         *      wp dailybrief set post_title 'The Daily Brief'
+         *      wp dailybrief set post_title 'The Your Site Daily Brief'
+         *      wp dailybrief set post_status 'draft'
          *
          * @param $args
          * @param $assoc_args
@@ -159,6 +163,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
         /**
          * Runs some tests and output debug values, mostly intended for development
          *
+         * ## OPTIONS
+         *
+         * [--days=<number of days>]
+         * : Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
+         * ---
+         * default: today
+         * ---
          * @param $args
          * @param $assoc_args
          */
@@ -197,6 +208,16 @@ if ( defined('WP_CLI') && WP_CLI ) {
         /**
          * Create list of posts with dates between before and after dates
          *
+         * ## OPTIONS
+         *
+         * [--post]
+         * : Create the post in Wordpress
+         *
+         * [--days=<number of days>]
+         * : Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
+         * ---
+         * default: today
+         * ---
          *
          * @param 	$args
          * @param 	$assoc_args --skip-posts 	    Skip including specific posts 1,2,3,4
@@ -266,9 +287,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $content = $query->post->post_content;
 
                     if ( ! has_excerpt() ) {
-                        $excerpt =  wp_trim_words( $content, $this->excerpt_words, '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>');
+                        $excerpt =  wp_trim_words( wp_strip_all_tags($content,true), $this->excerpt_words, '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>');
                     } else {
-                        $excerpt =  the_excerpt();
+                        $excerpt =  wp_trim_words( wp_strip_all_tags(get_the_excerpt($query),true));
                     }
                     $title = $query->post->post_title;
                     $date = $query->post->post_date;
@@ -300,7 +321,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 $this->output( $this->article_stats_txt.' '.$article_count ,$buffer );
             // End of post preparation
 
-            if ($post) {
+            if ($post && $article_count > 0) {
             	// Update the globals to recreate slugs and titles etc if anythign changed via args
 	            $this->update_globals();
                 // Ok create the post
