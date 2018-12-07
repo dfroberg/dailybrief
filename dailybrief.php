@@ -304,11 +304,12 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $query->the_post();
                     $id = get_the_ID();
                     $content = $query->post->post_content;
+                    $more = '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>';
 
                     if ( ! has_excerpt() ) {
-                        $excerpt =  wp_trim_words( wp_strip_all_tags($content,true), $this->excerpt_words, '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>');
+                        $excerpt =  wp_trim_words( wp_strip_all_tags($content,true), $this->excerpt_words, $more);
                     } else {
-                        $excerpt =  wp_trim_words( wp_strip_all_tags( get_the_excerpt($query),true), $this->excerpt_words, '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>');
+                        $excerpt =  wp_trim_words( wp_strip_all_tags( get_the_excerpt($query),true), $this->excerpt_words, $more);
                     }
                     $title = $query->post->post_title;
                     $date = $query->post->post_date;
