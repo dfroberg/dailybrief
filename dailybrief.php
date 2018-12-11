@@ -321,8 +321,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $c_cats = array();
                     if ($c) {
                         foreach ($c as $c_cat) {
-                            $c_cats[] = ucwords($c_cat->category_nicename);
-                            $article_category = ucwords($c_cat->category_nicename);
+                            $c_cats[] = ucwords($c_cat->category_nicename,"- \t\r\n\f\v");
+                            $article_category = ucwords($c_cat->category_nicename,"- \t\r\n\f\v");
                             $article_categories[$article_category] = $article_category;
                         }
                     }
@@ -332,8 +332,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $t_tags = array();
                     if ($t) {
                         foreach ($t as $t_tag) {
-                            $t_tags[] = ucwords($t_tag->name);
-                            $article_tag = ucwords($t_tag->name);
+                            $t_tags[] = ucwords($t_tag->name,"- \t\r\n\f\v");
+                            $article_tag = ucwords($t_tag->name,"- \t\r\n\f\v");
                             $article_tags[$article_tag] = $article_tag;
                         }
                     }
