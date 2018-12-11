@@ -85,3 +85,8 @@ Although the dailybrief command can be used with any type of social media or new
    Updated post_category = 34663
 ```
   
+# Roadmap:
+* STEEM SPECIFIC:
+: A VERY high frequency version allowing for 4 posts a day splitting the day into 6 hour segments. (it will skip a segment if no articles has been produced or you have less than 
+  `wp dailbrief set article_treshold X` )
+  
