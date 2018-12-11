@@ -3,6 +3,9 @@
 ## Description:
 WP_CLI command plugin to generate a simple daily daily brief with the posts of the day
 
+#### Note:
+This is still alpha grade code, and subject to change!
+ 
 ## Setup:
 Install by issuing;
 
@@ -56,3 +59,29 @@ All static configuration is done from the WP_CLI command line using *wp dailybri
 : Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
 default: today
 
+## Running
+
+`wp dailybrief brief --days='-1 day' --post --no-use-excerpts`
+
+Will generate one post with summaries of all articles from the day before using the body to create the excerpt.
+ 
+# Combining with SteemPress
+Although the dailybrief command can be used with any type of social media or newsletter plugin to distribute your Daily Brief it was written and intended to be use as a companion application to SteemPress, to enable high frequency Wordpress authors not to be hammered by numerous spambots and "holier than thau" self professed "I AM THE COMMUNITY!!!" steem cops and simply post ONE (or max 4) briefs per day.   
+## SteemPress specific setup
+* In Posts -> Categories
+: Create a new category named i.e. "Daily Brief", make a note of the ID once created.
+* In Settings -> SteemPress
+: Select to ignore all categories but the newly created "Daily Brief" category and save the selection.
+* On command line run;
+```
+   > wp term list category --fields=term_id,name --name="Daily Brief"
+   +---------+-------------+
+   | term_id | name        |
+   +---------+-------------+
+   | 34663   | Daily Brief |
+   +---------+-------------+
+   
+   > wp dailybrief set post_category 34663
+   Updated post_category = 34663
+```
+  
