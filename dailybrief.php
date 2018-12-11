@@ -330,7 +330,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     if ($t) {
                         foreach ($t as $t_tag) {
                             $article_tag = $t_tag->name;
-                            $article_tags[$article_tags] = $article_tag;
+                            $article_tags[$article_tag] = $article_tag;
                         }
                     }
                     // Pick a temporary featured image from the posts in the brief to use if featured_image_url is not set.
