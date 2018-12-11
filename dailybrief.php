@@ -318,6 +318,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
                     // Get article categories for stats
                     $c = get_the_category($id);
+                    $c_cats = array();
                     if ($c) {
                         foreach ($c as $c_cat) {
                             $c_cats[] = strtoupper($c_cat->category_nicename);
@@ -328,6 +329,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
                     // Get the article tags for stats
                     $t = get_the_tags($id);
+                    $t_tags = array();
                     if ($t) {
                         foreach ($t as $t_tag) {
                             $t_tags[] = ($t_tag->name);
