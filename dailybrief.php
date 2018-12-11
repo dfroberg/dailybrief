@@ -320,6 +320,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $c = get_the_category($id);
                     if ($c) {
                         foreach ($c as $c_cat) {
+                            $c_cats[] = strtoupper($c_cat->category_nicename);
                             $article_category = strtoupper($c_cat->category_nicename);
                             $article_categories[$article_category] = $article_category;
                         }
@@ -329,6 +330,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $t = get_the_tags($id);
                     if ($t) {
                         foreach ($t as $t_tag) {
+                            $t_tags[] = ($t_tag->name);
                             $article_tag = $t_tag->name;
                             $article_tags[$article_tag] = $article_tag;
                         }
@@ -339,9 +341,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
                     $article .= ( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">');
                     $article .= ( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$title.'</a></h2>');
-                    $article .= ( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.implode(', ',$c).'</strong>' );
+                    $article .= ( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.implode(', ',$c_cats).'</strong>' );
                     $article .= ( '<p>'.$excerpt.'</p>' );
-                    $article .= ( '<p>Tags: '.implode(', ',$t).'</p>' );
+                    $article .= ( '<p>Tags: '.implode(', ',$t_tags).'</p>' );
                     $article .= ( $this->article_delimiter);
                 }
             $page++;
