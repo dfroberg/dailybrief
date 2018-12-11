@@ -314,18 +314,34 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     if ( in_array( $id, $exclude_posts ) )
                             continue;
                     // Spit out some posts
-                    $c = get_the_category();
-                    $article_category = strtoupper($c[0]->category_nicename);
-                    $article_categories[$article_category] = $article_category;
                     $article_count++;
+
+                    // Get article categories
+                    $c = get_the_category($id);
+                    if ($c) {
+                        foreach ($c as $c_cat) {
+                            $article_category = strtoupper($c_cat->category_nicename);
+                            $article_categories[$article_category] = $article_category;
+                        }
+                    }
+
+                    // Get the article tags
+                    $t = get_the_tags($id);
+                    if ($t) {
+                        foreach ($t as $t_tag) {
+                            $article_tag = $t_tag->name;
+                            $article_tags[$article_tags] = $article_tag;
+                        }
+                    }
                     // Pick a temporary featured image from the posts in the brief to use if featured_image_url is not set.
                     if($this->temp_featured_image_url == '' && $this->featured_image_url == '')
 	                    $this->temp_featured_image_url = get_the_post_thumbnail_url($id, 'full');
 
                     $article .= ( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">');
                     $article .= ( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$title.'</a></h2>');
-                    $article .= ( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.$article_category.'</strong>' );
+                    $article .= ( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.implode(', ',$article_categories).'</strong>' );
                     $article .= ( '<p>'.$excerpt.'</p>' );
+                    $article .= ( '<p>Tags: '.implode(', ',$article_tags).'</p>' );
                     $article .= ( $this->article_delimiter);
                 }
             $page++;
