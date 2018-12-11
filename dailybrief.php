@@ -45,6 +45,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->article_delimiter= $this->get_option_default("article_delimiter",'<hr>');
             $this->article_continue = $this->get_option_default("article_continue",'Continue&nbsp;-&gt;');
             $this->article_stats_txt= $this->get_option_default("article_stats_txt",'<hr>Articles in this brief: ');
+	        $this->article_stats_cats_txt
+		                            = $this->get_option_default("article_stats_txt",'<br>Categories in this brief: ');
             $this->featured_image_url= $this->get_option_default("featured_image_url",'');
 
         }
@@ -70,6 +72,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $this->article_delimiter= $this->get_option_default("article_delimiter",'<hr>');
 	        $this->article_continue = $this->get_option_default("article_continue",'Continue&nbsp;-&gt;');
 	        $this->article_stats_txt= $this->get_option_default("article_stats_txt",'<hr>Articles in this brief: ');
+	        $this->article_stats_cats_txt
+		                            = $this->get_option_default("article_stats_txt",'<br>Categories in this brief: ');
 	        $this->featured_image_url= $this->get_option_default("featured_image_url",'');
         }
 
@@ -115,7 +119,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     'post_name'         =>   $this->slug,
                     'post_title'        =>   $this->post_title,
                     'post_content'      =>   ($this->content_buffer),
-                    'post_status'       =>   $this->post_status,
+                    'post_status'       =>   'draft',
                     'post_type'         =>   $this->post_type,
                     'post_category'     =>   @explode(',', $this->post_category )
                 )
@@ -211,19 +215,6 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
         }
 
-	    /**
-	     * @param $post_ID
-	     * @param $post
-	     * @param $update
-	     */
-	    function dailybrief_trigger_save_post( $post_ID, $post, $update ) {
-		    //* Remove action so it doesn't fire on wp_update_post()
-		    remove_action( 'save_post', 'dailybrief_trigger_save_post', 10 );
-		    $postarr = array( 'ID' => $this->post_id_created, 'post_content' => $this->content_buffer, );
-		    $wpupd_status = wp_update_post( $postarr );
-		    if($this->debuug) WP_CLI::line( '*** wp_update: '.$wpupd_status);
-	    }
-
         /**
          * Create list of posts with dates between before and after dates
          *
@@ -285,13 +276,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $exclude_categories = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' )),@explode(',',$this->always_skip_category));
             // Parse some flags
             $include_stats = WP_CLI\Utils\get_flag_value($assoc_args, 'stats', true );
-            // Output Header
-            if(!empty($this->options['header']))
-                $this->output( $this->options['header'],$buffer );
 
             // Retrieve posts
             $page = 1;
             $article_count = 0;
+            $article = "";
             do {
                 $query = new WP_Query( array(
                     'posts_per_page' => 30,
@@ -326,28 +315,42 @@ if ( defined('WP_CLI') && WP_CLI ) {
                             continue;
                     // Spit out some posts
                     $c = get_the_category();
+                    $article_category = strtoupper($c[0]->category_nicename);
+                    $article_categories[$article_category] = $article_category;
                     $article_count++;
                     // Pick a temporary featured image from the posts in the brief to use if featured_image_url is not set.
                     if($this->temp_featured_image_url == '' && $this->featured_image_url == '')
 	                    $this->temp_featured_image_url = get_the_post_thumbnail_url($id, 'full');
 
-                    $this->output( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">',$buffer);
-                    $this->output( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$title.'</a></h2>',$buffer );
-                    $this->output( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.strtoupper($c[0]->category_nicename).'</strong>',$buffer );
-                    $this->output( '<p>'.$excerpt.'</p>',$buffer );
-                    $this->output( $this->article_delimiter, $buffer);
+                    $article .= ( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">');
+                    $article .= ( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$title.'</a></h2>');
+                    $article .= ( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.$article_category.'</strong>' );
+                    $article .= ( '<p>'.$excerpt.'</p>' );
+                    $article .= ( $this->article_delimiter);
                 }
             $page++;
             } while ( $query->have_posts() );
-
-            // Output Footer
-            if(!empty($this->options['footer']))
-                $this->output( $this->options['footer'],$buffer );
-
-            // Add stats
-            if($include_stats)
-                $this->output( $this->article_stats_txt.' '.$article_count ,$buffer );
             // End of post preparation
+
+	        // Ouputs
+	        // Output Header
+	        if(!empty($this->options['header'])) {
+	        	$header = $this->options['header'];
+		        if($include_stats) {
+			        $stats  = $this->article_stats_txt.' '.$article_count;
+			        if(is_array($article_categories) && count($article_categories) > 0)
+			            $stats .= $this->article_stats_cats_txt.' '.implode(", ",$article_categories);
+			        $header .= $stats;
+		        }
+
+		        $this->output( $header, $buffer );
+	        }
+	        // Output article
+	        $this->output( $article,$buffer );
+
+	        // Output Footer
+	        if(!empty($this->options['footer']))
+		        $this->output( $this->options['footer'],$buffer );
 
             if ($post && $article_count > 0) {
             	// Update the globals to recreate slugs and titles etc if anythign changed via args
@@ -360,8 +363,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	            $this->post_id_created = $this->create_post();
 	            if($this->post_id_created > 0) {
 		            WP_CLI::line( '* Done ' . $this->post_id_created .' - "'.$this->post_title.'" on '.$this->slug);
-		            //* save_post fires *after* the post has been saved to the database
-		            add_action( 'save_post', 'dailybrief_trigger_save_post', 10, 3 );
+		            if($this->post_status == 'publish') {
+			            wp_publish_post( $this->post_id_created );
+		            }
 	            } else {
 		            WP_CLI::error( '*** Error - could not create the post...');
 	            }
