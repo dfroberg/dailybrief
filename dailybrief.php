@@ -150,7 +150,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          *
          * ## EXAMPLES
          *
-         *      wp dailybrief set header '<h1>This is the header.</h1>'
+         *      wp dailybrief set header '<h1>This is the header, this summary contains {article_count} articles about {article_categories}.</h1>'
          *      wp dailybrief set footer '<h1>This is the footer.</h1>'
          *      wp dailybrief set post_title 'The Your Site Daily Brief'
          *      wp dailybrief set post_status 'draft'
@@ -337,9 +337,20 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        if(!empty($this->options['header'])) {
 	        	$header = $this->options['header'];
 		        if($include_stats) {
-			        $stats  = $this->article_stats_txt.' '.$article_count;
-			        if(is_array($article_categories) && count($article_categories) > 0)
-			            $stats .= $this->article_stats_cats_txt.' '.implode(", ",$article_categories);
+		            if(stristr($header,'{article_count}')) {
+                        $header = str_replace('{article_count}', $article_count, $header);
+                    } else {
+                        $stats = $this->article_stats_txt . ' ' . $article_count;
+                    }
+
+			        if(is_array($article_categories) && count($article_categories) > 0) {
+                        if(stristr($header,'{article_categories}')) {
+                            $header = str_replace('{article_categories}', implode(", ",$article_categories), $header);
+                        } else {
+                            $stats .= $this->article_stats_cats_txt.' '.implode(", ",$article_categories);
+                        }
+                    }
+
 			        $header .= $stats;
 		        }
 
@@ -353,7 +364,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 		        $this->output( $this->options['footer'],$buffer );
 
             if ($post && $article_count > 0) {
-            	// Update the globals to recreate slugs and titles etc if anythign changed via args
+            	// Update the globals to recreate slugs and titles etc if anything changed via args
 	            $this->update_globals();
                 // Ok create the post
                 WP_CLI::line( '* Creating post with '.$article_count.' articles.' );
