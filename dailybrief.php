@@ -316,7 +316,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     // Spit out some posts
                     $article_count++;
 
-                    // Get article categories
+                    // Get article categories for stats
                     $c = get_the_category($id);
                     if ($c) {
                         foreach ($c as $c_cat) {
@@ -325,7 +325,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                         }
                     }
 
-                    // Get the article tags
+                    // Get the article tags for stats
                     $t = get_the_tags($id);
                     if ($t) {
                         foreach ($t as $t_tag) {
@@ -339,9 +339,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
                     $article .= ( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">');
                     $article .= ( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$title.'</a></h2>');
-                    $article .= ( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.implode(', ',$article_categories).'</strong>' );
+                    $article .= ( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.implode(', ',$c).'</strong>' );
                     $article .= ( '<p>'.$excerpt.'</p>' );
-                    $article .= ( '<p>Tags: '.implode(', ',$article_tags).'</p>' );
+                    $article .= ( '<p>Tags: '.implode(', ',$t).'</p>' );
                     $article .= ( $this->article_delimiter);
                 }
             $page++;
