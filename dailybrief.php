@@ -35,6 +35,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
             $this->author_id        = $this->get_option_default("author_id",1);
             $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
+            $this->post_tags        = $this->get_option_default("post_tags",''); // life,blog,news
             $this->always_skip_category
                                     = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
             $this->slug             = $this->get_option_default("slug","the-daily-brief").'-'.$this->date_suffix;
@@ -62,6 +63,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
 	        $this->author_id        = $this->get_option_default("author_id",1);
 	        $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
+            $this->post_tags        = $this->get_option_default("post_tags",''); // life,blog,news
 	        $this->always_skip_category
 		                            = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
 	        $this->slug             = $this->get_option_default("slug","the-daily-brief").'-'.$this->date_suffix;
@@ -154,6 +156,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          *      wp dailybrief set footer '<h1>This is the footer.</h1>'
          *      wp dailybrief set post_title 'The Your Site Daily Brief'
          *      wp dailybrief set post_status 'draft'
+         *      wp dailybrief set post_tags 'news-blog,life'
          *
          * @param $args
          * @param $assoc_args
@@ -258,6 +261,10 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $status = array( 'publish' );
             $types = array( 'post' );
             $buffer = false ;
+
+            // Unfurl tags if any
+            if(strlen($this->post_tags) > 0)
+                $this->post_tags = explode(',',$this->post_tags);
 
 			// Parse some flags
 	        $post = WP_CLI\Utils\get_flag_value($assoc_args, 'post', false );
@@ -393,8 +400,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 // Call create_post here
 	            $this->post_id_created = $this->create_post();
 	            if($this->post_id_created > 0) {
-		            WP_CLI::line( '* Done ' . $this->post_id_created .' - "'.$this->post_title.'" on '.$this->slug);
+		            WP_CLI::line( '* Created ' . $this->post_id_created .' - "'.$this->post_title.'" on '.$this->slug);
 		            if($this->post_status == 'publish') {
+		                // Append Tags if any set
+                        if(is_array($this->post_tags) && count($this->post_tags) > 0)
+                            wp_set_post_tags( $this->post_id_created, $this->post_tags, true );
 		                // WIP: This is a test
                         $value = get_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true);
                         if ($value == "0") {

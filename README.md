@@ -35,6 +35,7 @@ All static configuration is done from the WP_CLI command line using *wp dailybri
 | post_title    | string     | "The Daily Brief" | A date 2018-11-15 will be suffixed to this|
 | author_id     | numeric    | 1                 | User ID that will be the author           |
 | post_category | list       | 1                 | Category ID(s) to post to single or comma separated |
+| post_tags     | list       | ""                | Tags to add i.e. news,life,blog will create tags if nonexistent          |
 | always_skip_category | list | post_category | Always skips the brief category |
 | slug | string | "the-daily-brief" | A date 2018-11-15 will be suffixed to this |
 | comment_status | string | "open" | open or closed for comments |
