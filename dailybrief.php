@@ -47,8 +47,10 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->article_continue = $this->get_option_default("article_continue",'Continue&nbsp;-&gt;');
             $this->article_stats_txt= $this->get_option_default("article_stats_txt",'<hr>Articles in this brief: ');
 	        $this->article_stats_cats_txt
-		                            = $this->get_option_default("article_stats_txt",'<br>Categories in this brief: ');
-            $this->featured_image_url= $this->get_option_default("featured_image_url",'');
+		                            = $this->get_option_default("article_stats_cats_txt",'<br>Categories in this brief: ');
+            $this->article_stats_tags_txt
+                                    = $this->get_option_default("article_stats_tags_txt",'<br>Tags in this brief: ');
+	        $this->featured_image_url= $this->get_option_default("featured_image_url",'');
 
         }
 
@@ -74,8 +76,10 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $this->article_delimiter= $this->get_option_default("article_delimiter",'<hr>');
 	        $this->article_continue = $this->get_option_default("article_continue",'Continue&nbsp;-&gt;');
 	        $this->article_stats_txt= $this->get_option_default("article_stats_txt",'<hr>Articles in this brief: ');
-	        $this->article_stats_cats_txt
-		                            = $this->get_option_default("article_stats_txt",'<br>Categories in this brief: ');
+            $this->article_stats_cats_txt
+                                    = $this->get_option_default("article_stats_cats_txt",'<br>Categories in this brief: ');
+            $this->article_stats_tags_txt
+                                    = $this->get_option_default("article_stats_tags_txt",'<br>Tags in this brief: ');
 	        $this->featured_image_url= $this->get_option_default("featured_image_url",'');
         }
 
@@ -206,8 +210,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 $days = "today";
             $today = strtotime($days);
             $tomorrow = strtotime("+1 day",$today);
-            $today = date('Y-m-d',$today);
-            $tomorrow = date('Y-m-d',$tomorrow);
+            $today = date('Y-m-d H:m:s',$today);
+            $tomorrow = date('Y-m-d H:m:s',$tomorrow);
 	        $this->date_suffix = $today; // used for post-title & slug suffix, contains the date it relates to.
 
             $this->output( 'Today: '.$today);
@@ -378,6 +382,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
                         }
                     }
 
+                    if(is_array($article_tags) && count($article_tags) > 0) {
+                        if(stristr($header,'{article_tags}')) {
+                            $header = str_replace('{article_tags}', implode(", ",$article_tags), $header);
+                        } else {
+                            $stats .= $this->article_stats_tags_txt.' '.implode(", ",$article_tags);
+                        }
+                    }
 			        $header .= $stats;
 		        }
 

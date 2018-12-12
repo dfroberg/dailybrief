@@ -60,6 +60,13 @@ All static configuration is done from the WP_CLI command line using *wp dailybri
 : Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
 default: today
 
+## Formating headers and footers
+There are a few keywords that you can use in your header;
+
+So for example if you set your header to `wp dailybrief set header 'This is a summary of {article_count} article(s) about {article_categories} containing {article_tags}'` it will be included in your post as `'This is a summary of 5 article(s) about Holliday, Photos containing life,blog,news`
+
+You can use HTML to format the header and footer.
+
 ## Running
 
 `wp dailybrief brief --days='-1 day' --post --no-use-excerpts`
