@@ -395,6 +395,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	            if($this->post_id_created > 0) {
 		            WP_CLI::line( '* Done ' . $this->post_id_created .' - "'.$this->post_title.'" on '.$this->slug);
 		            if($this->post_status == 'publish') {
+		                // WIP: This is a test
+                        $value = get_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true);
+                        if ($value == "0") {
+                            update_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true);
+                        }
 			            wp_publish_post( $this->post_id_created );
 		            }
 	            } else {
