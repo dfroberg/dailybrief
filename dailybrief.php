@@ -91,10 +91,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
          */
         private function output( $output, $buffer = false ) {
             if($buffer == false) {
-                WP_CLI::line($output);
+                WP_CLI::log($output);
             } else {
                 $this->content_buffer .= $output;
-	            if($this->debug) WP_CLI::line('+ Added '.strlen($output).' bytes, buffer is now '.strlen( $this->content_buffer.' bytes'));
             }
         }
 
@@ -177,14 +176,14 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 $this->options[$option_name] = $option_value;
                 // The option already exists, so we just update it.
                 update_option( 'dailybrief_options', $this->options );
-                WP_CLI::line( 'Updated '.$option_name.' = '.$option_value );
+                WP_CLI::log( 'Updated '.$option_name.' = '.$option_value );
             } else {
                 // The option hasn't been added yet. We'll add it with $autoload set to 'no'.
                 $deprecated = null;
                 $autoload = 'no';
                 $this->options[$option_name] = $option_value;
                 add_option( 'dailybrief_options', $this->options, $deprecated, $autoload );
-                WP_CLI::line( 'Added '.$option_name.' = '.$option_value );
+                WP_CLI::log( 'Added '.$option_name.' = '.$option_value );
             }
 
 
@@ -204,7 +203,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * @param $assoc_args
          */
         public function test( $args, $assoc_args ) {
-            $this->output( '=== Testing ===' );
+
+            WP_CLI::log( '=== Testing ===' );
             $days = $assoc_args['days'];
             if(is_null($days))
                 $days = "today";
@@ -214,11 +214,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $tomorrow = date('Y-m-d H:m:s',$tomorrow);
 	        $this->date_suffix = $today; // used for post-title & slug suffix, contains the date it relates to.
 
-            $this->output( 'Today: '.$today);
-            $this->output( 'Tomorrow: '. $tomorrow);
-			$this->output( 'Day is set to :'. $this->date_suffix);
+            WP_CLI::log( 'Today: '.$today);
+            WP_CLI::log( 'Tomorrow: '. $tomorrow);
+            WP_CLI::log( 'Day is set to :'. $this->date_suffix);
 
-            $this->output( print_r($this->options,true) );
+            WP_CLI::log( print_r($this->options,true) );
 
         }
 
@@ -275,7 +275,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        if ($post) {
 	            // Ok prepare the post
                 $buffer = true;
-                WP_CLI::line( '* Preparing post for '.$today );
+                WP_CLI::log( '* Preparing post for '.$today );
             }
 	        // Use excerpts or not
             $use_excerpts = WP_CLI\Utils\get_flag_value($assoc_args, 'use-excerpts', true );
@@ -358,6 +358,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $article .= ( '<p>'.$excerpt.'</p>' );
                     $article .= ( '<p>Tags: '.implode(', ',$t_tags).'</p>' );
                     $article .= ( $this->article_delimiter);
+                    WP_CLI::log( '+ Added: '.$title );
                 }
             $page++;
             } while ( $query->have_posts() );
