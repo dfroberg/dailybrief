@@ -287,7 +287,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $exclude_categories = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' )),@explode(',',$this->always_skip_category));
             // Parse some flags
             $include_stats = WP_CLI\Utils\get_flag_value($assoc_args, 'stats', true );
-
+            $do_publish = WP_CLI\Utils\get_flag_value($assoc_args, 'publish', false );
             // Retrieve posts
             $page = 1;
             $article_count = 0;
@@ -405,33 +405,42 @@ if ( defined('WP_CLI') && WP_CLI ) {
             	// Update the globals to recreate slugs and titles etc if anything changed via args
 	            $this->update_globals();
                 // Ok create the post
-                WP_CLI::line( '* Creating post with '.$article_count.' articles.' );
+                WP_CLI::log( '* Creating post with '.$article_count.' articles.' );
                 // Do some sanity checks
 
                 // Call create_post here
-	            $this->post_id_created = $this->create_post();
-	            if($this->post_id_created > 0) {
-		            WP_CLI::line( '* Created ' . $this->post_id_created .' - "'.$this->post_title.'" on '.$this->slug);
-		            if($this->post_status == 'publish') {
-		                // Append Tags if any set
-                        if(is_array($this->post_tags) && count($this->post_tags) > 0)
-                            wp_set_post_tags( $this->post_id_created, $this->post_tags, true );
-		                // WIP: This is a test
-                        $value = get_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true);
-                        if ($value == "0") {
-                            update_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true);
+	            $wp_insert_post_restult = $this->create_post();
+	            if($wp_insert_post_restult > 0) {
+                    $this->post_id_created = $wp_insert_post_restult;
+		            WP_CLI::log( '* Created ' . $this->post_id_created .' - "'.$this->post_title.'" on '.$this->slug);
+                    // Append Tags if any set
+                    if(is_array($this->post_tags) && count($this->post_tags) > 0)
+                        $settags = wp_set_post_tags( $this->post_id_created, $this->post_tags, true );
+                    if(!is_wp_error($settags)) {
+                        WP_CLI::log( '* Set tags ' );
+                    } else {
+                        WP_CLI::error( "*** Error - could not set the tags...\n".$settags->get_error_message() );
+                    }
+                    // WIP: This is a test
+                    $value = get_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true);
+                    if ($value == "0") {
+                        if(update_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true)) {
+                            WP_CLI::log( '* Updated SeemPress meta' );
+                        } else {
+                            WP_CLI::log( '- Could not SeemPress meta' );
                         }
+                    }
+                    // Force the use of a --publish flag
+		            if($do_publish) {
 			            wp_publish_post( $this->post_id_created );
+                        WP_CLI::log( '* Transitioning to Publish state ' );
 		            }
 	            } else {
-		            WP_CLI::error( '*** Error - could not create the post...');
+		            WP_CLI::error( "*** Error - could not create the post...\n". $wp_insert_post_restult->get_error_message());
 	            }
             }
         }
-
     }
-
-
 
     // Finally add the command to WP_CLI
     WP_CLI::add_command( 'dailybrief', 'DailyBrief_CLI_Command' );

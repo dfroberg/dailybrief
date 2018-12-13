@@ -40,7 +40,7 @@ All static configuration is done from the WP_CLI command line using *wp dailybri
 | slug | string | "the-daily-brief" | A date 2018-11-15 will be suffixed to this |
 | comment_status | string | "open" | open or closed for comments |
 | ping_status | string | "closed" | open or closed for pings | 
-| post_status | string | "publish" | Set to "draft" to only create post but not publish |
+| post_status | string | "draft" | Is set to "draft" to only create post but not publish, quick override available with --publish flag |
 | post_type   | string | "post" | Only "post" is supported and tested |
 | article_delimiter | string | "&lt;hr&gt;" | Delimited between summarized articles |
 | article_continue | string | "Continue&nbsp;-&gt;" | Read more text after excerpt |
