@@ -379,7 +379,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                         if(stristr($header,'{article_categories}')) {
                             $header = str_replace('{article_categories}', implode(", ",$article_categories), $header);
                         } else {
-                            $stats .= $this->article_stats_cats_txt.' '.implode(", ",$article_categories);
+                            @$stats .= $this->article_stats_cats_txt.' '.implode(", ",$article_categories);
                         }
                     }
 
@@ -387,7 +387,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                         if(stristr($header,'{article_tags}')) {
                             $header = str_replace('{article_tags}', implode(", ",$article_tags), $header);
                         } else {
-                            $stats .= $this->article_stats_tags_txt.' '.implode(", ",$article_tags);
+                            @$stats .= $this->article_stats_tags_txt.' '.implode(", ",$article_tags);
                         }
                     }
 			        $header .= $stats;
