@@ -253,13 +253,22 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * ---
          * default: today
          * ---
+         * ### Examples:
+         *  To dump an preview to the console;
+         *    wp dailybrief create --days="-1 day" --no-use-excerpts
+         *
+         *  To produce a draft post;
+         *    wp dailybrief create --days="2018-10-15" --use-excerpts --post
+         *
+         *  To create and publish a post;
+         *    wp dailybrief create --days="today" --post --publish
          *
          * @param 	$args
          * @param 	$assoc_args --skip-posts 	    Skip including specific posts 1,2,3,4
          * @param 	$assoc_args --skip-categories	Skip including specific categories
          * @param 	$assoc_args --days 	            Include posts from '-1 days' etc default is 'today'
          */
-        public function brief( $args, $assoc_args ) {
+        public function create( $args, $assoc_args ) {
             global $wpdb;
             $days = $assoc_args['days'];
             if(is_null($days))

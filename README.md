@@ -70,10 +70,42 @@ So for example if you set your header to `wp dailybrief set header 'This is a su
 You can use HTML to format the header and footer.
 
 ## Running
+Create list of posts with dates between before and after dates
 
-`wp dailybrief brief --days='-1 day' --post --no-use-excerpts`
+#### OPTIONS:
+
+[--post]
+: Create the post in Wordpress
+* default: false
+
+[--use-excerpts]
+: Do you want to use the excepts of the summarized Wordpress posts
+* default: true
+
+[--publish]
+: Set the post_status to 'Publish' Wordpress posts
+* default: false
+
+[--days=<days>]
+: Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
+* default: today
+
+### Examples:
+To dump an preview to the console;
+
+`wp dailybrief create --days="-1 day" --no-use-excerpts`
+
+To produce a draft post;
+
+`wp dailybrief create --days="2018-10-15" --use-excerpts --post`
+
+To create and publish a post;
+
+`wp dailybrief create --days="today" --post --publish`  
 
 Will generate one post with summaries of all articles from the day before using the body to create the excerpt.
+
+`wp dailybrief brief --days='-1 day' --post --publish --no-use-excerpts`
  
 # Combining with SteemPress
 Although the dailybrief command can be used with any type of social media or newsletter plugin to distribute your Daily Brief it was written and intended to be use as a companion application to SteemPress, to enable high frequency Wordpress authors not to be hammered by numerous spambots and "holier than thau" self professed "I AM THE COMMUNITY!!!" steem cops and simply post ONE (or max 4) briefs per day.   
