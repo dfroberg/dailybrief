@@ -54,6 +54,7 @@ That is it, the bare minimum is done. You probably want to personalize it more s
     wp dailybrief set header '<h2>This is the header</h1>This summary contains {article_count} articles about {article_categories} and {article_tags}.</h1>'
     wp dailybrief set footer '<p>This is the footer.</p>'
     wp dailybrief set post_title 'The Your Site Daily Brief'
+    wp dailybrief set post_tags 'news-blog,life'
 
 ### Options available:
 

@@ -165,7 +165,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          *      wp dailybrief set footer '<h1>This is the footer.</h1>'
          *      wp dailybrief set post_title 'The Your Site Daily Brief'
          *      wp dailybrief set post_status 'draft'
-         *      wp dailybrief set post_tags 'news-blog,life'
+         *      wp dailybrief set post_tags 'news-blog,life,photography'
          *
          * @param $args
          * @param $assoc_args
