@@ -30,6 +30,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
             $this->options          = get_option( 'dailybrief_options', array());
             $this->debug            = $this->get_option_default("debug",0); // 1 for on
+            $this->include_toc      = $this->get_option_default("include_toc",1); // 1 for on / 0 for off
             $this->url_suffix       = $this->get_option_default("url_suffix",''); // set '?campaign=steempress&utm=dailybrief'
             $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
             $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
@@ -60,6 +61,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
         private function update_globals() {
 	        $this->options          = get_option( 'dailybrief_options', array());
 	        $this->debug            = $this->get_option_default("debug",0); // 1 for on
+            $this->include_toc      = $this->get_option_default("include_toc",1); // 1 for on / 0 for off
 	        $this->url_suffix       = $this->get_option_default("url_suffix",''); // set '?campaign=steempress&utm=dailybrief'
 	        $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
 	        $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
@@ -298,6 +300,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $page = 1;
             $article_count = 0;
             $article = "";
+            $toc_items = '';
             do {
                 $query = new WP_Query( array(
                     'posts_per_page' => 30,
@@ -358,8 +361,12 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     if($this->temp_featured_image_url == '' && $this->featured_image_url == '')
 	                    $this->temp_featured_image_url = get_the_post_thumbnail_url($id, 'full');
 
-                    $article .= ( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">');
-                    $article .= ( '<h2 id="'.$id.'"><a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$title.'</a></h2>');
+                    // Compile a TOC
+                    if($this->include_toc == 1)
+                        $toc_items .= '<li><a href="'.$id.'">'.$title.'</a></li>';
+
+                    $article .= ( '<a id="'.$id.'"></a><img src="'.get_the_post_thumbnail_url($id, 'full').'">');
+                    $article .= ( '<h2><a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$title.'</a></h2>');
                     $article .= ( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.implode(', ',$c_cats).'</strong>' );
                     $article .= ( '<p>'.$excerpt.'</p>' );
                     $article .= ( '<p>Tags: '.implode(', ',$t_tags).'</p>' );
@@ -401,6 +408,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
 		        $this->output( $header, $buffer );
 	        }
+	        // Output optional TOC
+            if($this->include_toc == 1) {
+                $this->output( '<hr><p><h3>Table of Contents</h3><ul>',$buffer );
+                $this->output( $toc_items, $buffer );
+                $this->output( '</ul></p><hr>',$buffer );
+            }
+
 	        // Output article
 	        $this->output( $article,$buffer );
 
