@@ -421,12 +421,15 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $this->post_id_created = $wp_insert_post_restult;
 		            WP_CLI::log( '* Created ' . $this->post_id_created .' - "'.$this->post_title.'" on '.$this->slug);
                     // Append Tags if any set
-                    if(is_array($this->post_tags) && count($this->post_tags) > 0)
-                        $settags = wp_set_post_tags( $this->post_id_created, $this->post_tags, true );
-                    if(!is_wp_error($settags)) {
-                        WP_CLI::log( '* Set tags ' );
+                    if(is_array($this->post_tags) && count($this->post_tags) > 0) {
+                        $settags = wp_set_post_tags($this->post_id_created, $this->post_tags, false);
+                        if (!is_wp_error($settags)) {
+                            WP_CLI::log('* Set tags ' . @implode(', ', $this->post_tags));
+                        } else {
+                            WP_CLI::error("*** Error - could not set the tags...\n" . $settags->get_error_message());
+                        }
                     } else {
-                        WP_CLI::error( "*** Error - could not set the tags...\n".$settags->get_error_message() );
+                        WP_CLI::warning('! No tags to set. (This will cause issues if you have no default tags in SteemPress set)');
                     }
                     // WIP: This is a test
                     $value = get_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true);
@@ -436,6 +439,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
                         } else {
                             WP_CLI::log( '- Could not update SeemPress meta' );
                         }
+                    } else {
+                        WP_CLI::log( '? Got already set SeemPress meta '.$value );
                     }
                     // Force the use of a --publish flag
 		            if($do_publish) {
