@@ -271,7 +271,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
         public function create( $args, $assoc_args ) {
             global $wpdb;
             $days = $assoc_args['days'];
-            if(is_null($days))
+            if(is_null($days) || $days == '')
                 $days = "today";
             $today = strtotime($days);
             $tomorrow = strtotime("+1 day",$today);
