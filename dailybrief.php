@@ -365,7 +365,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     if($this->include_toc == 1)
                         $toc_items .= '<li><a href="#'.$id.'">'.$title.'</a></li>';
 
-                    $article .= ( '<a id="'.$id.'"></a><img src="'.get_the_post_thumbnail_url($id, 'full').'">');
+                    $article .= ( '<a id="'.$id.'" name="'.$id.'></a><img src="'.get_the_post_thumbnail_url($id, 'full').'">');
                     $article .= ( '<h2><a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$title.'</a></h2>');
                     $article .= ( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.implode(', ',$c_cats).'</strong>' );
                     $article .= ( '<p>'.$excerpt.'</p>' );
