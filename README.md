@@ -18,7 +18,7 @@ The dailybrief command is intended to be run as a CRON task.
 
 ## Configuration:
 All static configuration is done from the WP_CLI command line using *wp dailybrief set &lt;option&gt; &lt;value&gt;*
-### Examples:
+### Basic:
 Configure the post author id;
 
 First find the user ID you wish to post as;
@@ -49,17 +49,15 @@ Then use the dailybrief set command again to set it.
    > wp dailybrief set post_category 34000
    Updated post_category = 34663
 ```
+That is it, the bare minimum is done. You probably want to personalize it more so here are some more examples for you. Check out the options table and play with the options until you find a combination that suits you. (Just avoid posting to steem as that messes up your account and sends some people into a frenzy)
 
-Some more examples;
-
-    wp dailybrief set header '<h1>This is the header, this summary contains {article_count} articles about {article_categories}.</h1>'
-    wp dailybrief set footer '<h1>This is the footer.</h1>'
+    wp dailybrief set header '<h2>This is the header</h1>This summary contains {article_count} articles about {article_categories} and {article_tags}.</h1>'
+    wp dailybrief set footer '<p>This is the footer.</p>'
     wp dailybrief set post_title 'The Your Site Daily Brief'
-    wp dailybrief set post_status 'draft'
 
 ### Options available:
 
-| Option        | Value type | Default Value     | Example - Description                     |
+|: Option        | Value type | Default Value     | Example - Description                     |
 |:--------------|:-----------|:------------------|:------------------------------------------|
 | debug         | numeric    | 1                 | 1 = on / 0 = Off                          |
 | include_toc   | numeric    | 1                 | 1 = on / 0 = Off - Include a table of contents |
