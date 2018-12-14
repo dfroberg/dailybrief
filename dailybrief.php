@@ -363,7 +363,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
                     // Compile a TOC
                     if($this->include_toc == 1)
-                        $toc_items .= '<li><a href="'.$id.'">'.$title.'</a></li>';
+                        $toc_items .= '<li><a href="#'.$id.'">'.$title.'</a></li>';
 
                     $article .= ( '<a id="'.$id.'"></a><img src="'.get_the_post_thumbnail_url($id, 'full').'">');
                     $article .= ( '<h2><a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$title.'</a></h2>');
