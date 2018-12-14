@@ -378,6 +378,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             // End of post preparation
 
 	        // Ouputs
+            WP_CLI::log( "--- BEGIN POST ----");
 	        // Output Header
 	        if(!empty($this->options['header'])) {
 	        	$header = $this->options['header'];
@@ -422,6 +423,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        if(!empty($this->options['footer']))
 		        $this->output( $this->options['footer'],$buffer );
 
+            WP_CLI::log( "--- END POST ----");
+
+	        // Create WP Post
             if ($post && $article_count > 0) {
             	// Update the globals to recreate slugs and titles etc if anything changed via args
 	            $this->update_globals();
