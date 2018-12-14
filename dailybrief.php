@@ -31,6 +31,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->options          = get_option( 'dailybrief_options', array());
             $this->debug            = $this->get_option_default("debug",0); // 1 for on
             $this->include_toc      = $this->get_option_default("include_toc",1); // 1 for on / 0 for off
+            $this->include_toc_localhrefs
+                                    = $this->get_option_default("include_toc_localhrefs",1); // 1 for on / 0 for off
             $this->url_suffix       = $this->get_option_default("url_suffix",''); // set '?campaign=steempress&utm=dailybrief'
             $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
             $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
@@ -62,6 +64,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $this->options          = get_option( 'dailybrief_options', array());
 	        $this->debug            = $this->get_option_default("debug",0); // 1 for on
             $this->include_toc      = $this->get_option_default("include_toc",1); // 1 for on / 0 for off
+            $this->include_toc_localhrefs
+                                    = $this->get_option_default("include_toc_localhrefs",1); // 1 for on / 0 for off
 	        $this->url_suffix       = $this->get_option_default("url_suffix",''); // set '?campaign=steempress&utm=dailybrief'
 	        $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
 	        $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
@@ -362,10 +366,16 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	                    $this->temp_featured_image_url = get_the_post_thumbnail_url($id, 'full');
 
                     // Compile a TOC
-                    if($this->include_toc == 1)
-                        $toc_items .= '<li><a href="#author_permlink'.$id.'">'.$title.'</a></li>';
+                    if($this->include_toc == 1) {
+                        $toc_items .= '<li>';
+                        if ($this->include_toc_localhrefs == 1)
+                            $toc_items .= '<a href="#author_permlink' . $id . '">';
+                        $toc_items .= $title . '</a></li>';
+                    }
 
-                    $article .= ( '<a id="author_permlink'.$id.'" name="author_permlink'.$id.'"></a><img src="'.get_the_post_thumbnail_url($id, 'full').'">');
+                    if($this->include_toc_localhrefs == 1)
+                        $article .= ( '<a id="author_permlink'.$id.'" name="author_permlink'.$id.'"></a>');
+                    $article .= ( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">');
                     $article .= ( '<h2><a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$title.'</a></h2>');
                     $article .= ( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.implode(', ',$c_cats).'</strong>' );
                     $article .= ( '<p>'.$excerpt.'</p>' );

@@ -31,6 +31,7 @@ All static configuration is done from the WP_CLI command line using *wp dailybri
 |:--------------|:-----------|:------------------|:------------------------------------------|
 | debug         | numeric    | 1                 | 1 = on / 0 = Off                          |
 | include_toc   | numeric    | 1                 | 1 = on / 0 = Off - Include a table of contents |
+| include_toc_localhrefs | numeric    | 1                 | 1 = on / 0 = Off - Include TOC local links (steemit bug) |
 | url_suffix    | string     | ""                | "?campaign=steempress&amp;utm=dailybrief" |
 | excerpt_words | numeric    | 100               | Numer of words in excerpt                 |
 | post_title    | string     | "The Daily Brief" | A date 2018-11-15 will be suffixed to this|
