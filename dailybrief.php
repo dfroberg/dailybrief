@@ -270,9 +270,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          */
         public function create( $args, $assoc_args ) {
             global $wpdb;
-            $days = $assoc_args['days'];
-            if(is_null($days) || $days == '')
-                $days = "today";
+	        $days = WP_CLI\Utils\get_flag_value($assoc_args, 'days', 'today' );
             $today = strtotime($days);
             $tomorrow = strtotime("+1 day",$today);
             $today = date('Y-m-d',$today);
