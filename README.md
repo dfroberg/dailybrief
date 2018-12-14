@@ -19,6 +19,38 @@ The dailybrief command is intended to be run as a CRON task.
 ## Configuration:
 All static configuration is done from the WP_CLI command line using *wp dailybrief set &lt;option&gt; &lt;value&gt;*
 ### Examples:
+Configure the post author id;
+
+First find the user ID you wish to post as;
+````
+> wp user list --fields="ID,display_name"
++----+----------------------+
+| ID | display_name         |
++----+----------------------+
+| 1  | Your Displayname     |
++----+----------------------+
+````
+Then use the dailybrief set command to set it.
+````
+> wp dailybrief set author_id 1
+Updated author_id = 1
+````
+Find the category you want to post to;
+```
+   > wp term list category --fields=term_id,name --name="Your Category"
+   +---------+---------------+
+   | term_id | name          |
+   +---------+---------------+
+   | 34000   | Your Category |
+   +---------+---------------+
+```
+Then use the dailybrief set command again to set it.
+```   
+   > wp dailybrief set post_category 34000
+   Updated post_category = 34663
+```
+
+Some more examples;
 
     wp dailybrief set header '<h1>This is the header, this summary contains {article_count} articles about {article_categories}.</h1>'
     wp dailybrief set footer '<h1>This is the footer.</h1>'
