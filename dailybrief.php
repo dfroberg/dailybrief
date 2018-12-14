@@ -236,6 +236,12 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * default: true
          * ---
          *
+         * [--publish]
+         * : Set the post_status to 'Publish' Wordpress posts
+         * ---
+         * default: false
+         * ---
+         *
          * [--days=<days>]
          * : Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
          * ---
@@ -428,7 +434,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                         if(update_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true)) {
                             WP_CLI::log( '* Updated SeemPress meta' );
                         } else {
-                            WP_CLI::log( '- Could not SeemPress meta' );
+                            WP_CLI::log( '- Could not update SeemPress meta' );
                         }
                     }
                     // Force the use of a --publish flag
