@@ -246,13 +246,14 @@ if ( defined('WP_CLI') && WP_CLI ) {
 			        ),
 			        'category__not_in' => $exclude_categories ,
 		        ) );
-		        WP_CLI::log( 'Count: '.$query->post_count);
+		        WP_CLI::log( 'Count: '.$query->post_count .' Pages: '.$query->max_num_pages);
 
 		        $article_count = 0;
 		        while ( $query->have_posts() ) {
 			        $query->the_post();
 			        $id = get_the_ID();
 			        $article_count++;
+
 			        $title = $query->post->post_title;
 			        $date = $query->post->post_date;
 			        WP_CLI::log( $article_count.'/'.$page.' - '.$date.' - '.$title.'');
