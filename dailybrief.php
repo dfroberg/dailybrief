@@ -507,7 +507,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                             WP_CLI::error("*** Error - could not set the tags...\n" . $settags->get_error_message());
                         }
                     } else {
-                        WP_CLI::warning('! No tags to set. (This will cause issues if you have no default tags in SteemPress set)');
+                        WP_CLI::warning('! No tags to set. (This will cause issues if you have no default tags in SteemPress set) '. @implode(', ', $this->post_tags));
                     }
                     // WIP: This is a test
                     $value = get_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true);
