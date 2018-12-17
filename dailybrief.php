@@ -233,8 +233,6 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
 	        WP_CLI::log( '--- EX QUERY --- ');
 			$page = 1;
-	        $before_date = $today;
-	        $after_date = $today;
 
 	        $failed_posts = array();
             $exclude_categories = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' )),@explode(',',$this->always_skip_category));
