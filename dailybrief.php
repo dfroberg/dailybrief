@@ -41,6 +41,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->post_tags        = $this->get_option_default("post_tags",''); // life,blog,news
             $this->always_skip_category
                                     = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
+            $this->always_skip_tags = $this->get_option_default("always_skip_tag",0);
             $this->slug             = $this->get_option_default("slug","the-daily-brief").'-'.$this->date_suffix;
             $this->comment_status   = $this->get_option_default("comment_status",'open');
             $this->ping_status      = $this->get_option_default("ping_status",'closed');
@@ -74,7 +75,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->post_tags        = $this->get_option_default("post_tags",''); // life,blog,news
 	        $this->always_skip_category
 		                            = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
-	        $this->slug             = $this->get_option_default("slug","the-daily-brief").'-'.$this->date_suffix;
+            $this->always_skip_tags = $this->get_option_default("always_skip_tag",0);
+            $this->slug             = $this->get_option_default("slug","the-daily-brief").'-'.$this->date_suffix;
 	        $this->comment_status   = $this->get_option_default("comment_status",'open');
 	        $this->ping_status      = $this->get_option_default("ping_status",'closed');
 	        $this->post_status      = $this->get_option_default("post_status",'publish');
@@ -231,9 +233,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
 			$page = 1;
 	        $before_date = $today;
 	        $after_date = $today;
-	        $exclude_posts = array();
+
 	        $failed_posts = array();
-	        $exclude_categories = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' )),@explode(',',$this->always_skip_category));
+            $exclude_categories = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' )),@explode(',',$this->always_skip_category));
+	        $exclude_tags = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-tags', '' )),@explode(',',$this->always_skip_tags));
+            $exclude_posts = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', '' ));
 	        $status = array( 'publish' );
 	        $types = array( 'post' );
 	        do {
@@ -251,8 +255,10 @@ if ( defined('WP_CLI') && WP_CLI ) {
 					        'inclusive' => true,
 				        ),
 			        ),
+			        'tag__not_in' => $exclude_tags ,
 			        'category__not_in' => $exclude_categories ,
-		        ) );
+                    'post__not_in'  => $exclude_posts ,
+                ) );
 		        WP_CLI::log( 'Count: '.$query->post_count .' Pages: '.$query->max_num_pages);
 
 		        $article_count = 0;
@@ -429,6 +435,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $article .= ( $this->article_delimiter);
                     WP_CLI::log( '+ Added: '.$title );
                 }
+
+                // Append to slug with page number
+                // Describe time range in title and header / footer macro
+                // Generate separate posts if number of articles exceeds posts_per_page
+
             $page++;
             } while ( $query->have_posts() );
             // End of post preparation
