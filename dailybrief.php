@@ -208,11 +208,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $days = WP_CLI\Utils\get_flag_value($assoc_args, 'days', 'today' );
 	        $split = WP_CLI\Utils\get_flag_value($assoc_args, 'split', 3 );
 
-            $today = strtotime($days);
-            $tomorrow = strtotime("+1 day",$today);
-            $today = date('Y-m-d H:m:s',$today);
-            $tomorrow = date('Y-m-d H:m:s',$tomorrow);
+	        $today = strtotime($days);
+	        $tomorrow = strtotime("+1 day",$today);
+	        $today = date('Y-m-d',$today);
+	        $tomorrow = date('Y-m-d',$tomorrow);
 	        $this->date_suffix = $today; // used for post-title & slug suffix, contains the date it relates to.
+	        $before_date = $today;
+	        $after_date = $today;
 
             WP_CLI::log( 'Today: '.$today);
             WP_CLI::log( 'Tomorrow: '. $tomorrow);
