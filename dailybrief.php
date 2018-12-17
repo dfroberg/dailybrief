@@ -240,6 +240,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $exclude_posts = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', '' ));
 	        $status = array( 'publish' );
 	        $types = array( 'post' );
+	        $total_article_count = 0;
+	        $total_posts = 0;
 	        do {
 		        $query = new WP_Query( array(
 			        'posts_per_page' => $split,
@@ -262,10 +264,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
 		        WP_CLI::log( 'Count: '.$query->post_count .' Pages: '.$query->max_num_pages);
 
 		        $article_count = 0;
+		        if($query->max_num_pages > $total_posts) $total_posts = $query->max_num_pages; // just to keep track of the total
+
 		        while ( $query->have_posts() ) {
 			        $query->the_post();
 			        $id = get_the_ID();
 			        $article_count++;
+                    $total_article_count++:
 
 			        $title = $query->post->post_title;
 			        $date = $query->post->post_date;
@@ -275,6 +280,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 		        $page++;
 	        } while ( $query->have_posts() );
 
+            WP_CLI::log( ' Total number of posts generated: '. $total_posts .' with ' . $total_article_count . ' articles.');
         }
 
         /**
