@@ -252,10 +252,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
 		        while ( $query->have_posts() ) {
 			        $query->the_post();
 			        $id = get_the_ID();
+			        $article_count++;
 			        $title = $query->post->post_title;
 			        $date = $query->post->post_date;
 			        WP_CLI::log( $article_count.'/'.$page.' - '.$date.' - '.$title.'');
-			        $article_count++;
+
 		        }
 		        $page++;
 	        } while ( $query->have_posts() );
