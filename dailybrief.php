@@ -229,6 +229,14 @@ if ( defined('WP_CLI') && WP_CLI ) {
             WP_CLI::log( 'Tomorrow: '. $tomorrow);
             WP_CLI::log( 'Day is set to :'. $this->date_suffix);
 
+	        $start = DateTime::createFromFormat("Y-m-d H:i:s","2011-01-01 00:00:01",new DateTimeZone("America/Toronto"));
+	        $interval = new DateInterval("P12H"); // 1 month
+	        $occurrences = 3;
+	        $period = new DatePeriod($start,$interval,$occurrences);
+	        foreach($period as $dt) {
+		        WP_CLI::log($dt->format( "Y-m-d H:i:s" ) );
+	        }
+
             WP_CLI::log( print_r($this->options,true) );
 
 	        WP_CLI::log( '--- EX QUERY --- ');
@@ -274,7 +282,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
 			        $title = $query->post->post_title;
 			        $date = $query->post->post_date;
-			        WP_CLI::log( $article_count.'/'.$page.' - '.$date.' - '.$title.'');
+			        WP_CLI::log( $article_count.'/'.$page.' - '.$id.' - '.$date.' - '.$title.'');
 
 		        }
 		        $page++;
