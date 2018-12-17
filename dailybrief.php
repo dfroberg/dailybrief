@@ -16,45 +16,46 @@ defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
 if ( defined('WP_CLI') && WP_CLI ) {
     
     class DailyBrief_CLI_Command extends WP_CLI_Command {
+        /** @noinspection MagicMethodsValidityInspection */
 
-	    /**
+        /**
 	     * DailyBrief_CLI_Command constructor.
 	     */
         public function __construct() {
 
             // constructor called when plugin loads
             $this->date_suffix      = '';
-	        $this->content_buffer   = "";
-	        $this->temp_featured_image_url = "";
+	        $this->content_buffer   = '';
+	        $this->temp_featured_image_url = '';
 	        $this->post_id_created  = 0;
 
             $this->options          = get_option( 'dailybrief_options', array());
-            $this->debug            = $this->get_option_default("debug",0); // 1 for on
-            $this->include_toc      = $this->get_option_default("include_toc",1); // 1 for on / 0 for off
+            $this->debug            = $this->get_option_default('debug',0); // 1 for on
+            $this->include_toc      = $this->get_option_default('include_toc',1); // 1 for on / 0 for off
             $this->include_toc_localhrefs
-                                    = $this->get_option_default("include_toc_localhrefs",1); // 1 for on / 0 for off
-            $this->url_suffix       = $this->get_option_default("url_suffix",''); // set '?campaign=steempress&utm=dailybrief'
-            $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
-            $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
-            $this->author_id        = $this->get_option_default("author_id",1);
-            $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
-            $this->post_tags        = $this->get_option_default("post_tags",''); // life,blog,news
+                                    = $this->get_option_default('include_toc_localhrefs',1); // 1 for on / 0 for off
+            $this->url_suffix       = $this->get_option_default('url_suffix',''); // set '?campaign=steempress&utm=dailybrief'
+            $this->excerpt_words    = $this->get_option_default('excerpt_words',100);
+            $this->post_title       = $this->get_option_default('post_title','The Daily Brief').' '.$this->date_suffix;
+            $this->author_id        = $this->get_option_default('author_id',1);
+            $this->post_category    = $this->get_option_default('post_category',1); // 1,2,8
+            $this->post_tags        = $this->get_option_default('post_tags',''); // life,blog,news
             $this->always_skip_category
-                                    = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
-            $this->always_skip_tags = $this->get_option_default("always_skip_tag",0);
-            $this->slug             = $this->get_option_default("slug","the-daily-brief").'-'.$this->date_suffix;
-            $this->comment_status   = $this->get_option_default("comment_status",'open');
-            $this->ping_status      = $this->get_option_default("ping_status",'closed');
-            $this->post_status      = $this->get_option_default("post_status",'publish');
-            $this->post_type        = $this->get_option_default("post_type",'post');
-            $this->article_delimiter= $this->get_option_default("article_delimiter",'<hr>');
-            $this->article_continue = $this->get_option_default("article_continue",'Continue&nbsp;-&gt;');
-            $this->article_stats_txt= $this->get_option_default("article_stats_txt",'<hr>Articles in this brief: ');
+                                    = $this->get_option_default('always_skip_category',$this->post_category); // Always skip the category of Daily Brief Posts
+            $this->always_skip_tags = $this->get_option_default('always_skip_tag',0);
+            $this->slug             = $this->get_option_default('slug','the-daily-brief').'-'.$this->date_suffix;
+            $this->comment_status   = $this->get_option_default('comment_status','open');
+            $this->ping_status      = $this->get_option_default('ping_status','closed');
+            $this->post_status      = $this->get_option_default('post_status','publish');
+            $this->post_type        = $this->get_option_default('post_type','post');
+            $this->article_delimiter= $this->get_option_default('article_delimiter','<hr>');
+            $this->article_continue = $this->get_option_default('article_continue','Continue&nbsp;-&gt;');
+            $this->article_stats_txt= $this->get_option_default('article_stats_txt','<hr>Articles in this brief: ');
 	        $this->article_stats_cats_txt
-		                            = $this->get_option_default("article_stats_cats_txt",'<br>Categories in this brief: ');
+		                            = $this->get_option_default('article_stats_cats_txt','<br>Categories in this brief: ');
             $this->article_stats_tags_txt
-                                    = $this->get_option_default("article_stats_tags_txt",'<br>Tags in this brief: ');
-	        $this->featured_image_url= $this->get_option_default("featured_image_url",'');
+                                    = $this->get_option_default('article_stats_tags_txt','<br>Tags in this brief: ');
+	        $this->featured_image_url= $this->get_option_default('featured_image_url','');
 
         }
 
@@ -63,32 +64,32 @@ if ( defined('WP_CLI') && WP_CLI ) {
          */
         private function update_globals() {
 	        $this->options          = get_option( 'dailybrief_options', array());
-	        $this->debug            = $this->get_option_default("debug",0); // 1 for on
-            $this->include_toc      = $this->get_option_default("include_toc",1); // 1 for on / 0 for off
+	        $this->debug            = $this->get_option_default('debug',0); // 1 for on
+            $this->include_toc      = $this->get_option_default('include_toc',1); // 1 for on / 0 for off
             $this->include_toc_localhrefs
-                                    = $this->get_option_default("include_toc_localhrefs",1); // 1 for on / 0 for off
-	        $this->url_suffix       = $this->get_option_default("url_suffix",''); // set '?campaign=steempress&utm=dailybrief'
-	        $this->excerpt_words    = $this->get_option_default("excerpt_words",100);
-	        $this->post_title       = $this->get_option_default("post_title","The Daily Brief").' '.$this->date_suffix;
-	        $this->author_id        = $this->get_option_default("author_id",1);
-	        $this->post_category    = $this->get_option_default("post_category",1); // 1,2,8
-            $this->post_tags        = $this->get_option_default("post_tags",''); // life,blog,news
-	        $this->always_skip_category
-		                            = $this->get_option_default("always_skip_category",$this->post_category); // Always skip the category of Daily Brief Posts
-            $this->always_skip_tags = $this->get_option_default("always_skip_tag",0);
-            $this->slug             = $this->get_option_default("slug","the-daily-brief").'-'.$this->date_suffix;
-	        $this->comment_status   = $this->get_option_default("comment_status",'open');
-	        $this->ping_status      = $this->get_option_default("ping_status",'closed');
-	        $this->post_status      = $this->get_option_default("post_status",'publish');
-	        $this->post_type        = $this->get_option_default("post_type",'post');
-	        $this->article_delimiter= $this->get_option_default("article_delimiter",'<hr>');
-	        $this->article_continue = $this->get_option_default("article_continue",'Continue&nbsp;-&gt;');
-	        $this->article_stats_txt= $this->get_option_default("article_stats_txt",'<hr>Articles in this brief: ');
+                = $this->get_option_default('include_toc_localhrefs',1); // 1 for on / 0 for off
+            $this->url_suffix       = $this->get_option_default('url_suffix',''); // set '?campaign=steempress&utm=dailybrief'
+            $this->excerpt_words    = $this->get_option_default('excerpt_words',100);
+            $this->post_title       = $this->get_option_default('post_title','The Daily Brief').' '.$this->date_suffix;
+            $this->author_id        = $this->get_option_default('author_id',1);
+            $this->post_category    = $this->get_option_default('post_category',1); // 1,2,8
+            $this->post_tags        = $this->get_option_default('post_tags',''); // life,blog,news
+            $this->always_skip_category
+                = $this->get_option_default('always_skip_category',$this->post_category); // Always skip the category of Daily Brief Posts
+            $this->always_skip_tags = $this->get_option_default('always_skip_tag',0);
+            $this->slug             = $this->get_option_default('slug','the-daily-brief').'-'.$this->date_suffix;
+            $this->comment_status   = $this->get_option_default('comment_status','open');
+            $this->ping_status      = $this->get_option_default('ping_status','closed');
+            $this->post_status      = $this->get_option_default('post_status','publish');
+            $this->post_type        = $this->get_option_default('post_type','post');
+            $this->article_delimiter= $this->get_option_default('article_delimiter','<hr>');
+            $this->article_continue = $this->get_option_default('article_continue','Continue&nbsp;-&gt;');
+            $this->article_stats_txt= $this->get_option_default('article_stats_txt','<hr>Articles in this brief: ');
             $this->article_stats_cats_txt
-                                    = $this->get_option_default("article_stats_cats_txt",'<br>Categories in this brief: ');
+                = $this->get_option_default('article_stats_cats_txt','<br>Categories in this brief: ');
             $this->article_stats_tags_txt
-                                    = $this->get_option_default("article_stats_tags_txt",'<br>Tags in this brief: ');
-	        $this->featured_image_url= $this->get_option_default("featured_image_url",'');
+                = $this->get_option_default('article_stats_tags_txt','<br>Tags in this brief: ');
+            $this->featured_image_url= $this->get_option_default('featured_image_url','');
         }
 
         /**
@@ -98,7 +99,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * @param bool $buffer
          */
         private function output( $output, $buffer = false ) {
-            if($buffer == false) {
+            if($buffer === false) {
                 WP_CLI::log($output);
             } else {
                 $this->content_buffer .= $output;
@@ -113,8 +114,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * @return mixed
          */
         private function get_option_default($option,$default) {
-            if(!isset($this->options[$option]))
+            if(!isset($this->options[$option])) {
                 return $default;
+            }
             return $this->options[$option];
         }
 
@@ -131,13 +133,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     'post_author'       =>   $this->author_id,
                     'post_name'         =>   $this->slug,
                     'post_title'        =>   $this->post_title,
-                    'post_content'      =>   ($this->content_buffer),
+                    'post_content'      =>   $this->content_buffer,
                     'post_status'       =>   'draft',
                     'post_type'         =>   $this->post_type,
                     'post_category'     =>   @explode(',', $this->post_category )
                 )
             );
-            if($this->featured_image_url != '') {
+            if($this->featured_image_url !== '') {
 	            $dailybrief_featured_image_id = attachment_url_to_postid( $this->featured_image_url );
             } else {
 	            $dailybrief_featured_image_id = attachment_url_to_postid( $this->temp_featured_image_url );
@@ -216,7 +218,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $split = WP_CLI\Utils\get_flag_value($assoc_args, 'split', 3 );
 
 	        $today = strtotime($days);
-	        $tomorrow = strtotime("+1 day",$today);
+	        $tomorrow = strtotime('+1 day',$today);
 	        $today = date('Y-m-d',$today);
 	        $tomorrow = date('Y-m-d',$tomorrow);
 	        $this->date_suffix = $today; // used for post-title & slug suffix, contains the date it relates to.
@@ -261,10 +263,10 @@ if ( defined('WP_CLI') && WP_CLI ) {
 			        'category__not_in' => $exclude_categories ,
                     'post__not_in'  => $exclude_posts ,
                 ) );
-		        WP_CLI::log( 'Count: '.$query->post_count .' Pages: '.$query->max_num_pages);
+		        WP_CLI::log( 'Count: '.$query->post_count .' Page: '.$page);
 
 		        $article_count = 0;
-		        if($query->max_num_pages > $total_posts) $total_posts = $query->max_num_pages; // just to keep track of the total
+		        if($query->max_num_pages > $total_posts) { $total_posts = $query->max_num_pages; } // just to keep track of the total
 
 		        while ( $query->have_posts() ) {
 			        $query->the_post();
@@ -318,16 +320,17 @@ if ( defined('WP_CLI') && WP_CLI ) {
          *  To create and publish a post;
          *    wp dailybrief create --days="today" --post --publish
          *
-         * @param 	$args
-         * @param 	$assoc_args --skip-posts 	    Skip including specific posts 1,2,3,4
-         * @param 	$assoc_args --skip-categories	Skip including specific categories
-         * @param 	$assoc_args --days 	            Include posts from '-1 days' etc default is 'today'
+         * @param    $args
+         * @param    $assoc_args --skip-posts        Skip including specific posts 1,2,3,4
+         * @param    $assoc_args --skip-categories    Skip including specific categories
+         * @param    $assoc_args --days                Include posts from '-1 days' etc default is 'today'
+         * @throws \WP_CLI\ExitException
          */
         public function create( $args, $assoc_args ) {
             global $wpdb;
 	        $days = WP_CLI\Utils\get_flag_value($assoc_args, 'days', 'today' );
             $today = strtotime($days);
-            $tomorrow = strtotime("+1 day",$today);
+            $tomorrow = strtotime('+1 day',$today);
             $today = date('Y-m-d',$today);
             $tomorrow = date('Y-m-d',$tomorrow);
             $this->date_suffix = $today; // used for post-title & slug suffix, contains the date it relates to.
@@ -361,7 +364,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             // Retrieve posts
             $page = 1;
             $article_count = 0;
-            $article = "";
+            $article = '';
             $toc_items = '';
             do {
                 $query = new WP_Query( array(
@@ -385,7 +388,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $content = $query->post->post_content;
                     $more = '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>';
 
-                    if ( ! has_excerpt() || ! $use_excerpts) {
+                    if (! $use_excerpts || ! has_excerpt()  ) {
                         $excerpt =  wp_trim_words( wp_strip_all_tags($content,true), $this->excerpt_words, $more);
                     } else {
                         $excerpt =  wp_trim_words( wp_strip_all_tags( get_the_excerpt($query),true), $this->excerpt_words, $more);
@@ -393,8 +396,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $title = $query->post->post_title;
                     $date = $query->post->post_date;
                     // Add any attachments on this post to the list of excluded attachments if this post is excluded
-                    if ( in_array( $id, $exclude_posts ) )
-                            continue;
+                    if ( in_array( $id, $exclude_posts,false )) { continue; }
                     // Spit out some posts
                     $article_count++;
 
@@ -420,25 +422,27 @@ if ( defined('WP_CLI') && WP_CLI ) {
                         }
                     }
                     // Pick a temporary featured image from the posts in the brief to use if featured_image_url is not set.
-                    if($this->temp_featured_image_url == '' && $this->featured_image_url == '')
-	                    $this->temp_featured_image_url = get_the_post_thumbnail_url($id, 'full');
-
+                    if($this->temp_featured_image_url === '' && $this->featured_image_url === '') {
+                        $this->temp_featured_image_url = get_the_post_thumbnail_url($id, 'full');
+                    }
                     // Compile a TOC
-                    if($this->include_toc == 1) {
+                    if($this->include_toc === 1) {
                         $toc_items .= '<li>';
-                        if ($this->include_toc_localhrefs == 1)
+                        if ($this->include_toc_localhrefs === 1) {
                             $toc_items .= '<a href="#author_permlink' . $id . '">';
+                        }
                         $toc_items .= $title . '</a></li>';
                     }
 
-                    if($this->include_toc_localhrefs == 1)
-                        $article .= ( '<a id="author_permlink'.$id.'" name="author_permlink'.$id.'"></a>');
+                    if($this->include_toc_localhrefs === 1) {
+                        $article .= ('<a id="author_permlink' . $id . '" name="author_permlink' . $id . '"></a>');
+                    }
                     $article .= ( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">');
                     $article .= ( '<h2><a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$title.'</a></h2>');
                     $article .= ( 'Published <strong>'.$date.'</strong> by <strong>'.get_the_author().'</strong> in <strong>'.implode(', ',$c_cats).'</strong>' );
                     $article .= ( '<p>'.$excerpt.'</p>' );
                     $article .= ( '<p>Tags: '.implode(', ',$t_tags).'</p>' );
-                    $article .= ( $this->article_delimiter);
+                    $article .=   $this->article_delimiter;
                     WP_CLI::log( '+ Added: '.$title );
                 }
 
@@ -451,30 +455,30 @@ if ( defined('WP_CLI') && WP_CLI ) {
             // End of post preparation
 
 	        // Ouputs
-            WP_CLI::log( "--- BEGIN POST ----");
+            WP_CLI::log('--- BEGIN POST ----');
 	        // Output Header
 	        if(!empty($this->options['header'])) {
 	        	$header = $this->options['header'];
 		        if($include_stats) {
-		            if(stristr($header,'{article_count}')) {
+		            if(false !== stripos($header,'{article_count}')) {
                         $header = str_replace('{article_count}', $article_count, $header);
                     } else {
                         $stats = $this->article_stats_txt . ' ' . $article_count;
                     }
 
 			        if(is_array($article_categories) && count($article_categories) > 0) {
-                        if(stristr($header,'{article_categories}')) {
-                            $header = str_replace('{article_categories}', implode(", ",$article_categories), $header);
+                        if(false !== stripos($header,'{article_categories}')) {
+                            $header = str_replace('{article_categories}', implode(', ',$article_categories), $header);
                         } else {
-                            @$stats .= $this->article_stats_cats_txt.' '.implode(", ",$article_categories);
+                            @$stats .= $this->article_stats_cats_txt.' '.implode(', ',$article_categories);
                         }
                     }
 
                     if(is_array($article_tags) && count($article_tags) > 0) {
-                        if(stristr($header,'{article_tags}')) {
-                            $header = str_replace('{article_tags}', implode(", ",$article_tags), $header);
+                        if(false !== stripos($header,'{article_tags}')) {
+                            $header = str_replace('{article_tags}', implode(', ',$article_tags), $header);
                         } else {
-                            @$stats .= $this->article_stats_tags_txt.' '.implode(", ",$article_tags);
+                            @$stats .= $this->article_stats_tags_txt.' '.implode(', ',$article_tags);
                         }
                     }
 			        $header .= $stats;
@@ -483,7 +487,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 		        $this->output( $header, $buffer );
 	        }
 	        // Output optional TOC
-            if($this->include_toc == 1) {
+            if($this->include_toc === 1) {
                 $this->output( '<hr><p><h3>Table of Contents</h3><ul>',$buffer );
                 $this->output( $toc_items, $buffer );
                 $this->output( '</ul></p><hr>',$buffer );
@@ -493,10 +497,10 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $this->output( $article,$buffer );
 
 	        // Output Footer
-	        if(!empty($this->options['footer']))
-		        $this->output( $this->options['footer'],$buffer );
-
-            WP_CLI::log( "--- END POST ----");
+	        if(!empty($this->options['footer'])) {
+                $this->output($this->options['footer'], $buffer);
+            }
+            WP_CLI::log('--- END POST ----');
 
 	        // Create WP Post
             if ($post && $article_count > 0) {
@@ -504,9 +508,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	            $this->update_globals();
 
                 // Unfurl tags if any
-                if(strlen($this->post_tags) > 0)
-                    $post_tags = @explode(',',$this->post_tags);
-
+                if(strlen($this->post_tags) !== '') {
+                    $post_tags = @explode(',', $this->post_tags);
+                }
                 // Ok create the post
                 WP_CLI::log( '* Creating post with '.$article_count.' articles.' );
                 // Do some sanity checks
@@ -530,7 +534,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     // WIP: This is a test
                     $value = get_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true);
                     WP_CLI::log( print_r($value,true) );
-                    if ($value == "0") {
+                    if ($value === '0') {
                         if(update_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true)) {
                             WP_CLI::log( '* Updated SeemPress meta' );
                         } else {
