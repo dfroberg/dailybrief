@@ -174,10 +174,6 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $option_name = $args[0];  // value: "arg1"
             $option_value = $args[1]; // value: 42
 
-            //$option_name = $assoc_args['option'];
-            //$option_value = $assoc_args['value'];
-
-
             if ( !empty($this->options) ) {
                 $this->options[$option_name] = $option_value;
                 // The option already exists, so we just update it.
@@ -191,8 +187,6 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 add_option( 'dailybrief_options', $this->options, $deprecated, $autoload );
                 WP_CLI::log( 'Added '.$option_name.' = '.$option_value );
             }
-
-
         }
 
         /**
@@ -211,9 +205,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
         public function test( $args, $assoc_args ) {
 
             WP_CLI::log( '=== Testing ===' );
-            $days = $assoc_args['days'];
-            if(is_null($days))
-                $days = "today";
+	        $days = WP_CLI\Utils\get_flag_value($assoc_args, 'days', 'today' );
+	        $split = WP_CLI\Utils\get_flag_value($assoc_args, 'split', 3 );
+
             $today = strtotime($days);
             $tomorrow = strtotime("+1 day",$today);
             $today = date('Y-m-d H:m:s',$today);
@@ -225,6 +219,40 @@ if ( defined('WP_CLI') && WP_CLI ) {
             WP_CLI::log( 'Day is set to :'. $this->date_suffix);
 
             WP_CLI::log( print_r($this->options,true) );
+			$page = 1;
+	        $before_date = $today;
+	        $after_date = $today;
+	        $exclude_posts = array();
+	        $failed_posts = array();
+	        $exclude_categories = array();
+	        $status = array( 'publish' );
+	        $types = array( 'post' );
+	        do {
+		        $query = new WP_Query( array(
+			        'posts_per_page' => $split,
+			        'paged' => $page,
+			        'post_status' => $status,
+			        'post_type' => $types,
+			        'date_query' => array(
+				        array(
+					        'before' => $before_date,
+					        'after' => $after_date,
+					        'inclusive' => true,
+				        ),
+			        ),
+			        'category__not_in' => $exclude_categories ,
+		        ) );
+
+		        while ( $query->have_posts() ) {
+			        $query->the_post();
+			        $id = get_the_ID();
+			        $title = $query->post->post_title;
+			        $date = $query->post->post_date;
+			        WP_CLI::log( '* '.$date.' - '.$title.'');
+
+		        }
+		        $page++;
+	        } while ( $query->have_posts() );
 
         }
 
