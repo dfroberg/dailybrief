@@ -233,7 +233,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $after_date = $today;
 	        $exclude_posts = array();
 	        $failed_posts = array();
-	        $exclude_categories = array();
+	        $exclude_categories = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' )),@explode(',',$this->always_skip_category));
 	        $status = array( 'publish' );
 	        $types = array( 'post' );
 	        do {
