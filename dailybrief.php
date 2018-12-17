@@ -230,9 +230,10 @@ if ( defined('WP_CLI') && WP_CLI ) {
             WP_CLI::log( 'Day is set to :'. $this->date_suffix);
 
 	        $start = DateTime::createFromFormat("Y-m-d H:i:s","2018-01-01 00:00:01",new DateTimeZone("Europe/Belgrade"));
-	        $interval = new DateInterval("P1D"); // 1 month
-	        $occurrences = 3;
-	        $period = new DatePeriod($start,$interval,$occurrences);
+	        $end = DateTime::createFromFormat("Y-m-d H:i:s","2018-01-01 23:59:59",new DateTimeZone("Europe/Belgrade"));
+	        $interval = new DateInterval("PT6H");
+
+	        $period = new DatePeriod($start,$interval,$end);
 	        foreach($period as $dt) {
 		        WP_CLI::log($dt->format( "Y-m-d H:i:s" ) );
 	        }
