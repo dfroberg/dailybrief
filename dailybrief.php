@@ -328,9 +328,6 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $types = array( 'post' );
             $buffer = false ;
 
-            // Unfurl tags if any
-            $this->post_tags = @explode(',',$this->post_tags);
-
 			// Parse some flags
 	        $post = WP_CLI\Utils\get_flag_value($assoc_args, 'post', false );
 	        if ($post) {
@@ -488,6 +485,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
             if ($post && $article_count > 0) {
             	// Update the globals to recreate slugs and titles etc if anything changed via args
 	            $this->update_globals();
+
+                // Unfurl tags if any
+                if(strlen($this->post_tags) > 0)
+                    $post_tags = @explode(',',$this->post_tags);
+
                 // Ok create the post
                 WP_CLI::log( '* Creating post with '.$article_count.' articles.' );
                 // Do some sanity checks
@@ -498,15 +500,15 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $this->post_id_created = $wp_insert_post_restult;
 		            WP_CLI::log( '* Created ' . $this->post_id_created .' - "'.$this->post_title.'" on '.$this->slug);
                     // Append Tags if any set
-                    if(is_array($this->post_tags) && count($this->post_tags) > 0) {
-                        $settags = wp_set_post_tags($this->post_id_created, $this->post_tags, false);
+                    if(is_array($post_tags) && count($post_tags) > 0) {
+                        $settags = wp_set_post_tags($this->post_id_created, $post_tags, false);
                         if (!is_wp_error($settags)) {
-                            WP_CLI::log('* Set tags ' . @implode(', ', $this->post_tags));
+                            WP_CLI::log('* Set tags ' . @implode(', ', $post_tags));
                         } else {
                             WP_CLI::error("*** Error - could not set the tags...\n" . $settags->get_error_message());
                         }
                     } else {
-                        WP_CLI::warning('! No tags to set. (This will cause issues if you have no default tags in SteemPress set) '. @implode(', ', $this->post_tags));
+                        WP_CLI::warning('! No tags to set. (This will cause issues if you have no default tags in SteemPress set) '. @implode(', ', $post_tags));
                     }
                     // WIP: This is a test
                     $value = get_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true);
