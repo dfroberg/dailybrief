@@ -270,7 +270,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 			        $query->the_post();
 			        $id = get_the_ID();
 			        $article_count++;
-                    $total_article_count++:
+                    $total_article_count++;
 
 			        $title = $query->post->post_title;
 			        $date = $query->post->post_date;
