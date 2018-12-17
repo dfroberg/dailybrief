@@ -219,6 +219,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
             WP_CLI::log( 'Day is set to :'. $this->date_suffix);
 
             WP_CLI::log( print_r($this->options,true) );
+
+	        WP_CLI::log( '--- EX QUERY --- ');
 			$page = 1;
 	        $before_date = $today;
 	        $after_date = $today;
@@ -242,14 +244,16 @@ if ( defined('WP_CLI') && WP_CLI ) {
 			        ),
 			        'category__not_in' => $exclude_categories ,
 		        ) );
+		        WP_CLI::log( 'Count: '.$query->post_count);
 
+		        $article_count = 0;
 		        while ( $query->have_posts() ) {
 			        $query->the_post();
 			        $id = get_the_ID();
 			        $title = $query->post->post_title;
 			        $date = $query->post->post_date;
-			        WP_CLI::log( '* '.$date.' - '.$title.'');
-
+			        WP_CLI::log( $article_count.'/'.$page.' - '.$date.' - '.$title.'');
+			        $article_count++;
 		        }
 		        $page++;
 	        } while ( $query->have_posts() );
