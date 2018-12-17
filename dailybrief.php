@@ -199,6 +199,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * ---
          * default: today
          * ---
+         * [--split=<pages>]
+         * : Number of articles per page/post
+         * ---
+         * default: 3
+         * ---
          * @param $args
          * @param $assoc_args
          */
