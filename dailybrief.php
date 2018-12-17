@@ -199,7 +199,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * ---
          * default: today
          * ---
-         * [--split=<pages>]
+         * [--split=<posts_per_page>]
          * : Number of articles per page/post
          * ---
          * default: 3
