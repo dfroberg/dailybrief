@@ -512,6 +512,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     }
                     // WIP: This is a test
                     $value = get_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true);
+                    WP_CLI::log( print_r($value,true) );
                     if ($value == "0") {
                         if(update_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true)) {
                             WP_CLI::log( '* Updated SeemPress meta' );
