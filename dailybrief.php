@@ -329,8 +329,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $buffer = false ;
 
             // Unfurl tags if any
-            if(strlen($this->post_tags) > 0)
-                $this->post_tags = explode(',',$this->post_tags);
+            $this->post_tags = @explode(',',$this->post_tags);
 
 			// Parse some flags
 	        $post = WP_CLI\Utils\get_flag_value($assoc_args, 'post', false );
