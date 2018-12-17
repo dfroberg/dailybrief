@@ -242,6 +242,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
 			        'paged' => $page,
 			        'post_status' => $status,
 			        'post_type' => $types,
+			        'orderby' => 'date',
+			        'order'   => 'ASC',
 			        'date_query' => array(
 				        array(
 					        'before' => $before_date,
