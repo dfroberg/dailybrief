@@ -324,13 +324,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * ## OPTIONS
          *
          * [--post]
-         * : Create the post in Wordpress
-         *
-         * [--use-excerpts]
-         * : Do you want to use the excepts of the summarized Wordpress posts
-         * ---
-         * default: true
-         * ---
+         * : Create the post in Wordpress as a Draft
          *
          * [--publish]
          * : Set the post_status to 'Publish' Wordpress posts
@@ -338,26 +332,37 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * default: false
          * ---
          *
-         * [--days=<days>]
-         * : Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
+         * [--use-excerpts]
+         * : Do you want to use the excepts of the summarized Wordpress posts
          * ---
-         * default: today
+         * default: true
          * ---
-         * ### Examples:
-         *  To dump an preview to the console;
-         *    wp dailybrief create --days="-1 day" --no-use-excerpts
-         *
-         *  To produce a draft post;
-         *    wp dailybrief create --days="2018-10-15" --use-excerpts --post
-         *
-         *  To create and publish a post;
-         *    wp dailybrief create --days="today" --post --publish
          *
          * [--skip-posts=<ids>]
          * : Skip including specific posts 1,2,3,4
          *
          * [--skip-categories=<ids>]
          * : Skip including specific categories, will always skip the category dailybrief posts to.
+         *
+         * [--skip-tags=<ids>]
+         * : Skip including specific tags.
+         *
+         * [--days=<days>]
+         * : Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
+         * ---
+         * default: today
+         * ---
+         *
+         * ### Examples:
+         * To dump an preview to the console;
+         *    wp dailybrief create --days="-1 day" --no-use-excerpts
+         *
+         * To produce a draft post;
+         *    wp dailybrief create --days="2018-10-15" --use-excerpts --post
+         *
+         * To create and publish a post;
+         *    wp dailybrief create --days="today" --post --publish
+         *
          *
          * @param    $args
          * @param    $assoc_args
