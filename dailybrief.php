@@ -14,26 +14,52 @@ defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
 
 // Only accessible from WP-CLI
 if ( defined('WP_CLI') && WP_CLI ) {
-    
+
+    /** @noinspection AutoloadingIssuesInspection */
+
     class DailyBrief_CLI_Command extends WP_CLI_Command {
         /** @noinspection MagicMethodsValidityInspection */
+
+        private $date_suffix = '';
+        private $temp_featured_image_url = '';
+        private $post_id_created  = 0;
+        private $options;
+        private $debug;
+        private $include_toc;
+        private $include_toc_local_hrefs;
+        private $url_suffix;
+        private $excerpt_words;
+        private $post_title;
+        private $author_id;
+        private $post_category;
+        private $post_tags;
+        private $always_skip_category;
+        private $always_skip_tags;
+        private $slug;
+        private $comment_status;
+        private $ping_status;
+        private $post_status;
+        private $post_type;
+        private $article_delimiter;
+        private $article_continue;
+        private $article_stats_txt;
+        private $article_stats_cats_txt;
+        private $article_stats_tags_txt;
+        private $featured_image_url;
+        private $content_buffer = '';
 
         /**
 	     * DailyBrief_CLI_Command constructor.
 	     */
         public function __construct() {
-
+            WP_CLI_Command::__construct();
             // constructor called when plugin loads
-            $this->date_suffix      = '';
-	        $this->content_buffer   = '';
-	        $this->temp_featured_image_url = '';
-	        $this->post_id_created  = 0;
 
             $this->options          = get_option( 'dailybrief_options', array());
             $this->debug            = $this->get_option_default('debug',0); // 1 for on
             $this->include_toc      = $this->get_option_default('include_toc',1); // 1 for on / 0 for off
-            $this->include_toc_localhrefs
-                                    = $this->get_option_default('include_toc_localhrefs',1); // 1 for on / 0 for off
+            $this->include_toc_local_hrefs
+                                    = $this->get_option_default('include_toc_local_hrefs',1); // 1 for on / 0 for off
             $this->url_suffix       = $this->get_option_default('url_suffix',''); // set '?campaign=steempress&utm=dailybrief'
             $this->excerpt_words    = $this->get_option_default('excerpt_words',100);
             $this->post_title       = $this->get_option_default('post_title','The Daily Brief').' '.$this->date_suffix;
@@ -66,8 +92,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        $this->options          = get_option( 'dailybrief_options', array());
 	        $this->debug            = $this->get_option_default('debug',0); // 1 for on
             $this->include_toc      = $this->get_option_default('include_toc',1); // 1 for on / 0 for off
-            $this->include_toc_localhrefs
-                = $this->get_option_default('include_toc_localhrefs',1); // 1 for on / 0 for off
+            $this->include_toc_local_hrefs
+                = $this->get_option_default('include_toc_local_hrefs',1); // 1 for on / 0 for off
             $this->url_suffix       = $this->get_option_default('url_suffix',''); // set '?campaign=steempress&utm=dailybrief'
             $this->excerpt_words    = $this->get_option_default('excerpt_words',100);
             $this->post_title       = $this->get_option_default('post_title','The Daily Brief').' '.$this->date_suffix;
@@ -210,6 +236,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
          * ---
          * @param $args
          * @param $assoc_args
+         * @throws Exception
          */
         public function test( $args, $assoc_args ) {
 
@@ -229,13 +256,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
             WP_CLI::log( 'Tomorrow: '. $tomorrow);
             WP_CLI::log( 'Day is set to :'. $this->date_suffix);
 
-	        $start = DateTime::createFromFormat("Y-m-d H:i:s","2018-01-01 00:00:01",new DateTimeZone("Europe/Belgrade"));
-	        $end = DateTime::createFromFormat("Y-m-d H:i:s","2018-01-01 23:59:59",new DateTimeZone("Europe/Belgrade"));
-	        $interval = new DateInterval("PT6H");
+	        $start = DateTime::createFromFormat('Y-m-d H:i:s', '2018-01-01 00:00:01',new DateTimeZone('Europe/Belgrade'));
+	        $end = DateTime::createFromFormat('Y-m-d H:i:s', '2018-01-01 23:59:59',new DateTimeZone('Europe/Belgrade'));
+	        $interval = new DateInterval('PT6H');
 
 	        $period = new DatePeriod($start,$interval,$end);
 	        foreach($period as $dt) {
-		        WP_CLI::log($dt->format( "Y-m-d H:i:s" ) );
+		        WP_CLI::log($dt->format('Y-m-d H:i:s') );
 	        }
 
             WP_CLI::log( print_r($this->options,true) );
@@ -243,7 +270,6 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        WP_CLI::log( '--- EX QUERY --- ');
 			$page = 1;
 
-	        $failed_posts = array();
             $exclude_categories = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' )),@explode(',',$this->always_skip_category));
 	        $exclude_tags = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-tags', '' )),@explode(',',$this->always_skip_tags));
             $exclude_posts = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', '' ));
@@ -327,14 +353,19 @@ if ( defined('WP_CLI') && WP_CLI ) {
          *  To create and publish a post;
          *    wp dailybrief create --days="today" --post --publish
          *
+         * [--skip-posts=<ids>]
+         * : Skip including specific posts 1,2,3,4
+         *
+         * [--skip-categories=<ids>]
+         * : Skip including specific categories, will always skip the category dailybrief posts to.
+         *
          * @param    $args
-         * @param    $assoc_args --skip-posts        Skip including specific posts 1,2,3,4
-         * @param    $assoc_args --skip-categories    Skip including specific categories
-         * @param    $assoc_args --days                Include posts from '-1 days' etc default is 'today'
+         * @param    $assoc_args
          * @throws \WP_CLI\ExitException
          */
         public function create( $args, $assoc_args ) {
-            global $wpdb;
+            global /** @noinspection PhpUnusedLocalVariableInspection */
+            $wpdb;
 	        $days = WP_CLI\Utils\get_flag_value($assoc_args, 'days', 'today' );
             $today = strtotime($days);
             $tomorrow = strtotime('+1 day',$today);
@@ -343,9 +374,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $this->date_suffix = $today; // used for post-title & slug suffix, contains the date it relates to.
             $before_date = $today;
             $after_date = $today;
-            $exclude_posts = array();
-            $failed_posts = array();
-            $exclude_categories = array();
+            // Exclude some category ids for whatever reason and merge with the always_skip_category option
+            $exclude_categories = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' )),@explode(',',$this->always_skip_category));
+            // Exclude some tag ids for whatever reason and merge with the always_skip_tags option
+            $exclude_tags = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-tags', '' )),@explode(',',$this->always_skip_tags));
+            // Exclude some post_ids for whatever reason
+            $exclude_posts = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', '' ));
+
             $status = array( 'publish' );
             $types = array( 'post' );
             $buffer = false ;
@@ -361,16 +396,16 @@ if ( defined('WP_CLI') && WP_CLI ) {
             $use_excerpts = WP_CLI\Utils\get_flag_value($assoc_args, 'use-excerpts', true );
 	        // Do you wish to focus on a particular category?
 	        $focus = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'focus', '' ));
-	        // Exclude some post_ids for whatever reason
-	        $exclude_posts = @explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-posts', '' ));
-	        // Exclude some category ids for whatever reason and merge with the always_skip_category option
-	        $exclude_categories = array_merge(@explode(',', WP_CLI\Utils\get_flag_value($assoc_args, 'skip-categories', '' )),@explode(',',$this->always_skip_category));
-            // Parse some flags
+
+	        // Parse some flags
             $include_stats = WP_CLI\Utils\get_flag_value($assoc_args, 'stats', true );
             $do_publish = WP_CLI\Utils\get_flag_value($assoc_args, 'publish', false );
             // Retrieve posts
             $page = 1;
             $article_count = 0;
+            $article_categories = '';
+            $article_tags = '';
+            $stats = '';
             $article = '';
             $toc_items = '';
             do {
@@ -386,7 +421,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
                             'inclusive' => true,
                         ),
                     ),
+                    'tag__not_in' => $exclude_tags ,
                     'category__not_in' => $exclude_categories ,
+                    'post__not_in'  => $exclude_posts ,
                 ) );
 
                 while ( $query->have_posts() ) {
@@ -435,13 +472,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     // Compile a TOC
                     if($this->include_toc === 1) {
                         $toc_items .= '<li>';
-                        if ($this->include_toc_localhrefs === 1) {
+                        if ($this->include_toc_local_hrefs === 1) {
                             $toc_items .= '<a href="#author_permlink' . $id . '">';
                         }
                         $toc_items .= $title . '</a></li>';
                     }
 
-                    if($this->include_toc_localhrefs === 1) {
+                    if($this->include_toc_local_hrefs === 1) {
                         $article .= ('<a id="author_permlink' . $id . '" name="author_permlink' . $id . '"></a>');
                     }
                     $article .= ( '<img src="'.get_the_post_thumbnail_url($id, 'full').'">');
@@ -461,7 +498,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
             } while ( $query->have_posts() );
             // End of post preparation
 
-	        // Ouputs
+	        // Output
             WP_CLI::log('--- BEGIN POST ----');
 	        // Output Header
 	        if(!empty($this->options['header'])) {
@@ -515,6 +552,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	            $this->update_globals();
 
                 // Unfurl tags if any
+                $post_tags = null;
                 if(strlen($this->post_tags) !== '') {
                     $post_tags = @explode(',', $this->post_tags);
                 }
@@ -523,17 +561,17 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 // Do some sanity checks
 
                 // Call create_post here
-	            $wp_insert_post_restult = $this->create_post();
-	            if($wp_insert_post_restult > 0) {
-                    $this->post_id_created = $wp_insert_post_restult;
+	            $wp_insert_post_result = $this->create_post();
+	            if($wp_insert_post_result > 0) {
+                    $this->post_id_created = $wp_insert_post_result;
 		            WP_CLI::log( '* Created ' . $this->post_id_created .' - "'.$this->post_title.'" on '.$this->slug);
                     // Append Tags if any set
                     if(is_array($post_tags) && count($post_tags) > 0) {
-                        $settags = wp_set_post_tags($this->post_id_created, $post_tags, false);
-                        if (!is_wp_error($settags)) {
+                        $set_tags = wp_set_post_tags($this->post_id_created, $post_tags, false);
+                        if (!is_wp_error($set_tags)) {
                             WP_CLI::log('* Set tags ' . @implode(', ', $post_tags));
                         } else {
-                            WP_CLI::error("*** Error - could not set the tags...\n" . $settags->get_error_message());
+                            WP_CLI::error("*** Error - could not set the tags...\n" . $set_tags->get_error_message());
                         }
                     } else {
                         WP_CLI::warning('! No tags to set. (This will cause issues if you have no default tags in SteemPress set) '. @implode(', ', $post_tags));
@@ -556,12 +594,15 @@ if ( defined('WP_CLI') && WP_CLI ) {
                         WP_CLI::log( '* Transitioning to Publish state ' );
 		            }
 	            } else {
-		            WP_CLI::error( "*** Error - could not create the post...\n". $wp_insert_post_restult->get_error_message());
+		            WP_CLI::error( "*** Error - could not create the post...\n". $wp_insert_post_result->get_error_message());
 	            }
             }
         }
     }
 
     // Finally add the command to WP_CLI
-    WP_CLI::add_command( 'dailybrief', 'DailyBrief_CLI_Command' );
+    try {
+        WP_CLI::add_command('dailybrief', 'DailyBrief_CLI_Command');
+    } catch (Exception $e) {
+    }
 }
