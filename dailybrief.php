@@ -290,6 +290,12 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        } while ( $query->have_posts() );
 
             WP_CLI::log( ' Total number of posts generated: '. $total_posts .' with ' . $total_article_count . ' articles.');
+
+	        if ( !function_exists( 'Steempress_sp_publish' ) ) {
+		        WP_CLI::warning( '? Steempress_sp_publish NOT available, can not post to steem. ');
+	        } else {
+		        WP_CLI::warning( '? Steempress_sp_publish IS available, can post to steem. ');
+	        }
         }
 
         /**
@@ -554,6 +560,10 @@ if ( defined('WP_CLI') && WP_CLI ) {
 		            if($do_publish) {
 			            wp_publish_post( $this->post_id_created );
                         WP_CLI::log( '* Transitioning to Publish state ' );
+			            if ( !function_exists( 'Steempress_sp_publish' ) ) {
+				            WP_CLI::warning( '? Steempress_sp_publish NOT available, can not post to steem. ');
+
+			            }
 		            }
 	            } else {
 		            WP_CLI::error( "*** Error - could not create the post...\n". $wp_insert_post_restult->get_error_message());
