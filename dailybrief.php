@@ -321,7 +321,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 		        WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish NOT available, can not post to steem. ');
 	        } else {
 		        WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish IS available, can post to steem. ');
-		        $test = new Steempress_sp_Admin;
+		        $test = new Steempress_sp_Admin('SteemPress','1.0');
 		        $test->Steempress_sp_publish(0);
 	        }
 	        WP_CLI::log( '* end test *' );
@@ -600,7 +600,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 				            WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish NOT available, can not post to steem. ');
 			            } else {
 				            WP_CLI::log( '* Steempress_sp_Admin::Steempress_sp_publish IS available, can post to steem. ');
-				            $test = new Steempress_sp_Admin;
+				            $test = new Steempress_sp_Admin('SteemPress','1.0');
 				            $test->Steempress_sp_publish($this->post_id_created);
 			            }
 		            }
