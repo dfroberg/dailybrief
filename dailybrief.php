@@ -321,6 +321,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
 		        WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish NOT available, can not post to steem. ');
 	        } else {
 		        WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish IS available, can post to steem. ');
+		        $test = new Steempress_sp_Admin;
+		        $test->Steempress_sp_publish(0);
 	        }
 	        WP_CLI::log( '* end test *' );
         }
@@ -588,25 +590,18 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     } else {
                         WP_CLI::warning('! No tags to set. (This will cause issues if you have no default tags in SteemPress set) '. @implode(', ', $post_tags));
                     }
-                    // WIP: This is a test
-                    $value = get_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true);
-                    WP_CLI::log( print_r($value,true) );
-                    if ($value === '0') {
-                        if(update_post_meta($this->post_id_created, 'Steempress_sp_steem_publish', true)) {
-                            WP_CLI::log( '* Updated SeemPress meta' );
-                        } else {
-                            WP_CLI::log( '- Could not update SeemPress meta' );
-                        }
-                    } else {
-                        WP_CLI::log( '? Got already set SeemPress meta '.$value );
-                    }
                     // Force the use of a --publish flag
 		            if($do_publish) {
 			            wp_publish_post( $this->post_id_created );
                         WP_CLI::log( '* Transitioning to Publish state ' );
-			            if ( !function_exists( 'Steempress_sp_publish' ) ) {
-				            WP_CLI::warning( '? Steempress_sp_publish NOT available, can not post to steem. ');
 
+                        // And now for the SteemPress Specific Stuff.
+			            if ( !class_exists('Steempress_sp_Admin') ) {
+				            WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish NOT available, can not post to steem. ');
+			            } else {
+				            WP_CLI::log( '* Steempress_sp_Admin::Steempress_sp_publish IS available, can post to steem. ');
+				            $test = new Steempress_sp_Admin;
+				            $test->Steempress_sp_publish($this->post_id_created);
 			            }
 		            }
 	            } else {
