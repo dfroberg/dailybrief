@@ -6,7 +6,7 @@
  * License:     GNU General Public License v3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * GitLab Plugin URI: https://gitlab.froberg.org/dfroberg/dailybrief
- * Version: 0.0.6
+ * Version: 0.0.7
  */
 
 // Basic security, prevents file from being loaded directly.
@@ -317,10 +317,10 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
             WP_CLI::log( ' Total number of posts generated: '. $total_posts .' with ' . $total_article_count . ' articles.');
 
-	        if ( !function_exists( 'Steempress_sp_Admin::Steempress_sp_publish' ) ) {
-		        WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish NOT available, can not post to steem. ');
+	        if ( !function_exists( 'Steempress_sp_publish' ) ) {
+		        WP_CLI::warning( '? Steempress_sp_publish NOT available, can not post to steem. ');
 	        } else {
-		        WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish IS available, can post to steem. ');
+		        WP_CLI::warning( '? Steempress_sp_publish IS available, can post to steem. ');
 	        }
 	        WP_CLI::log( '* end test *' );
         }
