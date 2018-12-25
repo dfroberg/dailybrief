@@ -322,6 +322,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        } else {
 		        WP_CLI::warning( '? Steempress_sp_publish IS available, can post to steem. ');
 	        }
+	        WP_CLI::log( '* end test *' );
         }
 
         /**
