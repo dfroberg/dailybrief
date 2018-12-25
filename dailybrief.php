@@ -317,10 +317,10 @@ if ( defined('WP_CLI') && WP_CLI ) {
 
             WP_CLI::log( ' Total number of posts generated: '. $total_posts .' with ' . $total_article_count . ' articles.');
 
-	        if ( !function_exists( 'Steempress_sp_publish' ) ) {
-		        WP_CLI::warning( '? Steempress_sp_publish NOT available, can not post to steem. ');
+	        if ( !function_exists( 'Steempress_sp_Admin::Steempress_sp_publish' ) ) {
+		        WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish NOT available, can not post to steem. ');
 	        } else {
-		        WP_CLI::warning( '? Steempress_sp_publish IS available, can post to steem. ');
+		        WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish IS available, can post to steem. ');
 	        }
 	        WP_CLI::log( '* end test *' );
         }
