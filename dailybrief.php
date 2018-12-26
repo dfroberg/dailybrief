@@ -321,7 +321,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
 		        WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish NOT available, can not post to steem. ');
 	        } else {
 		        WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish IS available, can post to steem. ');
-		        $test = new Steempress_sp_Admin('SteemPress','1.0');
+		        $test = new Steempress_sp_Admin('steempress_sp','2.3');
 		        $test->Steempress_sp_publish(0);
 	        }
 	        WP_CLI::log( '* end test *' );
@@ -600,8 +600,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
 				            WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish NOT available, can not post to steem. ');
 			            } else {
 				            WP_CLI::log( '* Steempress_sp_Admin::Steempress_sp_publish IS available, can post to steem. ');
-				            $test = new Steempress_sp_Admin('SteemPress','1.0');
-				            $test->Steempress_sp_publish($this->post_id_created);
+				            try {
+					            $test = new Steempress_sp_Admin('steempress_sp','2.3');
+					            $test->Steempress_sp_publish($this->post_id_created);
+					            // Alt Steempress_sp_Admin::Steempress_sp_publish($this->post_id_created);
+				            } catch (Exception $e) {
+					            WP_CLI::error( "*** Error - SteemPress Call Blew up " . $e->getMessage() );
+				            }
 			            }
 		            }
 	            } else {
