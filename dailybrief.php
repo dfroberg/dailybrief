@@ -54,35 +54,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
         public function __construct() {
             WP_CLI_Command::__construct();
             // constructor called when plugin loads
-
-            $this->options          = get_option( 'dailybrief_options', array());
-            $this->debug            = $this->get_option_default('debug',0); // 1 for on
-            $this->include_toc      = $this->get_option_default('include_toc',1); // 1 for on / 0 for off
-            $this->include_toc_local_hrefs
-                                    = $this->get_option_default('include_toc_local_hrefs',1); // 1 for on / 0 for off
-            $this->url_suffix       = $this->get_option_default('url_suffix',''); // set '?campaign=steempress&utm=dailybrief'
-            $this->excerpt_words    = $this->get_option_default('excerpt_words',100);
-            $this->post_title       = $this->get_option_default('post_title','The Daily Brief').' '.$this->date_suffix;
-            $this->author_id        = $this->get_option_default('author_id',1);
-            $this->post_category    = $this->get_option_default('post_category',1); // 1,2,8
-            $this->post_tags        = $this->get_option_default('post_tags',''); // life,blog,news
-            $this->always_skip_category
-                                    = $this->get_option_default('always_skip_category',$this->post_category); // Always skip the category of Daily Brief Posts
-            $this->always_skip_tags = $this->get_option_default('always_skip_tag',0);
-            $this->slug             = $this->get_option_default('slug','the-daily-brief').'-'.$this->date_suffix;
-            $this->comment_status   = $this->get_option_default('comment_status','open');
-            $this->ping_status      = $this->get_option_default('ping_status','closed');
-            $this->post_status      = $this->get_option_default('post_status','publish');
-            $this->post_type        = $this->get_option_default('post_type','post');
-            $this->article_delimiter= $this->get_option_default('article_delimiter','<hr>');
-            $this->article_continue = $this->get_option_default('article_continue','Continue&nbsp;-&gt;');
-            $this->article_stats_txt= $this->get_option_default('article_stats_txt','<hr>Articles in this brief: ');
-	        $this->article_stats_cats_txt
-		                            = $this->get_option_default('article_stats_cats_txt','<br>Categories in this brief: ');
-            $this->article_stats_tags_txt
-                                    = $this->get_option_default('article_stats_tags_txt','<br>Tags in this brief: ');
-	        $this->featured_image_url= $this->get_option_default('featured_image_url','');
-
+	        self::update_globals();
         }
 
         /**
@@ -592,10 +564,11 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     }
                     // Force the use of a --publish flag
 		            if($do_publish) {
+		            	// Transition post to publish state
 			            wp_publish_post( $this->post_id_created );
-                        WP_CLI::log( '* Transitioning to Publish state ' );
+                        WP_CLI::log( '* Post is now Published ' );
 
-                        // And now for the SteemPress Specific Stuff.
+                        // Call SteemPress to publish to Steem.
 			            if ( !class_exists('Steempress_sp_Admin') ) {
 				            WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish NOT available, can not post to steem. ');
 			            } else {
@@ -604,6 +577,13 @@ if ( defined('WP_CLI') && WP_CLI ) {
 					            $test = new Steempress_sp_Admin('steempress_sp','2.3');
 					            $test->Steempress_sp_publish($this->post_id_created);
 					            // Alt Steempress_sp_Admin::Steempress_sp_publish($this->post_id_created);
+					            $steempress_sp_permlink = get_post_meta($this->post_id_created,'steempress_sp_permlink');
+					            $steempress_sp_author = get_post_meta($this->post_id_created,'steempress_sp_author');
+					            if(!empty($steempress_sp_permlink) && !empty($steempress_sp_author)) {
+						            WP_CLI::log( '* Posted to Steempress API with: ' . $steempress_sp_author . ' / ' . $steempress_sp_permlink);
+					            } else {
+						            WP_CLI::warning( '? Steempress API post failed for some reason :-( ');
+					            }
 				            } catch (Exception $e) {
 					            WP_CLI::error( "*** Error - SteemPress Call Blew up " . $e->getMessage() );
 				            }
