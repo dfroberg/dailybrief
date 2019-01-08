@@ -6,7 +6,7 @@
  * License:     GNU General Public License v3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * GitLab Plugin URI: https://gitlab.froberg.org/dfroberg/dailybrief
- * Version: 0.0.7
+ * Version: 0.0.8
  */
 
 // Basic security, prevents file from being loaded directly.
