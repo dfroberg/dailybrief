@@ -568,11 +568,12 @@ if ( defined('WP_CLI') && WP_CLI ) {
 			            wp_publish_post( $this->post_id_created );
                         WP_CLI::log( '* Post is now Published ' );
 
-                        // Call SteemPress to publish to Steem.
 			            if ( !class_exists('Steempress_sp_Admin') ) {
-				            WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish NOT available, can not post to steem. ');
+				            WP_CLI::warning( '? SteemPress NOT available (did you install it?), can not post to steem. ');
 			            } else {
-				            WP_CLI::log( '* Steempress_sp_Admin::Steempress_sp_publish IS available, can post to steem. ');
+				            WP_CLI::log( '* SteemPress IS available, can post to steem, so trying that now ');
+
+				            // Since we're using another plugin directly we'll try and catch whatever goes wrong.
 				            try {
 					            $test = new Steempress_sp_Admin('steempress_sp','2.3');
 					            $test->Steempress_sp_publish($this->post_id_created);
@@ -580,9 +581,9 @@ if ( defined('WP_CLI') && WP_CLI ) {
 					            $steempress_sp_permlink = get_post_meta($this->post_id_created,'steempress_sp_permlink');
 					            $steempress_sp_author = get_post_meta($this->post_id_created,'steempress_sp_author');
 					            if(!empty($steempress_sp_permlink) && !empty($steempress_sp_author)) {
-						            WP_CLI::log( '* Posted to Steempress API with: ' . $steempress_sp_author . ' / ' . $steempress_sp_permlink);
+						            WP_CLI::log( '* Posted to SteemPress API with: ' . $steempress_sp_author . ' / ' . $steempress_sp_permlink);
 					            } else {
-						            WP_CLI::warning( '? Steempress API post failed for some reason :-( ');
+						            WP_CLI::warning( '? SteemPress API post failed for some reason :-( ');
 					            }
 				            } catch (Exception $e) {
 					            WP_CLI::error( "*** Error - SteemPress Call Blew up " . $e->getMessage() );
@@ -600,5 +601,6 @@ if ( defined('WP_CLI') && WP_CLI ) {
     try {
         WP_CLI::add_command('dailybrief', 'DailyBrief_CLI_Command');
     } catch (Exception $e) {
+	    WP_CLI::error( "*** WP_CLI threw an exception: " . $e->getMessage() );
     }
 }
