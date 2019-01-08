@@ -416,7 +416,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                     $query->the_post();
                     $id = get_the_ID();
                     $content = $query->post->post_content;
-                    $more = '... <a href="'.get_permalink( $id).'" target="dailybrief">'.$this->article_continue.'</a>';
+                    $more = '... <a href="'.get_permalink( $id).$this->url_suffix.'" target="dailybrief">'.$this->article_continue.'</a>';
 
                     if (! $use_excerpts || ! has_excerpt()  ) {
                         $excerpt =  wp_trim_words( wp_strip_all_tags($content,true), $this->excerpt_words, $more);
