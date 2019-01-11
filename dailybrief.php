@@ -389,8 +389,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
             // Retrieve posts
             $page = 1;
             $article_count = 0;
-            $article_categories = '';
-            $article_tags = '';
+            $article_categories = array();
+            $article_tags = array();
             $stats = '';
             $article = '';
             $toc_items = '';
@@ -437,7 +437,8 @@ if ( defined('WP_CLI') && WP_CLI ) {
                         foreach ($c as $c_cat) {
                             $c_cats[] = ucwords($c_cat->category_nicename,"- \t\r\n\f\v");
                             $article_category = ucwords($c_cat->category_nicename,"- \t\r\n\f\v");
-                            $article_categories[$article_category] = $article_category;
+                            $article_categories[] = $article_category;
+
                         }
                     }
 
@@ -448,7 +449,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                         foreach ($t as $t_tag) {
                             $t_tags[] = ucwords($t_tag->name,"- \t\r\n\f\v");
                             $article_tag = ucwords($t_tag->name,"- \t\r\n\f\v");
-                            $article_tags[$article_tag] = $article_tag;
+                            $article_tags[] = $article_tag;
                         }
                     }
                     // Pick a temporary featured image from the posts in the brief to use if featured_image_url is not set.
@@ -489,28 +490,33 @@ if ( defined('WP_CLI') && WP_CLI ) {
 	        // Output Header
 	        if(!empty($this->options['header'])) {
 	        	$header = $this->options['header'];
-		        if($include_stats) {
-		            if(false !== stripos($header,'{article_count}')) {
-                        $header = str_replace('{article_count}', $article_count, $header);
+
+	        	// Prepare macro subst / stats
+                if(false !== stripos($header,'{article_count}')) {
+                    $header = str_replace('{article_count}', $article_count, $header);
+                } else {
+                    $stats = $this->article_stats_txt . ' ' . $article_count;
+                }
+
+                if(is_array($article_categories) && count($article_categories) > 0) {
+                    array_unique($article_categories);
+                    if(false !== stripos($header,'{article_categories}')) {
+                        $header = str_replace('{article_categories}', implode(', ',$article_categories), $header);
                     } else {
-                        $stats = $this->article_stats_txt . ' ' . $article_count;
+                        @$stats .= $this->article_stats_cats_txt.' '.implode(', ',$article_categories);
                     }
+                }
 
-			        if(is_array($article_categories) && count($article_categories) > 0) {
-                        if(false !== stripos($header,'{article_categories}')) {
-                            $header = str_replace('{article_categories}', implode(', ',$article_categories), $header);
-                        } else {
-                            @$stats .= $this->article_stats_cats_txt.' '.implode(', ',$article_categories);
-                        }
+                if(is_array($article_tags) && count($article_tags) > 0) {
+                    array_unique($article_tags);
+                    if(false !== stripos($header,'{article_tags}')) {
+                        $header = str_replace('{article_tags}', implode(', ',$article_tags), $header);
+                    } else {
+                        @$stats .= $this->article_stats_tags_txt.' '.implode(', ',$article_tags);
                     }
+                }
 
-                    if(is_array($article_tags) && count($article_tags) > 0) {
-                        if(false !== stripos($header,'{article_tags}')) {
-                            $header = str_replace('{article_tags}', implode(', ',$article_tags), $header);
-                        } else {
-                            @$stats .= $this->article_stats_tags_txt.' '.implode(', ',$article_tags);
-                        }
-                    }
+                if($include_stats) {
 			        $header .= $stats;
 		        }
 
