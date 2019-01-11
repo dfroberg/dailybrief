@@ -499,7 +499,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 }
 
                 if(is_array($article_categories) && count($article_categories) > 0) {
-                    array_unique($article_categories);
+                    $article_categories = array_unique($article_categories);
                     if(false !== stripos($header,'{article_categories}')) {
                         $header = str_replace('{article_categories}', implode(', ',$article_categories), $header);
                     } else {
@@ -508,7 +508,7 @@ if ( defined('WP_CLI') && WP_CLI ) {
                 }
 
                 if(is_array($article_tags) && count($article_tags) > 0) {
-                    array_unique($article_tags);
+                    $article_tags = array_unique($article_tags);
                     if(false !== stripos($header,'{article_tags}')) {
                         $header = str_replace('{article_tags}', implode(', ',$article_tags), $header);
                     } else {
