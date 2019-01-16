@@ -16,8 +16,8 @@ before_script:
 - pecl install xdebug
 - docker-php-ext-enable xdebug
 # Install and run Composer
-- curl -sS https://getcomposer.org/installer | php
-- php composer.phar install
+#- curl -sS https://getcomposer.org/installer | php
+#- php composer.phar install
 
 # Bring in any services we need http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
 # See http://docs.gitlab.com/ce/ci/services/README.html for examples.
