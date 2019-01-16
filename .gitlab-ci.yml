@@ -11,7 +11,7 @@ before_script:
 # Install PHP extensions
 - pecl install mcrypt-1.0.1
 - docker-php-ext-enable mcrypt
-- docker-php-ext-install mbstring mcrypt pdo_pgsql curl json intl gd xml zip bz2 opcache
+- docker-php-ext-install mbstring pdo_pgsql curl json intl gd xml zip bz2 opcache
 # Install & enable Xdebug for code coverage reports
 - pecl install xdebug
 - docker-php-ext-enable xdebug
