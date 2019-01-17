@@ -37,11 +37,13 @@ variables:
   # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
   MYSQL_DATABASE: wordpress_tests
   MYSQL_ROOT_PASSWORD: mysql
+  WITH_XDEBUG: 1
+  TIMEZONE: "America/New_York"
 
 # Run our tests
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
 test:
-  image: tetraweb/php:7.2
+  image: stayallive/php:7.2
   services:
     - mysql:5.7
   script:
