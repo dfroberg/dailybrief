@@ -41,7 +41,7 @@ variables:
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
 test:
   services:
-    - mysql:5.6
+    - mysql:5.7
   script:
     - phpcs
     - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
