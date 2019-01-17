@@ -1,5 +1,3 @@
-image: php:7.2
-
 # Select what we should cache between builds
 cache:
   untracked: true
@@ -43,6 +41,7 @@ variables:
 # Run our tests
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
 test:
+  image: tetraweb/php:7.2
   services:
     - mysql:5.7
   script:
