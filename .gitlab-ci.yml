@@ -2,8 +2,10 @@ image: php:7.2
 
 # Select what we should cache between builds
 cache:
+  untracked: true
+  key: "$CI_BUILD_REF_NAME"
   paths:
-  - vendor/
+    - vendor/
 
 before_script:
 - apt-get update -yqq
