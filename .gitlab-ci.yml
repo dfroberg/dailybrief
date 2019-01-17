@@ -23,6 +23,7 @@ before_script:
 # Install and run Composer
 - curl -sS https://getcomposer.org/installer | php
 - php composer.phar install
+- chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
 # Install PHPCS and WPCS
 - composer global require "squizlabs/php_codesniffer=*"
 - composer global require "wp-coding-standards/wpcs"
