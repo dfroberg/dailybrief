@@ -38,7 +38,7 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'PLUGIN_NAME_VERSION', '0.0.10' );
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
-    require_once 'class-dailybrief-cli-command.php';
+    require_once plugin_dir_path( __FILE__ ) . 'includes/class-dailybrief-cli-command.php';
 }
 /**
  * The code that runs during plugin activation.
