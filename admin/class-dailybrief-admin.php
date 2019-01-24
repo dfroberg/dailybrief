@@ -125,4 +125,15 @@ class Dailybrief_Admin {
 		include_once( 'partials/dailybrief-admin-display.php' );
 	}
 
+	public function options_update() {
+		register_setting( $this->plugin_name, $this->plugin_name, array( $this, 'validate' ) );
+	}
+
+	public function validate( $input ) {
+		// All checkboxes inputs
+		$valid = array();
+
+		return $valid;
+	}
+
 }
