@@ -6,6 +6,7 @@
  * License:     GNU General Public License v3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * GitLab Plugin URI: https://gitlab.froberg.org/dfroberg/dailybrief
+ *
  * @package DailyBrief_CLI_Command
  * Version: 0.0.9
  */
@@ -17,10 +18,8 @@ defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 
 	/** @noinspection AutoloadingIssuesInspection */
-
 	class DailyBrief_CLI_Command extends WP_CLI_Command {
 		/** @noinspection MagicMethodsValidityInspection */
-
 		private $date_suffix = '';
 		private $temp_featured_image_url = '';
 		private $post_id_created = 0;
