@@ -4,4 +4,3 @@
  *
  * @package DailyBrief_CLI_Command
  */
-
