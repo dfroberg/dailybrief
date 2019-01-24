@@ -1,18 +1,35 @@
 <?php
 /**
- * Plugin Name: Daily Brief
- * Description: WP-CLI command plugin to generate a daily brief of todays posts.
- * Author:      Danny Froberg
- * License:     GNU General Public License v3 or later
- * License URI: http://www.gnu.org/licenses/gpl-3.0.html
- * GitLab Plugin URI: https://gitlab.froberg.org/dfroberg/dailybrief
+ * The plugin bootstrap file
  *
- * @package DailyBrief_CLI_Command
- * Version: 0.0.9
+ * This file is read by WordPress to generate the plugin information in the plugin
+ * admin area. This file also includes all of the dependencies used by the plugin,
+ * registers the activation and deactivation functions, and defines a function
+ * that starts the plugin.
+ *
+ * @link              https://www.froberg.org
+ * @since             1.0.0
+ * @package           Dailybrief
+ *
+ * @wordpress-plugin
+ * Plugin Name:       Dailybrief
+ * Plugin URI:        https://gitlab.froberg.org/dfroberg/dailybrief
+ * Description:       WP-CLI command plugin to generate a daily brief of a days posts.
+ * Version:           0.0.10
+ * Author:            Daniel Froberg
+ * Author URI:        https://www.froberg.org
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       dailybrief
+ * Domain Path:       /languages
+ * GitLab Plugin URI: https://gitlab.froberg.org/dfroberg/dailybrief
  */
+
 
 // Basic security, prevents file from being loaded directly.
 defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
+// Bail if WP-CLI is not present
+if ( !defined( 'WP_CLI' ) ) return;
 
 // Only accessible from WP-CLI
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
