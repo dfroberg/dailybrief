@@ -103,24 +103,24 @@ class Dailybrief {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( __FILE__ ) . 'includes/class-dailybrief-loader.php';
+		require_once plugin_dir_path( __FILE__ ) . '../includes/class-dailybrief-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( __FILE__ ) . 'includes/class-dailybrief-i18n.php';
+		require_once plugin_dir_path( __FILE__ ) . '../includes/class-dailybrief-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( __FILE__ ) . 'admin/class-dailybrief-admin.php';
+		require_once plugin_dir_path( __FILE__ ) . '../admin/class-dailybrief-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( __FILE__ ) . 'public/class-dailybrief-public.php';
+		require_once plugin_dir_path( __FILE__ ) . '../public/class-dailybrief-public.php';
 
 		$this->loader = new Dailybrief_Loader();
 
