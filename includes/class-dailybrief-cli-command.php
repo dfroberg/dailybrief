@@ -10,21 +10,8 @@
  * @link              https://www.froberg.org
  * @since             1.0.0
  * @package           Dailybrief
- *
- * @wordpress-plugin
- * Plugin Name:       Dailybrief
- * Plugin URI:        https://gitlab.froberg.org/dfroberg/dailybrief
- * Description:       WP-CLI command plugin to generate a daily brief of a days posts.
- * Version:           0.0.10
- * Author:            Daniel Froberg
- * Author URI:        https://www.froberg.org
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       dailybrief
- * Domain Path:       /languages
- * GitLab Plugin URI: https://gitlab.froberg.org/dfroberg/dailybrief
+ * @subpackage        Dailybrief/cli
  */
-
 
 // Basic security, prevents file from being loaded directly.
 defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
