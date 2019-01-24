@@ -559,13 +559,13 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 					if ( $this->include_toc === 1 ) {
 						$toc_items .= '<li>';
 						if ( $this->include_toc_local_hrefs === 1 ) {
-							$toc_items .= '<a href="#author_permlink' . $id . '">';
+							$toc_items .= '<a href="#_author_permlink_' . $id . '">';
 						}
 						$toc_items .= $title . '</a></li>';
 					}
 
 					if ( $this->include_toc_local_hrefs === 1 ) {
-						$article .= ( '<a id="author_permlink' . $id . '" name="author_permlink' . $id . '"></a>' );
+						$article .= ( '<a id="_author_permlink_' . $id . '" name="_author_permlink_' . $id . '"></a>' );
 					}
 					$article .= ( '<img src="' . get_the_post_thumbnail_url( $id, 'full' ) . '">' );
 					$article .= ( '<h2><a href="' . get_permalink( $id ) . $this->url_suffix . '" target="dailybrief">' . $title . '</a></h2>' );
@@ -597,7 +597,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 					$stats = $this->article_stats_txt . ' ' . $article_count;
 				}
 
-				if ( is_array( $article_categories ) && count( $article_categories ) > 0 ) {
+				if ( is_array( $article_categories ) && @count( $article_categories ) > 0 ) {
 					$article_categories = array_unique( $article_categories );
 					if ( false !== stripos( $header, '{article_categories}' ) ) {
 						$header = str_replace( '{article_categories}', implode( ', ', $article_categories ), $header );
@@ -606,7 +606,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 					}
 				}
 
-				if ( is_array( $article_tags ) && count( $article_tags ) > 0 ) {
+				if ( is_array( $article_tags ) && @count( $article_tags ) > 0 ) {
 					$article_tags = array_unique( $article_tags );
 					if ( false !== stripos( $header, '{article_tags}' ) ) {
 						$header = str_replace( '{article_tags}', implode( ', ', $article_tags ), $header );
@@ -643,7 +643,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 				$this->update_globals();
 
 				// Unfurl tags if any
-				$post_tags = null;
+				$post_tags = array();
 				if ( strlen( $this->post_tags ) !== '' ) {
 					$post_tags = @explode( ',', $this->post_tags );
 				}
@@ -657,7 +657,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 					$this->post_id_created = $wp_insert_post_result;
 					WP_CLI::log( '* Created ' . $this->post_id_created . ' - "' . $this->post_title . '" on ' . $this->slug );
 					// Append Tags if any set
-					if ( is_array( $post_tags ) && count( $post_tags ) > 0 ) {
+					if ( is_array( $post_tags ) && @count( $post_tags ) > 0 ) {
 						$set_tags = wp_set_post_tags( $this->post_id_created, $post_tags, false );
 						if ( ! is_wp_error( $set_tags ) ) {
 							WP_CLI::log( '* Set tags ' . @implode( ', ', $post_tags ) );
