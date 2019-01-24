@@ -135,7 +135,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		public function __construct() {
 			WP_CLI_Command::__construct();
 			// constructor called when plugin loads
-			self::update_globals();
+			$this->update_globals();
 		}
 
 		/**
