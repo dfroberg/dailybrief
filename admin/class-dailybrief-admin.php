@@ -101,4 +101,28 @@ class Dailybrief_Admin {
 
 	}
 
+	/**
+	 * Register the administration menu for this plugin into the WordPress Dashboard menu.
+	 *
+	 * @since    1.0.0
+	 */
+
+	public function add_plugin_admin_menu() {
+		add_options_page( 'DailyBrief Options', 'DailyBrief', 'manage_options', $this->plugin_name, array(
+				$this,
+				'display_plugin_setup_page'
+			)
+		);
+	}
+
+	/**
+	 * Render the settings page for this plugin.
+	 *
+	 * @since    1.0.0
+	 */
+
+	public function display_plugin_setup_page() {
+		include_once( 'partials/dailybrief-admin-display.php' );
+	}
+
 }
