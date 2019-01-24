@@ -115,6 +115,8 @@ class Dailybrief {
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( __FILE__ ) . '../admin/class-dailybrief-admin.php';
+		require_once plugin_dir_path( __FILE__ ) . '../admin/class-submenu.php';
+
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
