@@ -20,32 +20,113 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	/** @noinspection AutoloadingIssuesInspection */
 	class DailyBrief_CLI_Command extends WP_CLI_Command {
 		/** @noinspection MagicMethodsValidityInspection */
+		/**
+		 * @var string
+		 */
 		private $date_suffix = '';
+		/**
+		 * @var string
+		 */
 		private $temp_featured_image_url = '';
+		/**
+		 * @var int
+		 */
 		private $post_id_created = 0;
+		/**
+		 * @var array
+		 */
 		private $options;
+		/**
+		 * @var
+		 */
 		private $debug;
+		/**
+		 * @var
+		 */
 		private $include_toc;
+		/**
+		 * @var
+		 */
 		private $include_toc_local_hrefs;
+		/**
+		 * @var
+		 */
 		private $url_suffix;
+		/**
+		 * @var
+		 */
 		private $excerpt_words;
+		/**
+		 * @var
+		 */
 		private $post_title;
+		/**
+		 * @var
+		 */
 		private $author_id;
+		/**
+		 * @var
+		 */
 		private $post_category;
+		/**
+		 * @var
+		 */
 		private $post_tags;
+		/**
+		 * @var
+		 */
 		private $always_skip_category;
+		/**
+		 * @var
+		 */
 		private $always_skip_tags;
+		/**
+		 * @var
+		 */
 		private $slug;
+		/**
+		 * @var
+		 */
 		private $comment_status;
+		/**
+		 * @var
+		 */
 		private $ping_status;
+		/**
+		 * @var
+		 */
 		private $post_status;
+		/**
+		 * @var
+		 */
 		private $post_type;
+		/**
+		 * @var
+		 */
 		private $article_delimiter;
+		/**
+		 * @var
+		 */
 		private $article_continue;
+		/**
+		 * @var
+		 */
 		private $article_stats_txt;
+		/**
+		 * @var
+		 */
 		private $article_stats_cats_txt;
+		/**
+		 * @var
+		 */
 		private $article_stats_tags_txt;
+		/**
+		 * @var
+		 */
 		private $featured_image_url;
+		/**
+		 * @var string
+		 */
 		private $content_buffer = '';
 
 		/**
