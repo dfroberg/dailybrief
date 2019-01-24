@@ -603,12 +603,12 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 									WP_CLI::warning( '? SteemPress API post failed for some reason :-( ' );
 								}
 							} catch ( Exception $e ) {
-								WP_CLI::error( "*** Error - SteemPress Call Blew up " . $e->getMessage() );
+								WP_CLI::error( '*** Error - SteemPress Call Blew up ' . $e->getMessage() );
 							}
 						}
 					}
 				} else {
-					WP_CLI::error( "*** Error - could not create the post...\n" . $wp_insert_post_result->get_error_message() );
+					WP_CLI::error( '*** Error - could not create the post...\n' . $wp_insert_post_result->get_error_message() );
 				}
 			}
 		}
@@ -618,6 +618,6 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	try {
 		WP_CLI::add_command( 'dailybrief', 'DailyBrief_CLI_Command' );
 	} catch ( Exception $e ) {
-		WP_CLI::error( "*** WP_CLI threw an exception: " . $e->getMessage() );
+		WP_CLI::error( '*** WP_CLI threw an exception: ' . $e->getMessage() );
 	}
 }
