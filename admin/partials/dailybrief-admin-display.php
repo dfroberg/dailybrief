@@ -35,12 +35,12 @@ if (!isset($options['test'])) { $options['test¨'] = ''; }
         <br/>
         <p> Header text : <br> the tag {article_categories} and {article_tags} will be replaced by the categories and tags respectively covered by the articles included in the daily briefs. </p>
 <?php
-$settings = array( 'rows'=>5,'textarea_name' => $this->plugin_name.'-header' );
+$settings = array( 'rows'=>5,'textarea_name' => $this->plugin_name.'[header]' );
 wp_editor(  ($options["header"] == '' ? '<p>This is the header, this summary contains {article_count} articles about {article_categories}.</p>' : $options['header']), 'headereditor', $settings );
 ?>
         <p> Footer text : <br> the tag {article_categories} and {article_tags} will be replaced by the categories and tags respectively covered by the articles included in the daily briefs. </p>
 <?php
-$settings = array( 'rows'=>5,'textarea_name' => $this->plugin_name.'-footer' );
+$settings = array( 'rows'=>5,'textarea_name' => $this->plugin_name.'[footer]' );
 wp_editor(  ($options["footer"] == '' ? '<p>This is the footer {article_tags}.</p>' : $options['footer']), 'footereditor', $settings );
 ?>
 		<?php
