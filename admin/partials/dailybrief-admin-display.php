@@ -48,15 +48,15 @@ if (!isset($options['test'])) { $options['test¨'] = ''; }
             jQuery(document).ready(function() {
                 let $<?php echo $this->plugin_name; ?>_header = '';
                 jQuery('#<?php echo $this->plugin_name; ?>_header').keyup(function() {
-                    $<?php echo $this->plugin_name; ?>_header = $(this).val();
-                    $<?php echo $this->plugin_name; ?>_header = $<?php echo $this->plugin_name; ?>_header.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
+                    $<?php echo $this->plugin_name; ?>_header = jQuery(this).val();
+                    $<?php echo $this->plugin_name; ?>_header = jQuery<?php echo $this->plugin_name; ?>_header.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
                     jQuery('#live-preview-header').html( <?php echo $this->plugin_name; ?>_header );
                 });
 
                 let $<?php echo $this->plugin_name; ?>_footer = '';
                 jQuery('#<?php echo $this->plugin_name; ?>_footer').keyup(function() {
-                    $<?php echo $this->plugin_name; ?>_footer = $(this).val();
-                    $<?php echo $this->plugin_name; ?>_footer = $<?php echo $this->plugin_name; ?>_footer.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
+                    $<?php echo $this->plugin_name; ?>_footer = jQuery(this).val();
+                    $<?php echo $this->plugin_name; ?>_footer = jQuery<?php echo $this->plugin_name; ?>_footer.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
                     jQuery('#live-preview-footer').html( $<?php echo $this->plugin_name; ?>_footer );
                 });
             });
