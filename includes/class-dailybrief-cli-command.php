@@ -275,14 +275,14 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			if ( ! empty( $this->options ) ) {
 				$this->options[ $option_name ] = $option_value;
 				// The option already exists, so we just update it.
-				update_option( 'dailybrief_options', $this->options );
+				update_option( $this->plugin_name, $this->options );
 				WP_CLI::log( 'Updated ' . $option_name . ' = ' . $option_value );
 			} else {
 				// The option hasn't been added yet. We'll add it with $autoload set to 'no'.
 				$deprecated                    = null;
 				$autoload                      = 'no';
 				$this->options[ $option_name ] = $option_value;
-				add_option( 'dailybrief_options', $this->options, $deprecated, $autoload );
+				add_option( $this->plugin_name, $this->options, $deprecated, $autoload );
 				WP_CLI::log( 'Added ' . $option_name . ' = ' . $option_value );
 			}
 		}
