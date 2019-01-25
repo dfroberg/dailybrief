@@ -35,31 +35,31 @@ if (!isset($options['test'])) { $options['test¨'] = ''; }
         <br/>
         <p> Header text : <br>  the tag {article_categories} and {article_tags} will be replaced by the categories and tags respectively covered by the articles included in the daily briefs. </p>
         <br/>
-        <textarea maxlength="30000" type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>-header" name="<?php echo $this->plugin_name; ?>[header]"><?php echo ($options["header"] == '' ? '<p>This is the header, this summary contains {article_count} articles about {article_categories}.</p>' : $options['header']) ?></textarea>
+        <textarea maxlength="30000" type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>_header" name="<?php echo $this->plugin_name; ?>[header]"><?php echo ($options["header"] == '' ? '<p>This is the header, this summary contains {article_count} articles about {article_categories}.</p>' : $options['header']) ?></textarea>
         <br />
         <div id="preview-box-header"><div class="comment-by">Live Preview</div><div id="live-preview-header"></div></div>
         <script type="text/javascript">
             $(document).ready(function() {
-                var $<?php echo $this->plugin_name; ?>-header = '';
-                $('#<?php echo $this->plugin_name; ?>-header').keyup(function() {
-                    $<?php echo $this->plugin_name; ?>-header = $(this).val();
-                    $<?php echo $this->plugin_name; ?>-header = $<?php echo $this->plugin_name; ?>-header.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
+                var $<?php echo $this->plugin_name; ?>_header = '';
+                $('#<?php echo $this->plugin_name; ?>_header').keyup(function() {
+                    $<?php echo $this->plugin_name; ?>_header = $(this).val();
+                    $<?php echo $this->plugin_name; ?>_header = $<?php echo $this->plugin_name; ?>_header.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
                     $('#live-preview-header').html( $comment );
                 });
             });
         </script>
         <p> Footer text : <br>  the tag {article_categories} and {article_tags} will be replaced by the categories and tags respectively covered by the articles included in the daily briefs. </p>
         <br/>
-        <textarea maxlength="30000" type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>-footer" name="<?php echo $this->plugin_name; ?>[footer]"><?php echo ($options["footer"] == '' ? '<p>This is the footer {article_tags}.</p>' : $options['footer']) ?></textarea>
+        <textarea maxlength="30000" type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>_footer" name="<?php echo $this->plugin_name; ?>[footer]"><?php echo ($options["footer"] == '' ? '<p>This is the footer {article_tags}.</p>' : $options['footer']) ?></textarea>
         <br />
         <div id="preview-box-footer"><div class="comment-by">Live Preview</div><div id="live-preview-footer"></div></div>
         <script type="text/javascript">
             $(document).ready(function() {
-                var $<?php echo $this->plugin_name; ?>-footer = '';
-                $('#<?php echo $this->plugin_name; ?>-footer').keyup(function() {
-                    $<?php echo $this->plugin_name; ?>-footer = $(this).val();
-                    $<?php echo $this->plugin_name; ?>-footer = $<?php echo $this->plugin_name; ?>-footer.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
-                    $('#live-preview-footer').html( $<?php echo $this->plugin_name; ?>-footer );
+                var $<?php echo $this->plugin_name; ?>_footer = '';
+                $('#<?php echo $this->plugin_name; ?>_footer').keyup(function() {
+                    $<?php echo $this->plugin_name; ?>_footer = $(this).val();
+                    $<?php echo $this->plugin_name; ?>_footer = $<?php echo $this->plugin_name; ?>_footer.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
+                    $('#live-preview-footer').html( $<?php echo $this->plugin_name; ?>_footer );
                 });
             });
         </script>
