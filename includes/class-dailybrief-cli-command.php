@@ -27,6 +27,10 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 
 	class DailyBrief_CLI_Command extends WP_CLI_Command {
 		/** @noinspection MagicMethodsValidityInspection */
+        /**
+         * @var string
+         */
+		private $plugin_name = 'dailybrief';
 		/**
 		 * @var string
 		 */
@@ -149,7 +153,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		 * Re applies the defaults with options
 		 */
 		private function update_globals() {
-			$this->options            = get_option( 'dailybrief_options', array() );
+			$this->options            = get_option( $this->plugin_name /* 'dailybrief_options' */, array() );
 			$this->debug              = $this->get_option_default( 'debug', 0 ); // 1 for on
 			$this->include_toc        = $this->get_option_default( 'include_toc', 1 ); // 1 for on / 0 for off
 			$this->include_toc_local_hrefs
