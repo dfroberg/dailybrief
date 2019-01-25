@@ -34,14 +34,19 @@ if (!isset($options['test'])) { $options['test¨'] = ''; }
                value="<?php echo htmlspecialchars( $options["test"], ENT_QUOTES ); ?>"/>
         <br/>
         <p> Header text : <br>  the tag {article_categories} and {article_tags} will be replaced by the categories and tags respectively covered by the articles included in the daily briefs. </p>
-        <textarea maxlength="30000" type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>_header" name="<?php echo $this->plugin_name; ?>[header]"><?php echo ($options["header"] == '' ? '<p>This is the header, this summary contains {article_count} articles about {article_categories}.</p>' : $options['header']) ?></textarea>
-        <div id="preview-box-header"><div class="comment-by"><strong>Header Preview</strong></div><div id="live-preview-header"></div></div>
+        <textarea style="display:none" maxlength="30000" type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>_header" name="<?php echo $this->plugin_name; ?>[header]"><?php echo ($options["header"] == '' ? '<p>This is the header, this summary contains {article_count} articles about {article_categories}.</p>' : $options['header']) ?></textarea>
+        <div style="display:none" id="preview-box-header"><div class="comment-by"><strong>Header Preview</strong></div><div id="live-preview-header"></div></div>
 
         <p> Footer text : <br>  the tag {article_categories} and {article_tags} will be replaced by the categories and tags respectively covered by the articles included in the daily briefs. </p>
-        <textarea maxlength="30000" type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>_footer" name="<?php echo $this->plugin_name; ?>[footer]"><?php echo ($options["footer"] == '' ? '<p>This is the footer {article_tags}.</p>' : $options['footer']) ?></textarea>
-        <div id="preview-box-footer"><div class="comment-by"><strong>Footer Preview</strong></div><div id="live-preview-footer"></div></div>
-
-        <script type="text/javascript">
+        <textarea style="display:none" maxlength="30000" type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>_footer" name="<?php echo $this->plugin_name; ?>[footer]"><?php echo ($options["footer"] == '' ? '<p>This is the footer {article_tags}.</p>' : $options['footer']) ?></textarea>
+        <div style="display:none" id="preview-box-footer"><div class="comment-by"><strong>Footer Preview</strong></div><div id="live-preview-footer"></div></div>
+<?php
+$settings = array( 'textarea_name' => $this->plugin_name.'_header' );
+wp_editor(  ($options["header"] == '' ? '<p>This is the header, this summary contains {article_count} articles about {article_categories}.</p>' : $options['header']), 'header', $settings );
+$settings = array( 'textarea_name' => $this->plugin_name.'_footer' );
+wp_editor(  ($options["footer"] == '' ? '<p>This is the footer {article_tags}.</p>' : $options['footer']), 'footer', $settings );
+?>
+        <!-- script type="text/javascript">
             jQuery(document).ready(function() {
                 let $<?php echo $this->plugin_name; ?>_header = '';
                 jQuery('#<?php echo $this->plugin_name; ?>_header').on('show', function() {
@@ -67,7 +72,7 @@ if (!isset($options['test'])) { $options['test¨'] = ''; }
                     jQuery('#live-preview-footer').html( $<?php echo $this->plugin_name; ?>_footer );
                 });
             });
-        </script>
+        </script -->
 		<?php
 
 
