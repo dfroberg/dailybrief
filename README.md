@@ -1,7 +1,28 @@
-# dailybrief
+=== Plugin Name ===
+Contributors: dfroberg, howo
+Donate link: https://www.froberg.org
+Tags: posts, automation
+Requires at least: 3.0.1
+Tested up to: 5.0
+Stable tag: 1.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-## Description:
-WP_CLI command plugin to generate a simple daily daily brief with the posts of the day
+Plugin with WP_CLI support to generate a simple daily daily brief with the posts of the day
+
+== Description ==
+
+== Installation ==
+
+This section describes how to install the plugin and get it working.
+
+e.g.
+
+1. Upload `dailybrief.php` to the `/wp-content/plugins/` directory
+1. Activate the plugin through the 'Plugins' menu in WordPress
+1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+
+== Frequently Asked Questions ==
 
 #### Note:
 This is still alpha grade code, and subject to change!
