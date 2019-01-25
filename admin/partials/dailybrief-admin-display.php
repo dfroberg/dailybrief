@@ -30,12 +30,12 @@ $options = get_option( $this->plugin_name );
                value="<?php echo htmlspecialchars( $options["test"], ENT_QUOTES ); ?>"/>
         <br/>
         <p>Header : </p>
-        <input type="text" class="regular-text" maxlength="16" id="<?php echo $this->plugin_name; ?>-header"
+        <input type="text" class="regular-text" maxlength="250" id="<?php echo $this->plugin_name; ?>-header"
                name="<?php echo $this->plugin_name; ?>[header]"
                value="<?php echo htmlspecialchars( $options["header"], ENT_QUOTES ); ?>"/>
         <br/>
         <p>Footer : </p>
-        <input type="text" class="regular-text" maxlength="16" id="<?php echo $this->plugin_name; ?>-footer"
+        <input type="text" class="regular-text" maxlength="250" id="<?php echo $this->plugin_name; ?>-footer"
                name="<?php echo $this->plugin_name; ?>[footer]"
                value="<?php echo htmlspecialchars( $options["footer"], ENT_QUOTES ); ?>"/>
         <br/>
