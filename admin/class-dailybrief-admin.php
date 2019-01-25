@@ -142,8 +142,8 @@ class Dailybrief_Admin {
 	public function validate( $input ) {
 		$valid         = array();
 		$valid['test'] = ( isset( $input['test'] ) && ! empty( $input['test'] ) ) ? htmlspecialchars( $input['test'], ENT_QUOTES ) : '';
-        $valid['footer'] = ( isset( $input['footer'] ) && ! empty( $input['footer'] ) ) ? htmlspecialchars( $input['footer'], ENT_QUOTES ) : '';
-        $valid['header'] = ( isset( $input['header'] ) && ! empty( $input['header'] ) ) ? htmlspecialchars( $input['header'], ENT_QUOTES ) : '';
+        $valid['footer'] = ( isset( $input['footer'] ) && ! empty( $input['footer'] ) ) ? ( $input['footer'] ) : '';
+        $valid['header'] = ( isset( $input['header'] ) && ! empty( $input['header'] ) ) ? ( $input['header'] ) : '';
 		return $valid;
 	}
 

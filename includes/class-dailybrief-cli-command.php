@@ -259,7 +259,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		 *
 		 * ## EXAMPLES
 		 *
-		 *      wp dailybrief set header '<h1>This is the header, this summary contains {article_count} articles about {article_categories}.</h1>'
+		 *      wp dailybrief set header '<p>This is the header, this summary contains {article_count} articles about {article_categories}.</p>'
 		 *      wp dailybrief set footer '<h1>This is the footer.</h1>'
 		 *      wp dailybrief set post_title 'The Your Site Daily Brief'
 		 *      wp dailybrief set post_status 'draft'
