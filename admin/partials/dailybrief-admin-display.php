@@ -21,7 +21,6 @@ if (!isset($options['test'])) { $options['test¨'] = ''; }
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <div class="wrap">
     <h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
@@ -38,12 +37,9 @@ if (!isset($options['test'])) { $options['test¨'] = ''; }
         <br/>
         <textarea maxlength="30000" type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>-header" name="<?php echo $this->plugin_name; ?>[header]"><?php echo ($options["header"] == '' ? '<p>This is the header, this summary contains {article_count} articles about {article_categories}.</p>' : $options['header']) ?></textarea>
         <br />
-
+        <div id="preview-box-header"><div class="comment-by">Live Preview</div><div id="live-preview-header"></div></div>
         <script type="text/javascript">
             $(document).ready(function() {
-                $('#<?php echo $this->plugin_name; ?>-header').one("focus", function() {
-                    $('#<?php echo $this->plugin_name; ?>-header').parent().after('<div id="preview-box-header"><div class="comment-by">Live Comment Preview</div><div id="live-preview-header"></div></div>');
-                });
                 var $<?php echo $this->plugin_name; ?>-header = '';
                 $('#<?php echo $this->plugin_name; ?>-header').keyup(function() {
                     $<?php echo $this->plugin_name; ?>-header = $(this).val();
@@ -56,11 +52,9 @@ if (!isset($options['test'])) { $options['test¨'] = ''; }
         <br/>
         <textarea maxlength="30000" type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>-footer" name="<?php echo $this->plugin_name; ?>[footer]"><?php echo ($options["footer"] == '' ? '<p>This is the footer {article_tags}.</p>' : $options['footer']) ?></textarea>
         <br />
+        <div id="preview-box-footer"><div class="comment-by">Live Preview</div><div id="live-preview-footer"></div></div>
         <script type="text/javascript">
             $(document).ready(function() {
-                $('#<?php echo $this->plugin_name; ?>-footer').one("focus", function() {
-                    $('#<?php echo $this->plugin_name; ?>-footer').parent().after('<div id="preview-box-footer"><div class="comment-by">Live Comment Preview</div><div id="live-preview-footer"></div></div>');
-                });
                 var $<?php echo $this->plugin_name; ?>-footer = '';
                 $('#<?php echo $this->plugin_name; ?>-footer').keyup(function() {
                     $<?php echo $this->plugin_name; ?>-footer = $(this).val();
