@@ -35,15 +35,20 @@ if (!isset($options['test'])) { $options['test¨'] = ''; }
         <br/>
         <p> Header text : <br>  the tag {article_categories} and {article_tags} will be replaced by the categories and tags respectively covered by the articles included in the daily briefs. </p>
         <textarea maxlength="30000" type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>_header" name="<?php echo $this->plugin_name; ?>[header]"><?php echo ($options["header"] == '' ? '<p>This is the header, this summary contains {article_count} articles about {article_categories}.</p>' : $options['header']) ?></textarea>
-        <div id="preview-box-header"><div class="comment-by">Header Preview</div><div id="live-preview-header"></div></div>
+        <div id="preview-box-header"><div class="comment-by"><strong>Header Preview</strong></div><div id="live-preview-header"></div></div>
 
         <p> Footer text : <br>  the tag {article_categories} and {article_tags} will be replaced by the categories and tags respectively covered by the articles included in the daily briefs. </p>
         <textarea maxlength="30000" type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>_footer" name="<?php echo $this->plugin_name; ?>[footer]"><?php echo ($options["footer"] == '' ? '<p>This is the footer {article_tags}.</p>' : $options['footer']) ?></textarea>
-        <div id="preview-box-footer"><div class="comment-by">Footer Preview</div><div id="live-preview-footer"></div></div>
+        <div id="preview-box-footer"><div class="comment-by"><strong>Footer Preview</strong></div><div id="live-preview-footer"></div></div>
 
         <script type="text/javascript">
             jQuery(document).ready(function() {
                 let $<?php echo $this->plugin_name; ?>_header = '';
+                jQuery('#<?php echo $this->plugin_name; ?>_header').one(function() {
+                    $<?php echo $this->plugin_name; ?>_header = jQuery(this).val();
+                    $<?php echo $this->plugin_name; ?>_header = $<?php echo $this->plugin_name; ?>_header.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
+                    jQuery('#live-preview-header').html( $<?php echo $this->plugin_name; ?>_header );
+                });
                 jQuery('#<?php echo $this->plugin_name; ?>_header').keyup(function() {
                     $<?php echo $this->plugin_name; ?>_header = jQuery(this).val();
                     $<?php echo $this->plugin_name; ?>_header = $<?php echo $this->plugin_name; ?>_header.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
@@ -51,6 +56,11 @@ if (!isset($options['test'])) { $options['test¨'] = ''; }
                 });
 
                 let $<?php echo $this->plugin_name; ?>_footer = '';
+                jQuery('#<?php echo $this->plugin_name; ?>_footer').one(function() {
+                    $<?php echo $this->plugin_name; ?>_footer = jQuery(this).val();
+                    $<?php echo $this->plugin_name; ?>_footer = $<?php echo $this->plugin_name; ?>_footer.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
+                    jQuery('#live-preview-footer').html( $<?php echo $this->plugin_name; ?>_footer );
+                });
                 jQuery('#<?php echo $this->plugin_name; ?>_footer').keyup(function() {
                     $<?php echo $this->plugin_name; ?>_footer = jQuery(this).val();
                     $<?php echo $this->plugin_name; ?>_footer = $<?php echo $this->plugin_name; ?>_footer.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
