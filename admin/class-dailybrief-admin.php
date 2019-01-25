@@ -125,10 +125,20 @@ class Dailybrief_Admin {
 		include_once( 'partials/dailybrief-admin-display.php' );
 	}
 
+	/**
+	 * Update settings from plugins options page.
+	 *
+	 * @since    1.0.0
+	 */
 	public function options_update() {
 		register_setting( $this->plugin_name, $this->plugin_name, array( $this, 'validate' ) );
 	}
 
+	/**
+	 * Validate settings from plugins options page.
+	 *
+	 * @since    1.0.0
+	 */
 	public function validate( $input ) {
 		$valid         = array();
 		$valid['test'] = ( isset( $input['test'] ) && ! empty( $input['test'] ) ) ? htmlspecialchars( $input['test'], ENT_QUOTES ) : "";
