@@ -33,43 +33,16 @@ if (!isset($options['test'])) { $options['test¨'] = ''; }
                name="<?php echo $this->plugin_name; ?>[test]"
                value="<?php echo htmlspecialchars( $options["test"], ENT_QUOTES ); ?>"/>
         <br/>
-        <p> Header text : <br>  the tag {article_categories} and {article_tags} will be replaced by the categories and tags respectively covered by the articles included in the daily briefs. </p>
+        <p> Header text : <br> the tag {article_categories} and {article_tags} will be replaced by the categories and tags respectively covered by the articles included in the daily briefs. </p>
 <?php
-$settings = array( 'textarea_name' => $this->plugin_name.'_header' );
+$settings = array( 'rows'=>5,'textarea_name' => $this->plugin_name.'-header' );
 wp_editor(  ($options["header"] == '' ? '<p>This is the header, this summary contains {article_count} articles about {article_categories}.</p>' : $options['header']), 'headereditor', $settings );
 ?>
-        <p> Footer text : <br>  the tag {article_categories} and {article_tags} will be replaced by the categories and tags respectively covered by the articles included in the daily briefs. </p>
+        <p> Footer text : <br> the tag {article_categories} and {article_tags} will be replaced by the categories and tags respectively covered by the articles included in the daily briefs. </p>
 <?php
-$settings = array( 'textarea_name' => $this->plugin_name.'_footer' );
+$settings = array( 'rows'=>5,'textarea_name' => $this->plugin_name.'-footer' );
 wp_editor(  ($options["footer"] == '' ? '<p>This is the footer {article_tags}.</p>' : $options['footer']), 'footereditor', $settings );
 ?>
-        <!-- script type="text/javascript">
-            jQuery(document).ready(function() {
-                let $<?php echo $this->plugin_name; ?>_header = '';
-                jQuery('#<?php echo $this->plugin_name; ?>_header').on('show', function() {
-                    $<?php echo $this->plugin_name; ?>_header = jQuery(this).val();
-                    $<?php echo $this->plugin_name; ?>_header = $<?php echo $this->plugin_name; ?>_header.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
-                    jQuery('#live-preview-header').html( $<?php echo $this->plugin_name; ?>_header );
-                });
-                jQuery('#<?php echo $this->plugin_name; ?>_header').keyup(function() {
-                    $<?php echo $this->plugin_name; ?>_header = jQuery(this).val();
-                    $<?php echo $this->plugin_name; ?>_header = $<?php echo $this->plugin_name; ?>_header.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
-                    jQuery('#live-preview-header').html( $<?php echo $this->plugin_name; ?>_header );
-                });
-
-                let $<?php echo $this->plugin_name; ?>_footer = '';
-                jQuery('#<?php echo $this->plugin_name; ?>_footer').on('show',function() {
-                    $<?php echo $this->plugin_name; ?>_footer = jQuery(this).val();
-                    $<?php echo $this->plugin_name; ?>_footer = $<?php echo $this->plugin_name; ?>_footer.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
-                    jQuery('#live-preview-footer').html( $<?php echo $this->plugin_name; ?>_footer );
-                });
-                jQuery('#<?php echo $this->plugin_name; ?>_footer').keyup(function() {
-                    $<?php echo $this->plugin_name; ?>_footer = jQuery(this).val();
-                    $<?php echo $this->plugin_name; ?>_footer = $<?php echo $this->plugin_name; ?>_footer.replace(/\n/g, "<br />").replace(/\n\n+/g, '<br /><br />');
-                    jQuery('#live-preview-footer').html( $<?php echo $this->plugin_name; ?>_footer );
-                });
-            });
-        </script -->
 		<?php
 
 
