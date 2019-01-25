@@ -130,9 +130,8 @@ class Dailybrief_Admin {
 	}
 
 	public function validate( $input ) {
-		// All checkboxes inputs
-		$valid = array();
-
+		$valid         = array();
+		$valid['test'] = ( isset( $input['test'] ) && ! empty( $input['test'] ) ) ? htmlspecialchars( $input['test'], ENT_QUOTES ) : "";
 		return $valid;
 	}
 
