@@ -30,7 +30,18 @@ class Dailybrief_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
+        register_activation_hook(__FILE__, 'dailybrief_activation');
+        add_action('dailybrief_daily_event', 'dailybrief_do_daily_event');
 	}
+
+    function dailybrief_activation() {
+        if (! wp_next_scheduled ( 'dailybrief_daily_event' )) {
+            wp_schedule_event(time(), 'daily', 'dailybrief_daily_event');
+        }
+    }
+
+    function dailybrief_do_daily_event() {
+        // do brief every day
+    }
 
 }

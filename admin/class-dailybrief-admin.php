@@ -140,10 +140,29 @@ class Dailybrief_Admin {
 	 * @since    1.0.0
 	 */
 	public function validate( $input ) {
+	    // TODO: Instead of repeating defaults here, read them in from the main class and we'll do that everywhere. Also if a option is set with a value already use that as defaults instead.
 		$valid         = array();
-		$valid['test'] = ( isset( $input['test'] ) && ! empty( $input['test'] ) ) ? htmlspecialchars( $input['test'], ENT_QUOTES ) : '';
+		$valid['debug'] = ( isset( $input['debug'] ) && ! empty( $input['debug'] ) ) ? htmlspecialchars( $input['debug'], ENT_QUOTES ) : '0';
+        $valid['include_toc'] = ( isset( $input['include_toc'] ) && ! empty( $input['include_toc'] ) ) ? htmlspecialchars( $input['include_toc'], ENT_QUOTES ) : '0';
+        $valid['include_toc_local_hrefs'] = ( isset( $input['include_toc_local_hrefs'] ) && ! empty( $input['include_toc_local_hrefs'] ) ) ? htmlspecialchars( $input['include_toc_local_hrefs'], ENT_QUOTES ) : '0';
         $valid['footer'] = ( isset( $input['footer'] ) && ! empty( $input['footer'] ) ) ? ( $input['footer'] ) : '';
         $valid['header'] = ( isset( $input['header'] ) && ! empty( $input['header'] ) ) ? ( $input['header'] ) : '';
+        $valid['author_id'] = ( isset( $input['author_id'] ) && ! empty( $input['author_id'] ) ) ? ( $input['author_id'] ) : '';
+        $valid['post_category'] = ( isset( $input['post_category'] ) && ! empty( $input['post_category'] ) ) ? ( $input['post_category'] ) : '';
+        $valid['post_title'] = ( isset( $input['post_title'] ) && ! empty( $input['post_title'] ) ) ? ( $input['post_title'] ) : '';
+        $valid['post_tags'] = ( isset( $input['post_tags'] ) && ! empty( $input['post_tags'] ) ) ? ( $input['post_tags'] ) : '';
+        $valid['url_suffix'] = ( isset( $input['url_suffix'] ) && ! empty( $input['url_suffix'] ) ) ? ( $input['url_suffix'] ) : '?campaign=steempress&amp;utm=dailybrief';
+        $valid['excerpt_words'] = ( isset( $input['excerpt_words'] ) && ! empty( $input['excerpt_words'] ) ) ? ( $input['excerpt_words'] ) : '100';
+        $valid['slug'] = ( isset( $input['slug'] ) && ! empty( $input['slug'] ) ) ? ( $input['slug'] ) : 'the-daily-brief';
+        $valid['comment_status'] = ( isset( $input['comment_status'] ) && ! empty( $input['comment_status'] ) ) ? ( $input['comment_status'] ) : 'open';
+        $valid['ping_status'] = ( isset( $input['ping_status'] ) && ! empty( $input['ping_status'] ) ) ? ( $input['ping_status'] ) : 'closed';
+        $valid['article_delimiter'] = ( isset( $input['article_delimiter'] ) && ! empty( $input['article_delimiter'] ) ) ? ( $input['article_delimiter'] ) : '<hr>';
+        $valid['article_continue'] = ( isset( $input['article_continue'] ) && ! empty( $input['article_continue'] ) ) ? htmlspecialchars( $input['article_continue'] ) : 'Continue->';
+        $valid['article_stats_txt'] = ( isset( $input['article_stats_txt'] ) && ! empty( $input['article_stats_txt'] ) ) ? ( $input['article_stats_txt'] ) : '<hr>Articles in this brief: ';
+        $valid['article_stats_cats_txt'] = ( isset( $input['article_stats_cats_txt'] ) && ! empty( $input['article_stats_cats_txt'] ) ) ? ( $input['article_stats_cats_txt'] ) : '<br>Categories in this brief:';
+        $valid['featured_image_url'] = ( isset( $input['featured_image_url'] ) && ! empty( $input['featured_image_url'] ) ) ? ( $input['featured_image_url'] ) : '';
+        $valid['article_stats_tags_txt'] = ( isset( $input['article_stats_tags_txt'] ) && ! empty( $input['article_stats_tags_txt'] ) ) ? ( $input['article_stats_tags_txt'] ) : '<br>Tags in this brief: ';
+        $valid['featured_image_url'] = ( isset( $input['featured_image_url'] ) && ! empty( $input['featured_image_url'] ) ) ? ( $input['featured_image_url'] ) : '';
 		return $valid;
 	}
 
