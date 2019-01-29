@@ -15,31 +15,39 @@
 
 // Basic security, prevents file from being loaded directly.
 defined( 'ABSPATH' ) or die( 'Cheatin&#8217; uh?' );
-// Bail if WP-CLI is not present
+// Bail if WP-CLI is not present.
 if ( ! defined( 'WP_CLI' ) ) {
 	return;
 }
 
-// Only accessible from WP-CLI
+// Only accessible from WP-CLI.
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
-
-	/** @noinspection AutoloadingIssuesInspection */
-
+	/**
+	 * Class DailyBrief_CLI_Command
+	 */
 	class DailyBrief_CLI_Command extends WP_CLI_Command {
-		/** @noinspection MagicMethodsValidityInspection */
-        /**
-         * @var string
-         */
+
+		/**
+		 * The name of the plugin
+		 *
+		 * @var string
+		 */
 		private $plugin_name = 'dailybrief';
 		/**
+		 * Placeholder for the date suffix appended to the slug of the generated post
+		 *
 		 * @var string
 		 */
 		private $date_suffix = '';
 		/**
+		 * Placeholder for the image url we got to use as featured image.
+		 *
 		 * @var string
 		 */
 		private $temp_featured_image_url = '';
 		/**
+		 * This contains the created WP Post ID if sucessfully generated.
+		 *
 		 * @var int
 		 */
 		private $post_id_created = 0;
@@ -48,91 +56,91 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		 */
 		private $options;
 		/**
-		 * @var
+		 * @var array
 		 */
 		private $debug;
 		/**
-		 * @var
+		 * @var integer
 		 */
 		private $include_toc;
 		/**
-		 * @var
+		 * @var integer
 		 */
 		private $include_toc_local_hrefs;
 		/**
-		 * @var
+		 * @var integer
 		 */
 		private $url_suffix;
 		/**
-		 * @var
+		 * @var string
 		 */
 		private $excerpt_words;
 		/**
-		 * @var
+		 * @var integer
 		 */
 		private $post_title;
 		/**
-		 * @var
+		 * @var string
 		 */
 		private $author_id;
 		/**
-		 * @var
+		 * @var integer
 		 */
 		private $post_category;
 		/**
-		 * @var
+		 * @var integer
 		 */
 		private $post_tags;
 		/**
-		 * @var
+		 * @var array
 		 */
 		private $always_skip_category;
 		/**
-		 * @var
+		 * @var integer
 		 */
 		private $always_skip_tags;
 		/**
-		 * @var
+		 * @var array
 		 */
 		private $slug;
 		/**
-		 * @var
+		 * @var string
 		 */
 		private $comment_status;
 		/**
-		 * @var
+		 * @var string
 		 */
 		private $ping_status;
 		/**
-		 * @var
+		 * @var string
 		 */
 		private $post_status;
 		/**
-		 * @var
+		 * @var string
 		 */
 		private $post_type;
 		/**
-		 * @var
+		 * @var string
 		 */
 		private $article_delimiter;
 		/**
-		 * @var
+		 * @var string
 		 */
 		private $article_continue;
 		/**
-		 * @var
+		 * @var string
 		 */
 		private $article_stats_txt;
 		/**
-		 * @var
+		 * @var string
 		 */
 		private $article_stats_cats_txt;
 		/**
-		 * @var
+		 * @var string
 		 */
 		private $article_stats_tags_txt;
 		/**
-		 * @var
+		 * @var string
 		 */
 		private $featured_image_url;
 		/**
