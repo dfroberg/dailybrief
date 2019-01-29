@@ -1,12 +1,12 @@
 {
     "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
         "phpunit/phpunit": "5.0.*",
         "squizlabs/php_codesniffer": "3.*",
         "friendsofphp/php-cs-fixer": "2.14.*",
-        "wp-coding-standards/wpcs": "2.0.0",
+        "wp-coding-standards/wpcs": "*",
         "roave/security-advisories": "dev-master"
     },
     "require": {
-        "wp-coding-standards/wpcs": "2.0.0"
     }
 }
