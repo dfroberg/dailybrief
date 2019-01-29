@@ -44,13 +44,11 @@ if ( ! empty( $categories ) && is_array($categories) ) {
     }
 }
 
-if( isset( $_GET[ 'tab' ] ) ) {
-    $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'display_options';
-}
+// Figure out what tab we're on
+$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'display_options';
+
 
 ?>
-
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <div class="wrap">
     <h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
     <h2 class="nav-tab-wrapper">
@@ -61,6 +59,16 @@ if( isset( $_GET[ 'tab' ] ) ) {
     <div style="float: right; margin-right: 30%"><h2>Preview </h2>
     <h1><?php echo $options["post_title"]; ?></h1>
         <p><?php echo $options["header"]; ?></p>
+        <p><?php echo 'Published <strong>' . date( time() ) . '</strong> by <strong>Author Name</strong> in <strong>' . implode( ', ', array(
+				    'Sample',
+				    'Category'
+			    ) ) . '</strong>'; ?></p>
+        <p><?php echo wp_trim_words( wp_strip_all_tags( '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed fringilla odio. Quisque ultrices justo sit amet lorem volutpat lacinia. Pellentesque tristique tellus turpis, sed varius tortor aliquam eu. Proin eget lacinia odio, in faucibus risus. Nullam est urna, mollis quis lorem id, ornare sollicitudin turpis. Pellentesque sit amet tempus diam, in volutpat quam. Curabitur tristique gravida nulla nec pulvinar. Fusce semper nisl in augue rutrum porta. Fusce aliquam imperdiet erat, laoreet viverra metus volutpat vel. Nam convallis id ligula nec tempor. Morbi ultrices a massa vitae sodales. Etiam eu risus non elit aliquet suscipit. Pellentesque efficitur pretium est ac varius. Aliquam vitae est id lacus malesuada facilisis. Sed eget lacus malesuada, ornare ante quis, consequat dolor. Mauris cursus accumsan ultricies. 
+
+Aenean fringilla tempus sem et dapibus. Nunc viverra tellus sed orci semper, a mattis enim auctor. Mauris ut nibh imperdiet, dictum erat vitae, faucibus purus. Suspendisse in dictum augue. Praesent ut ullamcorper urna. Cras semper auctor pulvinar. Donec urna lectus, euismod in tincidunt nec, sagittis a massa. Donec ut facilisis elit. Vestibulum ac nibh eget lectus elementum varius ac sit amet felis. Nunc nibh magna, luctus eget faucibus vitae, cursus ac dui. Mauris in imperdiet justo, id pretium mi. Nullam ac sodales ipsum. Cras quis lectus eu arcu viverra pulvinar.
+
+Nullam maximus, urna eget lacinia auctor, odio metus fermentum augue, et ullamcorper arcu quam a arcu. Etiam ornare est non neque scelerisque pretium. Integer massa arcu, luctus ac sapien vel, tincidunt luctus nibh. Maecenas volutpat placerat turpis, in laoreet felis convallis nec. Vivamus facilisis arcu leo, ut tristique arcu tempor in. Mauris facilisis tortor id purus varius facilisis. Morbi ut libero suscipit, sodales nisi pellentesque, feugiat elit. Fusce ullamcorper, nisl quis pretium porttitor, urna mauris eleifend tellus, et fermentum purus nisl eu sem. Phasellus convallis, massa eget ultrices sollicitudin, elit risus vulputate tortor, vitae semper odio lacus quis metus. Morbi nec nunc odio. Maecenas porta aliquam tellus, quis gravida metus dictum sodales.
+', true ), $options["excerpt_words"], '... <a href="#">' . $options["article_continue"] . '</a>' ); ?></p>
         <p><?php echo $options["footer"]; ?></p>
     </div>
 
@@ -70,66 +78,71 @@ if( isset( $_GET[ 'tab' ] ) ) {
     <form method="post" name="cleanup_options" action="options.php">
 		<?php settings_fields( $this->plugin_name ); ?>
         <br/>
-        <p>User ID to Post as : </p>
+        <label>User ID to Post as :<br/>
         <select id="<?php echo $this->plugin_name; ?>-author_id"
         name="<?php echo $this->plugin_name; ?>[author_id]">
             <?php echo $user_select; ?>
-        </select>
-        <p>Category ID to Post to : </p>
+        </select></label>
+        <br/>
+        <label>Category ID to Post to :<br/>
         <select id="<?php echo $this->plugin_name; ?>-post_category"
                 name="<?php echo $this->plugin_name; ?>[post_category]">
             <?php echo $category_select; ?>
-        </select>
+        </select></label>
         <br/>
-        <p>Post Title : </p>
+        <label>Post Title :<br/>
         <input type="text" class="regular-text" maxlength="50" id="<?php echo $this->plugin_name; ?>-post_title"
                name="<?php echo $this->plugin_name; ?>[post_title]"
                value="<?php echo htmlspecialchars( ($options["post_title"] == '' ? 'The Your Site Daily Brief' : $options["post_title"] ), ENT_QUOTES ); ?>"/>
-        <br/>
-        <p>Post Tags : (Max 5)</p>
+            <br/></label>
+        <label>Post Tags : (Max 5)<br/>
         <input type="text" class="regular-text" maxlength="50" id="<?php echo $this->plugin_name; ?>-post_tags"
                name="<?php echo $this->plugin_name; ?>[post_tags]"
                value="<?php echo htmlspecialchars( ($options["post_tags"] == '' ? 'news-blog,life' : $options["post_tags"] ), ENT_QUOTES ); ?>"/>
-        <br/>
-        <p>Url Suffix (Append to outbound links in your post)</p>
+            <br/></label>
+        <label>Url Suffix (Append to outbound links in your post)<br/>
         <input type="text" class="regular-text" maxlength="50" id="<?php echo $this->plugin_name; ?>-url_suffix"
                name="<?php echo $this->plugin_name; ?>[url_suffix]"
                value="<?php echo ( ($options["url_suffix"] == '' ? '?campaign=steempress&amp;utm=dailybrief' : $options["url_suffix"] )); ?>"/>
-        <br/>
-        <p>Excerpt Words (How many words to include)</p>
+            <br/></label>
+        <label>Excerpt Words (How many words to include)<br/>
         <input type="number" class="regular-text" maxlength="4" id="<?php echo $this->plugin_name; ?>-excerpt_words"
                name="<?php echo $this->plugin_name; ?>[excerpt_words]"
                value="<?php echo htmlspecialchars( ($options["excerpt_words"] == '' ? '100' : $options["excerpt_words"] ), ENT_QUOTES ); ?>"/>
-        <br/>
-        <p>Post Slug : </p>
+            <br/></label>
+        <label>Post Slug :<br/>
         <input type="text" class="regular-text" maxlength="50" id="<?php echo $this->plugin_name; ?>-slug"
                name="<?php echo $this->plugin_name; ?>[slug]"
                value="<?php echo htmlspecialchars( ($options["slug"] == '' ? 'the-daily-brief' : $options["slug"] ), ENT_QUOTES ); ?>"/>
-        <br/>
-        <p>Article delimiter : </p>
+            <br/> </label>
+        <label>Article delimiter :<br/>
         <input type="text" class="regular-text" maxlength="50" id="<?php echo $this->plugin_name; ?>-article_delimiter"
                name="<?php echo $this->plugin_name; ?>[article_delimiter]"
                value="<?php echo ( ($options["article_delimiter"] == '' ? '<hr>' : $options["article_delimiter"] )); ?>"/>
-        <br/>
+            <br/> </label>
 
-        <p>Debugging : </p>
+        <label>Debugging :
         <label><input type="radio" name="<?php echo $this->plugin_name; ?>[debug]" <?php echo ( ($options["debug"] == '1' ? 'checked' : '' )); ?>> On</label>
         <label><input type="radio" name="<?php echo $this->plugin_name; ?>[debug]" <?php echo ( (($options["debug"] == '0' || empty($options["debug"])) ? 'checked' : '' )); ?>> Off</label>
-        <br>
-        <p>Include Table of Contents : </p>
+            <br></label>
+        <label>Include Table of Contents :
         <label><input type="radio" name="<?php echo $this->plugin_name; ?>[include_toc]" <?php echo ( ($options["include_toc"] == '1' ? 'checked' : '' )); ?>> On</label>
         <label><input type="radio" name="<?php echo $this->plugin_name; ?>[include_toc]" <?php echo ( (($options["include_toc"] == '0' || empty($options["include_toc"])) ? 'checked' : '' )); ?>> Off</label>
-        <br>
-        <p>Local HREFs in TOC : </p>
+            <br> </label>
+        <label>Local HREFs in TOC :
         <label><input type="radio" name="<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo ( ($options["include_toc_local_hrefs"] == '1' ? 'checked' : '' )); ?>> On</label>
         <label><input type="radio" name="<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo ( (($options["include_toc_local_hrefs"] == '0' || empty($options["include_toc_local_hrefs"])) ? 'checked' : '' )); ?>> Off</label>
-        <br>
-        <p> Header text : <br> the tags {article_count}, {article_categories} and {article_tags} will be replaced by the count, categories and tags respectively covered by the articles included in the daily briefs. </p>
+            <br></label>
+        <label><strong>Header text :</strong> <br> the tags {article_count}, {article_categories} and {article_tags}
+            will be replaced by the count, categories and tags respectively covered by the articles included in the
+            daily briefs. </label>
 <?php
 $settings = array( 'textarea_rows'=>5,'textarea_name' => $this->plugin_name.'[header]' );
 wp_editor(  ($options["header"] == '' ? '<p>This daily summary contains <strong>{article_count}</strong> articles about; <em>{article_tags}</em> in the following categories; <em>{article_categories}</em>.</p>' : $options['header']), 'headereditor', $settings );
 ?>
-        <p> Footer text : <br> the tags {article_count}, {article_categories} and {article_tags} will be replaced by the count, categories and tags respectively covered by the articles included in the daily briefs. </p>
+        <label><strong>Footer text :</strong> <br> the tags {article_count}, {article_categories} and {article_tags}
+            will be replaced by the count, categories and tags respectively covered by the articles included in the
+            daily briefs. </label>
 <?php
 $settings = array( 'textarea_rows'=>5,'textarea_name' => $this->plugin_name.'[footer]' );
 wp_editor(  ($options["footer"] == '' ? '<center><h2>Thank you for following our coverage.</h2></center>' : $options['footer']), 'footereditor', $settings );
