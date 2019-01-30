@@ -9,7 +9,7 @@ before_script:
   # update the docker
   - apt-get clean
   - apt-get -yqq update
-  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 
   # instll the required packages for the running CI tests
   - apt-get -yqqf install zip unzip subversion mysql-client libmysqlclient-dev --fix-missing
