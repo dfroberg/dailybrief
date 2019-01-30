@@ -2,6 +2,13 @@ variables:
   # Configure mysql service (https://hub.docker.com/_/mysql/)
   MYSQL_DATABASE: wordpress_tests
   MYSQL_ROOT_PASSWORD: mysql
+  WITH_XDEBUG: 1
+  TIMEZONE: "America/New_York"
+
+# Select what we should cache between builds
+cache:
+  paths:
+    - vendor/
 
 before_script:
   # Install dependencies
@@ -11,8 +18,8 @@ before_script:
   - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
   - apt-get -yqq update
 
-  # instll the required packages for the running CI tests
-  - apt-get -yqqf install zip unzip subversion mysql-client libmysqlclient-dev --fix-missing
+  # install the required packages for the running CI tests
+  # - apt-get -yqqf install zip unzip subversion mysql-client libmysqlclient-dev --fix-missing
 
   # PHP extensions
   - docker-php-ext-enable mbstring mcrypt mysqli pdo_mysql intl gd zip bz2
