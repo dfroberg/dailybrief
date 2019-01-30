@@ -13,9 +13,7 @@ before_script:
 - docker-php-ext-enable mcrypt
 - docker-php-ext-install mbstring curl json intl gd xml zip bz2 opcache pdo_mysql mysqli
 # Set up WP_CLI
-- curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-- chmod +x wp-cli.phar
-- mv wp-cli.phar /usr/local/bin/wp
+- curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 - wp --info
 # Set up WordPress tests
 - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
@@ -47,6 +45,7 @@ variables:
 
 # Run our tests
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
+# https://blogs.devforum.ro/using-tgmpa-with-gitlabs-ci-artifacts/
 test:
   image: stayallive/php:7.2
   services:
@@ -55,3 +54,4 @@ test:
     - wp --allow-root scaffold plugin-tests dailybrief
     - phpcs
     - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+
