@@ -20,7 +20,7 @@ before_script:
   - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
 
   # Install PHPCS and WPCS
-  - composer global require "squizlabs/php_codesniffer=*"
+  - composer global require "squizlabs/php_codesniffer=3.4.0"
   - composer global require "wp-coding-standards/wpcs=*"
   - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
 
