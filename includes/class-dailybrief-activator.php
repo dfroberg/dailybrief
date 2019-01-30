@@ -46,7 +46,7 @@ class Dailybrief_Activator {
 	 * Do daily CRON job.
 	 */
 	function dailybrief_do_daily_event() {
-		// do brief every day
+		// do brief every day!
 	}
 
 }

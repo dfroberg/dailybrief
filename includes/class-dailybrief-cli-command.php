@@ -396,11 +396,20 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			WP_CLI::log( print_r( $this->options, true ) );
 
 			WP_CLI::log( '--- EX QUERY --- ' );
-			$page = 1;
+			$page            = 1;
+			$skip_categories = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-categories', '' );
+			if ( ! empty( $skip_categories ) ) {
+				$exclude_categories = array_merge( explode( ',', $skip_categories ), $this->always_skip_category );
+			}
+			$skip_tags = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-tags', '' );
+			if ( ! empty( $skip_tags ) ) {
+				$exclude_tags = array_merge( explode( ',', $skip_tags ), $this->always_skip_tags );
+			}
+			$skip_posts = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-posts', '' );
+			if ( ! empty( $skip_posts ) ) {
+				$exclude_posts = explode( ',', $skip_posts );
+			}
 
-			$exclude_categories  = array_merge( @explode( ',', WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-categories', '' ) ), @explode( ',', $this->always_skip_category ) );
-			$exclude_tags        = array_merge( @explode( ',', WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-tags', '' ) ), @explode( ',', $this->always_skip_tags ) );
-			$exclude_posts       = @explode( ',', WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-posts', '' ) );
 			$status              = array( 'publish' );
 			$types               = array( 'post' );
 			$total_article_count = 0;
@@ -465,16 +474,16 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		 * ## OPTIONS
 		 *
 		 * [--post]
-		 * : Create the post in Wordpress as a Draft
+		 * : Create the post in WordPress as a Draft
 		 *
 		 * [--publish]
-		 * : Set the post_status to 'Publish' Wordpress posts
+		 * : Set the post_status to 'Publish' WordPress posts
 		 * ---
 		 * default: false
 		 * ---
 		 *
 		 * [--use-excerpts]
-		 * : Do you want to use the excepts of the summarized Wordpress posts
+		 * : Do you want to use the excepts of the summarized WordPress posts
 		 * ---
 		 * default: true
 		 * ---
@@ -521,11 +530,20 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			$before_date       = $today;
 			$after_date        = $today;
 			// Exclude some category ids for whatever reason and merge with the always_skip_category option.
-			$exclude_categories = array_merge( @explode( ',', WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-categories', '' ) ), @explode( ',', $this->always_skip_category ) );
+			$skip_categories = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-categories', '' );
+			if ( ! empty( $skip_categories ) ) {
+				$exclude_categories = array_merge( explode( ',', $skip_categories ), $this->always_skip_category );
+			}
 			// Exclude some tag ids for whatever reason and merge with the always_skip_tags option.
-			$exclude_tags = array_merge( @explode( ',', WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-tags', '' ) ), @explode( ',', $this->always_skip_tags ) );
+			$skip_tags = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-tags', '' );
+			if ( ! empty( $skip_tags ) ) {
+				$exclude_tags = array_merge( explode( ',', $skip_tags ), $this->always_skip_tags );
+			}
 			// Exclude some post_ids for whatever reason.
-			$exclude_posts = @explode( ',', WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-posts', '' ) );
+			$skip_posts = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-posts', '' );
+			if ( ! empty( $skip_posts ) ) {
+				$exclude_posts = explode( ',', $skip_posts );
+			}
 
 			$status = array( 'publish' );
 			$types  = array( 'post' );
@@ -541,8 +559,10 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			// Use excerpts or not.
 			$use_excerpts = WP_CLI\Utils\get_flag_value( $assoc_args, 'use-excerpts', true );
 			// Do you wish to focus on a particular category?
-			$focus = @explode( ',', WP_CLI\Utils\get_flag_value( $assoc_args, 'focus', '' ) );
-
+			$focus = WP_CLI\Utils\get_flag_value( $assoc_args, 'focus', '' );
+			if ( ! empty( $focus ) ) {
+				$focus = explode( ',', $focus );
+			}
 			// Parse some flags.
 			$include_stats = WP_CLI\Utils\get_flag_value( $assoc_args, 'stats', true );
 			$do_publish    = WP_CLI\Utils\get_flag_value( $assoc_args, 'publish', false );
@@ -660,21 +680,21 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 					$stats = $this->article_stats_txt . ' ' . $article_count;
 				}
 
-				if ( is_array( $article_categories ) && @count( $article_categories ) > 0 ) {
+				if ( is_array( $article_categories ) && count( $article_categories ) > 0 ) {
 					$article_categories = array_unique( $article_categories );
 					if ( false !== stripos( $header, '{article_categories}' ) ) {
 						$header = str_replace( '{article_categories}', implode( ', ', $article_categories ), $header );
 					} else {
-						@$stats .= $this->article_stats_cats_txt . ' ' . implode( ', ', $article_categories );
+						$stats .= $this->article_stats_cats_txt . ' ' . implode( ', ', $article_categories );
 					}
 				}
 
-				if ( is_array( $article_tags ) && @count( $article_tags ) > 0 ) {
+				if ( is_array( $article_tags ) && count( $article_tags ) > 0 ) {
 					$article_tags = array_unique( $article_tags );
 					if ( false !== stripos( $header, '{article_tags}' ) ) {
 						$header = str_replace( '{article_tags}', implode( ', ', $article_tags ), $header );
 					} else {
-						@$stats .= $this->article_stats_tags_txt . ' ' . implode( ', ', $article_tags );
+						$stats .= $this->article_stats_tags_txt . ' ' . implode( ', ', $article_tags );
 					}
 				}
 
@@ -708,7 +728,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 				// Unfurl tags if any.
 				$post_tags = array();
 				if ( strlen( $this->post_tags ) !== '' ) {
-					$post_tags = @explode( ',', $this->post_tags );
+					$post_tags = explode( ',', $this->post_tags );
 				}
 				// Ok create the post.
 				WP_CLI::log( '* Creating post with ' . $article_count . ' articles.' );
@@ -719,15 +739,15 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 					$this->post_id_created = $wp_insert_post_result;
 					WP_CLI::log( '* Created ' . $this->post_id_created . ' - "' . $this->post_title . '" on ' . $this->slug );
 					// Append Tags if any set.
-					if ( is_array( $post_tags ) && @count( $post_tags ) > 0 ) {
+					if ( is_array( $post_tags ) && count( $post_tags ) > 0 ) {
 						$set_tags = wp_set_post_tags( $this->post_id_created, $post_tags, false );
 						if ( ! is_wp_error( $set_tags ) ) {
-							WP_CLI::log( '* Set tags ' . @implode( ', ', $post_tags ) );
+							WP_CLI::log( '* Set tags ' . implode( ', ', $post_tags ) );
 						} else {
 							WP_CLI::error( "*** Error - could not set the tags...\n" . $set_tags->get_error_message() );
 						}
 					} else {
-						WP_CLI::warning( '! No tags to set. (This will cause issues if you have no default tags in SteemPress set) ' . @implode( ', ', $post_tags ) );
+						WP_CLI::warning( '! No tags to set. (This will cause issues if you have no default tags in SteemPress set) ' . implode( ', ', $post_tags ) );
 					}
 					// Force the use of a --publish flag.
 					if ( $do_publish ) {

@@ -23,7 +23,7 @@
  * @subpackage Dailybrief/includes
  * @author     Daniel Froberg <danny@froberg.org>
  */
-class Dailybrief_i18n {
+class Dailybrief_I18n {
 
 
 	/**
