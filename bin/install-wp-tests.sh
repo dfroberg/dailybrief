@@ -146,6 +146,7 @@ install_db() {
 	# create database
 	mysqladmin create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
 }
+export
 
 install_wp
 install_test_suite
