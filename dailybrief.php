@@ -38,7 +38,7 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'DAILYBRIEF_VERSION', '1.0.14' );
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
-    require_once plugin_dir_path( __FILE__ ) . 'includes/class-dailybrief-cli-command.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dailybrief-cli-command.php';
 }
 /**
  * The code that runs during plugin activation.
@@ -82,4 +82,5 @@ function run_dailybrief() {
 	$plugin->run();
 
 }
+
 run_dailybrief();

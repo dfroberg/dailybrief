@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired during plugin activation
  *
@@ -23,25 +22,31 @@
 class Dailybrief_Activator {
 
 	/**
-	 * Short Description. (use period)
+	 * Activate the plugin.
 	 *
-	 * Long Description.
+	 * Here we run the activation setup of the plugin as well as register any needed CRON jobs.
 	 *
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-        register_activation_hook(__FILE__, 'dailybrief_activation');
-        add_action('dailybrief_daily_event', 'dailybrief_do_daily_event');
+		register_activation_hook( __FILE__, 'dailybrief_activation' );
+		add_action( 'dailybrief_daily_event', 'dailybrief_do_daily_event' );
 	}
 
-    function dailybrief_activation() {
-        if (! wp_next_scheduled ( 'dailybrief_daily_event' )) {
-            wp_schedule_event(time(), 'daily', 'dailybrief_daily_event');
-        }
-    }
+	/**
+	 * Activate the plugin.
+	 */
+	function dailybrief_activation() {
+		if ( ! wp_next_scheduled( 'dailybrief_daily_event' ) ) {
+			wp_schedule_event( time(), 'daily', 'dailybrief_daily_event' );
+		}
+	}
 
-    function dailybrief_do_daily_event() {
-        // do brief every day
-    }
+	/**
+	 * Do daily CRON job.
+	 */
+	function dailybrief_do_daily_event() {
+		// do brief every day
+	}
 
 }

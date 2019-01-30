@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired during plugin deactivation
  *
@@ -30,11 +29,14 @@ class Dailybrief_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-        register_deactivation_hook(__FILE__, 'dailybrief_deactivation');
+		register_deactivation_hook( __FILE__, 'dailybrief_deactivation' );
 	}
 
 
-    function dailybrief_deactivation() {
-        wp_clear_scheduled_hook('dailybrief_daily_event');
-    }
+	/**
+	 * Clean up after deactication & de-register any CRON jobs.
+	 */
+	function dailybrief_deactivation() {
+		wp_clear_scheduled_hook( 'dailybrief_daily_event' );
+	}
 }
