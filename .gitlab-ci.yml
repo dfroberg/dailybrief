@@ -21,7 +21,7 @@ before_script:
 
   # Install PHPCS and WPCS
   - composer global require "squizlabs/php_codesniffer=3.4.0"
-  - composer global require "wp-coding-standards/wpcs=*"
+  - composer global require "wp-coding-standards/wpcs=2.0.0"
   - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
 
 #PHPunit:PHP5.3:MySQL:
