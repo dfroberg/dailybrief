@@ -186,33 +186,33 @@ Nullam maximus, urna eget lacinia auctor, odio metus fermentum augue, et ullamco
 			<br/> </label>
 
 		<label>Debugging :
-			<label><input type="radio"
-			              value="1"
-			              name="<?php echo $this->plugin_name; ?>[debug]" <?php echo( '1' === $options['debug'] ? 'checked' : '' ); ?>>
+			<label><input type = "radio"
+						value = "1"
+						name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( '1' === $options['debug'] ? 'checked' : '' ); ?>>
 				On</label>
-			<label><input type="radio"
-			              value="0"
-			              name="<?php echo $this->plugin_name; ?>[debug]" <?php echo( ( '0' === $options['debug'] || empty( $options['debug'] ) ) ? 'checked' : '' ); ?>>
+			<label><input type = "radio"
+						value = "0"
+						name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( ( '0' === $options['debug'] || empty( $options['debug'] ) ) ? 'checked' : '' ); ?>>
 				Off</label>
 			<br></label>
 		<label>Include Table of Contents :
-			<label><input type="radio"
-			              value="1"
-			              name="<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( '1' === $options['include_toc'] ? 'checked' : '' ); ?>>
+			<label><input type = "radio"
+						value = "1"
+						name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( '1' === $options['include_toc'] ? 'checked' : '' ); ?>>
 				On</label>
-			<label><input type="radio"
-			              value="0"
-			              name="<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( ( '0' === $options['include_toc'] || empty( $options['include_toc'] ) ) ? 'checked' : '' ); ?>>
+			<label><input type = "radio"
+						value = "0"
+						name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( ( '0' === $options['include_toc'] || empty( $options['include_toc'] ) ) ? 'checked' : '' ); ?>>
 				Off</label>
 			<br> </label>
 		<label>Local HREFs in TOC :
-			<label><input type="radio"
-			              value="1"
-			              name="<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( '1' === $options['include_toc_local_hrefs'] ? 'checked' : '' ); ?>>
+			<label><input type = "radio"
+						value = "1"
+						name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( '1' === $options['include_toc_local_hrefs'] ? 'checked' : '' ); ?>>
 				On</label>
-			<label><input type="radio"
-			              value="0"
-			              name="<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( ( '0' === $options['include_toc_local_hrefs'] || empty( $options['include_toc_local_hrefs'] ) ) ? 'checked' : '' ); ?>>
+			<label><input type = "radio"
+						value = "0"
+						name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( ( '0' === $options['include_toc_local_hrefs'] || empty( $options['include_toc_local_hrefs'] ) ) ? 'checked' : '' ); ?>>
 				Off</label>
 			<br></label>
 		<label><strong>Header text :</strong> <br> the tags {article_count}, {article_categories} and {article_tags}
