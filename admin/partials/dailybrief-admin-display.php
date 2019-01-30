@@ -52,8 +52,8 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 <div class="wrap">
 	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 	<h2 class="nav-tab-wrapper">
-		<a href="options-general.php?page=dailybrief&tab=options"
-		   class="nav-tab <?php echo 'options' === $active_tab ? 'nav-tab-active' : ''; ?>">Options</a>
+		<a href = "options-general.php?page=dailybrief&tab=options"
+				class = "nav-tab <?php echo 'options' === $active_tab ? 'nav-tab-active' : ''; ?>">Options</a>
 		<a  href="options-general.php?page=dailybrief&tab=preview"
 			class="nav-tab <?php echo 'preview' === $active_tab ? 'nav-tab-active' : ''; ?>">Preview</a>
 		<a  href="options-general.php?page=dailybrief&tab=support"
