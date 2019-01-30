@@ -52,6 +52,6 @@ test:
   services:
     - mysql:5.7
   script:
-    - wp scaffold plugin-tests dailybrief
+    - wp --allow-root scaffold plugin-tests dailybrief
     - phpcs
     - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
