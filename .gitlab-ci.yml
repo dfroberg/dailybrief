@@ -9,6 +9,7 @@ before_script:
   # update the docker
   - apt-get clean
   - apt-get -yqq update
+  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 
   # instll the required packages for the running CI tests
   - apt-get -yqqf install zip unzip subversion mysql-client libmysqlclient-dev --fix-missing
@@ -21,7 +22,7 @@ before_script:
 
   # Install PHPCS and WPCS
   - composer global require "squizlabs/php_codesniffer=3.3.0"
-  - composer global require "wp-coding-standards/wpcs=1.2.9"
+  - composer global require "wp-coding-standards/wpcs=1.2.0"
   - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
 
 #PHPunit:PHP5.3:MySQL:
