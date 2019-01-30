@@ -12,7 +12,12 @@ before_script:
 - pecl install mcrypt-1.0.1
 - docker-php-ext-enable mcrypt
 - docker-php-ext-install mbstring curl json intl gd xml zip bz2 opcache pdo_mysql mysqli
-  # Set up WordPress tests
+# Set up WP_CLI
+- curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+- chmod +x wp-cli.phar
+- mv wp-cli.phar /usr/local/bin/wp
+- wp --info
+# Set up WordPress tests
 - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
 
 # Install & enable Xdebug for code coverage reports
@@ -47,5 +52,6 @@ test:
   services:
     - mysql:5.7
   script:
+    - wp scaffold plugin-tests dailybrief
     - phpcs
     - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
