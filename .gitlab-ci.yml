@@ -22,7 +22,7 @@ before_script:
   # - apt-get -yqqf install zip unzip subversion mysql-client libmysqlclient-dev --fix-missing
 
   # PHP extensions
-  - docker-php-ext-enable mbstring mcrypt mysqli pdo_mysql intl gd zip bz2
+  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
 
   # Set up WordPress tests
   - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
@@ -53,6 +53,7 @@ PHPunit:PHP7.0:MySQL:
   services:
     - mysql:5.6
   script:
+    - docker-php-ext-enable mcrypt
     - phpcs
 #    - phpunit
 
@@ -61,6 +62,7 @@ PHPunit:PHP7.1:MySQL:
   services:
     - mysql:5.6
   script:
+    - docker-php-ext-enable mcrypt
     - phpcs
   #   - phpunit
 
@@ -69,5 +71,8 @@ PHPunit:PHP7.2:MySQL:
   services:
     - mysql:5.6
   script:
+    - apt-get install -y libmcrypt-dev && \
+      pecl install mcrypt-1.0.1 && \
+      docker-php-ext-enable mcrypt
     - phpcs
   #  - phpunit
