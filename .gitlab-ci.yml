@@ -41,7 +41,7 @@ before_script:
 #    - phpunit
 
 PHPunit:PHP5.6:MySQL:
-  image: stayallive/php:5.6
+  image: tetraweb/php:5.6
   services:
     - mysql:5.6
   script:
