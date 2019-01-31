@@ -19,7 +19,7 @@ before_script:
   - apt-get -yqq update
 
   # install the required packages for the running CI tests
-  - apt-get -yqqf install zip unzip subversion mysql-client --fix-missing
+  - apt-get -yqqf install unzip subversion mysql-client --fix-missing
 
   # PHP extensions
   - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
