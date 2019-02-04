@@ -47,8 +47,10 @@ codestyle:
       - reports
       - vendor
   script:
-    - phpunit --version
-    - phpunit --coverage-html build/coverage-report
+    - which phpunit
+    - vendor/phpunit/phpunit/phpunit --version
+    - $HOME/.composer/vendor/bin/phpunit --version
+    - vendor/phpunit/phpunit/phpunit --coverage-html build/coverage-report
     - mv coverage/ public/
     - phpcs
 
