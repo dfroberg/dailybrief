@@ -102,5 +102,7 @@ dailybrief:
   artifacts:
     name: "${CI_BUILD_NAME}_${CI_BUILD_REF_NAME}"
     untracked: false
-    paths: - dailybrief/
-  script: - echo 'Deploying!'
+    paths:
+      - dailybrief/
+  script:
+    - echo 'Deploying!'
