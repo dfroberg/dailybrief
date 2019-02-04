@@ -47,9 +47,9 @@ codestyle:
       - reports
       - vendor
   script:
-    - ls -la $HOME/.composer/vendor/phpunit/
+    - ls -la $HOME/.composer/vendor/phpunit/phpunit/
     - ls -la $HOME/.composer/vendor/bin/
-    - vendor/phpunit/phpunit/phpunit --coverage-html build/coverage-report
+    - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
     - mv coverage/ public/
     - phpcs
 
