@@ -44,6 +44,7 @@ codestyle:
     - mysql:5.6
   script:
     - phpunit --version
+    - phpunit --coverage
     - phpcs
 
 #PHPunit:PHP5.6:MySQL:
