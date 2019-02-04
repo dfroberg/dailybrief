@@ -33,9 +33,9 @@ before_script:
   - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
 
   # Install PHPCS and WPCS
-  - composer global require "phpunit/phpunit=6.*"
-  - composer global require "squizlabs/php_codesniffer=3.3.0"
-  - composer global require "wp-coding-standards/wpcs=1.2.0"
+  - composer global require "phpunit/phpunit=6.*" --no-progress
+  - composer global require "squizlabs/php_codesniffer=3.3.0" --no-progress
+  - composer global require "wp-coding-standards/wpcs=1.2.0" --no-progress
   - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
 
 codestyle:
@@ -53,7 +53,7 @@ codestyle:
 
 PHPunit:PHP5.6:MySQL:
   stage: test
-  image: tetraweb/php:5.6
+  image: edbizarro/gitlab-ci-pipeline-php:5.6 # tetraweb/php:5.6
   services:
     - mysql:5.6
   script:
