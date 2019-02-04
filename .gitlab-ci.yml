@@ -92,6 +92,7 @@ PHPunit:PHP7.2:MySQL:
 
 dailybrief:
   stage: build
+  image: stayallive/php:7.2
   retry: 2
   cache:
     untracked: true
