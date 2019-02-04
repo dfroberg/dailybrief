@@ -6,9 +6,9 @@ variables:
   TIMEZONE: "America/New_York"
 
 # Select what we should cache between builds
-cache:
-  paths:
-    - vendor/
+#cache:
+#  paths:
+#    - vendor/
 
 stages:
   - codestyle
