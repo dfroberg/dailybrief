@@ -42,9 +42,14 @@ codestyle:
   image: stayallive/php:7.2
   services:
     - mysql:5.6
+  artifacts:
+    paths:
+      - reports
+      - vendor
   script:
     - phpunit --version
-    - phpunit --coverage
+    - phpunit --coverage-html build/coverage-report
+    - mv coverage/ public/
     - phpcs
 
 #PHPunit:PHP5.6:MySQL:
