@@ -8,7 +8,7 @@
 /**
  * Sample test case.
  */
-class SampleTest extends WP_UnitTestCase {
+class InvokationTest extends WP_UnitTestCase {
 
 	/**
 	 * A single example test.
