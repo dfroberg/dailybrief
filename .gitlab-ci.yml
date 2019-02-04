@@ -51,14 +51,14 @@ codestyle:
     - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
     - phpcs
 
-PHPunit:PHP5.6:MySQL:
-  stage: test
-  image: edbizarro/gitlab-ci-pipeline-php:5.6 # tetraweb/php:5.6
-  services:
-    - mysql:5.6
-  script:
-    - docker-php-ext-enable mcrypt
-    - $HOME/.composer/vendor/bin/phpunit
+#PHPunit:PHP5.6:MySQL:
+#  stage: test
+#  image: edbizarro/gitlab-ci-pipeline-php:5.6 # tetraweb/php:5.6
+#  services:
+#    - mysql:5.6
+#  script:
+#    - docker-php-ext-enable mcrypt
+#    - $HOME/.composer/vendor/bin/phpunit
 
 PHPunit:PHP7.0:MySQL:
   stage: test
