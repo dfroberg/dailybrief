@@ -71,6 +71,7 @@ PHPunit:PHP7.1:MySQL:
   script:
     - docker-php-ext-enable mcrypt
     - phpunit --version
+    - phpunit --coverage
     - phpunit
 
 #PHPunit:PHP7.2:MySQL:
