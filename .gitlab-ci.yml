@@ -43,6 +43,8 @@ codestyle:
   services:
     - mysql:5.6
   script:
+    - phpunit --version
+    - ./vendor/bin/phpunit --version
     - phpcs
 
 #PHPunit:PHP5.6:MySQL:
