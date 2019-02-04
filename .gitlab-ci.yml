@@ -48,7 +48,6 @@ codestyle:
       - vendor
   script:
     - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
-    - mv coverage/ public/
     - phpcs
 
 #PHPunit:PHP5.6:MySQL:
