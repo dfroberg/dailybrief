@@ -86,142 +86,10 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			$option_name  = $args[0];  // value: "arg1".
 			$option_value = $args[1]; // value: 42.
 
-			if ( ! empty( $this->options ) ) {
-				$this->options[ $option_name ] = $option_value;
-				// The option already exists, so we just update it.
-				update_option( $this->plugin_name, $this->options );
-				WP_CLI::log( 'Updated ' . $option_name . ' = ' . $option_value );
-			} else {
-				// The option hasn't been added yet. We'll add it with $autoload set to 'no'.
-				$deprecated                    = null;
-				$autoload                      = 'no';
-				$this->options[ $option_name ] = $option_value;
-				add_option( $this->plugin_name, $this->options, $deprecated, $autoload );
-				WP_CLI::log( 'Added ' . $option_name . ' = ' . $option_value );
+			if ( ! empty( $option_name ) || ! empty( $option_value ) ) {
+				$this->dc->set_option( $option_name, $option_value );
+				WP_CLI::log( 'Set ' . $option_name . ' = ' . $option_value );
 			}
-		}
-
-		/**
-		 * Runs some tests and output debug values, mostly intended for development
-		 *
-		 * ## OPTIONS
-		 *
-		 * [--days=<days>]
-		 * : Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
-		 * ---
-		 * default: today
-		 * ---
-		 * [--split=<posts_per_page>]
-		 * : Number of articles per page/post
-		 * ---
-		 * default: 3
-		 * ---
-		 *
-		 * @param array $args arguments.
-		 * @param array $assoc_args associated arguments.
-		 *
-		 * @throws Exception Throws catchable exception.
-		 */
-		public function test( $args, $assoc_args ) {
-
-			WP_CLI::log( '=== Testing ===' );
-			$days  = WP_CLI\Utils\get_flag_value( $assoc_args, 'days', 'today' );
-			$split = WP_CLI\Utils\get_flag_value( $assoc_args, 'split', 3 );
-
-			$today             = strtotime( $days );
-			$tomorrow          = strtotime( '+1 day', $today );
-			$today             = date( 'Y-m-d', $today );
-			$tomorrow          = date( 'Y-m-d', $tomorrow );
-			$this->date_suffix = $today; // used for post-title & slug suffix, contains the date it relates to.
-			$before_date       = $today;
-			$after_date        = $today;
-
-			WP_CLI::log( 'Today: ' . $today );
-			WP_CLI::log( 'Tomorrow: ' . $tomorrow );
-			WP_CLI::log( 'Day is set to :' . $this->date_suffix );
-
-			$start    = DateTime::createFromFormat( 'Y-m-d H:i:s', '2018-01-01 00:00:01', new DateTimeZone( 'Europe/Belgrade' ) );
-			$end      = DateTime::createFromFormat( 'Y-m-d H:i:s', '2018-01-01 23:59:59', new DateTimeZone( 'Europe/Belgrade' ) );
-			$interval = new DateInterval( 'PT6H' );
-
-			$period = new DatePeriod( $start, $interval, $end );
-			foreach ( $period as $dt ) {
-				WP_CLI::log( $dt->format( 'Y-m-d H:i:s' ) );
-			}
-
-			WP_CLI::log( print_r( $this->options, true ) );
-
-			WP_CLI::log( '--- EX QUERY --- ' );
-			$page            = 1;
-			$skip_categories = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-categories', '' );
-			if ( ! empty( $skip_categories ) ) {
-				$exclude_categories = array_merge( explode( ',', $skip_categories ), $this->always_skip_category );
-			}
-			$skip_tags = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-tags', '' );
-			if ( ! empty( $skip_tags ) ) {
-				$exclude_tags = array_merge( explode( ',', $skip_tags ), $this->always_skip_tags );
-			}
-			$skip_posts = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-posts', '' );
-			if ( ! empty( $skip_posts ) ) {
-				$exclude_posts = explode( ',', $skip_posts );
-			}
-
-			$status              = array( 'publish' );
-			$types               = array( 'post' );
-			$total_article_count = 0;
-			$total_posts         = 0;
-			do {
-				$query = new WP_Query(
-					array(
-						'posts_per_page'   => $split,
-						'paged'            => $page,
-						'post_status'      => $status,
-						'post_type'        => $types,
-						'orderby'          => 'date',
-						'order'            => 'ASC',
-						'date_query'       => array(
-							array(
-								'before'    => $before_date,
-								'after'     => $after_date,
-								'inclusive' => true,
-							),
-						),
-						'tag__not_in'      => $exclude_tags,
-						'category__not_in' => $exclude_categories,
-						'post__not_in'     => $exclude_posts,
-					)
-				);
-				WP_CLI::log( 'Count: ' . $query->post_count . ' Page: ' . $page );
-
-				$article_count = 0;
-				if ( $query->max_num_pages > $total_posts ) {
-					$total_posts = $query->max_num_pages;
-				} // just to keep track of the total
-
-				while ( $query->have_posts() ) {
-					$query->the_post();
-					$id = get_the_ID();
-					$article_count ++;
-					$total_article_count ++;
-
-					$title = $query->post->post_title;
-					$date  = $query->post->post_date;
-					WP_CLI::log( $article_count . '/' . $page . ' - ' . $id . ' - ' . $date . ' - ' . $title . '' );
-
-				}
-				$page ++;
-			} while ( $query->have_posts() );
-
-			WP_CLI::log( ' Total number of posts generated: ' . $total_posts . ' with ' . $total_article_count . ' articles.' );
-
-			if ( ! class_exists( 'Steempress_sp_Admin' ) ) {
-				WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish NOT available, can not post to steem. ' );
-			} else {
-				WP_CLI::warning( '? Steempress_sp_Admin::Steempress_sp_publish IS available, can post to steem. ' );
-				$test = new Steempress_sp_Admin( 'steempress_sp', '2.3' );
-				$test->Steempress_sp_publish( 0 );
-			}
-			WP_CLI::log( '* end test *' );
 		}
 
 		/**
@@ -282,18 +150,18 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			$tomorrow          = strtotime( '+1 day', $today );
 			$today             = date( 'Y-m-d', $today );
 			$tomorrow          = date( 'Y-m-d', $tomorrow );
-			$this->date_suffix = $today; // used for post-title & slug suffix, contains the date it relates to.
+			$this->dc->setDateSuffix( $today ); // used for post-title & slug suffix, contains the date it relates to.
 			$before_date       = $today;
 			$after_date        = $today;
 			// Exclude some category ids for whatever reason and merge with the always_skip_category option.
 			$skip_categories = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-categories', '' );
 			if ( ! empty( $skip_categories ) ) {
-				$exclude_categories = array_merge( explode( ',', $skip_categories ), $this->always_skip_category );
+				$exclude_categories = array_merge( explode( ',', $skip_categories ), $this->dc->getAlwaysSkipCategory() );
 			}
 			// Exclude some tag ids for whatever reason and merge with the always_skip_tags option.
 			$skip_tags = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-tags', '' );
 			if ( ! empty( $skip_tags ) ) {
-				$exclude_tags = array_merge( explode( ',', $skip_tags ), $this->always_skip_tags );
+				$exclude_tags = array_merge( explode( ',', $skip_tags ), $this->dc->getAlwaysSkipTags() );
 			}
 			// Exclude some post_ids for whatever reason.
 			$skip_posts = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-posts', '' );
@@ -354,12 +222,12 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 					$query->the_post();
 					$id      = get_the_ID();
 					$content = $query->post->post_content;
-					$more    = '... <a href="' . get_permalink( $id ) . $this->url_suffix . '" target="dailybrief">' . $this->article_continue . '</a>';
+					$more    = '... <a href="' . get_permalink( $id ) . $this->dc->getUrlSuffix() . '" target="dailybrief">' . $this->dc->getArticleContinue() . '</a>';
 
 					if ( ! $use_excerpts || ! has_excerpt() ) {
-						$excerpt = wp_trim_words( wp_strip_all_tags( $content, true ), $this->excerpt_words, $more );
+						$excerpt = wp_trim_words( wp_strip_all_tags( $content, true ), $this->dc->getExcerptWords(), $more );
 					} else {
-						$excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt( $query ), true ), $this->excerpt_words, $more );
+						$excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt( $query ), true ), $this->dc->getExcerptWords(), $more );
 					}
 					$title = $query->post->post_title;
 					$date  = $query->post->post_date;
@@ -393,19 +261,19 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 						}
 					}
 					// Pick a temporary featured image from the posts in the brief to use if featured_image_url is not set.
-					if ( '' === $this->temp_featured_image_url && '' === $this->featured_image_url ) {
-						$this->temp_featured_image_url = get_the_post_thumbnail_url( $id, 'full' );
+					if ( '' === $this->dc->getTempFeaturedImageUrl() && '' === $this->dc->getFeaturedImageUrl() ) {
+						$this->dc->setTempFeaturedImageUrl( get_the_post_thumbnail_url( $id, 'full' ) );
 					}
 					// Compile a TOC.
-					if ( 1 === $this->include_toc ) {
+					if ( 1 === $this->dc->getIncludeToc() ) {
 						$toc_items .= '<li>';
-						if ( 1 === $this->include_toc_local_hrefs ) {
+						if ( 1 === $this->dc->getIncludeTocLocalHrefs() ) {
 							$toc_items .= '<a href="#_author_permlink_' . $id . '">';
 						}
 						$toc_items .= $title . '</a></li>';
 					}
 
-					if ( 1 === $this->include_toc_local_hrefs ) {
+					if ( 1 === $this->dc->getIncludeTocLocalHrefs() ) {
 						$article .= ( '<a id="_author_permlink_' . $id . '" name="_author_permlink_' . $id . '"></a>' );
 					}
 					$article .= ( '<img src="' . get_the_post_thumbnail_url( $id, 'full' ) . '">' );
