@@ -106,14 +106,32 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		 * : Skip including specific tags.
 		 *
 		 * [--days=<days>]
-		 * : Days back from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
+		 * : Days back to start the period from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
+		 * ---
+		 * default: today
+		 * ---
+		 *
+		 * [--period=<day|range>]
+		 * : Type of period to process.
+		 * ---
+		 * default: day
+		 * ---
+		 *
+		 * [--start=<day>]
+		 * : Days back to start the period from where to get the posts to summarize 'today' / '-1 day' / '-2 days'
+		 * ---
+		 * default: today
+		 * ---
+		 *
+		 * [--end=<day>]
+		 * : Day when to end the period 'today' / '-1 day' / '-2 days'
 		 * ---
 		 * default: today
 		 * ---
 		 *
 		 * ### Examples:
 		 * To dump an preview to the console;
-		 *    wp dailybrief create --days="-1 day" --no-use-excerpts
+		 *    wp dailybrief create --period=day --start="-2 day"  --end="-2 day"--no-use-excerpts
 		 *
 		 * To produce a draft post;
 		 *    wp dailybrief create --days="2018-10-15" --use-excerpts --post
@@ -129,14 +147,17 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		public function create( $args, $assoc_args ) {
 			global
 			$wpdb;
-			$days              = WP_CLI\Utils\get_flag_value( $assoc_args, 'days', 'today' );
-			$today             = strtotime( $days );
-			$tomorrow          = strtotime( '+1 day', $today );
-			$today             = date( 'Y-m-d', $today );
-			$tomorrow          = date( 'Y-m-d', $tomorrow );
-			$this->dc->setDateSuffix( $today ); // used for post-title & slug suffix, contains the date it relates to.
-			$before_date       = $today;
-			$after_date        = $today;
+
+			// Check if HTTP_HOST is available since we use it to build links.
+			if ( empty( $_SERVER['HTTP_HOST'] ) ) {
+				WP_CLI::error( "HTTP_HOST is NOT available since we use it to build links\nPlease add; To your wp-config.php to enable WP_CLI functionality.\nif(\$_SERVER['HTTP_HOST'] == '') {\n  \$_SERVER['HTTP_HOST'] = 'testwp.hackix.com';\n}\nReplace the domain with the fully qualified hostname to your server." );
+			}
+
+			$period = WP_CLI\Utils\get_flag_value( $assoc_args, 'period', 'day' );
+			$days   = WP_CLI\Utils\get_flag_value( $assoc_args, 'days', '-1 day' );
+			$start  = WP_CLI\Utils\get_flag_value( $assoc_args, 'start', '-1 day' );
+			$end    = WP_CLI\Utils\get_flag_value( $assoc_args, 'end', '-1 day' );
+
 			// Exclude some category ids for whatever reason and merge with the always_skip_category option.
 			$skip_categories = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-categories', '' );
 
@@ -164,8 +185,8 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			$do_publish    = WP_CLI\Utils\get_flag_value( $assoc_args, 'publish', false );
 
 			$arguments = array(
-				'do_publish'      => $do_publish,
-				'include_stats'   => $include_stats,
+				'publish'         => $do_publish,
+				'stats'           => $include_stats,
 				'focus'           => $focus,
 				'use_excerpts'    => $use_excerpts,
 				'post'            => $post,
@@ -173,9 +194,11 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 				'skip_tags'       => $skip_tags,
 				'skip_categories' => $skip_categories,
 				'days'            => $days,
+				'period'          => $period,
+				'start'           => $start,
+				'end'             => $end,
 			);
 			$this->dc->create( $arguments );
-
 
 		}
 	}
