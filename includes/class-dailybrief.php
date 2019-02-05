@@ -990,18 +990,35 @@ class Dailybrief {
 		return $this->options[ $option_name ];
 	}
 
+	/**
+	 * Logging via WP_CLI
+	 *
+	 * @param string $message Logging message.
+	 */
 	public function wpclilog( $message ) {
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			WP_CLI::log( $message );
 		}
 	}
 
+	/**
+	 * Logging via WP_CLI
+	 *
+	 * @param string $message Logging message.
+	 */
 	public function wpcliwarn( $message ) {
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			WP_CLI::warning( $message );
 		}
 	}
 
+	/**
+	 * Logging via WP_CLI
+	 *
+	 * @param string $message Logging message.
+	 *
+	 * @throws \WP_CLI\ExitException Stops processing on Error.
+	 */
 	public function wpclierror( $message ) {
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			WP_CLI::error( $message );
@@ -1012,7 +1029,7 @@ class Dailybrief {
 	 * Prepare for buffering output to a new post
 	 *
 	 * @param string $output what to write.
-	 * @param bool $buffer log or stdout.
+	 * @param bool   $buffer log or stdout.
 	 *
 	 * @input string @output write to log.
 	 */
@@ -1027,9 +1044,9 @@ class Dailybrief {
 	/**
 	 * Parse argument array
 	 *
-	 * @param array $arguments Array of arguments sent to function.
+	 * @param array  $arguments Array of arguments sent to function.
 	 * @param string $parameter Name of parameter to return.
-	 * @param mixed $default Default value of the parameter.
+	 * @param mixed  $default   Default value of the parameter.
 	 *
 	 * @return mixed
 	 */
@@ -1045,6 +1062,8 @@ class Dailybrief {
 	 * Create the WP Post.
 	 *
 	 * @param array $arguments Array of arguments sent to function.
+	 *
+	 * @throws \WP_CLI\ExitException Stops processing on Error.
 	 */
 	public function create( $arguments ) {
 		global
