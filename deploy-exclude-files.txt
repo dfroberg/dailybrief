@@ -1,3 +1,4 @@
+deploy-exclude-files.txt
 .distignore
 .editorconfig
 .git
