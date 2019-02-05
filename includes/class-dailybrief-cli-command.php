@@ -129,14 +129,14 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		public function create( $args, $assoc_args ) {
 			global
 			$wpdb;
-			$days              = WP_CLI\Utils\get_flag_value( $assoc_args, 'days', 'today' );
-			$today             = strtotime( $days );
-			$tomorrow          = strtotime( '+1 day', $today );
-			$today             = date( 'Y-m-d', $today );
-			$tomorrow          = date( 'Y-m-d', $tomorrow );
-			$this->dc->setDateSuffix( $today ); // used for post-title & slug suffix, contains the date it relates to.
-			$before_date       = $today;
-			$after_date        = $today;
+			$days     = WP_CLI\Utils\get_flag_value( $assoc_args, 'days', 'today' );
+			$today    = strtotime( $days );
+			$tomorrow = strtotime( '+1 day', $today );
+			$today    = date( 'Y-m-d', $today );
+			$tomorrow = date( 'Y-m-d', $tomorrow );
+			$this->dc->set_date_suffix( $today ); // used for post-title & slug suffix, contains the date it relates to.
+			$before_date = $today;
+			$after_date  = $today;
 			// Exclude some category ids for whatever reason and merge with the always_skip_category option.
 			$skip_categories = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-categories', '' );
 
@@ -175,7 +175,6 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 				'days'            => $days,
 			);
 			$this->dc->create( $arguments );
-
 
 		}
 	}

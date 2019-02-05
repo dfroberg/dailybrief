@@ -244,380 +244,488 @@ class Dailybrief {
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getDateSuffix(): string {
+	public function get_date_suffix(): string {
 		return $this->date_suffix;
 	}
 
 	/**
-	 * @param string $date_suffix
+	 * Setter.
+	 *
+	 * @param string $date_suffix Set suffix.
 	 */
-	public function setDateSuffix( string $date_suffix ): void {
+	public function set_date_suffix( string $date_suffix ): void {
 		$this->date_suffix = $date_suffix;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getTempFeaturedImageUrl(): string {
+	public function get_temp_featured_image_url(): string {
 		return $this->temp_featured_image_url;
 	}
 
 	/**
-	 * @param string $temp_featured_image_url
+	 * Setter.
+	 *
+	 * @param string $temp_featured_image_url Placeholder for temp URL.
 	 */
-	public function setTempFeaturedImageUrl( string $temp_featured_image_url ): void {
+	public function set_temp_featured_image_url( string $temp_featured_image_url ): void {
 		$this->temp_featured_image_url = $temp_featured_image_url;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return int
 	 */
-	public function getPostIdCreated(): int {
+	public function get_post_id_created(): int {
 		return $this->post_id_created;
 	}
 
 	/**
-	 * @param int $post_id_created
+	 * Setter.
+	 *
+	 * @param int $post_id_created WP Post ID created.
 	 */
-	public function setPostIdCreated( int $post_id_created ): void {
+	public function set_post_id_created( int $post_id_created ): void {
 		$this->post_id_created = $post_id_created;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return array
 	 */
-	public function getOptions(): array {
+	public function get_options(): array {
 		return $this->options;
 	}
 
 	/**
-	 * @param array $options
+	 * Setter.
+	 *
+	 * @param array $options Options array.
 	 */
-	public function setOptions( array $options ): void {
+	public function set_options( array $options ): void {
 		$this->options = $options;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return array
 	 */
-	public function getDebug(): array {
+	public function get_debug(): array {
 		return $this->debug;
 	}
 
 	/**
-	 * @param array $debug
+	 * Setter.
+	 *
+	 * @param array $debug Shall we debug.
 	 */
-	public function setDebug( array $debug ): void {
+	public function set_debug( array $debug ): void {
 		$this->debug = $debug;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return int
 	 */
-	public function getIncludeToc(): int {
+	public function get_include_toc(): int {
 		return $this->include_toc;
 	}
 
 	/**
-	 * @param int $include_toc
+	 * Setter.
+	 *
+	 * @param int $include_toc Table of contents.
 	 */
-	public function setIncludeToc( int $include_toc ): void {
+	public function set_include_toc( int $include_toc ): void {
 		$this->include_toc = $include_toc;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return int
 	 */
-	public function getIncludeTocLocalHrefs(): int {
+	public function get_include_toc_local_hrefs(): int {
 		return $this->include_toc_local_hrefs;
 	}
 
 	/**
-	 * @param int $include_toc_local_hrefs
+	 * Setter.
+	 *
+	 * @param int $include_toc_local_hrefs Ahrefs in TOC.
 	 */
-	public function setIncludeTocLocalHrefs( int $include_toc_local_hrefs ): void {
+	public function set_include_toc_local_hrefs( int $include_toc_local_hrefs ): void {
 		$this->include_toc_local_hrefs = $include_toc_local_hrefs;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return int
 	 */
-	public function getUrlSuffix(): int {
+	public function get_url_suffix(): int {
 		return $this->url_suffix;
 	}
 
 	/**
-	 * @param int $url_suffix
+	 * Setter.
+	 *
+	 * @param int $url_suffix Add stuff to outbound URLS.
 	 */
-	public function setUrlSuffix( int $url_suffix ): void {
+	public function set_url_suffix( int $url_suffix ): void {
 		$this->url_suffix = $url_suffix;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getExcerptWords(): string {
+	public function get_excerpt_words(): string {
 		return $this->excerpt_words;
 	}
 
 	/**
-	 * @param string $excerpt_words
+	 * Setter.
+	 *
+	 * @param string $excerpt_words How many words to use.
 	 */
-	public function setExcerptWords( string $excerpt_words ): void {
+	public function set_excerpt_words( string $excerpt_words ): void {
 		$this->excerpt_words = $excerpt_words;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return int
 	 */
-	public function getPostTitle(): int {
+	public function get_post_title(): int {
 		return $this->post_title;
 	}
 
 	/**
-	 * @param int $post_title
+	 * Setter.
+	 *
+	 * @param int $post_title WP Post Title.
 	 */
-	public function setPostTitle( int $post_title ): void {
+	public function set_post_title( int $post_title ): void {
 		$this->post_title = $post_title;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getAuthorId(): string {
+	public function get_author_id(): string {
 		return $this->author_id;
 	}
 
 	/**
-	 * @param string $author_id
+	 * Setter.
+	 *
+	 * @param string $author_id Author ID.
 	 */
-	public function setAuthorId( string $author_id ): void {
+	public function set_author_id( string $author_id ): void {
 		$this->author_id = $author_id;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return int
 	 */
-	public function getPostCategory(): int {
+	public function get_post_category(): int {
 		return $this->post_category;
 	}
 
 	/**
-	 * @param int $post_category
+	 * Setter.
+	 *
+	 * @param int $post_category WP Post category.
 	 */
-	public function setPostCategory( int $post_category ): void {
+	public function set_post_category( int $post_category ): void {
 		$this->post_category = $post_category;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return int
 	 */
-	public function getPostTags(): int {
+	public function get_post_tags(): int {
 		return $this->post_tags;
 	}
 
 	/**
-	 * @param int $post_tags
+	 * Setter.
+	 *
+	 * @param int $post_tags What Wp Post tags to set.
 	 */
-	public function setPostTags( int $post_tags ): void {
+	public function set_post_tags( int $post_tags ): void {
 		$this->post_tags = $post_tags;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return array
 	 */
-	public function getAlwaysSkipCategory(): array {
+	public function get_always_skip_category(): array {
 		return $this->always_skip_category;
 	}
 
 	/**
-	 * @param array $always_skip_category
+	 * Setter.
+	 *
+	 * @param array $always_skip_category Don't include posts from these categories.
 	 */
-	public function setAlwaysSkipCategory( array $always_skip_category ): void {
+	public function set_always_skip_category( array $always_skip_category ): void {
 		$this->always_skip_category = $always_skip_category;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return int
 	 */
-	public function getAlwaysSkipTags(): int {
+	public function get_always_skip_tags(): int {
 		return $this->always_skip_tags;
 	}
 
 	/**
-	 * @param int $always_skip_tags
+	 * Setter.
+	 *
+	 * @param int $always_skip_tags Don't include posts from these tags.
 	 */
-	public function setAlwaysSkipTags( int $always_skip_tags ): void {
+	public function set_always_skip_tags( int $always_skip_tags ): void {
 		$this->always_skip_tags = $always_skip_tags;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return array
 	 */
-	public function getSlug(): array {
+	public function get_slug(): array {
 		return $this->slug;
 	}
 
 	/**
-	 * @param array $slug
+	 * Setter.
+	 *
+	 * @param array $slug Base slug to use.
 	 */
-	public function setSlug( array $slug ): void {
+	public function set_slug( array $slug ): void {
 		$this->slug = $slug;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getCommentStatus(): string {
+	public function get_comment_status(): string {
 		return $this->comment_status;
 	}
 
 	/**
-	 * @param string $comment_status
+	 * Setter.
+	 *
+	 * @param string $comment_status Open or closed for comments.
 	 */
-	public function setCommentStatus( string $comment_status ): void {
+	public function set_comment_status( string $comment_status ): void {
 		$this->comment_status = $comment_status;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getPingStatus(): string {
+	public function get_ping_status(): string {
 		return $this->ping_status;
 	}
 
 	/**
-	 * @param string $ping_status
+	 * Setter.
+	 *
+	 * @param string $ping_status Open or Closed for pings.
 	 */
-	public function setPingStatus( string $ping_status ): void {
+	public function set_ping_status( string $ping_status ): void {
 		$this->ping_status = $ping_status;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getPostStatus(): string {
+	public function get_post_status(): string {
 		return $this->post_status;
 	}
 
 	/**
-	 * @param string $post_status
+	 * Setter.
+	 *
+	 * @param string $post_status Draft or Publish.
 	 */
-	public function setPostStatus( string $post_status ): void {
+	public function set_post_status( string $post_status ): void {
 		$this->post_status = $post_status;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getPostType(): string {
+	public function get_post_type(): string {
 		return $this->post_type;
 	}
 
 	/**
-	 * @param string $post_type
+	 * Setter.
+	 *
+	 * @param string $post_type Always post for now.
 	 */
-	public function setPostType( string $post_type ): void {
+	public function set_post_type( string $post_type ): void {
 		$this->post_type = $post_type;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getArticleDelimiter(): string {
+	public function get_article_delimiter(): string {
 		return $this->article_delimiter;
 	}
 
 	/**
-	 * @param string $article_delimiter
+	 * Setter.
+	 *
+	 * @param string $article_delimiter Stuff between articles in briefs.
 	 */
-	public function setArticleDelimiter( string $article_delimiter ): void {
+	public function set_article_delimiter( string $article_delimiter ): void {
 		$this->article_delimiter = $article_delimiter;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getArticleContinue(): string {
+	public function get_article_continue(): string {
 		return $this->article_continue;
 	}
 
 	/**
-	 * @param string $article_continue
+	 * Setter.
+	 *
+	 * @param string $article_continue Read more.
 	 */
-	public function setArticleContinue( string $article_continue ): void {
+	public function set_article_continue( string $article_continue ): void {
 		$this->article_continue = $article_continue;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getArticleStatsTxt(): string {
+	public function get_article_stats_txt(): string {
 		return $this->article_stats_txt;
 	}
 
 	/**
-	 * @param string $article_stats_txt
+	 * Setter.
+	 *
+	 * @param string $article_stats_txt Intro to article stats.
 	 */
-	public function setArticleStatsTxt( string $article_stats_txt ): void {
+	public function set_article_stats_txt( string $article_stats_txt ): void {
 		$this->article_stats_txt = $article_stats_txt;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getArticleStatsCatsTxt(): string {
+	public function get_article_stats_cats_txt(): string {
 		return $this->article_stats_cats_txt;
 	}
 
 	/**
-	 * @param string $article_stats_cats_txt
+	 * Setter.
+	 *
+	 * @param string $article_stats_cats_txt Intro to category stats.
 	 */
-	public function setArticleStatsCatsTxt( string $article_stats_cats_txt ): void {
+	public function set_article_stats_cats_txt( string $article_stats_cats_txt ): void {
 		$this->article_stats_cats_txt = $article_stats_cats_txt;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getArticleStatsTagsTxt(): string {
+	public function get_article_stats_tags_txt(): string {
 		return $this->article_stats_tags_txt;
 	}
 
 	/**
-	 * @param string $article_stats_tags_txt
+	 * Setter.
+	 *
+	 * @param string $article_stats_tags_txt Intro to tags stats.
 	 */
-	public function setArticleStatsTagsTxt( string $article_stats_tags_txt ): void {
+	public function set_article_stats_tags_txt( string $article_stats_tags_txt ): void {
 		$this->article_stats_tags_txt = $article_stats_tags_txt;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getFeaturedImageUrl(): string {
+	public function get_featured_image_url(): string {
 		return $this->featured_image_url;
 	}
 
 	/**
-	 * @param string $featured_image_url
+	 * Setter.
+	 *
+	 * @param string $featured_image_url Featured Image URL to use.
 	 */
-	public function setFeaturedImageUrl( string $featured_image_url ): void {
+	public function set_featured_image_url( string $featured_image_url ): void {
 		$this->featured_image_url = $featured_image_url;
 	}
 
 	/**
+	 * Getter.
+	 *
 	 * @return string
 	 */
-	public function getContentBuffer(): string {
+	public function get_content_buffer(): string {
 		return $this->content_buffer;
 	}
 
 	/**
-	 * @param string $content_buffer
+	 * Setter.
+	 *
+	 * @param string $content_buffer Buffer to compile WP Post content in.
 	 */
-	public function setContentBuffer( string $content_buffer ): void {
+	public function set_content_buffer( string $content_buffer ): void {
 		$this->content_buffer = $content_buffer;
 	}
 
@@ -947,18 +1055,18 @@ class Dailybrief {
 		$tomorrow = strtotime( '+1 day', $today );
 		$today    = date( 'Y-m-d', $today );
 		$tomorrow = date( 'Y-m-d', $tomorrow );
-		$this->setDateSuffix( $today ); // used for post-title & slug suffix, contains the date it relates to.
+		$this->set_date_suffix( $today ); // used for post-title & slug suffix, contains the date it relates to.
 		$before_date = $today;
 		$after_date  = $today;
 		// Exclude some category ids for whatever reason and merge with the always_skip_category option.
 		$skip_categories = $this->parse_arguments( $arguments, 'skip-categories', '' );
 		if ( ! empty( $skip_categories ) ) {
-			$exclude_categories = array_merge( explode( ',', $skip_categories ), $this->getAlwaysSkipCategory() );
+			$exclude_categories = array_merge( explode( ',', $skip_categories ), $this->get_always_skip_category() );
 		}
 		// Exclude some tag ids for whatever reason and merge with the always_skip_tags option.
 		$skip_tags = $this->parse_arguments( $arguments, 'skip-tags', '' );
 		if ( ! empty( $skip_tags ) ) {
-			$exclude_tags = array_merge( explode( ',', $skip_tags ), $this->getAlwaysSkipTags() );
+			$exclude_tags = array_merge( explode( ',', $skip_tags ), $this->get_always_skip_tags() );
 		}
 		// Exclude some post_ids for whatever reason.
 		$skip_posts = $this->parse_arguments( $arguments, 'skip-posts', '' );
@@ -1019,12 +1127,12 @@ class Dailybrief {
 				$query->the_post();
 				$id      = get_the_ID();
 				$content = $query->post->post_content;
-				$more    = '... <a href="' . get_permalink( $id ) . $this->getUrlSuffix() . '" target="dailybrief">' . $this->getArticleContinue() . '</a>';
+				$more    = '... <a href="' . get_permalink( $id ) . $this->get_url_suffix() . '" target="dailybrief">' . $this->get_article_continue() . '</a>';
 
 				if ( ! $use_excerpts || ! has_excerpt() ) {
-					$excerpt = wp_trim_words( wp_strip_all_tags( $content, true ), $this->getExcerptWords(), $more );
+					$excerpt = wp_trim_words( wp_strip_all_tags( $content, true ), $this->get_excerpt_words(), $more );
 				} else {
-					$excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt( $query ), true ), $this->getExcerptWords(), $more );
+					$excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt( $query ), true ), $this->get_excerpt_words(), $more );
 				}
 				$title = $query->post->post_title;
 				$date  = $query->post->post_date;
@@ -1058,19 +1166,19 @@ class Dailybrief {
 					}
 				}
 				// Pick a temporary featured image from the posts in the brief to use if featured_image_url is not set.
-				if ( '' === $this->getTempFeaturedImageUrl() && '' === $this->getFeaturedImageUrl() ) {
-					$this->setTempFeaturedImageUrl( get_the_post_thumbnail_url( $id, 'full' ) );
+				if ( '' === $this->get_temp_featured_image_url() && '' === $this->get_featured_image_url() ) {
+					$this->set_temp_featured_image_url( get_the_post_thumbnail_url( $id, 'full' ) );
 				}
 				// Compile a TOC.
-				if ( 1 === $this->getIncludeToc() ) {
+				if ( 1 === $this->get_include_toc() ) {
 					$toc_items .= '<li>';
-					if ( 1 === $this->getIncludeTocLocalHrefs() ) {
+					if ( 1 === $this->get_include_toc_local_hrefs() ) {
 						$toc_items .= '<a href="#_author_permlink_' . $id . '">';
 					}
 					$toc_items .= $title . '</a></li>';
 				}
 
-				if ( 1 === $this->getIncludeTocLocalHrefs() ) {
+				if ( 1 === $this->get_include_toc_local_hrefs() ) {
 					$article .= ( '<a id="_author_permlink_' . $id . '" name="_author_permlink_' . $id . '"></a>' );
 				}
 				$article .= ( '<img src="' . get_the_post_thumbnail_url( $id, 'full' ) . '">' );
