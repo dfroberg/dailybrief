@@ -87,8 +87,6 @@ PHPunit:PHP7.2:MySQL:
   script:
     - apt-get -yqq update && apt-get install -y libmcrypt-dev pkg-php-tools && pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
     - $HOME/.composer/vendor/bin/phpunit
-    - mkdir -p dailybrief
-    - rsync -av --exclude-from='deploy-exclude-files.txt' . dailybrief # <<< this is where you'll have all the files you need to be deployed
 
 dailybrief:
   stage: build
@@ -106,4 +104,6 @@ dailybrief:
     paths:
       - dailybrief/
   script:
+    - mkdir -p dailybrief
+    - rsync -av --exclude-from='deploy-exclude-files.txt' . dailybrief # <<< this is where you'll have all the files you need to be deployed
     - echo 'Deploying!'
