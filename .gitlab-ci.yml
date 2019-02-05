@@ -47,6 +47,7 @@ codestyle:
       - reports
       - vendor
   script:
+    - composer global require "phpunit/phpunit=6.*" --no-progress
     - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
     - phpcs
 
