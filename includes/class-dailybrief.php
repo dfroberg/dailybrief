@@ -882,6 +882,40 @@ class Dailybrief {
 		return $this->options[ $option_name ];
 	}
 
+	public function wpclilog( $message ) {
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			WP_CLI::log( $message );
+		}
+	}
+
+	public function wpcliwarn( $message ) {
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			WP_CLI::warning( $message );
+		}
+	}
+
+	public function wpclierror( $message ) {
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			WP_CLI::error( $message );
+		}
+	}
+
+	/**
+	 * Prepare for buffering output to a new post
+	 *
+	 * @param string $output what to write.
+	 * @param bool $buffer log or stdout.
+	 *
+	 * @input string @output write to log.
+	 */
+	private function output( $output, $buffer = false ) {
+		if ( false === $buffer ) {
+			$this->wpclilog( $output );
+		} else {
+			$this->content_buffer .= $output;
+		}
+	}
+
 	/**
 	 * Parse argument array
 	 *
@@ -941,7 +975,7 @@ class Dailybrief {
 		if ( $post ) {
 			// Ok prepare the post.
 			$buffer = true;
-			WP_CLI::log( '* Preparing post for ' . $today );
+			$this->wpclilog( '* Preparing post for ' . $today );
 		}
 		// Use excerpts or not.
 		$use_excerpts = $this->parse_arguments( $arguments, 'use-excerpts', true );
@@ -1045,7 +1079,7 @@ class Dailybrief {
 				$article .= ( '<p>' . $excerpt . '</p>' );
 				$article .= ( '<p>Tags: ' . implode( ', ', $t_tags ) . '</p>' );
 				$article .= $this->article_delimiter;
-				WP_CLI::log( '+ Added: ' . $title );
+				$this->wpclilog( '+ Added: ' . $title );
 			}
 
 			// Append to slug with page number
@@ -1055,7 +1089,7 @@ class Dailybrief {
 		} while ( $query->have_posts() );
 		// End of post preparation.
 		// Output.
-		WP_CLI::log( '--- BEGIN POST ----' );
+		$this->wpclilog( '--- BEGIN POST ----' );
 		// Output Header.
 		if ( ! empty( $this->options['header'] ) ) {
 			$header = $this->options['header'];
@@ -1105,7 +1139,7 @@ class Dailybrief {
 		if ( ! empty( $this->options['footer'] ) ) {
 			$this->output( $this->options['footer'], $buffer );
 		}
-		WP_CLI::log( '--- END POST ----' );
+		$this->wpclilog( '--- END POST ----' );
 
 		// Create WP Post.
 		if ( $post && $article_count > 0 ) {
@@ -1118,34 +1152,34 @@ class Dailybrief {
 				$post_tags = explode( ',', $this->post_tags );
 			}
 			// Ok create the post.
-			WP_CLI::log( '* Creating post with ' . $article_count . ' articles.' );
+			$this->wpclilog( '* Creating post with ' . $article_count . ' articles.' );
 			// Do some sanity checks.
 			// Call create_post here.
 			$wp_insert_post_result = $this->create_post();
 			if ( $wp_insert_post_result > 0 ) {
 				$this->post_id_created = $wp_insert_post_result;
-				WP_CLI::log( '* Created ' . $this->post_id_created . ' - "' . $this->post_title . '" on ' . $this->slug );
+				$this->wpclilog( '* Created ' . $this->post_id_created . ' - "' . $this->post_title . '" on ' . $this->slug );
 				// Append Tags if any set.
 				if ( is_array( $post_tags ) && count( $post_tags ) > 0 ) {
 					$set_tags = wp_set_post_tags( $this->post_id_created, $post_tags, false );
 					if ( ! is_wp_error( $set_tags ) ) {
-						WP_CLI::log( '* Set tags ' . implode( ', ', $post_tags ) );
+						$this->wpclilog( '* Set tags ' . implode( ', ', $post_tags ) );
 					} else {
-						WP_CLI::error( "*** Error - could not set the tags...\n" . $set_tags->get_error_message() );
+						$this->wpclierror( "*** Error - could not set the tags...\n" . $set_tags->get_error_message() );
 					}
 				} else {
-					WP_CLI::warning( '! No tags to set. (This will cause issues if you have no default tags in SteemPress set) ' . implode( ', ', $post_tags ) );
+					$this->wpcliwarn( '! No tags to set. (This will cause issues if you have no default tags in SteemPress set) ' . implode( ', ', $post_tags ) );
 				}
 				// Force the use of a --publish flag.
 				if ( $do_publish ) {
 					// Transition post to publish state.
 					wp_publish_post( $this->post_id_created );
-					WP_CLI::log( '* Post is now Published ' );
+					$this->wpclilog( '* Post is now Published ' );
 
 					if ( ! class_exists( 'Steempress_sp_Admin' ) ) {
-						WP_CLI::warning( '? SteemPress NOT available (did you install it?), can not post to steem. ' );
+						$this->wpcliwarn( '? SteemPress NOT available (did you install it?), can not post to steem. ' );
 					} else {
-						WP_CLI::log( '* SteemPress IS available, can post to steem, so trying that now ' );
+						$this->wpclilog( '* SteemPress IS available, can post to steem, so trying that now ' );
 
 						// Since we're using another plugin directly we'll try and catch whatever goes wrong.
 						try {
@@ -1155,17 +1189,17 @@ class Dailybrief {
 							$steempress_sp_permlink = get_post_meta( $this->post_id_created, 'steempress_sp_permlink' );
 							$steempress_sp_author   = get_post_meta( $this->post_id_created, 'steempress_sp_author' );
 							if ( ! empty( $steempress_sp_permlink ) && ! empty( $steempress_sp_author ) ) {
-								WP_CLI::log( '* Posted to SteemPress API with: ' . $steempress_sp_author . ' / ' . $steempress_sp_permlink );
+								$this->wpclilog( '* Posted to SteemPress API with: ' . $steempress_sp_author . ' / ' . $steempress_sp_permlink );
 							} else {
-								WP_CLI::warning( '? SteemPress API post failed for some reason :-( ' );
+								$this->wpcliwarn( '? SteemPress API post failed for some reason :-( ' );
 							}
 						} catch ( Exception $e ) {
-							WP_CLI::error( '*** Error - SteemPress Call Blew up ' . $e->getMessage() );
+							$this->wpclierror( '*** Error - SteemPress Call Blew up ' . $e->getMessage() );
 						}
 					}
 				}
 			} else {
-				WP_CLI::error( '*** Error - could not create the post...\n' . $wp_insert_post_result->get_error_message() );
+				$this->wpclierror( '*** Error - could not create the post...\n' . $wp_insert_post_result->get_error_message() );
 			}
 		}
 	}
