@@ -1333,9 +1333,9 @@ class Dailybrief {
 		}
 		// Output optional TOC.
 		if ( 1 === $this->include_toc ) {
-			$this->output( '<hr><p>', $buffer );
+			$this->output( '<hr><p><h3>', $buffer );
 			$this->output( $this->get_toc_header(), $buffer );
-			$this->output( '<ul>', $buffer );
+			$this->output( '</h3><ul>', $buffer );
 			$this->output( $toc_items, $buffer );
 			$this->output( '</ul></p><hr>', $buffer );
 		}

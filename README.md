@@ -83,6 +83,7 @@ That is it, the bare minimum is done. You probably want to personalize it more s
 | debug         | numeric    | 1                 | 1 = on / 0 = Off                          |
 | include_toc   | numeric    | 1                 | 1 = on / 0 = Off - Include a table of contents |
 | include_toc_localhrefs | numeric    | 1                 | 1 = on / 0 = Off - Include TOC local links (steemit bug) |
+| toc_header    | string     | "Table of Contents" | Table of Contents header text |
 | url_suffix    | string     | ""                | "?campaign=steempress&amp;utm=dailybrief" |
 | excerpt_words | numeric    | 100               | Numer of words in excerpt                 |
 | post_title    | string     | "The Daily Brief" | A date 2018-11-15 will be suffixed to this|
@@ -90,7 +91,7 @@ That is it, the bare minimum is done. You probably want to personalize it more s
 | post_category | list       | 1                 | Category ID(s) to post to single or comma separated |
 | post_tags     | list       | ""                | Tags to add i.e. news,life,blog will create tags if nonexistent          |
 | always_skip_category | list | post_category | Always skips the brief category |
-| slug | string | "the-daily-brief" | A date 2018-11-15 will be suffixed to this |
+| slug | string | "the-daily-brief" | A date i.e. 2018-11-15 will be suffixed to this |
 | comment_status | string | "open" | open or closed for comments |
 | ping_status | string | "closed" | open or closed for pings | 
 | post_status | string | "draft" | Is set to "draft" to only create post but not publish, quick override available with --publish flag |
@@ -98,7 +99,8 @@ That is it, the bare minimum is done. You probably want to personalize it more s
 | article_delimiter | string | "&lt;hr&gt;" | Delimited between summarized articles |
 | article_continue | string | "Continue&nbsp;-&gt;" | Read more text after excerpt |
 | article_stats_txt | string | "&lt;hr&gt;Articles in this brief: " | Article part of stats section |
-| article_stats_cats_txt | string | &lt;br&gt;Categories in this brief: | Categories part of stats section |
+| article_stats_cats_txt | string | '&lt;br&gt;Categories in this brief: '| Categories part of stats section |
+| article_stats_tags_txt | string | '&lt;br&gt;Tags in this brief: '| Tags part of stats section |
 | featured_image_url | string | "" | Fixed Image URL to use as featured image, if not set first summariez article posts image will be used. |
 
 ### Flags
