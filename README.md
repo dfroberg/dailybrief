@@ -26,7 +26,7 @@ e.g.
 #### Note:
 This is still alpha grade code, and subject to change!
  
-## Setup:
+## Setup & Run via WP CLI:
 Install by issuing;
 
 ```wp plugin install --activate https://gitlab.froberg.org/dfroberg/dailybrief/-/archive/master/dailybrief-master.zip```
@@ -34,9 +34,9 @@ Install by issuing;
 The dailybrief command is intended to be run as a CRON task.
 (Suggestion, you might want to run WP CRON via WP_CLI too)
 
-``` wp cron event run --due-now```
+```wp cron event run --due-now```
 
-## Configuration:
+## Configuration via WP CLI:
 All static configuration is done from the WP_CLI command line using *wp dailybrief set &lt;option&gt; &lt;value&gt;*
 ### Basic:
 Configure the post author id;
@@ -103,7 +103,7 @@ That is it, the bare minimum is done. You probably want to personalize it more s
 | article_stats_tags_txt | string | '&lt;br&gt;Tags in this brief: '| Tags part of stats section |
 | featured_image_url | string | "" | Fixed Image URL to use as featured image, if not set first summariez article posts image will be used. |
 
-### Flags
+### WP CLI Flags
 [--post]
 : Create the post in Wordpress
 
@@ -130,6 +130,16 @@ Create list of posts with dates between before and after dates
 [--post]
 : Create the post in Wordpress
 * default: false
+
+[--period=<day|range>]
+: Indicate what type of summary
+* default: day
+
+[--start=<strtime>]
+: Begin brief with posts on day i.e. "-1 day" / "yesterday"
+
+[--end=<strtime>]
+: End brief with posts on day i.e. "-1 day" / "yesterday"
 
 [--use-excerpts]
 : Do you want to use the excepts of the summarized Wordpress posts
