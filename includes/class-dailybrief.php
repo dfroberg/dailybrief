@@ -761,7 +761,7 @@ class Dailybrief {
 	/**
 	 * Return an dailybrief_options value if exists otherwise return the default.
 	 *
-	 * @param string $option option name.
+	 * @param string $option  option name.
 	 * @param mixed  $default default value to return.
 	 *
 	 * @return mixed
@@ -957,7 +957,7 @@ class Dailybrief {
 	/**
 	 * Set option parameter
 	 *
-	 * @param string $option_name Name of option to set.
+	 * @param string $option_name  Name of option to set.
 	 * @param string $option_value Value of option to set.
 	 *
 	 * @return bool
@@ -1029,7 +1029,7 @@ class Dailybrief {
 	 * Prepare for buffering output to a new post
 	 *
 	 * @param string $output what to write.
-	 * @param bool $buffer log or stdout.
+	 * @param bool   $buffer log or stdout.
 	 *
 	 * @input string @output write to log.
 	 */

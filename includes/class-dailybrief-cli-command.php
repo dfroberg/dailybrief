@@ -167,10 +167,6 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			// Exclude some post_ids for whatever reason.
 			$skip_posts = WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-posts', '' );
 
-			$status = array( 'publish' );
-			$types  = array( 'post' );
-			$buffer = false;
-
 			// Parse some flags.
 			$post = WP_CLI\Utils\get_flag_value( $assoc_args, 'post', false );
 
