@@ -1,8 +1,8 @@
 # dailybrief
 * Contributors: dfroberg, howo
-* Donate link: https://www.froberg.org
+* Donate link: https://steemit.com/@dfroberg
 * Tags: posts, automation, steem, steempress
-* Requires at least: 4.0.1
+* Requires at least: 4.7
 * Tested up to: 5.0.3
 * Stable tag: 1.0
 * License: GPLv2 or later
@@ -38,7 +38,7 @@ The dailybrief command is intended to be run as a CRON task.
 
 ## Configuration via WP CLI:
 All static configuration is done from the WP_CLI command line using *wp dailybrief set &lt;option&gt; &lt;value&gt;*
-### Basic:
+### Basic Settings:
 Configure the post author id;
 
 First find the user ID you wish to post as;
@@ -113,7 +113,7 @@ You can use HTML to format the header and footer.
 ## Running from WP CLI
 Create list of posts with dates between before and after dates
 
-#### OPTIONS:
+### OPTIONS & FLAGS:
 
 [--post]
 : Create the post in Wordpress
@@ -165,7 +165,7 @@ Although the dailybrief command can be used with any type of social media or new
 : Create a new category named i.e. "Daily Brief", make a note of the ID once created.
 * In Settings -> SteemPress
 : Select to ignore all categories but the newly created "Daily Brief" category and save the selection.
-* On command line run;
+* You can easily get the Category ID on command line run using WP CLI; 
 ```
    > wp term list category --fields=term_id,name --name="Daily Brief"
    +---------+-------------+
@@ -179,7 +179,18 @@ Although the dailybrief command can be used with any type of social media or new
 ```
   
 # Roadmap:
-* STEEM SPECIFIC:
-: A VERY high frequency version allowing for 4 posts a day splitting the day into 6 hour segments. (it will skip a segment if no articles has been produced or you have less than 
-  `wp dailbrief set article_treshold X` )
+
+#### General:
+General improvements planned for the plugin;
+* Better preview system.
+* More configurable options and formating.
+* Pre-made styling templates.
+
+#### Steem / SteemPpress:
+Improvements planned specific to Steem & SteemPress integration;
+* A VERY high frequency version allowing for 4 posts a day splitting the day into 6 hour segments. (it will skip a segment if no articles has been produced or you have less than 
+  `wp dailbrief set article_treshold X` ) where X is an integer representing the number of articles that is considered to few to publish in it's own segment.   
+* Create a brief for individual users posts and allow SteemPress to publish these to the individual steem accounts.
+
+  
   
