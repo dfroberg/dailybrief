@@ -1,14 +1,14 @@
 <?php
 /**
- * Class InvokationTest
+ * Class SampleTest
  *
- * @package DailyBrief_CLI_Command
+ * @package Dailybrief_Develop
  */
 
 /**
  * Sample test case.
  */
-class InvokationTest extends WP_UnitTestCase {
+class SampleTest extends WP_UnitTestCase {
 
 	/**
 	 * A single example test.

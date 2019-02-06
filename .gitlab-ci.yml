@@ -1,51 +1,113 @@
-# Select what we should cache between builds
-cache:
-  untracked: true
-  key: "$CI_BUILD_REF_NAME"
-  paths:
-    - vendor/
-
-before_script:
-- apt-get update -yqq
-- apt-get install -yqq git libmcrypt-dev libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev zip unzip subversion mysql-client default-libmysqlclient-dev --fix-missing
-# Install PHP extensions
-- pecl install mcrypt-1.0.1
-- docker-php-ext-enable mcrypt
-- docker-php-ext-install mbstring curl json intl gd xml zip bz2 opcache pdo_mysql mysqli
-  # Set up WordPress tests
-- bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
-
-# Install & enable Xdebug for code coverage reports
-- pecl install xdebug
-- docker-php-ext-enable xdebug
-# Install and run Composer
-- curl -sS https://getcomposer.org/installer | php
-- php composer.phar install
-- chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
-# Install PHPCS and WPCS
-- composer global require "squizlabs/php_codesniffer=*"
-- composer global require "wp-coding-standards/wpcs"
-- phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
-
-# Bring in any services we need http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
-# See http://docs.gitlab.com/ce/ci/services/README.html for examples.
-services:
-  - mysql:5.7
-
-# Set any variables we need
 variables:
-  # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
+  # Configure mysql service (https://hub.docker.com/_/mysql/)
   MYSQL_DATABASE: wordpress_tests
   MYSQL_ROOT_PASSWORD: mysql
   WITH_XDEBUG: 1
   TIMEZONE: "America/New_York"
 
-# Run our tests
-# If Xdebug was installed you can generate a coverage report and see code coverage metrics.
-test:
+# Select what we should cache between builds
+#cache:
+#  paths:
+#    - vendor/
+
+stages:
+  - codestyle
+  - codecoverage
+  - test
+  - build
+before_script:
+  # Install dependencies
+
+  # update the docker
+  - apt-get clean
+  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+  - apt-get -yqq update
+
+  # install the required packages for the running CI tests
+  - apt-get -yqqf install unzip subversion mysql-client rsync --fix-missing
+
+  # PHP extensions
+  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
+
+  # Set up WordPress tests
+  - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
+
+  # Install PHPCS and WPCS
+  - composer global require "squizlabs/php_codesniffer=3.3.0" --no-progress
+  - composer global require "wp-coding-standards/wpcs=1.2.0" --no-progress
+  - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
+
+codestyle:
+  stage: codestyle
   image: stayallive/php:7.2
   services:
-    - mysql:5.7
+    - mysql:5.6
+  artifacts:
+    paths:
+      - reports
+      - vendor
   script:
+    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
     - phpcs
-    - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+
+PHPunit:PHP5.6:MySQL:
+  stage: test
+  image: tetraweb/php:5.6
+  services:
+    - mysql:5.6
+  script:
+    - docker-php-ext-enable mcrypt
+    - composer global require "phpunit/phpunit=4.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit
+
+PHPunit:PHP7.0:MySQL:
+  stage: test
+  image: stayallive/php:7.0
+  services:
+    - mysql:5.6
+  script:
+    - docker-php-ext-enable mcrypt
+    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit
+
+PHPunit:PHP7.1:MySQL:
+  stage: test
+  image: stayallive/php:7.1
+  services:
+    - mysql:5.6
+  script:
+    - docker-php-ext-enable mcrypt
+    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit
+
+
+PHPunit:PHP7.2:MySQL:
+  stage: test
+  image: stayallive/php:7.2
+  services:
+    - mysql:5.6
+  script:
+    - apt-get -yqq update && apt-get install -y libmcrypt-dev pkg-php-tools && pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
+    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit
+
+dailybrief:
+  stage: build
+  image: stayallive/php:7.2
+  retry: 2
+  cache:
+    untracked: true
+    key: ${CI_BUILD_REF_NAME}
+    paths:
+      - node_modules/
+      - vendor/
+  artifacts:
+    name: "${CI_BUILD_NAME}_${CI_BUILD_REF_NAME}"
+    untracked: false
+    paths:
+      - dailybrief/
+  script:
+    - mkdir -p dailybrief
+    - rsync -av --exclude-from='deploy-exclude-files.txt' . dailybrief # <<< this is where you'll have all the files you need to be deployed
+    - echo 'Deploying!'
