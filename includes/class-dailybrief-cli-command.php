@@ -46,6 +46,35 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		}
 
 		/**
+		 * Shows Daily Brief options
+		 *
+		 * ## OPTIONS
+		 * [<option>]
+		 * : The name of the option to show i.e. header or footer
+		 *
+		 * ## EXAMPLES
+		 *
+		 *      wp dailybrief show header
+		 *      wp dailybrief show
+		 *
+		 * @param array $args arguments.
+		 * @param array $assoc_args associated arguments.
+		 */
+		public function show( $args, $assoc_args ) {
+			$option_name = $args[0];  // value: "arg1".
+
+			WP_CLI::log( 'Settings for ' . $this->dc->get_plugin_name() . ' version ' . DAILYBRIEF_VERSION );
+			if ( ! empty( $option_name ) ) {
+				$option_value = $this->dc->get_option( $option_name );
+				WP_CLI::log( '' . $option_name . ' = ' . $option_value );
+			} else {
+				foreach ( $this->dc->get_options() as $option_name => $option_value ) {
+					WP_CLI::log( '' . $option_name . ' = ' . ( is_numeric( $option_value ) ? '' : "'" ) . $option_value . ( is_numeric( $option_value ) ? '' : "'" ) );
+				}
+			}
+		}
+
+		/**
 		 * Sets Daily Brief options
 		 *
 		 * ## OPTIONS

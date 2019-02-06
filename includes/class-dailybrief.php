@@ -1265,6 +1265,7 @@ class Dailybrief {
 					'tag__not_in'      => $exclude_tags,
 					'category__not_in' => $exclude_categories,
 					'post__not_in'     => $exclude_posts,
+					'category__in'     => $focus,
 				)
 			);
 
