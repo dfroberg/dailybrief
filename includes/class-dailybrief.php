@@ -218,7 +218,30 @@ class Dailybrief {
 	 * @var string
 	 */
 	private $content_buffer = '';
+	/**
+	 * Table of Contents header.
+	 *
+	 * @var string
+	 */
+	private $toc_header = '';
 
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_toc_header(): string {
+		return $this->toc_header;
+	}
+
+	/**
+	 * Set table of contents header.
+	 *
+	 * @param string $toc_header Set table of contents header.
+	 */
+	public function set_toc_header( string $toc_header ): void {
+		$this->toc_header = $toc_header;
+	}
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -737,6 +760,7 @@ class Dailybrief {
 		$this->debug                   = $this->get_option_default( 'debug', 0 ); // 1 for on
 		$this->include_toc             = $this->get_option_default( 'include_toc', 1 ); // 1 for on / 0 for off
 		$this->include_toc_local_hrefs = $this->get_option_default( 'include_toc_local_hrefs', 1 ); // 1 for on / 0 for off
+		$this->toc_header              = $this->get_option_default( 'toc_header', '<h3>Table of Contents</h3>' );
 		$this->url_suffix              = $this->get_option_default( 'url_suffix', '' ); // set '?campaign=steempress&utm=dailybrief'.
 		$this->excerpt_words           = $this->get_option_default( 'excerpt_words', 100 );
 		$this->post_title              = $this->get_option_default( 'post_title', 'The Daily Brief' ) . ' ' . $this->date_suffix;
@@ -1309,7 +1333,9 @@ class Dailybrief {
 		}
 		// Output optional TOC.
 		if ( 1 === $this->include_toc ) {
-			$this->output( '<hr><p><h3>Table of Contents</h3><ul>', $buffer );
+			$this->output( '<hr><p>', $buffer );
+			$this->output( $this->get_toc_header(), $buffer );
+			$this->output( '<ul>', $buffer );
 			$this->output( $toc_items, $buffer );
 			$this->output( '</ul></p><hr>', $buffer );
 		}
