@@ -1064,9 +1064,9 @@ class Dailybrief {
 	/**
 	 * Parse argument array
 	 *
-	 * @param array $arguments Array of arguments sent to function.
+	 * @param array  $arguments Array of arguments sent to function.
 	 * @param string $parameter Name of parameter to return.
-	 * @param mixed $default Default value of the parameter.
+	 * @param mixed  $default   Default value of the parameter.
 	 *
 	 * @return mixed
 	 */
