@@ -19,7 +19,7 @@ e.g.
 
 1. Upload `dailybrief.php` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+1. Check the Settings -> Dailybrief - to customize the settings.
 
 ## Frequently Asked Questions
 
