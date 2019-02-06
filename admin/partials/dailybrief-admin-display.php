@@ -70,13 +70,15 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 	<?php } // end if support ?>
 	<?php
 	if ( 'preview' === $active_tab ) {
-		// Generate preview
-		$sample = $dc->create( array(
-			'preview' => true,
-			'period'  => 'range',
-			'start'   => date( 'Y-m-d', strtotime( 'yesterday' ) ),
-			'end'     => date( 'Y-m-d', strtotime( 'today' ) ),
-		) )
+		// Generate preview.
+		$sample = $dc->create(
+			array(
+				'preview' => true,
+				'period'  => 'range',
+				'start'   => date( 'Y-m-d', strtotime( 'yesterday' ) ),
+				'end'     => date( 'Y-m-d', strtotime( 'today' ) ),
+			)
+		)
 		?>
 		<div id = "dailybrief-preview-post" class = "dailybrief-preview-post">
 			<h1><?php echo $sample['post_title'] . ' ' . $dc->get_date_suffix(); ?></h1>

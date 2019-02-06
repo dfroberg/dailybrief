@@ -219,7 +219,7 @@ class Dailybrief {
 	 */
 	private $content_buffer = '';
 	/**
-	 * footer.
+	 * Footer.
 	 *
 	 * @var string
 	 */
@@ -1217,8 +1217,6 @@ class Dailybrief {
 		} else {
 			$exclude_posts = array();
 		}
-
-
 
 		// Parse some flags.
 		$post = $this->parse_arguments( $arguments, 'post', false );
