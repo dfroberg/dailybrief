@@ -2,3 +2,26 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+#dailybrief-preview-post {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 120%;
+    line-height: 150%;
+}
+
+.settings_page_dailybrief .dailybrief-preview-post {
+    max-width: 800px;
+    font-family: 'Source Serif Pro', serif;
+    font-size: 120%;
+    line-height: 150%;
+}
+
+.settings_page_dailybrief img {
+    max-width: 90%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.theme-dark {
+    background-color: #1C252B;
+    color: #fcfcfc;
+}

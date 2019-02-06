@@ -1158,11 +1158,19 @@ class Dailybrief {
 	 *
 	 * @param array $arguments Array of arguments sent to function.
 	 *
+	 * @return array
 	 * @throws \WP_CLI\ExitException Stops processing on Error.
 	 */
 	public function create( $arguments ) {
 		global
 		$wpdb;
+		$status  = array( 'publish' );
+		$types   = array( 'post' );
+		$buffer  = false;
+		$preview = $this->parse_arguments( $arguments, 'preview', false );
+		if ( $preview ) {
+			$buffer = true;
+		}
 		/**
 		 * Period to run brief against.
 		 * Can be day, for a specific day in the past or today, or days to specify range of days (longer than one day).
@@ -1210,9 +1218,7 @@ class Dailybrief {
 			$exclude_posts = array();
 		}
 
-		$status = array( 'publish' );
-		$types  = array( 'post' );
-		$buffer = false;
+
 
 		// Parse some flags.
 		$post = $this->parse_arguments( $arguments, 'post', false );
@@ -1221,6 +1227,7 @@ class Dailybrief {
 			$buffer = true;
 			$this->wpclilog( '* Preparing post for ' . $today );
 		}
+
 		// Use excerpts or not.
 		$use_excerpts = $this->parse_arguments( $arguments, 'use-excerpts', true );
 		// Do you wish to focus on a particular category?
@@ -1310,7 +1317,7 @@ class Dailybrief {
 					$this->set_temp_featured_image_url( get_the_post_thumbnail_url( $id, 'full' ) );
 				}
 				// Compile a TOC.
-				if ( 1 === $this->get_include_toc() ) {
+				if ( 1 == $this->get_include_toc() ) {
 					$toc_items .= '<li>';
 					if ( 1 === $this->get_include_toc_local_hrefs() ) {
 						$toc_items .= '<a href="#_author_permlink_' . $id . '">';
@@ -1318,7 +1325,7 @@ class Dailybrief {
 					$toc_items .= $title . '</a></li>';
 				}
 
-				if ( 1 === $this->get_include_toc_local_hrefs() ) {
+				if ( 1 == $this->get_include_toc_local_hrefs() ) {
 					$article .= ( '<a id="_author_permlink_' . $id . '" name="_author_permlink_' . $id . '"></a>' );
 				}
 				if ( has_post_thumbnail( $id ) ) {
@@ -1461,6 +1468,11 @@ class Dailybrief {
 				$this->wpclierror( '*** Error - could not create the post...\n' . $wp_insert_post_result->get_error_message() );
 			}
 		}
+
+		return array(
+			'post_title' => $this->post_title,
+			'content'    => $this->content_buffer,
+		);
 	}
 
 }

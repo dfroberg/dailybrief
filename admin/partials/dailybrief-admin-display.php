@@ -15,7 +15,7 @@
 $dc = new Dailybrief();
 $dc->update_globals();
 $options = $dc->get_options(); // get_option( $this->plugin_name ); // .
-print_r( $options);
+
 // Avoid undefined errors when running it for the first time.
 if ( ! isset( $options['test'] ) ) {
 	$options['test¨'] = '';
@@ -70,72 +70,27 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 	<?php } // end if support ?>
 	<?php
 	if ( 'preview' === $active_tab ) {
-		// Sample data.
-		$sample_posts = array(
-			1 => array(
-				'title'      => 'Nunc viverra tellus sed orci semper',
-				'date'       => '2019-01-29 09:47:27',
-				'author'     => 'Mr. A Guest',
-				'categories' => array( 'Blog, Life, News' ),
-				'body'       => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed fringilla odio. Quisque ultrices justo sit amet lorem volutpat lacinia. Pellentesque tristique tellus turpis, sed varius tortor aliquam eu. Proin eget lacinia odio, in faucibus risus. Nullam est urna, mollis quis lorem id, ornare sollicitudin turpis. Pellentesque sit amet tempus diam, in volutpat quam. Curabitur tristique gravida nulla nec pulvinar. Fusce semper nisl in augue rutrum porta. Fusce aliquam imperdiet erat, laoreet viverra metus volutpat vel. Nam convallis id ligula nec tempor. Morbi ultrices a massa vitae sodales. Etiam eu risus non elit aliquet suscipit. Pellentesque efficitur pretium est ac varius. Aliquam vitae est id lacus malesuada facilisis. Sed eget lacus malesuada, ornare ante quis, consequat dolor. Mauris cursus accumsan ultricies. 
-
-Aenean fringilla tempus sem et dapibus. Nunc viverra tellus sed orci semper, a mattis enim auctor. Mauris ut nibh imperdiet, dictum erat vitae, faucibus purus. Suspendisse in dictum augue. Praesent ut ullamcorper urna. Cras semper auctor pulvinar. Donec urna lectus, euismod in tincidunt nec, sagittis a massa. Donec ut facilisis elit. Vestibulum ac nibh eget lectus elementum varius ac sit amet felis. Nunc nibh magna, luctus eget faucibus vitae, cursus ac dui. Mauris in imperdiet justo, id pretium mi. Nullam ac sodales ipsum. Cras quis lectus eu arcu viverra pulvinar.
-
-Nullam maximus, urna eget lacinia auctor, odio metus fermentum augue, et ullamcorper arcu quam a arcu. Etiam ornare est non neque scelerisque pretium. Integer massa arcu, luctus ac sapien vel, tincidunt luctus nibh. Maecenas volutpat placerat turpis, in laoreet felis convallis nec. Vivamus facilisis arcu leo, ut tristique arcu tempor in. Mauris facilisis tortor id purus varius facilisis. Morbi ut libero suscipit, sodales nisi pellentesque, feugiat elit. Fusce ullamcorper, nisl quis pretium porttitor, urna mauris eleifend tellus, et fermentum purus nisl eu sem. Phasellus convallis, massa eget ultrices sollicitudin, elit risus vulputate tortor, vitae semper odio lacus quis metus. Morbi nec nunc odio. Maecenas porta aliquam tellus, quis gravida metus dictum sodales.
-</p>',
-			),
-			2 => array(
-				'title'      => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-				'date'       => '2019-01-29 09:47:27',
-				'author'     => 'Mrs. M Rose',
-				'categories' => array( 'Photography, Life' ),
-				'body'       => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed fringilla odio. Quisque ultrices justo sit amet lorem volutpat lacinia. Pellentesque tristique tellus turpis, sed varius tortor aliquam eu. Proin eget lacinia odio, in faucibus risus. Nullam est urna, mollis quis lorem id, ornare sollicitudin turpis. Pellentesque sit amet tempus diam, in volutpat quam. Curabitur tristique gravida nulla nec pulvinar. Fusce semper nisl in augue rutrum porta. Fusce aliquam imperdiet erat, laoreet viverra metus volutpat vel. Nam convallis id ligula nec tempor. Morbi ultrices a massa vitae sodales. Etiam eu risus non elit aliquet suscipit. Pellentesque efficitur pretium est ac varius. Aliquam vitae est id lacus malesuada facilisis. Sed eget lacus malesuada, ornare ante quis, consequat dolor. Mauris cursus accumsan ultricies. 
-    
-    Aenean fringilla tempus sem et dapibus. Nunc viverra tellus sed orci semper, a mattis enim auctor. Mauris ut nibh imperdiet, dictum erat vitae, faucibus purus. Suspendisse in dictum augue. Praesent ut ullamcorper urna. Cras semper auctor pulvinar. Donec urna lectus, euismod in tincidunt nec, sagittis a massa. Donec ut facilisis elit. Vestibulum ac nibh eget lectus elementum varius ac sit amet felis. Nunc nibh magna, luctus eget faucibus vitae, cursus ac dui. Mauris in imperdiet justo, id pretium mi. Nullam ac sodales ipsum. Cras quis lectus eu arcu viverra pulvinar.
-    
-    Nullam maximus, urna eget lacinia auctor, odio metus fermentum augue, et ullamcorper arcu quam a arcu. Etiam ornare est non neque scelerisque pretium. Integer massa arcu, luctus ac sapien vel, tincidunt luctus nibh. Maecenas volutpat placerat turpis, in laoreet felis convallis nec. Vivamus facilisis arcu leo, ut tristique arcu tempor in. Mauris facilisis tortor id purus varius facilisis. Morbi ut libero suscipit, sodales nisi pellentesque, feugiat elit. Fusce ullamcorper, nisl quis pretium porttitor, urna mauris eleifend tellus, et fermentum purus nisl eu sem. Phasellus convallis, massa eget ultrices sollicitudin, elit risus vulputate tortor, vitae semper odio lacus quis metus. Morbi nec nunc odio. Maecenas porta aliquam tellus, quis gravida metus dictum sodales.
-    </p>',
-			),
-			3 => array(
-				'title'      => 'Duis sed fringilla odio. Quisque ultrices justo sit amet lorem volutpat lacinia.',
-				'date'       => '2019-01-29 09:47:27',
-				'author'     => 'Mr. B Logger',
-				'categories' => array( 'Blog, Life, Travel' ),
-				'body'       => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed fringilla odio. Quisque ultrices justo sit amet lorem volutpat lacinia. Pellentesque tristique tellus turpis, sed varius tortor aliquam eu. Proin eget lacinia odio, in faucibus risus. Nullam est urna, mollis quis lorem id, ornare sollicitudin turpis. Pellentesque sit amet tempus diam, in volutpat quam. Curabitur tristique gravida nulla nec pulvinar. Fusce semper nisl in augue rutrum porta. Fusce aliquam imperdiet erat, laoreet viverra metus volutpat vel. Nam convallis id ligula nec tempor. Morbi ultrices a massa vitae sodales. Etiam eu risus non elit aliquet suscipit. Pellentesque efficitur pretium est ac varius. Aliquam vitae est id lacus malesuada facilisis. Sed eget lacus malesuada, ornare ante quis, consequat dolor. Mauris cursus accumsan ultricies. 
-        
-        Aenean fringilla tempus sem et dapibus. Nunc viverra tellus sed orci semper, a mattis enim auctor. Mauris ut nibh imperdiet, dictum erat vitae, faucibus purus. Suspendisse in dictum augue. Praesent ut ullamcorper urna. Cras semper auctor pulvinar. Donec urna lectus, euismod in tincidunt nec, sagittis a massa. Donec ut facilisis elit. Vestibulum ac nibh eget lectus elementum varius ac sit amet felis. Nunc nibh magna, luctus eget faucibus vitae, cursus ac dui. Mauris in imperdiet justo, id pretium mi. Nullam ac sodales ipsum. Cras quis lectus eu arcu viverra pulvinar.
-        
-        Nullam maximus, urna eget lacinia auctor, odio metus fermentum augue, et ullamcorper arcu quam a arcu. Etiam ornare est non neque scelerisque pretium. Integer massa arcu, luctus ac sapien vel, tincidunt luctus nibh. Maecenas volutpat placerat turpis, in laoreet felis convallis nec. Vivamus facilisis arcu leo, ut tristique arcu tempor in. Mauris facilisis tortor id purus varius facilisis. Morbi ut libero suscipit, sodales nisi pellentesque, feugiat elit. Fusce ullamcorper, nisl quis pretium porttitor, urna mauris eleifend tellus, et fermentum purus nisl eu sem. Phasellus convallis, massa eget ultrices sollicitudin, elit risus vulputate tortor, vitae semper odio lacus quis metus. Morbi nec nunc odio. Maecenas porta aliquam tellus, quis gravida metus dictum sodales.
-        </p>',
-			),
-		)
+		// Generate preview
+		$sample = $dc->create( array(
+			'preview' => true,
+			'period'  => 'range',
+			'start'   => date( 'Y-m-d', strtotime( 'yesterday' ) ),
+			'end'     => date( 'Y-m-d', strtotime( 'today' ) ),
+		) )
 		?>
-		<div style="float: right; margin-right: 30%"><h2>Preview </h2>
-			<h1><?php echo $options['post_title']; ?></h1>
-			<p><?php echo $options['header']; ?></p>
+		<div id = "dailybrief-preview-post" class = "dailybrief-preview-post">
+			<h1><?php echo $sample['post_title'] . ' ' . $dc->get_date_suffix(); ?></h1>
+			<p></p>
 			<?php
-			if ( '1' === $options['include_toc'] ) {
-				?>
-				<h2>Table of Contents:</h2>
-				<ul>
-					<?php
-					foreach ( $sample_posts as $post ) {
-						echo '<li>' . $post['title'] . '</li>';
-					}
-					?>
-				</ul>
-				<?php echo $options['article_delimiter']; ?>
-				<?php
-			}
-			foreach ( $sample_posts as $post ) {
-				?>
-
-				<h2><?php echo $post['title']; ?></h2>
-				<p><?php echo 'Published <strong>' . $post['date'] . '</strong> by <strong>' . $post['author'] . '</strong> in <strong>' . implode( ', ', $post['categories'] ) . '</strong>'; ?></p>
-				<p><?php echo wp_trim_words( wp_strip_all_tags( $post['body'], true ), $options['excerpt_words'], '... <a href="#">' . $options['article_continue'] . '</a>' ); ?></p>
-				<p><?php echo $options['article_delimiter']; ?></p>
-			<?php } ?>
-			<p><?php echo $options['footer']; ?></p>
+			echo '<center><img src="' . $dc->get_temp_featured_image_url() . '" width="640"></center>';
+			?>
+			<br>
+			<p></p>
+			<p>
+			<?php
+			echo $sample['content'];
+			?>
+			</p>
 		</div>
 
 	<?php } // end if preview ?>
@@ -243,11 +198,11 @@ Nullam maximus, urna eget lacinia auctor, odio metus fermentum augue, et ullamco
 		);
 		wp_editor( ( '' === $options['footer'] ? $dc->get_footer() : $options['footer'] ), 'footereditor', $settings );
 		?>
-		<?php } // end if display_options ?>
 		<?php
 
 
 		submit_button( 'Save all changes', 'primary', 'submit', true );
 		?>
 	</form>
+	<?php } // end if display_options ?>
 </div>
