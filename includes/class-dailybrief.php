@@ -230,7 +230,7 @@ class Dailybrief {
 	 *
 	 * @return string
 	 */
-	public function get_toc_header(): string {
+	public function get_toc_header() {
 		return $this->toc_header;
 	}
 
@@ -239,7 +239,7 @@ class Dailybrief {
 	 *
 	 * @param string $toc_header Set table of contents header.
 	 */
-	public function set_toc_header( string $toc_header ): void {
+	public function set_toc_header( string $toc_header ) {
 		$this->toc_header = $toc_header;
 	}
 	/**
