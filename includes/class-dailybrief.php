@@ -219,6 +219,54 @@ class Dailybrief {
 	 */
 	private $content_buffer = '';
 	/**
+	 * footer.
+	 *
+	 * @var string
+	 */
+	private $footer = '';
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_footer() {
+		return $this->footer;
+	}
+
+	/**
+	 * Set footer.
+	 *
+	 * @param string $footer Set  footer.
+	 */
+	public function set_footer( string $footer ) {
+		$this->footer = $footer;
+	}
+	/**
+	 * Header.
+	 *
+	 * @var string
+	 */
+	private $header = '';
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_header() {
+		return $this->header;
+	}
+
+	/**
+	 * Set header.
+	 *
+	 * @param string $header Set  header.
+	 */
+	public function set_header( string $header ) {
+		$this->header = $header;
+	}
+	/**
 	 * Table of Contents header.
 	 *
 	 * @var string
@@ -263,6 +311,7 @@ class Dailybrief {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->update_globals();
 
 	}
 
@@ -760,7 +809,7 @@ class Dailybrief {
 		$this->debug                   = $this->get_option_default( 'debug', 0 ); // 1 for on
 		$this->include_toc             = $this->get_option_default( 'include_toc', 1 ); // 1 for on / 0 for off
 		$this->include_toc_local_hrefs = $this->get_option_default( 'include_toc_local_hrefs', 1 ); // 1 for on / 0 for off
-		$this->toc_header              = $this->get_option_default( 'toc_header', '<h3>Table of Contents</h3>' );
+		$this->toc_header              = $this->get_option_default( 'toc_header', 'Table of Contents' );
 		$this->url_suffix              = $this->get_option_default( 'url_suffix', '' ); // set '?campaign=steempress&utm=dailybrief'.
 		$this->excerpt_words           = $this->get_option_default( 'excerpt_words', 100 );
 		$this->post_title              = $this->get_option_default( 'post_title', 'The Daily Brief' ) . ' ' . $this->date_suffix;
@@ -780,6 +829,8 @@ class Dailybrief {
 		$this->article_stats_cats_txt  = $this->get_option_default( 'article_stats_cats_txt', '<br>Categories in this brief: ' );
 		$this->article_stats_tags_txt  = $this->get_option_default( 'article_stats_tags_txt', '<br>Tags in this brief: ' );
 		$this->featured_image_url      = $this->get_option_default( 'featured_image_url', '' );
+		$this->header                  = $this->get_option_default( 'header', '<p>This daily summary contains <strong>{article_count}</strong> articles about; <em>{article_tags}</em> in the following categories; <em>{article_categories}</em>.</p>' );
+		$this->footer                  = $this->get_option_default( 'footer', '<center><h2>Thank you for following our coverage.</h2></center>' );
 	}
 
 	/**

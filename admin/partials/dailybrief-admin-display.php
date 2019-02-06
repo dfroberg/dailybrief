@@ -12,7 +12,10 @@
  */
 
 // Grab all options.
-$options = get_option( $this->plugin_name );
+$dc = new Dailybrief();
+$dc->update_globals();
+$options = $dc->get_options(); // get_option( $this->plugin_name ); // .
+print_r( $options);
 // Avoid undefined errors when running it for the first time.
 if ( ! isset( $options['test'] ) ) {
 	$options['test¨'] = '';
@@ -156,33 +159,33 @@ Nullam maximus, urna eget lacinia auctor, odio metus fermentum augue, et ullamco
 		<label>Post Title :<br/>
 			<input  type="text" class="regular-text" maxlength="50" id="<?php echo $this->plugin_name; ?>-post_title"
 					name="<?php echo $this->plugin_name; ?>[post_title]"
-					value="<?php echo htmlspecialchars( ( '' === $options['post_title'] ? 'The Your Site Daily Brief' : $options['post_title'] ), ENT_QUOTES ); ?>"/>
+					value="<?php echo htmlspecialchars( ( '' === $options['post_title'] ? $dc->get_post_title() : $options['post_title'] ), ENT_QUOTES ); ?>"/>
 			<br/></label>
 		<label>Post Tags : (Max 5)<br/>
 			<input  type="text" class="regular-text" maxlength="50" id="<?php echo $this->plugin_name; ?>-post_tags"
 					name="<?php echo $this->plugin_name; ?>[post_tags]"
-					value="<?php echo htmlspecialchars( ( '' === $options['post_tags'] ? 'news-blog,life' : $options['post_tags'] ), ENT_QUOTES ); ?>"/>
+					value="<?php echo htmlspecialchars( ( '' === $options['post_tags'] ? $dc->get_post_tags() : $options['post_tags'] ), ENT_QUOTES ); ?>"/>
 			<br/></label>
 		<label>Url Suffix (Append to outbound links in your post)<br/>
 			<input  type="text" class="regular-text" maxlength="50" id="<?php echo $this->plugin_name; ?>-url_suffix"
 					name="<?php echo $this->plugin_name; ?>[url_suffix]"
-					value="<?php echo( '' === $options['url_suffix'] ? '?campaign=steempress&amp;utm=dailybrief' : $options['url_suffix'] ); ?>"/>
+					value="<?php echo( '' === $options['url_suffix'] ? $dc->get_url_suffix() : $options['url_suffix'] ); ?>"/>
 			<br/></label>
 		<label>Excerpt Words (How many words to include)<br/>
 			<input  type="number" class="regular-text" maxlength="4" id="<?php echo $this->plugin_name; ?>-excerpt_words"
 					name="<?php echo $this->plugin_name; ?>[excerpt_words]"
-					value="<?php echo htmlspecialchars( ( '' === $options['excerpt_words'] ? '100' : $options['excerpt_words'] ), ENT_QUOTES ); ?>"/>
+					value="<?php echo htmlspecialchars( ( '' === $options['excerpt_words'] ? $dc->get_excerpt_words() : $options['excerpt_words'] ), ENT_QUOTES ); ?>"/>
 			<br/></label>
 		<label>Post Slug :<br/>
 			<input  type="text" class="regular-text" maxlength="50" id="<?php echo $this->plugin_name; ?>-slug"
 					name="<?php echo $this->plugin_name; ?>[slug]"
-					value="<?php echo htmlspecialchars( ( '' === $options['slug'] ? 'the-daily-brief' : $options['slug'] ), ENT_QUOTES ); ?>"/>
+					value="<?php echo htmlspecialchars( ( '' === $options['slug'] ? $dc->get_slug() : $options['slug'] ), ENT_QUOTES ); ?>"/>
 			<br/> </label>
 		<label>Article delimiter :<br/>
 			<input  type="text" class="regular-text" maxlength="50"
 					id="<?php echo $this->plugin_name; ?>-article_delimiter"
 					name="<?php echo $this->plugin_name; ?>[article_delimiter]"
-					value="<?php echo( '' === $options['article_delimiter'] ? '<hr>' : $options['article_delimiter'] ); ?>"/>
+					value="<?php echo( '' === $options['article_delimiter'] ? $dc->get_article_delimiter() : $options['article_delimiter'] ); ?>"/>
 			<br/> </label>
 
 		<label>Debugging :
@@ -195,6 +198,11 @@ Nullam maximus, urna eget lacinia auctor, odio metus fermentum augue, et ullamco
 						name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( ( '0' === $options['debug'] || empty( $options['debug'] ) ) ? 'checked' : '' ); ?>>
 				Off</label>
 			<br></label>
+		<label>Table of Contents Header :<br/>
+			<input  type="text" class="regular-text" maxlength="50" id="<?php echo $this->plugin_name; ?>-toc_header"
+					name="<?php echo $this->plugin_name; ?>[toc_header]"
+					value="<?php echo htmlspecialchars( ( '' === $options['toc_header'] ? $dc->get_toc_header() : $options['toc_header'] ) ); ?>"/>
+			<br/> </label>
 		<label>Include Table of Contents :
 			<label><input type = "radio"
 						value = "1"
@@ -223,7 +231,7 @@ Nullam maximus, urna eget lacinia auctor, odio metus fermentum augue, et ullamco
 			'textarea_rows' => 5,
 			'textarea_name' => $this->plugin_name . '[header]',
 		);
-		wp_editor( ( '' === $options['header'] ? '<p>This daily summary contains <strong>{article_count}</strong> articles about; <em>{article_tags}</em> in the following categories; <em>{article_categories}</em>.</p>' : $options['header'] ), 'headereditor', $settings );
+		wp_editor( ( '' === $options['header'] ? $dc->get_header() : $options['header'] ), 'headereditor', $settings );
 		?>
 		<label><strong>Footer text :</strong> <br> the tags {article_count}, {article_categories} and {article_tags}
 			will be replaced by the count, categories and tags respectively covered by the articles included in the
@@ -233,7 +241,7 @@ Nullam maximus, urna eget lacinia auctor, odio metus fermentum augue, et ullamco
 			'textarea_rows' => 5,
 			'textarea_name' => $this->plugin_name . '[footer]',
 		);
-		wp_editor( ( '' === $options['footer'] ? '<center><h2>Thank you for following our coverage.</h2></center>' : $options['footer'] ), 'footereditor', $settings );
+		wp_editor( ( '' === $options['footer'] ? $dc->get_footer() : $options['footer'] ), 'footereditor', $settings );
 		?>
 		<?php } // end if display_options ?>
 		<?php
