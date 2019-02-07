@@ -2,10 +2,14 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
-#dailybrief-preview-post {
+.dailybrief-preview-post {
     font-family: 'Source Serif Pro', serif;
     font-size: 120%;
     line-height: 150%;
+    padding: 1rem 0 2rem 0;
+    clear: left;
+    max-width: 40rem;
+    margin: 0 auto;
 }
 
 .settings_page_dailybrief .dailybrief-preview-post {
@@ -19,6 +23,18 @@
     max-width: 90%;
     display: inline-block;
     vertical-align: middle;
+}
+
+.dailybrief-preview-post > h1 {
+    overflow: hidden;
+    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 240%;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2 !important;
 }
 
 .theme-dark {
