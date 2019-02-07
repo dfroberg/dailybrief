@@ -101,6 +101,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 	<form method="post" name="cleanup_options" action="options.php">
 		<?php settings_fields( $this->plugin_name ); ?>
 		<br/>
+		<div class = "settings-header">Who, what & where?</div>
 		<label>User ID to Post as :<br/>
 			<select id="<?php echo $this->plugin_name; ?>-author_id"
 					name="<?php echo $this->plugin_name; ?>[author_id]">
@@ -155,6 +156,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( ( '0' === $options['debug'] || empty( $options['debug'] ) ) ? 'checked' : '' ); ?>>
 				Off</label>
 			<br></label>
+		<div class = "settings-header">Table of Contents</div>
 		<label>Table of Contents Header :<br/>
 			<input  type="text" class="regular-text" maxlength="50" id="<?php echo $this->plugin_name; ?>-toc_header"
 					name="<?php echo $this->plugin_name; ?>[toc_header]"
@@ -163,21 +165,21 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		<label>Include Table of Contents :
 			<label><input type = "radio"
 						value = "1"
-						name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( '1' === $options['include_toc'] ? 'checked' : '' ); ?>>
+						name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( '1' === $dc->get_include_toc() ? 'checked' : '' ); ?>>
 				On</label>
 			<label><input type = "radio"
 						value = "0"
-						name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( ( '0' === $options['include_toc'] || empty( $options['include_toc'] ) ) ? 'checked' : '' ); ?>>
+						name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( ( '0' === $dc->get_include_toc() || empty( $dc->get_include_toc() ) ) ? 'checked' : '' ); ?>>
 				Off</label>
 			<br> </label>
 		<label>Local HREFs in TOC :
 			<label><input type = "radio"
 						value = "1"
-						name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( '1' === $options['include_toc_local_hrefs'] ? 'checked' : '' ); ?>>
+						name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( '1' === $dc->get_include_toc_local_hrefs() ? 'checked' : '' ); ?>>
 				On</label>
 			<label><input type = "radio"
 						value = "0"
-						name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( ( '0' === $options['include_toc_local_hrefs'] || empty( $options['include_toc_local_hrefs'] ) ) ? 'checked' : '' ); ?>>
+						name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( ( '0' === $dc->get_include_toc_local_hrefs() || empty( $dc->get_include_toc_local_hrefs() ) ) ? 'checked' : '' ); ?>>
 				Off</label>
 			<br></label>
 		<label><strong>Header text :</strong> <br> the tags {article_count}, {article_categories} and {article_tags}

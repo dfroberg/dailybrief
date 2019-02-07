@@ -806,18 +806,18 @@ class Dailybrief {
 	 */
 	public function update_globals() {
 		$this->options                 = get_option( $this->plugin_name /* 'dailybrief_options' */, array() );
-		$this->debug                   = $this->get_option_default( 'debug', 0 ); // 1 for on
-		$this->include_toc             = $this->get_option_default( 'include_toc', 1 ); // 1 for on / 0 for off
-		$this->include_toc_local_hrefs = $this->get_option_default( 'include_toc_local_hrefs', 1 ); // 1 for on / 0 for off
+		$this->debug                   = $this->get_option_default( 'debug', '0' ); // 1 for on
+		$this->include_toc             = $this->get_option_default( 'include_toc', '1' ); // 1 for on / 0 for off
+		$this->include_toc_local_hrefs = $this->get_option_default( 'include_toc_local_hrefs', '1' ); // 1 for on / 0 for off
 		$this->toc_header              = $this->get_option_default( 'toc_header', 'Table of Contents' );
 		$this->url_suffix              = $this->get_option_default( 'url_suffix', '?campaign=steempress&utm=dailybrief' ); // set ''.
-		$this->excerpt_words           = $this->get_option_default( 'excerpt_words', 100 );
+		$this->excerpt_words           = $this->get_option_default( 'excerpt_words', '100' );
 		$this->post_title              = $this->get_option_default( 'post_title', 'The Daily Brief' ) . ' ' . $this->date_suffix;
-		$this->author_id               = $this->get_option_default( 'author_id', 1 );
-		$this->post_category           = $this->get_option_default( 'post_category', 1 ); // 1,2,8
+		$this->author_id               = $this->get_option_default( 'author_id', '1' );
+		$this->post_category           = $this->get_option_default( 'post_category', '1' ); // 1,2,8
 		$this->post_tags               = $this->get_option_default( 'post_tags', '' ); // life,blog,news.
 		$this->always_skip_category    = $this->get_option_default( 'always_skip_category', $this->post_category ); // Always skip the category of Daily Brief Posts.
-		$this->always_skip_tags        = $this->get_option_default( 'always_skip_tag', 0 );
+		$this->always_skip_tags        = $this->get_option_default( 'always_skip_tag', '0' );
 		$this->slug                    = $this->get_option_default( 'slug', 'the-daily-brief' ) . '-' . $this->date_suffix;
 		$this->comment_status          = $this->get_option_default( 'comment_status', 'open' );
 		$this->ping_status             = $this->get_option_default( 'ping_status', 'closed' );
@@ -1316,15 +1316,15 @@ class Dailybrief {
 					$this->set_temp_featured_image_url( get_the_post_thumbnail_url( $id, 'full' ) );
 				}
 				// Compile a TOC.
-				if ( 1 == $this->get_include_toc() ) {
+				if ( '1' === $this->get_include_toc() ) {
 					$toc_items .= '<li>';
-					if ( 1 === $this->get_include_toc_local_hrefs() ) {
+					if ( '1' === $this->get_include_toc_local_hrefs() ) {
 						$toc_items .= '<a href="#_author_permlink_' . $id . '">';
 					}
 					$toc_items .= $title . '</a></li>';
 				}
 
-				if ( 1 == $this->get_include_toc_local_hrefs() ) {
+				if ( '1' === $this->get_include_toc_local_hrefs() ) {
 					$article .= ( '<a id="_author_permlink_' . $id . '" name="_author_permlink_' . $id . '"></a>' );
 				}
 				if ( has_post_thumbnail( $id ) ) {
@@ -1389,7 +1389,7 @@ class Dailybrief {
 			$this->output( $header, $buffer );
 		}
 		// Output optional TOC.
-		if ( 1 === $this->include_toc ) {
+		if ( '1' === $this->get_include_toc() ) {
 			$this->output( '<hr><p><h3>', $buffer );
 			$this->output( $this->get_toc_header(), $buffer );
 			$this->output( '</h3><ul>', $buffer );

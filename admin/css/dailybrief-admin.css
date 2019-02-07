@@ -2,6 +2,11 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+.settings-header {
+    font-size: 120%;
+    line-height: 150%;
+    margin: 10px auto;
+}
 .dailybrief-preview-post {
     font-family: 'Source Serif Pro', serif;
     font-size: 120%;
