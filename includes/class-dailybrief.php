@@ -810,7 +810,7 @@ class Dailybrief {
 		$this->include_toc             = $this->get_option_default( 'include_toc', 1 ); // 1 for on / 0 for off
 		$this->include_toc_local_hrefs = $this->get_option_default( 'include_toc_local_hrefs', 1 ); // 1 for on / 0 for off
 		$this->toc_header              = $this->get_option_default( 'toc_header', 'Table of Contents' );
-		$this->url_suffix              = $this->get_option_default( 'url_suffix', '' ); // set '?campaign=steempress&utm=dailybrief'.
+		$this->url_suffix              = $this->get_option_default( 'url_suffix', '?campaign=steempress&utm=dailybrief' ); // set ''.
 		$this->excerpt_words           = $this->get_option_default( 'excerpt_words', 100 );
 		$this->post_title              = $this->get_option_default( 'post_title', 'The Daily Brief' ) . ' ' . $this->date_suffix;
 		$this->author_id               = $this->get_option_default( 'author_id', 1 );

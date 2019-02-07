@@ -188,7 +188,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 			'textarea_rows' => 5,
 			'textarea_name' => $this->plugin_name . '[header]',
 		);
-		wp_editor( ( '' === $options['header'] ? $dc->get_header() : $options['header'] ), 'headereditor', $settings );
+		wp_editor( wpautop( '' === $options['header'] ? $dc->get_header() : $options['header'], true ), 'headereditor', $settings );
 		?>
 		<label><strong>Footer text :</strong> <br> the tags {article_count}, {article_categories} and {article_tags}
 			will be replaced by the count, categories and tags respectively covered by the articles included in the
@@ -198,7 +198,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 			'textarea_rows' => 5,
 			'textarea_name' => $this->plugin_name . '[footer]',
 		);
-		wp_editor( ( '' === $options['footer'] ? $dc->get_footer() : $options['footer'] ), 'footereditor', $settings );
+		wp_editor( wpautop( '' === $options['footer'] ? $dc->get_footer() : $options['footer'], true ), 'footereditor', $settings );
 		?>
 		<?php
 
