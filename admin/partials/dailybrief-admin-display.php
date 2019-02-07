@@ -76,12 +76,14 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				'preview' => true,
 				'period'  => 'range',
 				'start'   => date( 'Y-m-d', strtotime( 'yesterday' ) ),
-				'end'     => date( 'Y-m-d', strtotime( 'today' ) ),
+				'end'     => date( 'Y-m-d', strtotime( 'yesterday' ) ),
 			)
 		)
 		?>
-		<div id = "dailybrief-preview-post" class = "dailybrief-preview-post">
-			<h1><?php echo $sample['post_title'] . ' ' . $dc->get_date_suffix(); ?></h1>
+		<div id = "dailybrief-preview-post" class = "dailybrief-preview-post" style="max-width: 40rem">
+
+			<h1 style="vertical-align: center;"><?php echo $sample['post_title'] . ' ' . $dc->get_date_suffix(); ?> <img src="<?php echo plugin_dir_url( __FILE__ ); ?>/images/steemit.png" width="27" height="27"></h1>
+			<div style="overflow: hidden; font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 240%; font-weight: 800; line-height: 1.1; text-align: left; vertical-align: center;" ><h1><img src="<?php echo plugin_dir_url( __FILE__ ); ?>/images/white_icon_dailybrief.png" width="70" height="70"> dailybrief (48) in news •  12 hours ago </h1></div>
 			<p></p>
 			<?php
 			echo '<center><img src="' . $dc->get_temp_featured_image_url() . '" width="640"></center>';
@@ -101,7 +103,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 	<form method="post" name="cleanup_options" action="options.php">
 		<?php settings_fields( $this->plugin_name ); ?>
 		<br/>
-		<div class = "settings-header">Who, what & where?</div>
+		<div class = "settings-header"><h4>Who, what & where?</h4></div>
 		<label>User ID to Post as :<br/>
 			<select id="<?php echo $this->plugin_name; ?>-author_id"
 					name="<?php echo $this->plugin_name; ?>[author_id]">
@@ -145,7 +147,12 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 					name="<?php echo $this->plugin_name; ?>[article_delimiter]"
 					value="<?php echo( '' === $options['article_delimiter'] ? $dc->get_article_delimiter() : $options['article_delimiter'] ); ?>"/>
 			<br/> </label>
-
+		<label>Article Continue Prompt :<br/>
+			<input  type="text" class="regular-text" maxlength="50"
+					id="<?php echo $this->plugin_name; ?>-article_continue"
+					name="<?php echo $this->plugin_name; ?>[article_continue]"
+					value="<?php echo htmlspecialchars( '' === $options['article_continue'] ? $dc->get_article_continue() : $options['article_continue'], ENT_COMPAT | ENT_HTML401, 'UTF-8', false ); ?>"/>
+			<br/> </label>
 		<label>Debugging :
 			<label><input type = "radio"
 						value = "1"
@@ -156,7 +163,27 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( ( '0' === $options['debug'] || empty( $options['debug'] ) ) ? 'checked' : '' ); ?>>
 				Off</label>
 			<br></label>
-		<div class = "settings-header">Table of Contents</div>
+		<p><div class = "settings-header"><h4>Statistics</h4></div>
+		<em>These section headers are used if you do not specify any of the macros in the header or footer texts.</em></p>
+		<label>Number of articles in Brief : <em>( Replaced by {article_count} )</em><br/>
+			<input  type="text" class="regular-text" maxlength="50"
+					id="<?php echo $this->plugin_name; ?>-article_stats_txt"
+					name="<?php echo $this->plugin_name; ?>[article_stats_txt]"
+					value="<?php echo ( '' === $options['article_stats_txt'] ? $dc->get_article_stats_txt() : $options['article_stats_txt'] ); ?>"/>
+			<br/> </label>
+		<label>Categories in Brief : <em>( Replaced by {article_categories} )</em><br/>
+			<input  type="text" class="regular-text" maxlength="50"
+					id="<?php echo $this->plugin_name; ?>-article_stats_cats_txt"
+					name="<?php echo $this->plugin_name; ?>[article_stats_cats_txt]"
+					value="<?php echo ( '' === $options['article_stats_cats_txt'] ? $dc->get_article_stats_cats_txt() : $options['article_stats_cats_txt'] ); ?>"/>
+			<br/> </label>
+		<label>Tags in Brief : <em>( Replaced by {article_tags} )</em><br/>
+			<input  type="text" class="regular-text" maxlength="50"
+					id="<?php echo $this->plugin_name; ?>-article_stats_tags_txt"
+					name="<?php echo $this->plugin_name; ?>[article_stats_tags_txt]"
+					value="<?php echo ( '' === $options['article_stats_tags_txt'] ? $dc->get_article_stats_tags_txt() : $options['article_stats_tags_txt'] ); ?>"/>
+			<br/> </label>
+		<p><div class = "settings-header"><h4>Table of Contents</h4></div></p>
 		<label>Table of Contents Header :<br/>
 			<input  type="text" class="regular-text" maxlength="50" id="<?php echo $this->plugin_name; ?>-toc_header"
 					name="<?php echo $this->plugin_name; ?>[toc_header]"
