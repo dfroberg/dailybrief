@@ -69,7 +69,7 @@ class Dailybrief {
 	 */
 	private $temp_featured_image_url = '';
 	/**
-	 * This contains the created WP Post ID if sucessfully generated.
+	 * This contains the created WP Post ID if successfully generated.
 	 *
 	 * @var int
 	 */
@@ -83,7 +83,7 @@ class Dailybrief {
 	/**
 	 * Shall we debug?
 	 *
-	 * @var array
+	 * @var integer
 	 */
 	private $debug;
 	/**
@@ -93,7 +93,7 @@ class Dailybrief {
 	 */
 	private $include_toc;
 	/**
-	 * Due to a bug in Steem Condenser and many other condensers, do we want to make local anchor HREFs to the articles?
+	 * Due to a bug in Steemit Condenser and many other condensers, do we want to make local anchor HREFs to the articles?
 	 *
 	 * @var integer
 	 */
@@ -107,7 +107,7 @@ class Dailybrief {
 	/**
 	 * How many words do we want in the article excerpts of the brief?
 	 *
-	 * @var string
+	 * @var int
 	 */
 	private $excerpt_words;
 	/**
@@ -149,7 +149,7 @@ class Dailybrief {
 	/**
 	 * Base slug of the WP & Steem post (will be suffixed with the date)
 	 *
-	 * @var array
+	 * @var string
 	 */
 	private $slug;
 	/**
@@ -390,7 +390,7 @@ class Dailybrief {
 	/**
 	 * Getter.
 	 *
-	 * @return array
+	 * @return int
 	 */
 	public function get_debug() {
 		return $this->debug;
@@ -399,9 +399,9 @@ class Dailybrief {
 	/**
 	 * Setter.
 	 *
-	 * @param array $debug Shall we debug.
+	 * @param int $debug Shall we debug.
 	 */
-	public function set_debug( array $debug ) {
+	public function set_debug( int $debug ) {
 		$this->debug = $debug;
 	}
 
@@ -462,7 +462,7 @@ class Dailybrief {
 	/**
 	 * Getter.
 	 *
-	 * @return string
+	 * @return int
 	 */
 	public function get_excerpt_words() {
 		return $this->excerpt_words;
@@ -471,9 +471,9 @@ class Dailybrief {
 	/**
 	 * Setter.
 	 *
-	 * @param string $excerpt_words How many words to use.
+	 * @param int $excerpt_words How many words to use.
 	 */
-	public function set_excerpt_words( string $excerpt_words ) {
+	public function set_excerpt_words( int $excerpt_words ) {
 		$this->excerpt_words = $excerpt_words;
 	}
 
@@ -588,7 +588,7 @@ class Dailybrief {
 	/**
 	 * Getter.
 	 *
-	 * @return array
+	 * @return string
 	 */
 	public function get_slug() {
 		return $this->slug;
@@ -597,9 +597,9 @@ class Dailybrief {
 	/**
 	 * Setter.
 	 *
-	 * @param array $slug Base slug to use.
+	 * @param string $slug Base slug to use.
 	 */
-	public function set_slug( array $slug ) {
+	public function set_slug( string $slug ) {
 		$this->slug = $slug;
 	}
 
@@ -831,6 +831,7 @@ class Dailybrief {
 		$this->featured_image_url      = $this->get_option_default( 'featured_image_url', '' );
 		$this->header                  = $this->get_option_default( 'header', '<p>This daily summary contains <strong>{article_count}</strong> articles about; <em>{article_tags}</em> in the following categories; <em>{article_categories}</em>.</p>' );
 		$this->footer                  = $this->get_option_default( 'footer', '<center><h2>Thank you for following our coverage.</h2></center>' );
+
 	}
 
 	/**
@@ -842,7 +843,9 @@ class Dailybrief {
 	 * @return mixed
 	 */
 	private function get_option_default( $option, $default ) {
+		// Should only run once per option not found.
 		if ( ! isset( $this->options[ $option ] ) ) {
+			$this->set_option( $option, $default );
 			return $default;
 		}
 
@@ -1178,12 +1181,11 @@ class Dailybrief {
 		$period = $this->parse_arguments( $arguments, 'period', 'day' );
 
 		if ( 'day' === $period || empty( $period ) ) {
-			$days         = $this->parse_arguments( $arguments, 'days', '-1 day' );
-			$today        = strtotime( $days );
-			$today        = date( 'Y-m-d', $today );
-			$before_date  = $today;
-			$after_date   = $today;
-			$today_suffix = '' . $today;
+			$days        = $this->parse_arguments( $arguments, 'days', '-1 day' );
+			$today       = strtotime( $days );
+			$today       = date( 'Y-m-d', $today );
+			$before_date = $today;
+			$after_date  = $today;
 		} elseif ( 'range' === $period ) {
 			$startday     = $this->parse_arguments( $arguments, 'start', '-1 day' );
 			$endday       = $this->parse_arguments( $arguments, 'end', '-1 day' );
@@ -1191,6 +1193,10 @@ class Dailybrief {
 			$end_period   = strtotime( $endday );
 			$before_date  = date( 'Y-m-d', $end_period );
 			$after_date   = date( 'Y-m-d', $begin_period );
+		}
+		if ( $after_date == $before_date ) {
+			$today_suffix = '' . $after_date;
+		} else {
 			$today_suffix = '' . $after_date . '--' . $before_date;
 		}
 
