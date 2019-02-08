@@ -58,6 +58,7 @@ class Dailybrief_Activator {
 				'start'   => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
 				'end'     => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
 				'post'    => true,
+				'publish' => false,
 			)
 		);
 	}

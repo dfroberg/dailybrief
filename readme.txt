@@ -45,6 +45,10 @@ Thank you for wanting to make DailyBrief better for everyone! [We salute you](ht
 
 
 == Changelog ==
+= 1.0.19 &mdash; 8 of February, 2019 =
+
+* New: Implement internal CRON to fire once a day for now. Should suffice for basic usage.
+
 = 1.0.18 &mdash; 8 of February, 2019 =
 
 * New: Implement focus category setting; Enable briefs about a particular subject.
