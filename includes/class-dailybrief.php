@@ -219,6 +219,78 @@ class Dailybrief {
 	 */
 	private $content_buffer = '';
 	/**
+	 * Period.
+	 *
+	 * @var string
+	 */
+	private $period = '';
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_period() {
+		return $this->footer;
+	}
+
+	/**
+	 * Set period.
+	 *
+	 * @param string $period Set period.
+	 */
+	public function set_period( string $period ) {
+		$this->period = $period;
+	}
+	/**
+	 * Start Date.
+	 *
+	 * @var string
+	 */
+	private $start_date = '';
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_start_date() {
+		return $this->start_date;
+	}
+
+	/**
+	 * Set start_date.
+	 *
+	 * @param string $start_date Set start_date.
+	 */
+	public function set_start_date( string $start_date ) {
+		$this->start_date = $start_date;
+	}
+	/**
+	 * End Date.
+	 *
+	 * @var string
+	 */
+	private $end_date = '';
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_end_date() {
+		return $this->end_date;
+	}
+
+	/**
+	 * Set end_date.
+	 *
+	 * @param string $end_date Set end_date.
+	 */
+	public function set_end_date( string $end_date ) {
+		$this->end_date = $end_date;
+	}
+	/**
 	 * Footer.
 	 *
 	 * @var string
@@ -831,6 +903,9 @@ class Dailybrief {
 		$this->featured_image_url      = $this->get_option_default( 'featured_image_url', '' );
 		$this->header                  = $this->get_option_default( 'header', '<p>This daily summary contains <strong>{article_count}</strong> articles about; <em>{article_tags}</em> in the following categories; <em>{article_categories}</em>.</p>' );
 		$this->footer                  = $this->get_option_default( 'footer', '<center><h2>Thank you for following our coverage.</h2></center>' );
+		$this->period                  = $this->get_option_default( 'period', 'day' );
+		$this->start_date              = $this->get_option_default( 'start_date', '-1 day' );
+		$this->end_date                = $this->get_option_default( 'end_date', '-1 day' );
 
 	}
 

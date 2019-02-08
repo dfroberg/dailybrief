@@ -26,7 +26,7 @@ $args = array(
 	'role'    => '',
 	'orderby' => 'id',
 	'who'     => 'authors',
-	'fields'  => array( 'id', 'user_login', 'user_nicename' ),
+	'fields'  => array( 'id', 'user_login', 'user_nicename', 'display_name' ),
 );
 
 // The User Query.
@@ -74,9 +74,9 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		$sample = $dc->create(
 			array(
 				'preview' => true,
-				'period'  => 'range',
-				'start'   => date( 'Y-m-d', strtotime( 'yesterday' ) ),
-				'end'     => date( 'Y-m-d', strtotime( 'yesterday' ) ),
+				'period'  => $options['period'],
+				'start'   => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
+				'end'     => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
 			)
 		)
 		?>
@@ -229,6 +229,28 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		);
 		wp_editor( wpautop( '' === $options['footer'] ? $dc->get_footer() : $options['footer'], true ), 'footereditor', $settings );
 		?>
+		<div class = "settings-header"><h4>Times</h4>
+			The below settings currently means that if you generated the brief now ( <?php echo date( 'Y-m-d' ); ?> ) it would collect articles between; <?php echo date( 'Y-m-d', strtotime( $options['start_date'] ) ); ?> and <?php echo date( 'Y-m-d', strtotime( $options['end_date'] ) ); ?>.
+		</div>
+		<label>Period :<br/>
+			<select id="<?php echo $this->plugin_name; ?>-period"
+					name="<?php echo $this->plugin_name; ?>[period]">
+				<option value="day" <?php echo ( 'day' === $options['period'] ? 'SELECTED' : '' ); ?>>Single day</option>
+				<option value="range" <?php echo ( 'range' === $options['period'] ? 'SELECTED' : '' ); ?>>Range of days</option>
+			</select></label>
+		<br/>
+		<label>Before Date : <em>( Include articles before this )</em><br/>
+			<input  type="text" class="regular-text" maxlength="50"
+					id="<?php echo $this->plugin_name; ?>-start_date"
+					name="<?php echo $this->plugin_name; ?>[start_date]"
+					value="<?php echo ( '' === $options['start_date'] ? $dc->get_start_date() : $options['start_date'] ); ?>"/>
+			<br/> </label>
+		<label>After Date : <em>( Include articles after this )</em><br/>
+			<input  type="text" class="regular-text" maxlength="50"
+					id="<?php echo $this->plugin_name; ?>-end_date"
+					name="<?php echo $this->plugin_name; ?>[end_date]"
+					value="<?php echo ( '' === $options['end_date'] ? $dc->get_end_date() : $options['end_date'] ); ?>"/>
+			<br/> </label>
 		<?php
 
 

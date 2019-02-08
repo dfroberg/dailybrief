@@ -172,6 +172,9 @@ class Dailybrief_Admin {
 		$valid['featured_image_url']      = ( isset( $input['featured_image_url'] ) && ! empty( $input['featured_image_url'] ) ) ? ( $input['featured_image_url'] ) : $options['featured_image_url'];
 		$valid['article_stats_tags_txt']  = ( isset( $input['article_stats_tags_txt'] ) && ! empty( $input['article_stats_tags_txt'] ) ) ? ( $input['article_stats_tags_txt'] ) : $options['article_stats_tags_txt'];
 		$valid['featured_image_url']      = ( isset( $input['featured_image_url'] ) && ! empty( $input['featured_image_url'] ) ) ? ( $input['featured_image_url'] ) : $options['featured_image_url'];
+		$valid['period']                  = ( isset( $input['period'] ) && ! empty( $input['period'] ) ) ? ( $input['period'] ) : $options['period'];
+		$valid['start_date']              = ( isset( $input['start_date'] ) && ! empty( $input['start_date'] ) ) ? ( $input['start_date'] ) : $options['start_date'];
+		$valid['end_date']                = ( isset( $input['end_date'] ) && ! empty( $input['end_date'] ) ) ? ( $input['end_date'] ) : $options['end_date'];
 
 		return $valid;
 	}
