@@ -1,4 +1,4 @@
-=== FakerPress ===
+=== DailyBrief ===
 Contributors:      dfroberg
 Tags:              content generation, generation, steem, blockchain, steemit, briefs
 Requires at least: 4.7
@@ -27,7 +27,7 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 * Automatic integration with your SteemPress installation.
 
 = Languages =
-We use GlotPress on WordPress.org, so if you want to translate FakerPress to your language please [follow this guidelines](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/#translating-themes-plugins).
+We use GlotPress on WordPress.org, so if you want to translate DailyBrief to your language please [follow this guidelines](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/#translating-themes-plugins).
 
 = See room for improvement? =
 
@@ -36,7 +36,7 @@ Great! There are several ways you can get involved to help make Dailybrief bette
 1. **Report Bugs:** If you find a bug, error or other problem, please report it! You can do this by [creating a new topic](http://wordpress.org/support/plugin/dailybrief) in the plugin forum. Once a developer can verify the bug by reproducing it, they will create an official bug report in GitHub where the bug will be worked on.
 2. **Suggest New Features:** Have an awesome idea? Please share it! Simply [create a new topic](http://wordpress.org/support/plugin/dailybrief) in the plugin forum to express your thoughts on why the feature should be included and get a discussion going around your idea.
 
-Thank you for wanting to make FakerPress better for everyone! [We salute you](https://www.youtube.com/watch?v=8fPf6L0XNvM).
+Thank you for wanting to make DailyBrief better for everyone! [We salute you](https://www.youtube.com/watch?v=8fPf6L0XNvM).
 
 = Frequently Asked Questions =
 
