@@ -555,7 +555,7 @@ class Dailybrief {
 	 * @return array
 	 */
 	public function get_always_skip_category() {
-		return $this->always_skip_category;
+		return array_merge( $this->always_skip_category, $this->post_category );
 	}
 
 	/**

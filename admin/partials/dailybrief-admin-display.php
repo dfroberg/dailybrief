@@ -35,7 +35,7 @@ $user_select = '';
 // The User Loop.
 if ( ! empty( $user_query->results ) ) {
 	foreach ( $user_query->results as $user ) {
-		$user_select .= '<option ' . ( $options['author_id'] == $user->id ? 'SELECTED' : '' ) . ' value="' . $user->id . '">' . $user->user_nicename . '</option>';
+		$user_select .= '<option ' . ( $options['author_id'] == $user->id ? 'SELECTED' : '' ) . ' value="' . $user->id . '">' . $user->display_name . '</option>';
 	}
 }
 // Get the categories.
