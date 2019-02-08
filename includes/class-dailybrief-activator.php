@@ -47,6 +47,19 @@ class Dailybrief_Activator {
 	 */
 	function dailybrief_do_daily_event() {
 		// do brief every day!
+		$dc = new Dailybrief();
+		$dc->update_globals();
+		$options = $dc->get_options();
+		// Generate post.
+		$dailybrief = $dc->create(
+			array(
+				'preview' => false,
+				'period'  => $options['period'],
+				'start'   => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
+				'end'     => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
+				'post'    => true,
+			)
+		);
 	}
 
 }
