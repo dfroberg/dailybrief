@@ -175,6 +175,7 @@ class Dailybrief_Admin {
 		$valid['period']                  = ( isset( $input['period'] ) && ! empty( $input['period'] ) ) ? ( $input['period'] ) : $options['period'];
 		$valid['start_date']              = ( isset( $input['start_date'] ) && ! empty( $input['start_date'] ) ) ? ( $input['start_date'] ) : $options['start_date'];
 		$valid['end_date']                = ( isset( $input['end_date'] ) && ! empty( $input['end_date'] ) ) ? ( $input['end_date'] ) : $options['end_date'];
+		$valid['focus']                   = ( isset( $input['focus'] ) && ! empty( $input['focus'] ) ) ? ( $input['focus'] ) : $options['focus'];
 
 		return $valid;
 	}

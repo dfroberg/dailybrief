@@ -47,7 +47,12 @@ if ( ! empty( $categories ) && is_array( $categories ) ) {
 		$category_select .= '<option ' . ( $options['post_category'] == $category->cat_ID ? 'SELECTED' : '' ) . ' value="' . $category->cat_ID . '">' . $category->name . '</option>';
 	}
 }
-
+// The Focus on Categories loop.
+if ( ! empty( $categories ) && is_array( $categories ) ) {
+	foreach ( $categories as $category ) {
+		$category_focus_select .= '<option ' . ( $options['focus'] == $category->cat_ID ? 'SELECTED' : '' ) . ' value="' . $category->cat_ID . '">' . $category->name . '</option>';
+	}
+}
 // Figure out what tab we're on.
 $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 
@@ -110,10 +115,17 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				<?php echo $user_select; ?>
 			</select></label>
 		<br/>
-		<label>Category ID to Post to :<br/>
+		<label>Category to Post to :<br/>
 			<select id="<?php echo $this->plugin_name; ?>-post_category"
 					name="<?php echo $this->plugin_name; ?>[post_category]">
 				<?php echo $category_select; ?>
+			</select></label>
+		<br/>
+		<label>Focus on a single Category :<br/>
+			<select id="<?php echo $this->plugin_name; ?>-focus"
+					name="<?php echo $this->plugin_name; ?>[focus]">
+				<option value="-1">No Focus Category</option>
+				<?php echo $category_focus_select; ?>
 			</select></label>
 		<br/>
 		<label>Post Title :<br/>

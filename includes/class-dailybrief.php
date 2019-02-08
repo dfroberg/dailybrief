@@ -219,6 +219,30 @@ class Dailybrief {
 	 */
 	private $content_buffer = '';
 	/**
+	 * Focus category.
+	 *
+	 * @var string
+	 */
+	private $focus = '-1';
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_focus() {
+		return $this->focus;
+	}
+
+	/**
+	 * Set focus.
+	 *
+	 * @param string $focus Set focus category.
+	 */
+	public function set_focus( string $focus ) {
+		$this->focus = $focus;
+	}
+	/**
 	 * Period.
 	 *
 	 * @var string
@@ -888,7 +912,7 @@ class Dailybrief {
 		$this->author_id               = $this->get_option_default( 'author_id', '1' );
 		$this->post_category           = $this->get_option_default( 'post_category', '1' ); // 1,2,8
 		$this->post_tags               = $this->get_option_default( 'post_tags', '' ); // life,blog,news.
-		$this->always_skip_category    = $this->get_option_default( 'always_skip_category', $this->post_category ); // Always skip the category of Daily Brief Posts.
+		$this->always_skip_category    = $this->get_option_default( 'always_skip_category', -$this->post_category ); // Always skip the category of Daily Brief Posts.
 		$this->always_skip_tags        = $this->get_option_default( 'always_skip_tag', '0' );
 		$this->slug                    = $this->get_option_default( 'slug', 'the-daily-brief' ) . '-' . $this->date_suffix;
 		$this->comment_status          = $this->get_option_default( 'comment_status', 'open' );
@@ -906,6 +930,7 @@ class Dailybrief {
 		$this->period                  = $this->get_option_default( 'period', 'day' );
 		$this->start_date              = $this->get_option_default( 'start_date', '-1 day' );
 		$this->end_date                = $this->get_option_default( 'end_date', '-1 day' );
+		$this->focus                   = $this->get_option_default( 'focus', '-1' );
 
 	}
 
@@ -1314,7 +1339,7 @@ class Dailybrief {
 		if ( ! empty( $focus ) ) {
 			$focus = explode( ',', $focus );
 		} else {
-			$focus = array();
+			$focus = explode( ',', $this->get_focus() );
 		}
 		// Parse some flags.
 		$include_stats = $this->parse_arguments( $arguments, 'stats', true );
@@ -1332,21 +1357,20 @@ class Dailybrief {
 		do {
 			$query = new WP_Query(
 				array(
-					'posts_per_page'   => 30,
-					'paged'            => $page,
-					'post_status'      => $status,
-					'post_type'        => $types,
-					'date_query'       => array(
+					'posts_per_page' => 30,
+					'paged'          => $page,
+					'post_status'    => $status,
+					'post_type'      => $types,
+					'date_query'     => array(
 						array(
 							'before'    => $before_date,
 							'after'     => $after_date,
 							'inclusive' => true,
 						),
 					),
-					'tag__not_in'      => $exclude_tags,
-					'category__not_in' => $exclude_categories,
-					'post__not_in'     => $exclude_posts,
-					'category__in'     => $focus,
+					'cat'            => array_merge( $exclude_categories, $focus ),
+					'tag__not_in'    => $exclude_tags,
+					'post__not_in'   => $exclude_posts,
 				)
 			);
 
@@ -1470,12 +1494,16 @@ class Dailybrief {
 			$this->output( $header, $buffer );
 		}
 		// Output optional TOC.
-		if ( '1' === $this->get_include_toc() ) {
-			$this->output( '<hr><p><h3>', $buffer );
-			$this->output( $this->get_toc_header(), $buffer );
-			$this->output( '</h3><ul>', $buffer );
-			$this->output( $toc_items, $buffer );
-			$this->output( '</ul></p><hr>', $buffer );
+		if ( $article_count > 0 ) {
+			if ( '1' === $this->get_include_toc() ) {
+				$this->output( '<hr><p><h3>', $buffer );
+				$this->output( $this->get_toc_header(), $buffer );
+				$this->output( '</h3><ul>', $buffer );
+				$this->output( $toc_items, $buffer );
+				$this->output( '</ul></p><hr>', $buffer );
+			}
+		} else {
+			$this->output( '<center><h3>Currently No articles available to Brief about.<br>Check your settings.</h3>Do you have any posts during the specified period or do you have any Focus category set that interferes?</center>', $buffer );
 		}
 
 		// Output article.
