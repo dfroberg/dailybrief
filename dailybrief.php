@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'DAILYBRIEF_VERSION', '1.0.16' );
+define( 'DAILYBRIEF_VERSION', '1.0.17' );
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dailybrief-cli-command.php';

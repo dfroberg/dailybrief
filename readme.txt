@@ -43,6 +43,10 @@ Thank you for wanting to make FakerPress better for everyone! [We salute you](ht
 
 
 == Changelog ==
+= 1.0.17 &mdash; 8 of February, 2019 =
+
+* Fix: Ensure that the category you post Daily Briefs to is always skipped from daily brief sourcing.
+* Fix: User names now full names for readability on settings screens.
 
 = 1.0.16 &mdash; 7 of February, 2019 =
 
