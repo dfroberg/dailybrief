@@ -45,6 +45,10 @@ Thank you for wanting to make DailyBrief better for everyone! [We salute you](ht
 
 
 == Changelog ==
+= 1.0.18 &mdash; 8 of February, 2019 =
+
+* New: Implement focus category setting; Enable briefs about a particular subject.
+
 = 1.0.17 &mdash; 8 of February, 2019 =
 
 * Fix: Ensure that the category you post Daily Briefs to is always skipped from daily brief sourcing.
@@ -61,3 +65,10 @@ Thank you for wanting to make DailyBrief better for everyone! [We salute you](ht
 = 0.0.9 &mdash; 17 of December, 2018 =
 
 * First initial WP_CLI version.
+
+= Roadmap =
+
+* Multi-user functionality to work with StemPress 2.3+
+* Multi-focus categories.
+* Ajaxify the options panel to make things a lot easier!!!
+* High frequency post sites support for sites that requires multiple briefs per day.
