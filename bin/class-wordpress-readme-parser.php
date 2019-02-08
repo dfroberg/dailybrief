@@ -8,6 +8,11 @@
  * @author Weston Ruter <weston@x-team.com> (@westonruter)
  * @copyright Copyright (c) 2013, X-Team <http://x-team.com/wordpress/>
  * @license GPLv2+
+ * @package DailyBrief
+ */
+
+/**
+ * Class WordPress_Readme_Parser
  */
 class WordPress_Readme_Parser {
 	/**
