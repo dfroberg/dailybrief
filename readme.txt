@@ -1,8 +1,9 @@
 === DailyBrief ===
 Contributors:      dfroberg
+Donation Link:     https://steemit.com/@dfroberg
 Tags:              content generation, generation, steem, blockchain, steemit, briefs
 Requires at least: 4.7
-Tested up to:      5.0.4
+Tested up to:      5.0.3
 Stable tag:        trunk
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
@@ -35,6 +36,7 @@ Great! There are several ways you can get involved to help make Dailybrief bette
 
 1. **Report Bugs:** If you find a bug, error or other problem, please report it! You can do this by [creating a new topic](http://wordpress.org/support/plugin/dailybrief) in the plugin forum. Once a developer can verify the bug by reproducing it, they will create an official bug report in GitHub where the bug will be worked on.
 2. **Suggest New Features:** Have an awesome idea? Please share it! Simply [create a new topic](http://wordpress.org/support/plugin/dailybrief) in the plugin forum to express your thoughts on why the feature should be included and get a discussion going around your idea.
+3. **Check out our Github:** Take a look at the code; [GitHub](https://github.com/dfroberg/dailybrief)
 
 Thank you for wanting to make DailyBrief better for everyone! [We salute you](https://www.youtube.com/watch?v=8fPf6L0XNvM).
 
