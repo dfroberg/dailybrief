@@ -1,12 +1,4 @@
-# dailybrief
-* Contributors: dfroberg, howo
-* Donate link: https://steemit.com/@dfroberg
-* Tags: posts, automation, steem, steempress
-* Requires at least: 4.7
-* Tested up to: 5.0.3
-* Stable tag: 1.0
-* License: GPLv2 or later
-* License URI: http://www.gnu.org/licenses/gpl-2.0.html
+# dailybrief WP-CLI
 
 ## Description
 Plugin with WP_CLI support to generate a simple daily daily brief with the posts of the day
@@ -15,11 +7,7 @@ Plugin with WP_CLI support to generate a simple daily daily brief with the posts
 
 This section describes how to install the plugin and get it working.
 
-e.g.
-
-1. Upload `dailybrief.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Check the Settings -> Dailybrief - to customize the settings.
+```wp plugin install --activate https://gitlab.froberg.org/dfroberg/dailybrief/-/archive/master/dailybrief-master.zip```
 
 ## Frequently Asked Questions
 
@@ -27,9 +15,6 @@ e.g.
 This is still alpha grade code, and subject to change!
  
 ## Setup & Run via WP CLI:
-Install by issuing;
-
-```wp plugin install --activate https://gitlab.froberg.org/dfroberg/dailybrief/-/archive/master/dailybrief-master.zip```
 
 The dailybrief command is intended to be run as a CRON task.
 (Suggestion, you might want to run WP CRON via WP_CLI too)
