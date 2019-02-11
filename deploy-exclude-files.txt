@@ -1,5 +1,5 @@
 deploy-exclude-files.txt
-dailybrief/
+./dailybrief/
 svn-url
 .distignore
 .editorconfig
