@@ -20,6 +20,7 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 > **Important: it's primarily intended to be used alongside [SteemPress](https://wordpress.org/plugins/steempress/) the WordPress to Steem integration solution.**
 > **Note: This plugin requires PHP 5.6 or higher to be activated.**
 > **Note: Automated tests for PHP 5.6, 7.0, 7.1, 7.2 are made on each commit.**
+
 ### Features ###
 * Daily automated brief generated for previous day (if any posts was published that day).
 * Automatic integration with your SteemPress installation.
@@ -61,6 +62,7 @@ Thank you for wanting to make DailyBrief better for everyone! [We salute you](ht
 ## Roadmap ##
 * Multi-user functionality to work with StemPress 2.3+
 * Multi-focus categories.
+* Multi-period support; daily, weekly, monthly briefs.
 * Ajaxify the options panel to make things a lot easier!!!
 * High frequency post sites support for sites that requires multiple briefs per day.
 
