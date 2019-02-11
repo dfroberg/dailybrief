@@ -1,4 +1,4 @@
-= DailyBrief
+=== DailyBrief ===
 
 DailyBrief is a WordPress plugin that provides a post summary of all WordPress posts written a during a day.
 
@@ -21,17 +21,17 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 > **Note: Automated tests for PHP 5.6, 7.0, 7.1, 7.2 are made on each commit.**
 > [![Build Status](https://gitlab.froberg.org/dfroberg/dailybrief/badges/master/build.svg)](https://github.com/dfroberg/dailybrief)
 
-
-=== Features ===
+---
+= Features =
 
 * Daily automated brief generated for previous day (if any posts was published that day).
 * Automatic integration with your SteemPress installation.
 
-=== Languages ===
+= Languages =
 
 We use GlotPress on WordPress.org, so if you want to translate DailyBrief to your language please [follow this guidelines](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/=translating-themes-plugins).
 
-=== See room for improvement? ===
+= See room for improvement? =
 
 Great! There are several ways you can get involved to help make Dailybrief better:
 
