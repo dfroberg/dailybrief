@@ -1,7 +1,7 @@
 === DailyBrief ===
 Contributors:      dfroberg
 Donation Link:     https://steemit.com/@dfroberg
-Tags:              content generation, generation, steem, blockchain, steemit, briefs
+Tags:              content+generation, generation, steem, blockchain, steemit, briefs
 Requires at least: 4.7
 Tested up to:      5.0.3
 Stable tag:        trunk
@@ -16,9 +16,10 @@ DailyBrief is designed to solve a fundamental problem many new WordPress users f
 
 DailyBrief compiles a summary of all posts made during a particular day complete with featured images, meta information, and excerpts. It also creates a table of contents, inserts headers and footers with optional macros that auto-fill in article counts, tags and categories used in the processed articles.
 
-> **Important: it's primarily intended to be used alongside [SteemPress](https://wordpress.org/plugins/steempress/) the WordPress to Steem integration solution. **
+> **Important: The plugin is primarily intended to be used alongside [SteemPress](https://wordpress.org/plugins/steempress/) the WordPress to Steem integration solution. If you want to publish your daily briefs to steem you need to install [SteemPress](https://wordpress.org/plugins/steempress/) first.**
 > **Note: This plugin requires PHP 5.6 or higher to be activated.**
 > **Note: Automated tests for PHP 5.6, 7.0, 7.1, 7.2 are made on each commit.**
+> [![Build Status](https://gitlab.froberg.org/dfroberg/dailybrief/badges/master/build.svg)](https://github.com/dfroberg/dailybrief)
 
 ---
 
@@ -28,7 +29,8 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 * Automatic integration with your SteemPress installation.
 
 = Languages =
-We use GlotPress on WordPress.org, so if you want to translate DailyBrief to your language please [follow this guidelines](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/#translating-themes-plugins).
+
+We use GlotPress on WordPress.org, so if you want to translate DailyBrief to your language please [follow this guidelines](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/=translating-themes-plugins).
 
 = See room for improvement? =
 
@@ -43,36 +45,32 @@ Thank you for wanting to make DailyBrief better for everyone! [We salute you](ht
 = Frequently Asked Questions =
 
 
-
 == Changelog ==
-= 1.0.19 &mdash; 8 of February, 2019 =
 
+=== 1.0.19 &mdash; 8 of February, 2019 ===
 * New: Implement internal CRON to fire once a day for now. Should suffice for basic usage.
 
-= 1.0.18 &mdash; 8 of February, 2019 =
-
+=== 1.0.18 &mdash; 8 of February, 2019 ===
 * New: Implement focus category setting; Enable briefs about a particular subject.
 
-= 1.0.17 &mdash; 8 of February, 2019 =
-
+=== 1.0.17 &mdash; 8 of February, 2019 ===
 * Fix: Ensure that the category you post Daily Briefs to is always skipped from daily brief sourcing.
 * Fix: User names now full names for readability on settings screens.
 
-= 1.0.16 &mdash; 7 of February, 2019 =
-
+=== 1.0.16 &mdash; 7 of February, 2019 ===
 * Improvement: Added Admin GUI preview for Dailybrief posts (steemit:ish version).
 
-= 1.0.0 &mdash; 4 of January, 2019 =
-
+=== 1.0.0 &mdash; 4 of January, 2019 ===
 * Improvement: Added Admin GUI for settings.
 
-= 0.0.9 &mdash; 17 of December, 2018 =
-
+=== 0.0.9 &mdash; 17 of December, 2018 ===
 * First initial WP_CLI version.
+
 
 = Roadmap =
 
 * Multi-user functionality to work with StemPress 2.3+
 * Multi-focus categories.
+* Multi-period support; daily, weekly, monthly briefs.
 * Ajaxify the options panel to make things a lot easier!!!
 * High frequency post sites support for sites that requires multiple briefs per day.
