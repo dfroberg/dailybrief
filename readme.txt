@@ -17,9 +17,11 @@ DailyBrief is designed to solve a fundamental problem many new WordPress users f
 
 DailyBrief compiles a summary of all posts made during a particular day complete with featured images, meta information, and excerpts. It also creates a table of contents, inserts headers and footers with optional macros that auto-fill in article counts, tags and categories used in the processed articles.
 
-> **Important: it's primarily intended to be used alongside [SteemPress](https://wordpress.org/plugins/steempress/) the WordPress to Steem integration solution.**
+> **Important: The plugin is primarily intended to be used alongside [SteemPress](https://wordpress.org/plugins/steempress/) the WordPress to Steem integration solution. If you want to publish your daily briefs to steem you need to install [SteemPress](https://wordpress.org/plugins/steempress/) first.**
 > **Note: This plugin requires PHP 5.6 or higher to be activated.**
-> **Note: Automated tests for PHP 5.6, 7.0, 7.1, 7.2 are made on each commit. [![Build Status](https://gitlab.froberg.org/dfroberg/dailybrief/badges/master/build.svg)](https://github.com/dfroberg/dailybrief)**
+> **Note: Automated tests for PHP 5.6, 7.0, 7.1, 7.2 are made on each commit.**
+
+[![Build Status](https://gitlab.froberg.org/dfroberg/dailybrief/badges/master/build.svg)](https://github.com/dfroberg/dailybrief)
 
 ### Features ###
 * Daily automated brief generated for previous day (if any posts was published that day).
