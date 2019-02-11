@@ -23,6 +23,7 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 
 [![Build Status](https://gitlab.froberg.org/dfroberg/dailybrief/badges/master/build.svg)](https://github.com/dfroberg/dailybrief)
 
+
 ### Features ###
 * Daily automated brief generated for previous day (if any posts was published that day).
 * Automatic integration with your SteemPress installation.
