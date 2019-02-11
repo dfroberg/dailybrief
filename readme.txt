@@ -28,6 +28,8 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 * Daily automated brief generated for previous day (if any posts was published that day).
 * Automatic integration with your SteemPress installation.
 
+= Screenshots =
+
 = Languages =
 
 We use GlotPress on WordPress.org, so if you want to translate DailyBrief to your language please [follow this guidelines](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/=translating-themes-plugins).
