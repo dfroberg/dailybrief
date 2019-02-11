@@ -1,14 +1,14 @@
 === DailyBrief ===
+Contributors:      dfroberg
+Donation Link:     https://steemit.com/@dfroberg
+Tags:              content+generation, generation, steem, blockchain, steemit, briefs
+Requires at least: 4.7
+Tested up to:      5.0.3
+Stable tag:        trunk
+License:           GPLv2 or later
+License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
 DailyBrief is a WordPress plugin that provides a post summary of all WordPress posts written a during a day.
-
-Contributors:       dfroberg
-Tags:               content generation, generation, steem, blockchain, steemit, briefs
-Requires at least:  4.7
-Tested up to:       5.0.3
-Stable tag:         trunk
-License:            GPLv2 or later
-Donation Link:      https://steemit.com/@dfroberg
 
 == Description ==
 
@@ -22,6 +22,7 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 > [![Build Status](https://gitlab.froberg.org/dfroberg/dailybrief/badges/master/build.svg)](https://github.com/dfroberg/dailybrief)
 
 ---
+
 = Features =
 
 * Daily automated brief generated for previous day (if any posts was published that day).
@@ -40,6 +41,8 @@ Great! There are several ways you can get involved to help make Dailybrief bette
 3. **Check out our Github:** Take a look at the code; [GitHub](https://github.com/dfroberg/dailybrief)
 
 Thank you for wanting to make DailyBrief better for everyone! [We salute you](https://www.youtube.com/watch?v=8fPf6L0XNvM).
+
+= Frequently Asked Questions =
 
 
 == Changelog ==
@@ -64,7 +67,7 @@ Thank you for wanting to make DailyBrief better for everyone! [We salute you](ht
 * First initial WP_CLI version.
 
 
-== Roadmap ==
+= Roadmap =
 
 * Multi-user functionality to work with StemPress 2.3+
 * Multi-focus categories.
