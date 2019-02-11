@@ -1,4 +1,5 @@
 deploy-exclude-files.txt
+dailybrief
 .distignore
 .editorconfig
 .git
