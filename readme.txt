@@ -30,6 +30,12 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 
 = Screenshots =
 
+1. Top part of preview screen.
+2. Bottom part of the preview screen.
+3. Options - Who, What & Where.
+4. Options - Statistics & Table of contents.
+5. Options - Header, Footer, Time periods to include in Brief.
+
 = Languages =
 
 We use GlotPress on WordPress.org, so if you want to translate DailyBrief to your language please [follow this guidelines](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/=translating-themes-plugins).
