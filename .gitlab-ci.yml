@@ -109,6 +109,7 @@ dailybrief:
     paths:
       - dailybrief/
   script:
-    - mkdir -p dailybrief
+    - mkdir -p dailybrief && chmod +x bin/generate-markdown-readme
+    - bin/generate-markdown-readme
     - rsync -av --exclude-from='deploy-exclude-files.txt' . dailybrief # <<< this is where you'll have all the files you need to be deployed
     - echo 'Deploying!'
