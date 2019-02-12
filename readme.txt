@@ -23,7 +23,7 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 
 ---
 
-= Features =
+== Features ==
 
 * Daily automated brief generated for previous day (if any posts was published that day).
 * Automatic integration with your SteemPress installation.
@@ -31,21 +31,17 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 == Screenshots ==
 
 1. Preview 1
-
 2. Preview 2
-
 3. Options 1
-
 4. Options 2
-
 5. Options 3
 
 
-= Languages =
+== Languages ==
 
 We use GlotPress on WordPress.org, so if you want to translate DailyBrief to your language please [follow this guidelines](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/=translating-themes-plugins).
 
-= See room for improvement? =
+== See room for improvement? ==
 
 Great! There are several ways you can get involved to help make Dailybrief better:
 
@@ -55,7 +51,7 @@ Great! There are several ways you can get involved to help make Dailybrief bette
 
 Thank you for wanting to make DailyBrief better for everyone! [We salute you](https://www.youtube.com/watch?v=8fPf6L0XNvM).
 
-= Frequently Asked Questions =
+== Frequently Asked Questions ==
 
 
 == Changelog ==
@@ -80,7 +76,7 @@ Thank you for wanting to make DailyBrief better for everyone! [We salute you](ht
 * First initial WP_CLI version.
 
 
-= Roadmap =
+== Roadmap ==
 
 * Multi-user functionality to work with StemPress 2.3+
 * Multi-focus categories.
