@@ -30,11 +30,12 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 
 = Screenshots =
 
-1. Top part of preview screen.
-2. Bottom part of the preview screen.
-3. Options - Who, What & Where.
-4. Options - Statistics & Table of contents.
-5. Options - Header, Footer, Time periods to include in Brief.
+1. Preview 1
+2. Preview 2
+3. Options 1
+4. Options 2
+5. Options 3
+
 
 = Languages =
 
