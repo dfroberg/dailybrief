@@ -15,7 +15,7 @@
  * Plugin Name:       Dailybrief
  * Plugin URI:        https://github.com/dfroberg/dailybrief
  * Description:       WP-CLI command plugin to generate a daily brief of a days posts.
- * Version:           1.0.19
+ * Version:           1.0.20
  * Author:            Daniel Froberg
  * Author URI:        https://www.froberg.org
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'DAILYBRIEF_VERSION', '1.0.19' );
+define( 'DAILYBRIEF_VERSION', '1.0.20' );
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dailybrief-cli-command.php';
