@@ -1,6 +1,4 @@
 deploy-exclude-files.txt
-/dailybrief/
-svn-url
 .distignore
 .editorconfig
 .git
@@ -28,6 +26,9 @@ wp-cli.local.yml
 tests
 vendor
 node_modules
+/dailybrief
+/dailybrief/
+svn-url
 *.sql
 *.tar.gz
 *.zip
