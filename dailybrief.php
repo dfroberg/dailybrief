@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Dailybrief
  * Plugin URI:        https://github.com/dfroberg/dailybrief
- * Description:       WP-CLI command plugin to generate a daily brief of a days posts.
+ * Description:       WordPress plugin with WP-CLI support to generate a daily brief of a previous day or periods posts.
  * Version:           1.0.20
  * Author:            Daniel Froberg
  * Author URI:        https://www.froberg.org
