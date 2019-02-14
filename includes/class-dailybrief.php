@@ -956,7 +956,7 @@ class Dailybrief {
 		$this->start_date              = $this->get_option_default( 'start_date', '-1 day' );
 		$this->end_date                = $this->get_option_default( 'end_date', '-1 day' );
 		$this->focus                   = $this->get_option_default( 'focus', '-1' );
-		$this->cron_publish = $this->get_option_default( 'cron_publish', '1' );
+		$this->cron_publish            = $this->get_option_default( 'cron_publish', '1' );
 
 	}
 
