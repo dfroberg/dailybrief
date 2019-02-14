@@ -56,6 +56,10 @@ Thank you for wanting to make DailyBrief better for everyone! [We salute you](ht
 
 == Changelog ==
 
+=== 1.0.21 &mdash; 14 of February, 2019 ===
+* Fix: Add try catch for scheduling timestamp in cron.
+* New: Make cron_publish an option, this is practical if you're not quite ready with your setup or wish to pause creation of daily briefs.
+
 === 1.0.20 &mdash; 13 of February, 2019 ===
 * Fix: Set internal CRON to fire "tomorrow" after midnight taking WP timezone into consideration.
 

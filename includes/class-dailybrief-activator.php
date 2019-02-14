@@ -39,7 +39,11 @@ class Dailybrief_Activator {
 	function dailybrief_activation() {
 		if ( ! wp_next_scheduled( 'dailybrief_daily_event' ) ) {
 			// Lets schedule the next brief for tomorrow after midnight according to this sites Timezone.
-			$date      = new DateTime( 'tomorrow', new DateTimeZone( get_option( 'timezone_string' ) ) );
+			try {
+				$date = new DateTime( 'tomorrow', new DateTimeZone( get_option( 'timezone_string' ) ) );
+			} catch ( Exception $e ) {
+				wp_die( $e->getMessage(), 'DailyBrief Exploded' );
+			}
 			$timestamp = $date->getTimestamp();
 			wp_schedule_event( $timestamp, 'daily', 'dailybrief_daily_event' );
 		}
@@ -61,7 +65,7 @@ class Dailybrief_Activator {
 				'start'   => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
 				'end'     => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
 				'post'    => true,
-				'publish' => false,
+				'publish' => $options['cron_publish'],
 			)
 		);
 	}

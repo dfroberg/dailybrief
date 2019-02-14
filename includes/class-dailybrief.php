@@ -242,6 +242,31 @@ class Dailybrief {
 	public function set_focus( string $focus ) {
 		$this->focus = $focus;
 	}
+
+	/**
+	 * Cron Publish Enabled category.
+	 *
+	 * @var string
+	 */
+	private $cron_publish = '0';
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_cron_publish() {
+		return $this->cron_publish;
+	}
+
+	/**
+	 * Set cron_publish.
+	 *
+	 * @param string $cron_publish Set cron_publish enabled or not.
+	 */
+	public function set_cron_publish( string $cron_publish ) {
+		$this->cron_publish = $cron_publish;
+	}
 	/**
 	 * Period.
 	 *
@@ -931,6 +956,7 @@ class Dailybrief {
 		$this->start_date              = $this->get_option_default( 'start_date', '-1 day' );
 		$this->end_date                = $this->get_option_default( 'end_date', '-1 day' );
 		$this->focus                   = $this->get_option_default( 'focus', '-1' );
+		$this->cron_publish = $this->get_option_default( 'cron_publish', '1' );
 
 	}
 
