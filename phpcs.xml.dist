@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="WordPress Coding Standards for Plugins">
 	<description>Generally-applicable sniffs for WordPress plugins</description>
-    <config name="installed_paths" value="vendor/wp-coding-standards/wpcs" />
-    <config name="installed_paths" value="/root/.composer/vendor/wp-coding-standards/wpcs" />
+    <config name="installed_paths" value="vendor/wp-coding-standards/wpcs,/root/.composer/vendor/wp-coding-standards/wpcs" />
 	<rule ref="WordPress-Core" />
 	<rule ref="WordPress-Docs" />
 
@@ -11,8 +10,8 @@
 	<file>.</file>
 
 	<!-- Show progress and sniff codes in all reports -->
-	<arg value="ps"/>
-
+	<arg value="psv"/>
+    <arg name="parallel" value="8"/>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/bin/*</exclude-pattern>
