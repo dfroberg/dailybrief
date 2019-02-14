@@ -58,7 +58,7 @@ function deactivate_dailybrief() {
 	Dailybrief_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_dailybrief' );
+register_activation_hook( __FILE__, 'activate_dailybrief' ); // .
 register_deactivation_hook( __FILE__, 'deactivate_dailybrief' );
 
 /**
