@@ -1,4 +1,5 @@
 deploy-exclude-files.txt
+wordpress_description.txt
 .distignore
 .editorconfig
 .git
