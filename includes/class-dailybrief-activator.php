@@ -30,22 +30,25 @@ class Dailybrief_Activator {
 	 */
 	public static function activate() {
 		register_activation_hook( __FILE__, 'dailybrief_activation' );
-		add_action( 'dailybrief_daily_event', 'dailybrief_do_daily_event' );
 	}
 
 	/**
 	 * Activate the plugin.
 	 */
 	function dailybrief_activation() {
-		if ( ! wp_next_scheduled( 'dailybrief_daily_event' ) ) {
-			// Lets schedule the next brief for tomorrow after midnight according to this sites Timezone.
-			try {
-				$date = new DateTime( 'tomorrow', new DateTimeZone( get_option( 'timezone_string' ) ) );
-			} catch ( Exception $e ) {
-				wp_die( $e->getMessage(), 'DailyBrief Exploded' );
+		if ( add_action( 'dailybrief_daily_event', 'dailybrief_do_daily_event' ) ) {
+			if ( ! wp_next_scheduled( 'dailybrief_daily_event' ) ) {
+				// Lets schedule the next brief for tomorrow after midnight according to this sites Timezone.
+				try {
+					$date = new DateTime( 'tomorrow', new DateTimeZone( get_option( 'timezone_string' ) ) );
+				} catch ( Exception $e ) {
+					wp_die( $e->getMessage(), 'DailyBrief Exploded' );
+				}
+				$timestamp = $date->getTimestamp();
+				wp_schedule_event( $timestamp, 'daily', 'dailybrief_daily_event' );
 			}
-			$timestamp = $date->getTimestamp();
-			wp_schedule_event( $timestamp, 'daily', 'dailybrief_daily_event' );
+		} else {
+			$error = new WP_Error( 'error', 'No Cron Event Added' );
 		}
 	}
 
