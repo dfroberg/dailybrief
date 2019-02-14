@@ -49,7 +49,7 @@ codestyle:
   script:
     - composer global require "phpunit/phpunit=6.*" --no-progress
     - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
-    - phpcs
+    - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
     - chmod +x bin/generate-markdown-readme && bin/generate-markdown-readme
 
 PHPunit:PHP5.6:MySQL:
