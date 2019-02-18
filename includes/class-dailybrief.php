@@ -1065,7 +1065,7 @@ class Dailybrief {
 			$dailybrief_featured_image_id = attachment_url_to_postid( $this->temp_featured_image_url );
 		}
 		if ( false === $dailybrief_featured_image_id ) {
-			WP_CLI::warning( 'Unable to set featured image, make sure you have uploaded the image you want to use to your sites media library and set the featured_image_url option with its complete URL.' );
+			$this->wpcliwarn( 'Unable to set featured image, make sure you have uploaded the image you want to use to your sites media library and set the featured_image_url option with its complete URL.' );
 
 			return $post_id;
 		}
