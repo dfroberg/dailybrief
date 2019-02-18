@@ -16,8 +16,8 @@
         "test": "vendor/bin/phpunit",
         "post-install-cmd": "sh vendor/bin/cghooks add --ignore-lock",
         "post-update-cmd": "sh vendor/bin/cghooks update",
-        "check-style": "php-cs-fixer fix --using-cache=no --diff --dry-run .",
-        "fix-style": "php-cs-fixer fix --using-cache=no ."
+      "check-style": "sh vendor/bin/php-cs-fixer fix --using-cache=no --diff --dry-run .",
+      "fix-style": "sh vendor/bin/php-cs-fixer fix --using-cache=no ."
     },
     "extra": {
         "hooks": {
