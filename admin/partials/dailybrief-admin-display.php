@@ -72,7 +72,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		?>
 		<p>Join us on the discord server : https://discord.gg/W2KyAbm and talk to Danny</p>
 		<p>This is <?php echo $this->plugin_name; ?> version <?php echo $this->version; ?></p>
-		<p>The Internal CRON job is: <?php echo ( wp_get_schedule( 'dailybrief_daily_event' ) ? 'Scheduled on' . wp_next_scheduled( 'dailybrief_daily_event' ) : '<strong>Not</strong> scheduled' ); ?></p>
+		<p>The Internal CRON job is: <?php echo  ( wp_get_schedule( 'dailybrief_daily_event' ) ? 'Scheduled on ' . date( 'Y-m-d H:m:s', wp_next_scheduled( 'dailybrief_daily_event' ) ) : '<strong>Not</strong> scheduled' ); ?></p>
 	<?php } // end if support ?>
 	<?php
 	if ( 'preview' === $active_tab ) {

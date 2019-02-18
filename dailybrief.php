@@ -40,26 +40,14 @@ define( 'DAILYBRIEF_VERSION', '1.0.21' );
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dailybrief-cli-command.php';
 }
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-dailybrief-activator.php
- */
-function activate_dailybrief() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dailybrief-activator.php';
-	Dailybrief_Activator::activate();
-}
+
+register_activation_hook( __FILE__, array( Dailybrief::class, 'activator' ) );
+register_deactivation_hook( __FILE__, array( Dailybrief::class, 'deactivator' ) );
 
 /**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-dailybrief-deactivator.php
+ * Helper class for getting correct Timezone in WordPress.
  */
-function deactivate_dailybrief() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dailybrief-deactivator.php';
-	Dailybrief_Deactivator::deactivate();
-}
-
-register_activation_hook( __FILE__, 'activate_dailybrief' ); // .
-register_deactivation_hook( __FILE__, 'deactivate_dailybrief' );
+require plugin_dir_path( __FILE__ ) . 'includes/class-wpdatetimezone.php';
 
 /**
  * The core plugin class that is used to define internationalization,

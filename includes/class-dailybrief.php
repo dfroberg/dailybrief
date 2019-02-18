@@ -433,6 +433,7 @@ class Dailybrief {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$this->update_globals();
+		add_action( self::CRON_HOOK, array( $this, 'dailybrief_do_daily_event' ) );
 
 	}
 
@@ -920,6 +921,63 @@ class Dailybrief {
 	 */
 	public function set_content_buffer( string $content_buffer ) {
 		$this->content_buffer = $content_buffer;
+	}
+
+	/**
+	 * Cron Hook name
+	 */
+	const CRON_HOOK = 'dailybrief_daily_event';
+
+	/**
+	 * Do daily CRON job.
+	 */
+	function dailybrief_do_daily_event() {
+		// do brief every day!
+		$dc = new Dailybrief();
+		$dc->update_globals();
+		$options = $dc->get_options();
+		// Generate post.
+		$dailybrief = $dc->create(
+			array(
+				'preview' => false,
+				'period'  => $options['period'],
+				'start'   => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
+				'end'     => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
+				'post'    => true,
+				'publish' => $options['cron_publish'],
+			)
+		);
+	}
+
+	/**
+	 * Setup the cron jobs required for this plugin.
+	 */
+	public static function activator() {
+		// Use wp_next_scheduled to check if the event is already scheduled.
+		$timestamp = wp_next_scheduled( self::CRON_HOOK );
+
+		// If $timestamp == false schedule daily backups since it hasn't been done previously.
+		if ( false == $timestamp ) {
+			// Lets schedule the next brief for tomorrow after midnight according to this sites Timezone.
+			try {
+				$date = new DateTime( 'tomorrow', WpDateTimeZone::getWpTimezone() );
+			} catch ( Exception $e ) {
+				wp_die( $e->getMessage(), 'DailyBrief Exploded' );
+			}
+			$timestamp = $date->getTimestamp();
+
+			// Schedule the event for right now, then to repeat daily using the hook 'dailybrief_daily_event'.
+			wp_schedule_event( $timestamp, 'daily', self::CRON_HOOK );
+		}
+	}
+
+	/**
+	 * Remove any cron jobs for this plugin.
+	 */
+	public static function deactivator() {
+		// Get the timestamp for the next event.
+		$timestamp = wp_next_scheduled( self::CRON_HOOK );
+		wp_unschedule_event( $timestamp, self::CRON_HOOK );
 	}
 
 	/**
