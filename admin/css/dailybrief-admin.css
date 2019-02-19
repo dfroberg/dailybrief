@@ -67,6 +67,9 @@
 .dailybrief {
 	width: 85%;
 }
+.dailybrief .settings_page_dailybrief .settings-form table {
+	vert-align: top;
+}
 .dailybrief .dailybrief-sidebar {
 	width: 15%;
 	float: right;
