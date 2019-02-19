@@ -103,200 +103,323 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 
 		<?php } // end if preview ?>
 		<?php if ( 'options' === $active_tab ) { ?>
-			<?php settings_errors(); ?>
 			<form method = "post" class = "settings-form" name = "cleanup_options" action = "options.php">
 				<?php settings_fields( $this->plugin_name ); ?>
 				<fieldset>
-					<legend>CRON Control</legend>
-					<div class = "pretty p-switch" style = "white-space: nowrap;">
-						<legend>CRON Publish : <em>( If on; create the post but do not publish it )</em></legend>
-						<input type = "radio"
-								value = "1"
-								name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( '1' === $options['cron_publish'] ? 'checked' : '' ); ?> />
-						<div class = "state p-success"><label>On</label></div>
-						<input type = "radio"
-								value = "0"
-								name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( ( '0' === $options['cron_publish'] || empty( $options['cron_publish'] ) ) ? 'checked' : '' ); ?> />
-						<div class = "state p-warning"><label>Off</label></div>
-
-					</div>
-					<br>
-					<label>CRON Pause :
-						<label><input type = "radio"
+					<table>
+						<tr><td colspan="2"><h3>CRON Control</h3></td></tr>
+						<tr><td>CRON Publish</td><td><input type = "radio"
 									value = "1"
-									name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( '1' === $options['cron_pause'] ? 'checked' : '' ); ?>>
-							On</label>
-						<label><input type = "radio"
+									name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( '1' === $options['cron_publish'] ? 'checked' : '' ); ?> /><label>On</label> <input type = "radio"
 									value = "0"
-									name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( ( '0' === $options['cron_pause'] || empty( $options['cron_pause'] ) ) ? 'checked' : '' ); ?>>
-							Off</label>
-						<em>( Will disable post creation by internal CRON )</em>
-						<br></label>
+									name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( ( '0' === $options['cron_publish'] || empty( $options['cron_publish'] ) ) ? 'checked' : '' ); ?> /><label>Off</label>
+								<br><em>( If on; create the post but do not publish it )</em> </td>
+						</tr>
+						<tr><td>CRON Pause</td><td><input type = "radio"
+										value = "1"
+										name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( '1' === $options['cron_pause'] ? 'checked' : '' ); ?> /><label>On</label> <input type = "radio"
+										value = "0"
+										name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( ( '0' === $options['cron_pause'] || empty( $options['cron_pause'] ) ) ? 'checked' : '' ); ?> /><label>Off</label>
+								<br><em>( Will disable post creation by internal CRON )</em> </td>
+						</tr>
+						<tr><td colspan="2"><h3>Who, what & where?</h3></td></tr>
+						<tr>
+							<td>
+								User ID to Post as :
+							</td>
+							<td>
+								<select id = "<?php echo $this->plugin_name; ?>-author_id"
+										name = "<?php echo $this->plugin_name; ?>[author_id]">
+									<?php echo $user_select; ?>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Category to Post to :
+							</td>
+							<td>
+								<select id = "<?php echo $this->plugin_name; ?>-post_category"
+										name = "<?php echo $this->plugin_name; ?>[post_category]">
+									<?php echo $category_select; ?>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Focus on a single Category :
+							</td>
+							<td>
+								<select id = "<?php echo $this->plugin_name; ?>-focus"
+										name = "<?php echo $this->plugin_name; ?>[focus]">
+									<option value = "-1">No Focus Category</option>
+									<?php echo $category_focus_select; ?>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Post Title :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-post_title"
+										name = "<?php echo $this->plugin_name; ?>[post_title]"
+										value = "<?php echo htmlspecialchars( ( '' === $options['post_title'] ? $dc->get_post_title() : $options['post_title'] ), ENT_QUOTES ); ?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Post Tags :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-post_tags"
+										name = "<?php echo $this->plugin_name; ?>[post_tags]"
+										value = "<?php echo htmlspecialchars( ( '' === $options['post_tags'] ? $dc->get_post_tags() : $options['post_tags'] ), ENT_QUOTES ); ?>"/>
+								<br><em>(Max 5)</em>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Url Suffix :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-url_suffix"
+										name = "<?php echo $this->plugin_name; ?>[url_suffix]"
+										value = "<?php echo( '' === $options['url_suffix'] ? $dc->get_url_suffix() : $options['url_suffix'] ); ?>"/>
+								<br><em>(Append to outbound links in your post)</em>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Excerpt Words :
+							</td>
+							<td>
+								<input type = "number" class = "regular-text" maxlength = "4"
+										id = "<?php echo $this->plugin_name; ?>-excerpt_words"
+										name = "<?php echo $this->plugin_name; ?>[excerpt_words]"
+										value = "<?php echo htmlspecialchars( ( '' === $options['excerpt_words'] ? $dc->get_excerpt_words() : $options['excerpt_words'] ), ENT_QUOTES ); ?>"/>
+								<br><em>(How many words to include)</em>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Post Slug :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-slug"
+										name = "<?php echo $this->plugin_name; ?>[slug]"
+										value = "<?php echo htmlspecialchars( ( '' === $options['slug'] ? $dc->get_slug() : $options['slug'] ), ENT_QUOTES ); ?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Article delimiter :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-article_delimiter"
+										name = "<?php echo $this->plugin_name; ?>[article_delimiter]"
+										value = "<?php echo( '' === $options['article_delimiter'] ? $dc->get_article_delimiter() : $options['article_delimiter'] ); ?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Article Continue Prompt :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-article_continue"
+										name = "<?php echo $this->plugin_name; ?>[article_continue]"
+										value = "<?php echo htmlspecialchars( '' === $options['article_continue'] ? $dc->get_article_continue() : $options['article_continue'], ENT_COMPAT | ENT_HTML401, 'UTF-8', false ); ?>"/>
+							</td>
+						</tr>
+						<tr><td colspan="2"><h3>Debugging</h3></td></tr>
+						<tr>
+							<td>
+								Debugging :
+							</td>
+							<td>
+								<input type = "radio"
+										value = "1"
+										name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( '1' === $options['debug'] ? 'checked' : '' ); ?>> <label>On</label>
+								<input type = "radio"
+										value = "0"
+										name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( ( '0' === $options['debug'] || empty( $options['debug'] ) ) ? 'checked' : '' ); ?>> <label>Off</label>
+							</td>
+						</tr>
+						<tr><td colspan="2"><h3>Statistics</h3><em>These section headers are used if you do not specify any of the macros in the header or footer texts.</em></p></td></tr>
+						<tr>
+							<td>
+								Number of articles in Brief :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-article_stats_txt"
+										name = "<?php echo $this->plugin_name; ?>[article_stats_txt]"
+										value = "<?php echo( '' === $options['article_stats_txt'] ? $dc->get_article_stats_txt() : $options['article_stats_txt'] ); ?>"/>
+								<br/><em>( Replaced by {article_count} )</em>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Categories in Brief :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-article_stats_cats_txt"
+										name = "<?php echo $this->plugin_name; ?>[article_stats_cats_txt]"
+										value = "<?php echo( '' === $options['article_stats_cats_txt'] ? $dc->get_article_stats_cats_txt() : $options['article_stats_cats_txt'] ); ?>"/>
+								<br/><em>( Replaced by {article_categories} )</em>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Tags in Brief :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-article_stats_tags_txt"
+										name = "<?php echo $this->plugin_name; ?>[article_stats_tags_txt]"
+										value = "<?php echo( '' === $options['article_stats_tags_txt'] ? $dc->get_article_stats_tags_txt() : $options['article_stats_tags_txt'] ); ?>"/>
+								<br/><em>( Replaced by {article_tags} )</em>
+							</td>
+						</tr>
+						<tr><td colspan="2"><h3>Table of Contents</h3></td></tr>
+						<tr>
+							<td>
+								Table of Contents Header :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-toc_header"
+										name = "<?php echo $this->plugin_name; ?>[toc_header]"
+										value = "<?php echo htmlspecialchars( ( '' === $options['toc_header'] ? $dc->get_toc_header() : $options['toc_header'] ) ); ?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Include Table of Contents :
+							</td>
+							<td>
+								<input type = "radio"
+										value = "1"
+										name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( '1' === $dc->get_include_toc() ? 'checked' : '' ); ?>>
+								<label>On</label>
+								<input type = "radio"
+										value = "0"
+										name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( ( '0' === $dc->get_include_toc() || empty( $dc->get_include_toc() ) ) ? 'checked' : '' ); ?>>
+								<label>Off</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Local HREFs in TOC :
+							</td>
+							<td>
+								<input type = "radio"
+										value = "1"
+										name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( '1' === $dc->get_include_toc_local_hrefs() ? 'checked' : '' ); ?>>
+								<label>On</label>
+								<input type = "radio"
+										value = "0"
+										name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( ( '0' === $dc->get_include_toc_local_hrefs() || empty( $dc->get_include_toc_local_hrefs() ) ) ? 'checked' : '' ); ?>>
+								<label>Off</label>
+							</td>
+						</tr>
+						<tr><td colspan="2"><h3>Header & Footer</h3></td></tr>
+						<tr>
+							<td>
+								<strong>Header text :</strong>
+							</td>
+							<td>
+								<?php
+								$settings = array(
+									'textarea_rows' => 5,
+									'textarea_name' => $this->plugin_name . '[header]',
+								);
+								wp_editor( wpautop( '' === $options['header'] ? $dc->get_header() : $options['header'], true ), 'headereditor', $settings );
+								?>
+								<br> the tags {article_count}, {article_categories} and {article_tags} will be replaced by the count, categories and tags respectively covered by the articles included in the daily briefs.
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<strong>Footer text :</strong>
+							</td>
+							<td>
+								<?php
+								$settings = array(
+									'textarea_rows' => 5,
+									'textarea_name' => $this->plugin_name . '[footer]',
+								);
+								wp_editor( wpautop( '' === $options['footer'] ? $dc->get_footer() : $options['footer'], true ), 'footereditor', $settings );
+								?>
+								<br> the tags {article_count}, {article_categories} and {article_tags} will be replaced by the count, categories and tags respectively covered by the articles included in the daily briefs.
+							</td>
+						</tr>
+						<tr><td colspan="2" style="white-space: normal;"><h4>Times</h4>
+								The below settings currently means that if you generated the brief now
+								( <?php echo date( 'Y-m-d' ); ?> ) it would collect articles
+								between; <?php echo date( 'Y-m-d', strtotime( $options['start_date'] ) ); ?>
+								and <?php echo date( 'Y-m-d', strtotime( $options['end_date'] ) ); ?>.</td></tr>
+						<tr>
+							<td>
+								Period :
+							</td>
+							<td>
+								<select id = "<?php echo $this->plugin_name; ?>-period"
+										name = "<?php echo $this->plugin_name; ?>[period]">
+									<option value = "day" <?php echo( 'day' === $options['period'] ? 'SELECTED' : '' ); ?>>Single day</option>
+									<option value = "range" <?php echo( 'range' === $options['period'] ? 'SELECTED' : '' ); ?>>Range of days</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Before Date :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-start_date"
+										name = "<?php echo $this->plugin_name; ?>[start_date]"
+										value = "<?php echo( '' === $options['start_date'] ? $dc->get_start_date() : $options['start_date'] ); ?>"/>
+								<br/><em>( Include articles before this )</em>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								After Date :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-end_date"
+										name = "<?php echo $this->plugin_name; ?>[end_date]"
+										value = "<?php echo( '' === $options['end_date'] ? $dc->get_end_date() : $options['end_date'] ); ?>"/>
+								<br/><em>( Include articles after this )</em>
+							</td>
+						</tr>
+						<tr>
+							<td>
+
+							</td>
+							<td>
+
+							</td>
+						</tr>
+						<tr>
+							<td>
+
+							</td>
+							<td>
+
+							</td>
+						</tr>
+					</table>
 				</fieldset>
-				<br/>
-				<div class = "settings-header"><h4>Who, what & where?</h4></div>
-				<label>User ID to Post as :<br/>
-					<select id = "<?php echo $this->plugin_name; ?>-author_id"
-							name = "<?php echo $this->plugin_name; ?>[author_id]">
-						<?php echo $user_select; ?>
-					</select></label>
-				<br/>
-				<label>Category to Post to :<br/>
-					<select id = "<?php echo $this->plugin_name; ?>-post_category"
-							name = "<?php echo $this->plugin_name; ?>[post_category]">
-						<?php echo $category_select; ?>
-					</select></label>
-				<br/>
-				<label>Focus on a single Category :<br/>
-					<select id = "<?php echo $this->plugin_name; ?>-focus"
-							name = "<?php echo $this->plugin_name; ?>[focus]">
-						<option value = "-1">No Focus Category</option>
-						<?php echo $category_focus_select; ?>
-					</select></label>
-				<br/>
-				<label>Post Title :<br/>
-					<input type = "text" class = "regular-text" maxlength = "50"
-							id = "<?php echo $this->plugin_name; ?>-post_title"
-							name = "<?php echo $this->plugin_name; ?>[post_title]"
-							value = "<?php echo htmlspecialchars( ( '' === $options['post_title'] ? $dc->get_post_title() : $options['post_title'] ), ENT_QUOTES ); ?>"/>
-					<br/></label>
-				<label>Post Tags : (Max 5)<br/>
-					<input type = "text" class = "regular-text" maxlength = "50"
-							id = "<?php echo $this->plugin_name; ?>-post_tags"
-							name = "<?php echo $this->plugin_name; ?>[post_tags]"
-							value = "<?php echo htmlspecialchars( ( '' === $options['post_tags'] ? $dc->get_post_tags() : $options['post_tags'] ), ENT_QUOTES ); ?>"/>
-					<br/></label>
-				<label>Url Suffix (Append to outbound links in your post)<br/>
-					<input type = "text" class = "regular-text" maxlength = "50"
-							id = "<?php echo $this->plugin_name; ?>-url_suffix"
-							name = "<?php echo $this->plugin_name; ?>[url_suffix]"
-							value = "<?php echo( '' === $options['url_suffix'] ? $dc->get_url_suffix() : $options['url_suffix'] ); ?>"/>
-					<br/></label>
-				<label>Excerpt Words (How many words to include)<br/>
-					<input type = "number" class = "regular-text" maxlength = "4"
-							id = "<?php echo $this->plugin_name; ?>-excerpt_words"
-							name = "<?php echo $this->plugin_name; ?>[excerpt_words]"
-							value = "<?php echo htmlspecialchars( ( '' === $options['excerpt_words'] ? $dc->get_excerpt_words() : $options['excerpt_words'] ), ENT_QUOTES ); ?>"/>
-					<br/></label>
-				<label>Post Slug :<br/>
-					<input type = "text" class = "regular-text" maxlength = "50"
-							id = "<?php echo $this->plugin_name; ?>-slug"
-							name = "<?php echo $this->plugin_name; ?>[slug]"
-							value = "<?php echo htmlspecialchars( ( '' === $options['slug'] ? $dc->get_slug() : $options['slug'] ), ENT_QUOTES ); ?>"/>
-					<br/> </label>
-				<label>Article delimiter :<br/>
-					<input type = "text" class = "regular-text" maxlength = "50"
-							id = "<?php echo $this->plugin_name; ?>-article_delimiter"
-							name = "<?php echo $this->plugin_name; ?>[article_delimiter]"
-							value = "<?php echo( '' === $options['article_delimiter'] ? $dc->get_article_delimiter() : $options['article_delimiter'] ); ?>"/>
-					<br/> </label>
-				<label>Article Continue Prompt :<br/>
-					<input type = "text" class = "regular-text" maxlength = "50"
-							id = "<?php echo $this->plugin_name; ?>-article_continue"
-							name = "<?php echo $this->plugin_name; ?>[article_continue]"
-							value = "<?php echo htmlspecialchars( '' === $options['article_continue'] ? $dc->get_article_continue() : $options['article_continue'], ENT_COMPAT | ENT_HTML401, 'UTF-8', false ); ?>"/>
-					<br/> </label>
-				<label>Debugging :
-					<label><input type = "radio"
-								value = "1"
-								name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( '1' === $options['debug'] ? 'checked' : '' ); ?>>
-						On</label>
-					<label><input type = "radio"
-								value = "0"
-								name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( ( '0' === $options['debug'] || empty( $options['debug'] ) ) ? 'checked' : '' ); ?>>
-						Off</label>
-					<br></label>
-				<p>
-				<div class = "settings-header"><h4>Statistics</h4></div>
-				<em>These section headers are used if you do not specify any of the macros in the header or footer texts.</em></p>
-				<label>Number of articles in Brief : <em>( Replaced by {article_count} )</em><br/>
-					<input type = "text" class = "regular-text" maxlength = "50"
-							id = "<?php echo $this->plugin_name; ?>-article_stats_txt"
-							name = "<?php echo $this->plugin_name; ?>[article_stats_txt]"
-							value = "<?php echo( '' === $options['article_stats_txt'] ? $dc->get_article_stats_txt() : $options['article_stats_txt'] ); ?>"/>
-					<br/> </label>
-				<label>Categories in Brief : <em>( Replaced by {article_categories} )</em><br/>
-					<input type = "text" class = "regular-text" maxlength = "50"
-							id = "<?php echo $this->plugin_name; ?>-article_stats_cats_txt"
-							name = "<?php echo $this->plugin_name; ?>[article_stats_cats_txt]"
-							value = "<?php echo( '' === $options['article_stats_cats_txt'] ? $dc->get_article_stats_cats_txt() : $options['article_stats_cats_txt'] ); ?>"/>
-					<br/> </label>
-				<label>Tags in Brief : <em>( Replaced by {article_tags} )</em><br/>
-					<input type = "text" class = "regular-text" maxlength = "50"
-							id = "<?php echo $this->plugin_name; ?>-article_stats_tags_txt"
-							name = "<?php echo $this->plugin_name; ?>[article_stats_tags_txt]"
-							value = "<?php echo( '' === $options['article_stats_tags_txt'] ? $dc->get_article_stats_tags_txt() : $options['article_stats_tags_txt'] ); ?>"/>
-					<br/> </label>
-				<p>
-				<div class = "settings-header"><h4>Table of Contents</h4></div>
-				</p>
-				<label>Table of Contents Header :<br/>
-					<input type = "text" class = "regular-text" maxlength = "50"
-							id = "<?php echo $this->plugin_name; ?>-toc_header"
-							name = "<?php echo $this->plugin_name; ?>[toc_header]"
-							value = "<?php echo htmlspecialchars( ( '' === $options['toc_header'] ? $dc->get_toc_header() : $options['toc_header'] ) ); ?>"/>
-					<br/> </label>
-				<label>Include Table of Contents :
-					<label><input type = "radio"
-								value = "1"
-								name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( '1' === $dc->get_include_toc() ? 'checked' : '' ); ?>>
-						On</label>
-					<label><input type = "radio"
-								value = "0"
-								name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( ( '0' === $dc->get_include_toc() || empty( $dc->get_include_toc() ) ) ? 'checked' : '' ); ?>>
-						Off</label>
-					<br> </label>
-				<label>Local HREFs in TOC :
-					<label><input type = "radio"
-								value = "1"
-								name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( '1' === $dc->get_include_toc_local_hrefs() ? 'checked' : '' ); ?>>
-						On</label>
-					<label><input type = "radio"
-								value = "0"
-								name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( ( '0' === $dc->get_include_toc_local_hrefs() || empty( $dc->get_include_toc_local_hrefs() ) ) ? 'checked' : '' ); ?>>
-						Off</label>
-					<br></label>
-				<label><strong>Header text :</strong> <br> the tags {article_count}, {article_categories} and {article_tags} will be replaced by the count, categories and tags respectively covered by the articles included in the daily briefs. </label>
-				<?php
-				$settings = array(
-					'textarea_rows' => 5,
-					'textarea_name' => $this->plugin_name . '[header]',
-				);
-				wp_editor( wpautop( '' === $options['header'] ? $dc->get_header() : $options['header'], true ), 'headereditor', $settings );
-				?>
-				<label><strong>Footer text :</strong> <br> the tags {article_count}, {article_categories} and {article_tags} will be replaced by the count, categories and tags respectively covered by the articles included in the daily briefs. </label>
-				<?php
-				$settings = array(
-					'textarea_rows' => 5,
-					'textarea_name' => $this->plugin_name . '[footer]',
-				);
-				wp_editor( wpautop( '' === $options['footer'] ? $dc->get_footer() : $options['footer'], true ), 'footereditor', $settings );
-				?>
-				<div class = "settings-header"><h4>Times</h4>
-					The below settings currently means that if you generated the brief now
-					( <?php echo date( 'Y-m-d' ); ?> ) it would collect articles
-					between; <?php echo date( 'Y-m-d', strtotime( $options['start_date'] ) ); ?>
-					and <?php echo date( 'Y-m-d', strtotime( $options['end_date'] ) ); ?>.
-				</div>
-				<label>Period :<br/>
-					<select id = "<?php echo $this->plugin_name; ?>-period"
-							name = "<?php echo $this->plugin_name; ?>[period]">
-						<option value = "day" <?php echo( 'day' === $options['period'] ? 'SELECTED' : '' ); ?>>Single day</option>
-						<option value = "range" <?php echo( 'range' === $options['period'] ? 'SELECTED' : '' ); ?>>Range of days</option>
-					</select></label>
-				<br/>
-				<label>Before Date : <em>( Include articles before this )</em><br/>
-					<input type = "text" class = "regular-text" maxlength = "50"
-							id = "<?php echo $this->plugin_name; ?>-start_date"
-							name = "<?php echo $this->plugin_name; ?>[start_date]"
-							value = "<?php echo( '' === $options['start_date'] ? $dc->get_start_date() : $options['start_date'] ); ?>"/>
-					<br/> </label>
-				<label>After Date : <em>( Include articles after this )</em><br/>
-					<input type = "text" class = "regular-text" maxlength = "50"
-							id = "<?php echo $this->plugin_name; ?>-end_date"
-							name = "<?php echo $this->plugin_name; ?>[end_date]"
-							value = "<?php echo( '' === $options['end_date'] ? $dc->get_end_date() : $options['end_date'] ); ?>"/>
-					<br/> </label>
 				<?php
 
 
@@ -314,10 +437,11 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		$tz        = $date->getTimezone();
 		$tz_name   = $tz->getName();
 		$tz_offset = $tz->getOffset( $date );
-		echo $date->format( 'd/m/Y H:m:s T' );
+		$date->setTimestamp( $cron_run + $tz_offset );
+		echo $date->format( 'Y-m-d H:m:s T' );
 		?>
 		<h1>DailyBrief v <?php echo $this->version; ?></h1>
 		<p>Join us on the discord server : <a href="https://discord.gg/W2KyAbm">https://discord.gg/W2KyAbm</a> and talk to Danny</p>
-		<p>The Internal CRON job is: <?php echo( wp_get_schedule( 'dailybrief_daily_event' ) ? 'Scheduled to run on ' . $date->format( 'd/m/y H:m:s T' ) . ' ' . $timezone->getName() : '<strong>Not</strong> scheduled' ); ?></p>
+		<p>Internal CRON is: <?php echo( wp_get_schedule( 'dailybrief_daily_event' ) ? 'Scheduled to run on ' . $date->format( 'Y-m-d H:m:s T' ) . ' ' . $timezone->getName() : '<strong>Not</strong> scheduled' ); ?></p>
 	</aside>
 </div>
