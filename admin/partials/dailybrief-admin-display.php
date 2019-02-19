@@ -166,6 +166,28 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 					name="<?php echo $this->plugin_name; ?>[article_continue]"
 					value="<?php echo htmlspecialchars( '' === $options['article_continue'] ? $dc->get_article_continue() : $options['article_continue'], ENT_COMPAT | ENT_HTML401, 'UTF-8', false ); ?>"/>
 			<br/> </label>
+		<label>CRON Publish :
+			<label><input type = "radio"
+						value = "1"
+						name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( '1' === $options['cron_publish'] ? 'checked' : '' ); ?>>
+				On</label>
+			<label><input type = "radio"
+						value = "0"
+						name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( ( '0' === $options['cron_publish'] || empty( $options['cron_publish'] ) ) ? 'checked' : '' ); ?>>
+				Off</label>
+			<em>( Will create the post but not publish it )</em>
+			<br></label>
+		<label>CRON Pause :
+			<label><input type = "radio"
+						value = "1"
+						name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( '1' === $options['cron_pause'] ? 'checked' : '' ); ?>>
+				On</label>
+			<label><input type = "radio"
+						value = "0"
+						name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( ( '0' === $options['cron_pause'] || empty( $options['cron_pause'] ) ) ? 'checked' : '' ); ?>>
+				Off</label>
+			<em>( Will disable post creation by internal CRON )</em>
+			<br></label>
 		<label>Debugging :
 			<label><input type = "radio"
 						value = "1"

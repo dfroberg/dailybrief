@@ -53,33 +53,52 @@ Thank you for wanting to make DailyBrief better for everyone! [We salute you](ht
 
 == Frequently Asked Questions ==
 
+= Can daily briefs be generated via WP CLI? =
+
+Yes, check [WP-CLI-README](https://github.com/dfroberg/dailybrief/blob/master/WP-CLI-README.md) to learn how.
+
+= Can I temporarily disable generation of daily briefs? =
+
+Yes, go to settings and set pause to Yes.
+
+= Can I generate daily briefs as drafts? =
+
+Yes, go to settings and set publish to No.
+
+= If I haven't written any posts will Daily Brief publish empty briefs? =
+
+No, if it detects that there is nothing to summarize it will skip post creation.
 
 == Changelog ==
 
-=== 1.0.21 &mdash; 14 of February, 2019 ===
+= 1.0.22 &mdash; 19 of February, 2019 =
+* Fix: WP Cron activator / de-activator.
+* New: Make cron_pause an option, pause post creation, this will skip post creation entirely.
+
+= 1.0.21 &mdash; 14 of February, 2019 =
 * Fix: Add try catch for scheduling timestamp in cron.
 * New: Make cron_publish an option, this is practical if you're not quite ready with your setup or wish to pause creation of daily briefs.
 
-=== 1.0.20 &mdash; 13 of February, 2019 ===
+= 1.0.20 &mdash; 13 of February, 2019 =
 * Fix: Set internal CRON to fire "tomorrow" after midnight taking WP timezone into consideration.
 
-=== 1.0.19 &mdash; 8 of February, 2019 ===
+= 1.0.19 &mdash; 8 of February, 2019 =
 * New: Implement internal CRON to fire once a day for now. Should suffice for basic usage.
 
-=== 1.0.18 &mdash; 8 of February, 2019 ===
+= 1.0.18 &mdash; 8 of February, 2019 =
 * New: Implement focus category setting; Enable briefs about a particular subject.
 
-=== 1.0.17 &mdash; 8 of February, 2019 ===
+= 1.0.17 &mdash; 8 of February, 2019 =
 * Fix: Ensure that the category you post Daily Briefs to is always skipped from daily brief sourcing.
 * Fix: User names now full names for readability on settings screens.
 
-=== 1.0.16 &mdash; 7 of February, 2019 ===
+= 1.0.16 &mdash; 7 of February, 2019 =
 * Improvement: Added Admin GUI preview for Dailybrief posts (steemit:ish version).
 
-=== 1.0.0 &mdash; 4 of January, 2019 ===
+= 1.0.0 &mdash; 4 of January, 2019 =
 * Improvement: Added Admin GUI for settings.
 
-=== 0.0.9 &mdash; 17 of December, 2018 ===
+= 0.0.9 &mdash; 17 of December, 2018 =
 * First initial WP_CLI version.
 
 

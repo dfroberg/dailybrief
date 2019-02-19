@@ -267,6 +267,31 @@ class Dailybrief {
 	public function set_cron_publish( string $cron_publish ) {
 		$this->cron_publish = $cron_publish;
 	}
+
+	/**
+	 * Cron Publish Enabled category.
+	 *
+	 * @var string
+	 */
+	private $cron_pause = '0';
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_cron_pause() {
+		return $this->cron_pause;
+	}
+
+	/**
+	 * Set cron_pause.
+	 *
+	 * @param string $cron_pause Set cron pause enabled or not.
+	 */
+	public function set_cron_pause( string $cron_pause ) {
+		$this->cron_pause = $cron_pause;
+	}
 	/**
 	 * Period.
 	 *
@@ -936,17 +961,20 @@ class Dailybrief {
 		$dc = new Dailybrief();
 		$dc->update_globals();
 		$options = $dc->get_options();
-		// Generate post.
-		$dailybrief = $dc->create(
-			array(
-				'preview' => false,
-				'period'  => $options['period'],
-				'start'   => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
-				'end'     => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
-				'post'    => true,
-				'publish' => $options['cron_publish'],
-			)
-		);
+		// Dead end if CRON is paused.
+		if ( '1' === $options['cron_pause'] ) {
+			// Generate post.
+			$dailybrief = $dc->create(
+				array(
+					'preview' => false,
+					'period'  => $options['period'],
+					'start'   => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
+					'end'     => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
+					'post'    => true,
+					'publish' => $options['cron_publish'],
+				)
+			);
+		}
 	}
 
 	/**
@@ -1015,6 +1043,7 @@ class Dailybrief {
 		$this->end_date                = $this->get_option_default( 'end_date', '-1 day' );
 		$this->focus                   = $this->get_option_default( 'focus', '-1' );
 		$this->cron_publish            = $this->get_option_default( 'cron_publish', '1' );
+		$this->cron_pause = $this->get_option_default( 'cron_pause', '0' );
 
 	}
 
@@ -1042,6 +1071,10 @@ class Dailybrief {
 	 * @return mixed post_id
 	 */
 	public function create_post() {
+		// Dead end if CRON is paused.
+		if ( '1' === $this->cron_pause ) {
+			return false;
+		}
 		$post_category = explode( ',', $this->post_category );
 		if ( empty( $post_category ) ) {
 			$post_category[] = 1; // "Uncategorized".
