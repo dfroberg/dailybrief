@@ -176,8 +176,8 @@ class Dailybrief_Admin {
 		$valid['start_date']              = ( isset( $input['start_date'] ) && ! empty( $input['start_date'] ) ) ? ( $input['start_date'] ) : $options['start_date'];
 		$valid['end_date']                = ( isset( $input['end_date'] ) && ! empty( $input['end_date'] ) ) ? ( $input['end_date'] ) : $options['end_date'];
 		$valid['focus']                   = ( isset( $input['focus'] ) && ! empty( $input['focus'] ) ) ? ( $input['focus'] ) : $options['focus'];
-		$valid['cron_publish'] = ( isset( $input['cron_publish'] ) && is_numeric( $input['cron_publish'] ) ) ? ( $input['cron_publish'] ) : $options['cron_publish'];
-		$valid['cron_pause'] = ( isset( $input['cron_pause'] ) && is_numeric( $input['cron_pause'] ) ) ? ( $input['cron_pause'] ) : $options['cron_pause'];
+		$valid['cron_publish']            = ( isset( $input['cron_publish'] ) && is_numeric( $input['cron_publish'] ) ) ? ( $input['cron_publish'] ) : $options['cron_publish'];
+		$valid['cron_pause']              = ( isset( $input['cron_pause'] ) && is_numeric( $input['cron_pause'] ) ) ? ( $input['cron_pause'] ) : $options['cron_pause'];
 
 		return $valid;
 	}
