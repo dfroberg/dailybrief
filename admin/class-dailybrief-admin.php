@@ -74,6 +74,7 @@ class Dailybrief_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/dailybrief-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, 'https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css', array(), $this->version, 'all' );
 
 	}
 

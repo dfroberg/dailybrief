@@ -72,6 +72,7 @@ No, if it detects that there is nothing to summarize it will skip post creation.
 == Changelog ==
 
 = 1.0.22 &mdash; 19 of February, 2019 =
+* Fix: Admin GUI layout and position of options.
 * Fix: WP Cron activator / de-activator.
 * New: Make cron_pause an option, pause post creation, this will skip post creation entirely.
 
