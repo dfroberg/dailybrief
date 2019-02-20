@@ -73,11 +73,13 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 			// Generate preview.
 			$sample = $dc->create(
 				array(
-					'preview'      => true,
-					'period'       => $options['period'],
-					'start'        => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
-					'end'          => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
-					'use-excerpts' => $options['use_excerpts'],
+					'preview'         => true,
+					'period'          => $options['period'],
+					'days'            => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
+					'start'           => date( 'Y-m-d H:i:s', strtotime( $options['start_date'] ) ),
+					'end'             => date( 'Y-m-d H:i:s', strtotime( $options['end_date'] ) ),
+					'use-excerpts'    => $options['use_excerpts'],
+					'skip-categories' => $options['skip_categories'],
 				)
 			)
 			?>
@@ -393,26 +395,26 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								After Date :
-							</td>
-							<td>
-								<input type = "text" class = "regular-text" maxlength = "50"
-										id = "<?php echo $this->plugin_name; ?>-end_date"
-										name = "<?php echo $this->plugin_name; ?>[end_date]"
-										value = "<?php echo( '' === $options['end_date'] ? $dc->get_end_date() : $options['end_date'] ); ?>"/>
-								<br/><em>( Include articles after this )</em>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								Before Date :
+								Start Date :
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
 										id = "<?php echo $this->plugin_name; ?>-start_date"
 										name = "<?php echo $this->plugin_name; ?>[start_date]"
-										value = "<?php echo( '' === $options['start_date'] ? $dc->get_start_date() : $options['start_date'] ); ?>"/>
-								<br/><em>( Include articles before this )</em>
+										value = "<?php echo( '' === $options['start_date'] ? $dc->get_end_date() : $options['start_date'] ); ?>"/>
+								<br/><em>( Include articles after this date )</em>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								End Date :
+							</td>
+							<td>
+								<input type = "text" class = "regular-text" maxlength = "50"
+										id = "<?php echo $this->plugin_name; ?>-end_date"
+										name = "<?php echo $this->plugin_name; ?>[end_date]"
+										value = "<?php echo( '' === $options['end_date'] ? $dc->get_start_date() : $options['end_date'] ); ?>"/>
+								<br/><em>( Include articles before this date )</em>
 							</td>
 						</tr>
 						<tr>
@@ -456,5 +458,17 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		<h1>DailyBrief v <?php echo $this->version; ?></h1>
 		<p>Join us on the discord server : <a href="https://discord.gg/W2KyAbm">https://discord.gg/W2KyAbm</a> and talk to Danny</p>
 		<p>Internal CRON is: <?php echo( wp_get_schedule( 'dailybrief_daily_event' ) ? 'Scheduled to run on ' . $date->format( 'Y-m-d H:m:s T' ) . ' ' . $timezone->getName() : '<strong>Not</strong> scheduled' ); ?></p>
+		<p>The current settings currently means that if you generated the brief now
+		( <?php echo date( 'Y-m-d H:i:s' ); ?> ) it would collect articles
+		between; <?php echo date( 'Y-m-d H:i:s', strtotime( $options['start_date'] ) ); ?>
+		and
+		<?php
+		if ( 'day' !== $options['period'] ) {
+			echo date( 'Y-m-d H:i:s', strtotime( $options['end_date'] ) );
+		} else {
+			echo date( 'Y-m-d 23:59:59', strtotime( $options['start_date'] ) );
+		}
+		?>
+		</p>
 	</aside>
 </div>

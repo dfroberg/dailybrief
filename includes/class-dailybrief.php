@@ -727,7 +727,7 @@ class Dailybrief {
 	 * @return array
 	 */
 	public function get_always_skip_category() {
-		return array_merge( $this->always_skip_category, $this->post_category );
+		return array_merge( array( $this->always_skip_category ), array( -$this->post_category ) );
 	}
 
 	/**
@@ -1049,7 +1049,7 @@ class Dailybrief {
 		$this->author_id               = $this->get_option_default( 'author_id', '1' );
 		$this->post_category           = $this->get_option_default( 'post_category', '1' ); // 1,2,8
 		$this->post_tags               = $this->get_option_default( 'post_tags', '' ); // life,blog,news.
-		$this->always_skip_category    = $this->get_option_default( 'always_skip_category', -$this->post_category ); // Always skip the category of Daily Brief Posts.
+		$this->always_skip_category    = $this->get_option_default( 'always_skip_category', array( -$this->post_category ) ); // Always skip the category of Daily Brief Posts.
 		$this->always_skip_tags        = $this->get_option_default( 'always_skip_tag', '0' );
 		$this->slug                    = $this->get_option_default( 'slug', 'the-daily-brief' ) . '-' . $this->date_suffix;
 		$this->comment_status          = $this->get_option_default( 'comment_status', 'open' );
@@ -1425,23 +1425,24 @@ class Dailybrief {
 		$period = $this->parse_arguments( $arguments, 'period', 'day' );
 
 		if ( 'day' === $period || empty( $period ) ) {
-			$days        = $this->parse_arguments( $arguments, 'days', '-1 day' );
-			$today       = strtotime( $days );
-			$today       = date( 'Y-m-d', $today );
-			$before_date = $today;
-			$after_date  = $today;
+			$days         = $this->parse_arguments( $arguments, 'days', '-1 day' );
+			$today        = strtotime( $days );
+			$begin_period = strtotime( date( 'Y-m-d 00:00:00', $today ) );
+			$end_period   = strtotime( date( 'Y-m-d 23:59:59', $today ) );
+			$before_date  = date( 'Y-m-d H:i:s', $end_period );
+			$after_date   = date( 'Y-m-d H:i:s', $begin_period );
 		} elseif ( 'range' === $period ) {
-			$startday     = $this->parse_arguments( $arguments, 'start', '-1 day' );
-			$endday       = $this->parse_arguments( $arguments, 'end', '-1 day' );
+			$startday     = $this->parse_arguments( $arguments, 'start', '-1 day 00:00:00' );
+			$endday       = $this->parse_arguments( $arguments, 'end', '-1 day 23:59:59' );
 			$begin_period = strtotime( $startday );
 			$end_period   = strtotime( $endday );
 			$before_date  = date( 'Y-m-d H:i:s', $end_period );
 			$after_date   = date( 'Y-m-d H:i:s', $begin_period );
 		}
-		if ( $after_date == $before_date ) {
-			$today_suffix = '' . $after_date;
+		if ( substr( $after_date, 0, 10 ) === substr( $before_date, 0, 10 ) ) {
+			$today_suffix = '' . substr( $after_date, 0, 10 );
 		} else {
-			$today_suffix = '' . $after_date . '--' . $before_date;
+			$today_suffix = '' . substr( $after_date, 0, 10 ) . '--' . substr( $before_date, 0, 10 );
 		}
 
 		$this->set_date_suffix( $today_suffix ); // used for post-title & slug suffix, contains the date it relates to.
@@ -1451,7 +1452,7 @@ class Dailybrief {
 		if ( ! empty( $skip_categories ) ) {
 			$exclude_categories = array_merge( explode( ',', $skip_categories ), $this->get_always_skip_category() );
 		} else {
-			$exclude_categories = array();
+			$exclude_categories = $this->get_always_skip_category();
 		}
 		// Exclude some tag ids for whatever reason and merge with the always_skip_tags option.
 		$skip_tags = $this->parse_arguments( $arguments, 'skip-tags', '' );
@@ -1473,7 +1474,7 @@ class Dailybrief {
 		if ( $post ) {
 			// Ok prepare the post.
 			$buffer = true;
-			$this->wpclilog( '* Preparing post for ' . $today );
+			$this->wpclilog( '* Preparing post for ' . $today_suffix );
 		}
 
 		// Use excerpts or not.
@@ -1498,43 +1499,69 @@ class Dailybrief {
 		$toc_items          = '';
 		$schema             = ( is_ssl() ? 'https' : 'http' );
 
+		if ( 'range' === $period ) {
+			$date_query_start = array(
+				'year'    => date( 'Y', $begin_period ),
+				'month'   => date( 'm', $begin_period ),
+				'day'     => date( 'd', $begin_period ),
+				'hour'    => date( 'H', $begin_period ),
+				'minute'  => date( 'i', $begin_period ),
+				'second'  => date( 's', $begin_period ),
+				'compare' => '>=',
+				'column'  => 'post_date',
+			);
+			$date_query_end   = array(
+				'year'    => date( 'Y', $end_period ),
+				'month'   => date( 'm', $end_period ),
+				'day'     => date( 'd', $end_period ),
+				'hour'    => date( 'H', $end_period ),
+				'minute'  => date( 'i', $end_period ),
+				'second'  => date( 's', $end_period ),
+				'compare' => '<=',
+				'column'  => 'post_date',
+			);
+		} elseif ( 'day' === $period ) {
+			$date_query_start = array(
+				'year'    => date( 'Y', $begin_period ),
+				'month'   => date( 'm', $begin_period ),
+				'day'     => date( 'd', $begin_period ),
+				'hour'    => '00',
+				'minute'  => '00',
+				'second'  => '00',
+				'compare' => '>=',
+				'column'  => 'post_date',
+			);
+			$date_query_end   = array(
+				'year'    => date( 'Y', $end_period ),
+				'month'   => date( 'm', $end_period ),
+				'day'     => date( 'd', $end_period ),
+				'hour'    => '23',
+				'minute'  => '59',
+				'second'  => '59',
+				'compare' => '<=',
+				'column'  => 'post_date',
+			);
+		}
+		// https://generatewp.com/wp_date_query/ .
+		$date_query = array(
+			'relation' => 'AND',
+			$date_query_start,
+			$date_query_end,
+		);
+
 		do {
-			// https://generatewp.com/wp_date_query/ .
-			$date_query = array(
-				'relation' => 'AND',
-				array(
-					'year'    => 2019,
-					'month'   => 02,
-					'day'     => 19,
-					'hour'    => 00,
-					'minute'  => 00,
-					'second'  => 00,
-					'compare' => 'BETWEEN',
-					'column'  => 'post_date',
-				),
-				array(
-					'year'    => 2019,
-					'month'   => 02,
-					'day'     => 19,
-					'hour'    => 23,
-					'minute'  => 59,
-					'second'  => 59,
-					'compare' => 'BETWEEN',
-					'column'  => 'post_date',
-				),
+			$query_array = array(
+				'posts_per_page' => 30,
+				'paged'          => $page,
+				'post_status'    => $status,
+				'post_type'      => $types,
+				'date_query'     => $date_query,
+				'cat'            => array_merge( $exclude_categories, $focus ),
+				'tag__not_in'    => $exclude_tags,
+				'post__not_in'   => $exclude_posts,
 			);
-			$query      = new WP_Query(
-				array(
-					'posts_per_page' => 30,
-					'paged'          => $page,
-					'post_status'    => $status,
-					'post_type'      => $types,
-					'date_query'     => $date_query,
-					'cat'            => array_merge( $exclude_categories, $focus ),
-					'tag__not_in'    => $exclude_tags,
-					'post__not_in'   => $exclude_posts,
-				)
-			);
+
+			$query = new WP_Query( $query_array );
 
 			while ( $query->have_posts() ) {
 				$query->the_post();
