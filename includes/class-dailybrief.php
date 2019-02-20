@@ -219,6 +219,31 @@ class Dailybrief {
 	 */
 	private $content_buffer = '';
 	/**
+	 * Use excerpts.
+	 *
+	 * @var string
+	 */
+	private $use_excerpts = '0';
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_use_excerpts() {
+		return $this->use_excerpts;
+	}
+
+	/**
+	 * Set Use excerpts.
+	 *
+	 * @param string $use_excerpts Set Use excerpts.
+	 */
+	public function set_use_excerpts( string $use_excerpts ) {
+		$this->use_excerpts = $use_excerpts;
+	}
+
+	/**
 	 * Focus category.
 	 *
 	 * @var string
@@ -966,12 +991,13 @@ class Dailybrief {
 			// Generate post.
 			$dailybrief = $dc->create(
 				array(
-					'preview' => false,
-					'period'  => $options['period'],
-					'start'   => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
-					'end'     => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
-					'post'    => true,
-					'publish' => $options['cron_publish'],
+					'preview'      => false,
+					'period'       => $options['period'],
+					'start'        => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
+					'end'          => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
+					'post'         => true,
+					'publish'      => $options['cron_publish'],
+					'use-excerpts' => $options['use_excerpts'],
 				)
 			);
 		}
@@ -1044,6 +1070,7 @@ class Dailybrief {
 		$this->focus                   = $this->get_option_default( 'focus', '-1' );
 		$this->cron_publish            = $this->get_option_default( 'cron_publish', '1' );
 		$this->cron_pause              = $this->get_option_default( 'cron_pause', '0' );
+		$this->use_excerpts            = $this->get_option_default( 'use_excerpts', '0' );
 
 	}
 
@@ -1450,7 +1477,7 @@ class Dailybrief {
 		}
 
 		// Use excerpts or not.
-		$use_excerpts = $this->parse_arguments( $arguments, 'use-excerpts', true );
+		$use_excerpts = $this->parse_arguments( $arguments, 'use-excerpts', '0' );
 		// Do you wish to focus on a particular category?
 		$focus = $this->parse_arguments( $arguments, 'focus', '' );
 		if ( ! empty( $focus ) ) {
@@ -1497,7 +1524,7 @@ class Dailybrief {
 				$content = $query->post->post_content;
 				$more    = '... <a href="' . get_permalink( $id ) . $this->get_url_suffix() . '" target="dailybrief">' . $this->get_article_continue() . '</a>';
 
-				if ( ! $use_excerpts || ! has_excerpt() ) {
+				if ( false === $use_excerpts || '0' === $use_excerpts || ! has_excerpt() ) {
 					$excerpt = wp_trim_words( wp_strip_all_tags( $content, true ), $this->get_excerpt_words(), $more );
 				} else {
 					$excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt( $query ), true ), $this->get_excerpt_words(), $more );

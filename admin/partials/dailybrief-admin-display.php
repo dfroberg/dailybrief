@@ -73,10 +73,11 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 			// Generate preview.
 			$sample = $dc->create(
 				array(
-					'preview' => true,
-					'period'  => $options['period'],
-					'start'   => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
-					'end'     => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
+					'preview'      => true,
+					'period'       => $options['period'],
+					'start'        => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
+					'end'          => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
+					'use-excerpts' => $options['use_excerpts'],
 				)
 			)
 			?>
@@ -202,6 +203,22 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 										name = "<?php echo $this->plugin_name; ?>[excerpt_words]"
 										value = "<?php echo htmlspecialchars( ( '' === $options['excerpt_words'] ? $dc->get_excerpt_words() : $options['excerpt_words'] ), ENT_QUOTES ); ?>"/>
 								<br><em>(How many words to include)</em>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Use Excerpts :
+							</td>
+							<td>
+								<input type = "radio"
+										value = "1"
+										name = "<?php echo $this->plugin_name; ?>[use_excerpts]" <?php echo( '1' === $dc->get_use_excerpts() ? 'checked' : '' ); ?>>
+								<label>On</label>
+								<input type = "radio"
+										value = "0"
+										name = "<?php echo $this->plugin_name; ?>[use_excerpts]" <?php echo( ( '0' === $dc->get_use_excerpts() || empty( $dc->get_use_excerpts() ) ) ? 'checked' : '' ); ?>>
+								<label>Off</label>
+								<br><em>(Use existing excerpts or genereate our own (safest) )</em>
 							</td>
 						</tr>
 						<tr>
