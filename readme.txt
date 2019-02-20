@@ -75,6 +75,7 @@ No, if it detects that there is nothing to summarize it will skip post creation.
 * Fix: Date selection for periods and single day to include hours
 * Fix: Reorder Period selection fields plus adding more verbose debug information.
 * Fix: Category exclusions
+* Fix: Add new options to Internal CRON job.
 
 = 1.0.22 &mdash; 19 of February, 2019 =
 * Fix: Admin GUI layout and position of options.
