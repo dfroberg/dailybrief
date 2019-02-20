@@ -991,13 +991,15 @@ class Dailybrief {
 			// Generate post.
 			$dailybrief = $dc->create(
 				array(
-					'preview'      => false,
-					'period'       => $options['period'],
-					'start'        => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
-					'end'          => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
-					'post'         => true,
-					'publish'      => $options['cron_publish'],
-					'use-excerpts' => $options['use_excerpts'],
+					'preview'         => false,
+					'period'          => $options['period'],
+					'days'            => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
+					'start'           => date( 'Y-m-d H:i:s', strtotime( $options['start_date'] ) ),
+					'end'             => date( 'Y-m-d H:i:s', strtotime( $options['end_date'] ) ),
+					'use-excerpts'    => $options['use_excerpts'],
+					'skip-categories' => $options['skip_categories'],
+					'post'            => true,
+					'publish'         => $options['cron_publish'],
 				)
 			);
 		}
