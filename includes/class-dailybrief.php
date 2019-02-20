@@ -1435,8 +1435,8 @@ class Dailybrief {
 			$endday       = $this->parse_arguments( $arguments, 'end', '-1 day' );
 			$begin_period = strtotime( $startday );
 			$end_period   = strtotime( $endday );
-			$before_date  = date( 'Y-m-d', $end_period );
-			$after_date   = date( 'Y-m-d', $begin_period );
+			$before_date  = date( 'Y-m-d H:i:s', $end_period );
+			$after_date   = date( 'Y-m-d H:i:s', $begin_period );
 		}
 		if ( $after_date == $before_date ) {
 			$today_suffix = '' . $after_date;
@@ -1499,19 +1499,37 @@ class Dailybrief {
 		$schema             = ( is_ssl() ? 'https' : 'http' );
 
 		do {
-			$query = new WP_Query(
+			// https://generatewp.com/wp_date_query/ .
+			$date_query = array(
+				'relation' => 'AND',
+				array(
+					'year'    => 2019,
+					'month'   => 02,
+					'day'     => 19,
+					'hour'    => 00,
+					'minute'  => 00,
+					'second'  => 00,
+					'compare' => 'BETWEEN',
+					'column'  => 'post_date',
+				),
+				array(
+					'year'    => 2019,
+					'month'   => 02,
+					'day'     => 19,
+					'hour'    => 23,
+					'minute'  => 59,
+					'second'  => 59,
+					'compare' => 'BETWEEN',
+					'column'  => 'post_date',
+				),
+			);
+			$query      = new WP_Query(
 				array(
 					'posts_per_page' => 30,
 					'paged'          => $page,
 					'post_status'    => $status,
 					'post_type'      => $types,
-					'date_query'     => array(
-						array(
-							'before'    => $before_date,
-							'after'     => $after_date,
-							'inclusive' => true,
-						),
-					),
+					'date_query'     => $date_query,
 					'cat'            => array_merge( $exclude_categories, $focus ),
 					'tag__not_in'    => $exclude_tags,
 					'post__not_in'   => $exclude_posts,
