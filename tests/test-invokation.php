@@ -15,7 +15,42 @@ class InvokationTest extends WP_UnitTestCase {
 	 */
 	function setUp() {
 		parent::setUp();
+		// Let's create a category.
+		$this->cat1 = $this->factory->term->create(
+			array(
+				'taxonomy' => 'category',
+			)
+		);
+		// Let's create some featured posts in a category.
+		$this->factory->post->create_many(
+			2,
+			array(
+				'post_category' => array( $this->cat1 ),
+				'tax_input'     => array(
+					'taxonomy'   => 'term',
+					'prominence' => 'taxonomy-featured',
+				),
+			)
+		);
+		$this->factory->post->create_many(
+			2,
+			array(
+				'post_category' => array( $this->cat1 ),
+				'tax_input'     => array(
+					'taxonomy'   => 'term',
+					'prominence' => 'taxonomy-secondary-featured',
+				),
+			)
+		);
+		// And some non-featured posts.
+		$this->cat1_no_prom = $this->factory->post->create_many(
+			2,
+			array(
+				'post_category' => array( $this->cat1 ),
+			)
+		);
 	}
+
 	/**
 	 * A single example test.
 	 */
@@ -23,6 +58,7 @@ class InvokationTest extends WP_UnitTestCase {
 		// Replace this with some actual testing code.
 		$this->assertTrue( true );
 	}
+
 	/**
 	 * Load plugin.
 	 */
@@ -34,6 +70,7 @@ class InvokationTest extends WP_UnitTestCase {
 		}
 		$this->assertTrue( true );
 	}
+
 	/**
 	 * Load plugin.
 	 */
@@ -48,6 +85,7 @@ class InvokationTest extends WP_UnitTestCase {
 		// Pass test.
 		$this->assertTrue( true );
 	}
+
 	/**
 	 * Load plugin.
 	 */
@@ -68,4 +106,30 @@ class InvokationTest extends WP_UnitTestCase {
 		// Pass test.
 		$this->assertTrue( true );
 	}
+	/**
+	 * Load plugin.
+	 */
+	public function test_create_dailybrief() {
+		// Include class.
+		require_once '/builds/dfroberg/dailybrief/dailybrief.php';
+		$dc = new Dailybrief();
+		$dc->update_globals();
+		$options = $dc->get_options();
+		$dc->create(
+			array(
+				'preview'         => false,
+				'period'          => 'day',
+				'days'            => date( 'Y-m-d' ),
+				'start'           => date( 'Y-m-d H:i:s', strtotime( $options['start_date'] ) ),
+				'end'             => date( 'Y-m-d H:i:s', strtotime( $options['end_date'] ) ),
+				'use-excerpts'    => $options['use_excerpts'],
+				'skip-categories' => $options['skip_categories'],
+				'post'            => true,
+				'publish'         => true,
+			)
+		);
+		// Pass test.
+		$this->assertTrue( true );
+	}
+
 }
