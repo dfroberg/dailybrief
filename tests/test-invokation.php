@@ -115,5 +115,10 @@ class InvokationTest extends WP_UnitTestCase {
 		// Pass test.
 		$this->assertTrue( true );
 	}
-
+	/**
+	 * Load plugin.
+	 */
+	public function test_find_post_dailybrief() {
+		$this->assertTrue( true );
+	}
 }

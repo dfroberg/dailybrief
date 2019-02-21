@@ -1451,9 +1451,9 @@ class Dailybrief {
 		$this->set_date_suffix( $today_suffix ); // used for post-title & slug suffix, contains the date it relates to.
 
 		// Exclude some category ids for whatever reason and merge with the always_skip_category option.
-		$skip_categories = $this->parse_arguments( $arguments, 'skip-categories', '' );
+		$skip_categories = $this->parse_arguments( $arguments, 'skip-categories', '-1' );
 		if ( ! empty( $skip_categories ) ) {
-			$exclude_categories = array_merge( explode( ',', $skip_categories ), explode( ',', $this->get_always_skip_category() ) );
+			$exclude_categories = explode( ',', $skip_categories . ',' . $this->get_always_skip_category() );
 		} else {
 			$exclude_categories = explode( ',', $this->get_always_skip_category() );
 		}
@@ -1552,6 +1552,9 @@ class Dailybrief {
 			$date_query_end,
 		);
 		// Sanity check categories selected.
+		if ( ! is_array( $exclude_categories ) && '' !== $exclude_categories ) {
+			$exclude_categories = explode( ',', $exclude_categories );
+		}
 		$cats = array_merge( $exclude_categories, array( -$this->get_post_category() ), $focus );
 
 		do {
