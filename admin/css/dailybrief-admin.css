@@ -95,3 +95,5 @@
 	display: table-cell;
 	vertical-align: top;
 }
+
+.dailybrief input[type="radio"]:checked+label { font-weight: bold; }
