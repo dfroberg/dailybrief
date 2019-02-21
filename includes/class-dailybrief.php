@@ -137,7 +137,7 @@ class Dailybrief {
 	/**
 	 * Always skip these categories, this is among other things used to not include the briefs category in the brief we generate.
 	 *
-	 * @var array
+	 * @var string
 	 */
 	private $always_skip_category;
 	/**
@@ -724,18 +724,18 @@ class Dailybrief {
 	/**
 	 * Getter.
 	 *
-	 * @return array
+	 * @return string
 	 */
 	public function get_always_skip_category() {
-		return array_merge( array( $this->always_skip_category ), array( -$this->post_category ) );
+		return $this->always_skip_category;
 	}
 
 	/**
 	 * Setter.
 	 *
-	 * @param array $always_skip_category Don't include posts from these categories.
+	 * @param string $always_skip_category Don't include posts from these categories.
 	 */
-	public function set_always_skip_category( array $always_skip_category ) {
+	public function set_always_skip_category( $always_skip_category ) {
 		$this->always_skip_category = $always_skip_category;
 	}
 
@@ -1453,9 +1453,9 @@ class Dailybrief {
 		// Exclude some category ids for whatever reason and merge with the always_skip_category option.
 		$skip_categories = $this->parse_arguments( $arguments, 'skip-categories', '' );
 		if ( ! empty( $skip_categories ) ) {
-			$exclude_categories = array_merge( explode( ',', $skip_categories ), $this->get_always_skip_category() );
+			$exclude_categories = array_merge( explode( ',', $skip_categories ), explode( ',', $this->get_always_skip_category() ) );
 		} else {
-			$exclude_categories = $this->get_always_skip_category();
+			$exclude_categories = explode( ',', $this->get_always_skip_category() );
 		}
 		// Exclude some tag ids for whatever reason and merge with the always_skip_tags option.
 		$skip_tags = $this->parse_arguments( $arguments, 'skip-tags', '' );
@@ -1551,6 +1551,8 @@ class Dailybrief {
 			$date_query_start,
 			$date_query_end,
 		);
+		// Sanity check categories selected.
+		$cats = array_merge( $exclude_categories, array( -$this->get_post_category() ), $focus );
 
 		do {
 			$query_array = array(
@@ -1559,7 +1561,7 @@ class Dailybrief {
 				'post_status'    => $status,
 				'post_type'      => $types,
 				'date_query'     => $date_query,
-				'cat'            => array_merge( $exclude_categories, $focus ),
+				'cat'            => $cats,
 				'tag__not_in'    => $exclude_tags,
 				'post__not_in'   => $exclude_posts,
 			);
