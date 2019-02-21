@@ -37,11 +37,25 @@ class InvokationTest extends WP_UnitTestCase {
 	/**
 	 * Load plugin.
 	 */
-	public function test_instantiate_dailybrief() {
+	public function test_availability_dailybrief() {
 		// Include class.
 		require_once '/builds/dfroberg/dailybrief/dailybrief.php';
 
 		if ( ! defined( Dailybrief::CRON_HOOK ) ) {
+			$this->assertTrue( false );
+		}
+		// Pass test.
+		$this->assertTrue( true );
+	}
+	/**
+	 * Load plugin.
+	 */
+	public function test_instantiate_dailybrief() {
+		// Include class.
+		require_once '/builds/dfroberg/dailybrief/dailybrief.php';
+		$dc = new Dailybrief();
+
+		if ( 'dailybrief' !== $dc->get_plugin_name() ) {
 			$this->assertTrue( false );
 		}
 		// Pass test.
