@@ -35,6 +35,9 @@ $user_select = '';
 // The User Loop.
 if ( ! empty( $user_query->results ) ) {
 	foreach ( $user_query->results as $user ) {
+		if ( $options['author_id'] === $user->id ) {
+			$debug_current_author_name = $user->display_name;
+		}
 		$user_select .= '<option ' . ( $options['author_id'] == $user->id ? 'SELECTED' : '' ) . ' value="' . $user->id . '">' . $user->display_name . '</option>';
 	}
 }
@@ -44,12 +47,18 @@ $category_select = '';
 // The Categories loop.
 if ( ! empty( $categories ) && is_array( $categories ) ) {
 	foreach ( $categories as $category ) {
+		if ( $options['post_category'] == $category->cat_ID ) {
+			$debug_current_category_name = $category->name;
+		}
 		$category_select .= '<option ' . ( $options['post_category'] == $category->cat_ID ? 'SELECTED' : '' ) . ' value="' . $category->cat_ID . '">' . $category->name . '</option>';
 	}
 }
 // The Focus on Categories loop.
 if ( ! empty( $categories ) && is_array( $categories ) ) {
 	foreach ( $categories as $category ) {
+		if ( $options['focus'] == $category->cat_ID ) {
+			$debug_current_focus_category_name = $category->name;
+		}
 		$category_focus_select .= '<option ' . ( $options['focus'] == $category->cat_ID ? 'SELECTED' : '' ) . ' value="' . $category->cat_ID . '">' . $category->name . '</option>';
 	}
 }
@@ -83,15 +92,14 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				)
 			)
 			?>
-			<div id = "dailybrief-preview-post" class = "dailybrief-preview-post" style = "max-width: 40rem">
-
-				<h1 style = "vertical-align: center;"><?php echo $sample['post_title'] . ' ' . $dc->get_date_suffix(); ?>
-					<img src = "<?php echo plugin_dir_url( __FILE__ ); ?>/images/steemit.png" width = "27"
-							height = "27"></h1>
-				<div style = "overflow: hidden; font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 100%; font-weight: 800; line-height: 1; text-align: left; vertical-align: center;">
-					<h2><img src = "<?php echo plugin_dir_url( __FILE__ ); ?>/images/white_icon_dailybrief.png"
-								width = "70" height = "70"> dailybrief (48) in news • 12 hours ago </h2></div>
+			<div id = "dailybrief-preview-post" class = "dailybrief-preview-post">
+				<h1 style = "vertical-align: center; margin-bottom: 0;"><?php echo $sample['post_title'] . ' ' . $dc->get_date_suffix(); ?>
+					<img src = "<?php echo plugin_dir_url( __FILE__ ); ?>/images/steemit.png" width = "27" height = "27"></h1>
+				<div id="user-block" class="user-block">
+					<h2><img src = "<?php echo plugin_dir_url( __FILE__ ); ?>/images/white_icon_dailybrief.png" width = "70" height = "70"> dailybrief (48) in news • 12 hours ago </h2>
+				</div>
 				<p></p>
+				<div id="steem-body" class="steem-body">
 				<?php
 				echo '<center><img src="' . $dc->get_temp_featured_image_url() . '" width="640"></center>';
 				?>
@@ -99,9 +107,10 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				<p></p>
 				<p>
 					<?php
-					echo $sample['content'];
+					echo wpautop( $sample['content'] );
 					?>
 				</p>
+				</div>
 			</div>
 
 		<?php } // end if preview ?>
@@ -465,22 +474,32 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		$tz_name   = $tz->getName();
 		$tz_offset = $tz->getOffset( $date );
 		$date->setTimestamp( $cron_run + $tz_offset );
-		echo $date->format( 'Y-m-d H:m:s T' );
 		?>
-		<h1>DailyBrief v <?php echo $this->version; ?></h1>
+		<h1>DailyBrief v&nbsp;<?php echo $this->version; ?></h1>
 		<p>Join us on the discord server : <a href="https://discord.gg/W2KyAbm">https://discord.gg/W2KyAbm</a> and talk to Danny</p>
-		<p>Internal CRON is: <?php echo( wp_get_schedule( 'dailybrief_daily_event' ) ? 'Scheduled to run on ' . $date->format( 'Y-m-d H:m:s T' ) . ' ' . $timezone->getName() : '<strong>Not</strong> scheduled' ); ?></p>
-		<p>The current settings currently means that if you generated the brief now
-		( <?php echo date( 'Y-m-d H:i:s' ); ?> ) it would collect articles
-		between; <?php echo date( 'Y-m-d H:i:s', strtotime( $options['start_date'] ) ); ?>
-		and
 		<?php
-		if ( 'day' !== $options['period'] ) {
-			echo date( 'Y-m-d H:i:s', strtotime( $options['end_date'] ) );
-		} else {
-			echo date( 'Y-m-d 23:59:59', strtotime( $options['start_date'] ) );
+		if ( $options['debug'] ) {
+			?>
+			<p>Internal CRON is:
+				<br/><?php echo( wp_get_schedule( 'dailybrief_daily_event' ) ? 'Scheduled to run on ' . get_date_from_gmt( $date->format( 'Y-m-d H:m:s T' ) ) . ' ' . $timezone->getName() : '<strong>Not</strong> scheduled' ); ?>
+			</p>
+			<p>The current settings currently means that if you generated the brief now
+			( <?php echo get_date_from_gmt( date( 'Y-m-d H:i:s' ), 'Y-m-d H:i:s' ); ?> ) it would collect articles
+			between; <?php echo date( 'Y-m-d H:i:s', strtotime( $options['start_date'] ) ); ?>
+			and
+				<?php
+				if ( 'day' !== $options['period'] ) {
+					echo date( 'Y-m-d H:i:s', strtotime( $options['end_date'] ) );
+				} else {
+					echo date( 'Y-m-d 23:59:59', strtotime( $options['start_date'] ) );
+				}
+				?>
+			</p>
+			<p>Briefs author: <?php echo $debug_current_author_name; ?></p>
+			<p>Posted to catregory : <?php echo $debug_current_category_name; ?></p>
+			<p>Focusing on category : <?php echo( $debug_current_focus_category_name ?: 'None' ); ?></p>
+			<?php
 		}
 		?>
-		</p>
 	</aside>
 </div>
