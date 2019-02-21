@@ -239,7 +239,7 @@ class Dailybrief {
 	 *
 	 * @param string $use_excerpts Set Use excerpts.
 	 */
-	public function set_use_excerpts( string $use_excerpts ) {
+	public function set_use_excerpts( $use_excerpts ) {
 		$this->use_excerpts = $use_excerpts;
 	}
 
@@ -264,7 +264,7 @@ class Dailybrief {
 	 *
 	 * @param string $focus Set focus category.
 	 */
-	public function set_focus( string $focus ) {
+	public function set_focus( $focus ) {
 		$this->focus = $focus;
 	}
 
@@ -289,7 +289,7 @@ class Dailybrief {
 	 *
 	 * @param string $cron_publish Set cron_publish enabled or not.
 	 */
-	public function set_cron_publish( string $cron_publish ) {
+	public function set_cron_publish( $cron_publish ) {
 		$this->cron_publish = $cron_publish;
 	}
 
@@ -314,7 +314,7 @@ class Dailybrief {
 	 *
 	 * @param string $cron_pause Set cron pause enabled or not.
 	 */
-	public function set_cron_pause( string $cron_pause ) {
+	public function set_cron_pause( $cron_pause ) {
 		$this->cron_pause = $cron_pause;
 	}
 	/**
@@ -338,7 +338,7 @@ class Dailybrief {
 	 *
 	 * @param string $period Set period.
 	 */
-	public function set_period( string $period ) {
+	public function set_period( $period ) {
 		$this->period = $period;
 	}
 	/**
@@ -362,7 +362,7 @@ class Dailybrief {
 	 *
 	 * @param string $start_date Set start_date.
 	 */
-	public function set_start_date( string $start_date ) {
+	public function set_start_date( $start_date ) {
 		$this->start_date = $start_date;
 	}
 	/**
@@ -386,7 +386,7 @@ class Dailybrief {
 	 *
 	 * @param string $end_date Set end_date.
 	 */
-	public function set_end_date( string $end_date ) {
+	public function set_end_date( $end_date ) {
 		$this->end_date = $end_date;
 	}
 	/**
@@ -410,7 +410,7 @@ class Dailybrief {
 	 *
 	 * @param string $footer Set  footer.
 	 */
-	public function set_footer( string $footer ) {
+	public function set_footer( $footer ) {
 		$this->footer = $footer;
 	}
 	/**
@@ -434,7 +434,7 @@ class Dailybrief {
 	 *
 	 * @param string $header Set  header.
 	 */
-	public function set_header( string $header ) {
+	public function set_header( $header ) {
 		$this->header = $header;
 	}
 	/**
@@ -458,7 +458,7 @@ class Dailybrief {
 	 *
 	 * @param string $toc_header Set table of contents header.
 	 */
-	public function set_toc_header( string $toc_header ) {
+	public function set_toc_header( $toc_header ) {
 		$this->toc_header = $toc_header;
 	}
 	/**
@@ -501,7 +501,7 @@ class Dailybrief {
 	 *
 	 * @param string $date_suffix Set suffix.
 	 */
-	public function set_date_suffix( string $date_suffix ) {
+	public function set_date_suffix( $date_suffix ) {
 		$this->date_suffix = $date_suffix;
 	}
 
@@ -519,7 +519,7 @@ class Dailybrief {
 	 *
 	 * @param string $temp_featured_image_url Placeholder for temp URL.
 	 */
-	public function set_temp_featured_image_url( string $temp_featured_image_url ) {
+	public function set_temp_featured_image_url( $temp_featured_image_url ) {
 		$this->temp_featured_image_url = $temp_featured_image_url;
 	}
 
@@ -537,7 +537,7 @@ class Dailybrief {
 	 *
 	 * @param int $post_id_created WP Post ID created.
 	 */
-	public function set_post_id_created( int $post_id_created ) {
+	public function set_post_id_created( $post_id_created ) {
 		$this->post_id_created = $post_id_created;
 	}
 
@@ -555,7 +555,7 @@ class Dailybrief {
 	 *
 	 * @param array $options Options array.
 	 */
-	public function set_options( array $options ) {
+	public function set_options( $options ) {
 		$this->options = $options;
 	}
 
@@ -573,7 +573,7 @@ class Dailybrief {
 	 *
 	 * @param int $debug Shall we debug.
 	 */
-	public function set_debug( int $debug ) {
+	public function set_debug( $debug ) {
 		$this->debug = $debug;
 	}
 
@@ -591,7 +591,7 @@ class Dailybrief {
 	 *
 	 * @param int $include_toc Table of contents.
 	 */
-	public function set_include_toc( int $include_toc ) {
+	public function set_include_toc( $include_toc ) {
 		$this->include_toc = $include_toc;
 	}
 
@@ -609,7 +609,7 @@ class Dailybrief {
 	 *
 	 * @param int $include_toc_local_hrefs Ahrefs in TOC.
 	 */
-	public function set_include_toc_local_hrefs( int $include_toc_local_hrefs ) {
+	public function set_include_toc_local_hrefs( $include_toc_local_hrefs ) {
 		$this->include_toc_local_hrefs = $include_toc_local_hrefs;
 	}
 
@@ -627,7 +627,7 @@ class Dailybrief {
 	 *
 	 * @param string $url_suffix Add stuff to outbound URLS.
 	 */
-	public function set_url_suffix( string $url_suffix ) {
+	public function set_url_suffix( $url_suffix ) {
 		$this->url_suffix = $url_suffix;
 	}
 
@@ -645,7 +645,7 @@ class Dailybrief {
 	 *
 	 * @param int $excerpt_words How many words to use.
 	 */
-	public function set_excerpt_words( int $excerpt_words ) {
+	public function set_excerpt_words( $excerpt_words ) {
 		$this->excerpt_words = $excerpt_words;
 	}
 
@@ -663,7 +663,7 @@ class Dailybrief {
 	 *
 	 * @param int $post_title WP Post Title.
 	 */
-	public function set_post_title( int $post_title ) {
+	public function set_post_title( $post_title ) {
 		$this->post_title = $post_title;
 	}
 
@@ -681,7 +681,7 @@ class Dailybrief {
 	 *
 	 * @param string $author_id Author ID.
 	 */
-	public function set_author_id( string $author_id ) {
+	public function set_author_id( $author_id ) {
 		$this->author_id = $author_id;
 	}
 
@@ -699,7 +699,7 @@ class Dailybrief {
 	 *
 	 * @param int $post_category WP Post category.
 	 */
-	public function set_post_category( int $post_category ) {
+	public function set_post_category( $post_category ) {
 		$this->post_category = $post_category;
 	}
 
@@ -717,7 +717,7 @@ class Dailybrief {
 	 *
 	 * @param int $post_tags What Wp Post tags to set.
 	 */
-	public function set_post_tags( int $post_tags ) {
+	public function set_post_tags( $post_tags ) {
 		$this->post_tags = $post_tags;
 	}
 
@@ -753,7 +753,7 @@ class Dailybrief {
 	 *
 	 * @param int $always_skip_tags Don't include posts from these tags.
 	 */
-	public function set_always_skip_tags( int $always_skip_tags ) {
+	public function set_always_skip_tags( $always_skip_tags ) {
 		$this->always_skip_tags = $always_skip_tags;
 	}
 
@@ -771,7 +771,7 @@ class Dailybrief {
 	 *
 	 * @param string $slug Base slug to use.
 	 */
-	public function set_slug( string $slug ) {
+	public function set_slug( $slug ) {
 		$this->slug = $slug;
 	}
 
@@ -789,7 +789,7 @@ class Dailybrief {
 	 *
 	 * @param string $comment_status Open or closed for comments.
 	 */
-	public function set_comment_status( string $comment_status ) {
+	public function set_comment_status( $comment_status ) {
 		$this->comment_status = $comment_status;
 	}
 
@@ -807,7 +807,7 @@ class Dailybrief {
 	 *
 	 * @param string $ping_status Open or Closed for pings.
 	 */
-	public function set_ping_status( string $ping_status ) {
+	public function set_ping_status( $ping_status ) {
 		$this->ping_status = $ping_status;
 	}
 
@@ -825,7 +825,7 @@ class Dailybrief {
 	 *
 	 * @param string $post_status Draft or Publish.
 	 */
-	public function set_post_status( string $post_status ) {
+	public function set_post_status( $post_status ) {
 		$this->post_status = $post_status;
 	}
 
@@ -843,7 +843,7 @@ class Dailybrief {
 	 *
 	 * @param string $post_type Always post for now.
 	 */
-	public function set_post_type( string $post_type ) {
+	public function set_post_type( $post_type ) {
 		$this->post_type = $post_type;
 	}
 
@@ -861,7 +861,7 @@ class Dailybrief {
 	 *
 	 * @param string $article_delimiter Stuff between articles in briefs.
 	 */
-	public function set_article_delimiter( string $article_delimiter ) {
+	public function set_article_delimiter( $article_delimiter ) {
 		$this->article_delimiter = $article_delimiter;
 	}
 
@@ -879,7 +879,7 @@ class Dailybrief {
 	 *
 	 * @param string $article_continue Read more.
 	 */
-	public function set_article_continue( string $article_continue ) {
+	public function set_article_continue( $article_continue ) {
 		$this->article_continue = $article_continue;
 	}
 
@@ -897,7 +897,7 @@ class Dailybrief {
 	 *
 	 * @param string $article_stats_txt Intro to article stats.
 	 */
-	public function set_article_stats_txt( string $article_stats_txt ) {
+	public function set_article_stats_txt( $article_stats_txt ) {
 		$this->article_stats_txt = $article_stats_txt;
 	}
 
@@ -915,7 +915,7 @@ class Dailybrief {
 	 *
 	 * @param string $article_stats_cats_txt Intro to category stats.
 	 */
-	public function set_article_stats_cats_txt( string $article_stats_cats_txt ) {
+	public function set_article_stats_cats_txt( $article_stats_cats_txt ) {
 		$this->article_stats_cats_txt = $article_stats_cats_txt;
 	}
 
@@ -933,7 +933,7 @@ class Dailybrief {
 	 *
 	 * @param string $article_stats_tags_txt Intro to tags stats.
 	 */
-	public function set_article_stats_tags_txt( string $article_stats_tags_txt ) {
+	public function set_article_stats_tags_txt( $article_stats_tags_txt ) {
 		$this->article_stats_tags_txt = $article_stats_tags_txt;
 	}
 
@@ -951,7 +951,7 @@ class Dailybrief {
 	 *
 	 * @param string $featured_image_url Featured Image URL to use.
 	 */
-	public function set_featured_image_url( string $featured_image_url ) {
+	public function set_featured_image_url( $featured_image_url ) {
 		$this->featured_image_url = $featured_image_url;
 	}
 
@@ -969,7 +969,7 @@ class Dailybrief {
 	 *
 	 * @param string $content_buffer Buffer to compile WP Post content in.
 	 */
-	public function set_content_buffer( string $content_buffer ) {
+	public function set_content_buffer( $content_buffer ) {
 		$this->content_buffer = $content_buffer;
 	}
 
@@ -1769,7 +1769,7 @@ class Dailybrief {
 						try {
 							$test = new Steempress_sp_Admin( 'steempress_sp', '2.3' );
 							$test->Steempress_sp_publish( $this->post_id_created );
-							// Alt Steempress_sp_Admin::Steempress_sp_publish($this->post_id_created);.
+							// Alt Steempress_sp_Admin::Steempress_sp_publish( $this->post_id_created);.
 							$steempress_sp_permlink = get_post_meta( $this->post_id_created, 'steempress_sp_permlink' );
 							$steempress_sp_author   = get_post_meta( $this->post_id_created, 'steempress_sp_author' );
 							if ( ! empty( $steempress_sp_permlink ) && ! empty( $steempress_sp_author ) ) {
