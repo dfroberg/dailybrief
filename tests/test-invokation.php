@@ -11,6 +11,12 @@
 class InvokationTest extends WP_UnitTestCase {
 
 	/**
+	 * Setup.
+	 */
+	function setUp() {
+		parent::setUp();
+	}
+	/**
 	 * A single example test.
 	 */
 	public function test_sample() {
