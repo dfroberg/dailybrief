@@ -88,7 +88,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 					'start'           => date( 'Y-m-d H:i:s', strtotime( $options['start_date'] ) ),
 					'end'             => date( 'Y-m-d H:i:s', strtotime( $options['end_date'] ) ),
 					'use-excerpts'    => $options['use_excerpts'],
-					'skip-categories' => $options['skip_categories'],
+					'skip-categories' => $options['always_skip_category'],
 				)
 			)
 			?>
