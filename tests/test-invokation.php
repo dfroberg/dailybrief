@@ -34,7 +34,6 @@ class InvokationTest extends WP_UnitTestCase {
 		}
 		$this->assertTrue( true );
 	}
-
 	/**
 	 * Load plugin.
 	 */
@@ -44,6 +43,26 @@ class InvokationTest extends WP_UnitTestCase {
 		$dc = new Dailybrief();
 
 		if ( 'dailybrief' !== $dc->get_plugin_name() ) {
+			$this->assertTrue( false );
+		}
+		// Pass test.
+		$this->assertTrue( true );
+	}
+	/**
+	 * Load plugin.
+	 */
+	public function test_getsetoptions_dailybrief() {
+		// Include class.
+		require_once '/builds/dfroberg/dailybrief/dailybrief.php';
+		$dc = new Dailybrief();
+
+		$dc->set_article_delimiter( 'delimiter' );
+		if ( 'delimiter' !== $dc->get_article_delimiter() ) {
+			$this->assertTrue( false );
+		}
+
+		$dc->set_always_skip_category( array( '-1' ) );
+		if ( ! in_array( '-1', $dc->get_always_skip_category() ) ) {
 			$this->assertTrue( false );
 		}
 		// Pass test.
