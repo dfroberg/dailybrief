@@ -44,9 +44,10 @@ codestyle:
   services:
     - mysql:5.6
   artifacts:
+    name: "${CI_BUILD_NAME}_${CI_BUILD_REF_NAME}_report"
+    untracked: false
     paths:
-      - reports
-      - vendor
+      - build/coverage-report/
   script:
     - composer global require "phpunit/phpunit=6.*" --no-progress
     - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
@@ -116,4 +117,5 @@ dailybrief:
     - bin/generate-markdown-readme
     - rsync -av --exclude-from='deploy-exclude-files.txt' . dailybrief/
     - rm -rf dailybrief/dailybrief # Just to make darn sure
+    - rm -rf dailybrief/build # Just to make darn sure
     - echo 'Deploying!'

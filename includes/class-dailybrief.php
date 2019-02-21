@@ -137,7 +137,7 @@ class Dailybrief {
 	/**
 	 * Always skip these categories, this is among other things used to not include the briefs category in the brief we generate.
 	 *
-	 * @var array
+	 * @var string
 	 */
 	private $always_skip_category;
 	/**
@@ -219,6 +219,31 @@ class Dailybrief {
 	 */
 	private $content_buffer = '';
 	/**
+	 * Use excerpts.
+	 *
+	 * @var string
+	 */
+	private $use_excerpts = '0';
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_use_excerpts() {
+		return $this->use_excerpts;
+	}
+
+	/**
+	 * Set Use excerpts.
+	 *
+	 * @param string $use_excerpts Set Use excerpts.
+	 */
+	public function set_use_excerpts( $use_excerpts ) {
+		$this->use_excerpts = $use_excerpts;
+	}
+
+	/**
 	 * Focus category.
 	 *
 	 * @var string
@@ -239,7 +264,7 @@ class Dailybrief {
 	 *
 	 * @param string $focus Set focus category.
 	 */
-	public function set_focus( string $focus ) {
+	public function set_focus( $focus ) {
 		$this->focus = $focus;
 	}
 
@@ -264,7 +289,7 @@ class Dailybrief {
 	 *
 	 * @param string $cron_publish Set cron_publish enabled or not.
 	 */
-	public function set_cron_publish( string $cron_publish ) {
+	public function set_cron_publish( $cron_publish ) {
 		$this->cron_publish = $cron_publish;
 	}
 
@@ -289,7 +314,7 @@ class Dailybrief {
 	 *
 	 * @param string $cron_pause Set cron pause enabled or not.
 	 */
-	public function set_cron_pause( string $cron_pause ) {
+	public function set_cron_pause( $cron_pause ) {
 		$this->cron_pause = $cron_pause;
 	}
 	/**
@@ -313,7 +338,7 @@ class Dailybrief {
 	 *
 	 * @param string $period Set period.
 	 */
-	public function set_period( string $period ) {
+	public function set_period( $period ) {
 		$this->period = $period;
 	}
 	/**
@@ -337,7 +362,7 @@ class Dailybrief {
 	 *
 	 * @param string $start_date Set start_date.
 	 */
-	public function set_start_date( string $start_date ) {
+	public function set_start_date( $start_date ) {
 		$this->start_date = $start_date;
 	}
 	/**
@@ -361,7 +386,7 @@ class Dailybrief {
 	 *
 	 * @param string $end_date Set end_date.
 	 */
-	public function set_end_date( string $end_date ) {
+	public function set_end_date( $end_date ) {
 		$this->end_date = $end_date;
 	}
 	/**
@@ -385,7 +410,7 @@ class Dailybrief {
 	 *
 	 * @param string $footer Set  footer.
 	 */
-	public function set_footer( string $footer ) {
+	public function set_footer( $footer ) {
 		$this->footer = $footer;
 	}
 	/**
@@ -409,7 +434,7 @@ class Dailybrief {
 	 *
 	 * @param string $header Set  header.
 	 */
-	public function set_header( string $header ) {
+	public function set_header( $header ) {
 		$this->header = $header;
 	}
 	/**
@@ -433,7 +458,7 @@ class Dailybrief {
 	 *
 	 * @param string $toc_header Set table of contents header.
 	 */
-	public function set_toc_header( string $toc_header ) {
+	public function set_toc_header( $toc_header ) {
 		$this->toc_header = $toc_header;
 	}
 	/**
@@ -476,7 +501,7 @@ class Dailybrief {
 	 *
 	 * @param string $date_suffix Set suffix.
 	 */
-	public function set_date_suffix( string $date_suffix ) {
+	public function set_date_suffix( $date_suffix ) {
 		$this->date_suffix = $date_suffix;
 	}
 
@@ -494,7 +519,7 @@ class Dailybrief {
 	 *
 	 * @param string $temp_featured_image_url Placeholder for temp URL.
 	 */
-	public function set_temp_featured_image_url( string $temp_featured_image_url ) {
+	public function set_temp_featured_image_url( $temp_featured_image_url ) {
 		$this->temp_featured_image_url = $temp_featured_image_url;
 	}
 
@@ -512,7 +537,7 @@ class Dailybrief {
 	 *
 	 * @param int $post_id_created WP Post ID created.
 	 */
-	public function set_post_id_created( int $post_id_created ) {
+	public function set_post_id_created( $post_id_created ) {
 		$this->post_id_created = $post_id_created;
 	}
 
@@ -530,7 +555,7 @@ class Dailybrief {
 	 *
 	 * @param array $options Options array.
 	 */
-	public function set_options( array $options ) {
+	public function set_options( $options ) {
 		$this->options = $options;
 	}
 
@@ -548,7 +573,7 @@ class Dailybrief {
 	 *
 	 * @param int $debug Shall we debug.
 	 */
-	public function set_debug( int $debug ) {
+	public function set_debug( $debug ) {
 		$this->debug = $debug;
 	}
 
@@ -566,7 +591,7 @@ class Dailybrief {
 	 *
 	 * @param int $include_toc Table of contents.
 	 */
-	public function set_include_toc( int $include_toc ) {
+	public function set_include_toc( $include_toc ) {
 		$this->include_toc = $include_toc;
 	}
 
@@ -584,7 +609,7 @@ class Dailybrief {
 	 *
 	 * @param int $include_toc_local_hrefs Ahrefs in TOC.
 	 */
-	public function set_include_toc_local_hrefs( int $include_toc_local_hrefs ) {
+	public function set_include_toc_local_hrefs( $include_toc_local_hrefs ) {
 		$this->include_toc_local_hrefs = $include_toc_local_hrefs;
 	}
 
@@ -602,7 +627,7 @@ class Dailybrief {
 	 *
 	 * @param string $url_suffix Add stuff to outbound URLS.
 	 */
-	public function set_url_suffix( string $url_suffix ) {
+	public function set_url_suffix( $url_suffix ) {
 		$this->url_suffix = $url_suffix;
 	}
 
@@ -620,7 +645,7 @@ class Dailybrief {
 	 *
 	 * @param int $excerpt_words How many words to use.
 	 */
-	public function set_excerpt_words( int $excerpt_words ) {
+	public function set_excerpt_words( $excerpt_words ) {
 		$this->excerpt_words = $excerpt_words;
 	}
 
@@ -638,7 +663,7 @@ class Dailybrief {
 	 *
 	 * @param int $post_title WP Post Title.
 	 */
-	public function set_post_title( int $post_title ) {
+	public function set_post_title( $post_title ) {
 		$this->post_title = $post_title;
 	}
 
@@ -656,7 +681,7 @@ class Dailybrief {
 	 *
 	 * @param string $author_id Author ID.
 	 */
-	public function set_author_id( string $author_id ) {
+	public function set_author_id( $author_id ) {
 		$this->author_id = $author_id;
 	}
 
@@ -674,7 +699,7 @@ class Dailybrief {
 	 *
 	 * @param int $post_category WP Post category.
 	 */
-	public function set_post_category( int $post_category ) {
+	public function set_post_category( $post_category ) {
 		$this->post_category = $post_category;
 	}
 
@@ -692,25 +717,25 @@ class Dailybrief {
 	 *
 	 * @param int $post_tags What Wp Post tags to set.
 	 */
-	public function set_post_tags( int $post_tags ) {
+	public function set_post_tags( $post_tags ) {
 		$this->post_tags = $post_tags;
 	}
 
 	/**
 	 * Getter.
 	 *
-	 * @return array
+	 * @return string
 	 */
 	public function get_always_skip_category() {
-		return array_merge( $this->always_skip_category, $this->post_category );
+		return $this->always_skip_category;
 	}
 
 	/**
 	 * Setter.
 	 *
-	 * @param array $always_skip_category Don't include posts from these categories.
+	 * @param string $always_skip_category Don't include posts from these categories.
 	 */
-	public function set_always_skip_category( array $always_skip_category ) {
+	public function set_always_skip_category( $always_skip_category ) {
 		$this->always_skip_category = $always_skip_category;
 	}
 
@@ -728,7 +753,7 @@ class Dailybrief {
 	 *
 	 * @param int $always_skip_tags Don't include posts from these tags.
 	 */
-	public function set_always_skip_tags( int $always_skip_tags ) {
+	public function set_always_skip_tags( $always_skip_tags ) {
 		$this->always_skip_tags = $always_skip_tags;
 	}
 
@@ -746,7 +771,7 @@ class Dailybrief {
 	 *
 	 * @param string $slug Base slug to use.
 	 */
-	public function set_slug( string $slug ) {
+	public function set_slug( $slug ) {
 		$this->slug = $slug;
 	}
 
@@ -764,7 +789,7 @@ class Dailybrief {
 	 *
 	 * @param string $comment_status Open or closed for comments.
 	 */
-	public function set_comment_status( string $comment_status ) {
+	public function set_comment_status( $comment_status ) {
 		$this->comment_status = $comment_status;
 	}
 
@@ -782,7 +807,7 @@ class Dailybrief {
 	 *
 	 * @param string $ping_status Open or Closed for pings.
 	 */
-	public function set_ping_status( string $ping_status ) {
+	public function set_ping_status( $ping_status ) {
 		$this->ping_status = $ping_status;
 	}
 
@@ -800,7 +825,7 @@ class Dailybrief {
 	 *
 	 * @param string $post_status Draft or Publish.
 	 */
-	public function set_post_status( string $post_status ) {
+	public function set_post_status( $post_status ) {
 		$this->post_status = $post_status;
 	}
 
@@ -818,7 +843,7 @@ class Dailybrief {
 	 *
 	 * @param string $post_type Always post for now.
 	 */
-	public function set_post_type( string $post_type ) {
+	public function set_post_type( $post_type ) {
 		$this->post_type = $post_type;
 	}
 
@@ -836,7 +861,7 @@ class Dailybrief {
 	 *
 	 * @param string $article_delimiter Stuff between articles in briefs.
 	 */
-	public function set_article_delimiter( string $article_delimiter ) {
+	public function set_article_delimiter( $article_delimiter ) {
 		$this->article_delimiter = $article_delimiter;
 	}
 
@@ -854,7 +879,7 @@ class Dailybrief {
 	 *
 	 * @param string $article_continue Read more.
 	 */
-	public function set_article_continue( string $article_continue ) {
+	public function set_article_continue( $article_continue ) {
 		$this->article_continue = $article_continue;
 	}
 
@@ -872,7 +897,7 @@ class Dailybrief {
 	 *
 	 * @param string $article_stats_txt Intro to article stats.
 	 */
-	public function set_article_stats_txt( string $article_stats_txt ) {
+	public function set_article_stats_txt( $article_stats_txt ) {
 		$this->article_stats_txt = $article_stats_txt;
 	}
 
@@ -890,7 +915,7 @@ class Dailybrief {
 	 *
 	 * @param string $article_stats_cats_txt Intro to category stats.
 	 */
-	public function set_article_stats_cats_txt( string $article_stats_cats_txt ) {
+	public function set_article_stats_cats_txt( $article_stats_cats_txt ) {
 		$this->article_stats_cats_txt = $article_stats_cats_txt;
 	}
 
@@ -908,7 +933,7 @@ class Dailybrief {
 	 *
 	 * @param string $article_stats_tags_txt Intro to tags stats.
 	 */
-	public function set_article_stats_tags_txt( string $article_stats_tags_txt ) {
+	public function set_article_stats_tags_txt( $article_stats_tags_txt ) {
 		$this->article_stats_tags_txt = $article_stats_tags_txt;
 	}
 
@@ -926,7 +951,7 @@ class Dailybrief {
 	 *
 	 * @param string $featured_image_url Featured Image URL to use.
 	 */
-	public function set_featured_image_url( string $featured_image_url ) {
+	public function set_featured_image_url( $featured_image_url ) {
 		$this->featured_image_url = $featured_image_url;
 	}
 
@@ -944,7 +969,7 @@ class Dailybrief {
 	 *
 	 * @param string $content_buffer Buffer to compile WP Post content in.
 	 */
-	public function set_content_buffer( string $content_buffer ) {
+	public function set_content_buffer( $content_buffer ) {
 		$this->content_buffer = $content_buffer;
 	}
 
@@ -966,12 +991,15 @@ class Dailybrief {
 			// Generate post.
 			$dailybrief = $dc->create(
 				array(
-					'preview' => false,
-					'period'  => $options['period'],
-					'start'   => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
-					'end'     => date( 'Y-m-d', strtotime( $options['end_date'] ) ),
-					'post'    => true,
-					'publish' => $options['cron_publish'],
+					'preview'         => false,
+					'period'          => $options['period'],
+					'days'            => date( 'Y-m-d', strtotime( $options['start_date'] ) ),
+					'start'           => date( 'Y-m-d H:i:s', strtotime( $options['start_date'] ) ),
+					'end'             => date( 'Y-m-d H:i:s', strtotime( $options['end_date'] ) ),
+					'use-excerpts'    => $options['use_excerpts'],
+					'skip-categories' => $options['skip_categories'],
+					'post'            => true,
+					'publish'         => $options['cron_publish'],
 				)
 			);
 		}
@@ -1044,6 +1072,8 @@ class Dailybrief {
 		$this->focus                   = $this->get_option_default( 'focus', '-1' );
 		$this->cron_publish            = $this->get_option_default( 'cron_publish', '1' );
 		$this->cron_pause              = $this->get_option_default( 'cron_pause', '0' );
+		$this->use_excerpts            = $this->get_option_default( 'use_excerpts', '0' );
+		$this->skip_categories         = $this->get_option_default( 'skip_categories', '-1' );
 
 	}
 
@@ -1398,33 +1428,34 @@ class Dailybrief {
 		$period = $this->parse_arguments( $arguments, 'period', 'day' );
 
 		if ( 'day' === $period || empty( $period ) ) {
-			$days        = $this->parse_arguments( $arguments, 'days', '-1 day' );
-			$today       = strtotime( $days );
-			$today       = date( 'Y-m-d', $today );
-			$before_date = $today;
-			$after_date  = $today;
+			$days         = $this->parse_arguments( $arguments, 'days', '-1 day' );
+			$today        = strtotime( $days );
+			$begin_period = strtotime( date( 'Y-m-d 00:00:00', $today ) );
+			$end_period   = strtotime( date( 'Y-m-d 23:59:59', $today ) );
+			$before_date  = date( 'Y-m-d H:i:s', $end_period );
+			$after_date   = date( 'Y-m-d H:i:s', $begin_period );
 		} elseif ( 'range' === $period ) {
-			$startday     = $this->parse_arguments( $arguments, 'start', '-1 day' );
-			$endday       = $this->parse_arguments( $arguments, 'end', '-1 day' );
+			$startday     = $this->parse_arguments( $arguments, 'start', '-1 day 00:00:00' );
+			$endday       = $this->parse_arguments( $arguments, 'end', '-1 day 23:59:59' );
 			$begin_period = strtotime( $startday );
 			$end_period   = strtotime( $endday );
-			$before_date  = date( 'Y-m-d', $end_period );
-			$after_date   = date( 'Y-m-d', $begin_period );
+			$before_date  = date( 'Y-m-d H:i:s', $end_period );
+			$after_date   = date( 'Y-m-d H:i:s', $begin_period );
 		}
-		if ( $after_date == $before_date ) {
-			$today_suffix = '' . $after_date;
+		if ( substr( $after_date, 0, 10 ) === substr( $before_date, 0, 10 ) ) {
+			$today_suffix = '' . substr( $after_date, 0, 10 );
 		} else {
-			$today_suffix = '' . $after_date . '--' . $before_date;
+			$today_suffix = '' . substr( $after_date, 0, 10 ) . '--' . substr( $before_date, 0, 10 );
 		}
 
 		$this->set_date_suffix( $today_suffix ); // used for post-title & slug suffix, contains the date it relates to.
 
 		// Exclude some category ids for whatever reason and merge with the always_skip_category option.
-		$skip_categories = $this->parse_arguments( $arguments, 'skip-categories', '' );
+		$skip_categories = $this->parse_arguments( $arguments, 'skip-categories', '-1' );
 		if ( ! empty( $skip_categories ) ) {
-			$exclude_categories = array_merge( explode( ',', $skip_categories ), $this->get_always_skip_category() );
+			$exclude_categories = explode( ',', $skip_categories . ',' . $this->get_always_skip_category() );
 		} else {
-			$exclude_categories = array();
+			$exclude_categories = explode( ',', $this->get_always_skip_category() );
 		}
 		// Exclude some tag ids for whatever reason and merge with the always_skip_tags option.
 		$skip_tags = $this->parse_arguments( $arguments, 'skip-tags', '' );
@@ -1446,11 +1477,11 @@ class Dailybrief {
 		if ( $post ) {
 			// Ok prepare the post.
 			$buffer = true;
-			$this->wpclilog( '* Preparing post for ' . $today );
+			$this->wpclilog( '* Preparing post for ' . $today_suffix );
 		}
 
 		// Use excerpts or not.
-		$use_excerpts = $this->parse_arguments( $arguments, 'use-excerpts', true );
+		$use_excerpts = $this->parse_arguments( $arguments, 'use-excerpts', '0' );
 		// Do you wish to focus on a particular category?
 		$focus = $this->parse_arguments( $arguments, 'focus', '' );
 		if ( ! empty( $focus ) ) {
@@ -1471,25 +1502,74 @@ class Dailybrief {
 		$toc_items          = '';
 		$schema             = ( is_ssl() ? 'https' : 'http' );
 
-		do {
-			$query = new WP_Query(
-				array(
-					'posts_per_page' => 30,
-					'paged'          => $page,
-					'post_status'    => $status,
-					'post_type'      => $types,
-					'date_query'     => array(
-						array(
-							'before'    => $before_date,
-							'after'     => $after_date,
-							'inclusive' => true,
-						),
-					),
-					'cat'            => array_merge( $exclude_categories, $focus ),
-					'tag__not_in'    => $exclude_tags,
-					'post__not_in'   => $exclude_posts,
-				)
+		if ( 'range' === $period ) {
+			$date_query_start = array(
+				'year'    => date( 'Y', $begin_period ),
+				'month'   => date( 'm', $begin_period ),
+				'day'     => date( 'd', $begin_period ),
+				'hour'    => date( 'H', $begin_period ),
+				'minute'  => date( 'i', $begin_period ),
+				'second'  => date( 's', $begin_period ),
+				'compare' => '>=',
+				'column'  => 'post_date',
 			);
+			$date_query_end   = array(
+				'year'    => date( 'Y', $end_period ),
+				'month'   => date( 'm', $end_period ),
+				'day'     => date( 'd', $end_period ),
+				'hour'    => date( 'H', $end_period ),
+				'minute'  => date( 'i', $end_period ),
+				'second'  => date( 's', $end_period ),
+				'compare' => '<=',
+				'column'  => 'post_date',
+			);
+		} elseif ( 'day' === $period ) {
+			$date_query_start = array(
+				'year'    => date( 'Y', $begin_period ),
+				'month'   => date( 'm', $begin_period ),
+				'day'     => date( 'd', $begin_period ),
+				'hour'    => '00',
+				'minute'  => '00',
+				'second'  => '00',
+				'compare' => '>=',
+				'column'  => 'post_date',
+			);
+			$date_query_end   = array(
+				'year'    => date( 'Y', $end_period ),
+				'month'   => date( 'm', $end_period ),
+				'day'     => date( 'd', $end_period ),
+				'hour'    => '23',
+				'minute'  => '59',
+				'second'  => '59',
+				'compare' => '<=',
+				'column'  => 'post_date',
+			);
+		}
+		// https://generatewp.com/wp_date_query/ .
+		$date_query = array(
+			'relation' => 'AND',
+			$date_query_start,
+			$date_query_end,
+		);
+		// Sanity check categories selected.
+		if ( ! is_array( $exclude_categories ) && '' !== $exclude_categories ) {
+			$exclude_categories = explode( ',', $exclude_categories );
+		}
+		$cats = array_merge( $exclude_categories, array( -$this->get_post_category() ), $focus );
+
+		do {
+			$query_array = array(
+				'posts_per_page' => 30,
+				'paged'          => $page,
+				'post_status'    => $status,
+				'post_type'      => $types,
+				'date_query'     => $date_query,
+				'cat'            => $cats,
+				'tag__not_in'    => $exclude_tags,
+				'post__not_in'   => $exclude_posts,
+			);
+
+			$query = new WP_Query( $query_array );
 
 			while ( $query->have_posts() ) {
 				$query->the_post();
@@ -1497,7 +1577,7 @@ class Dailybrief {
 				$content = $query->post->post_content;
 				$more    = '... <a href="' . get_permalink( $id ) . $this->get_url_suffix() . '" target="dailybrief">' . $this->get_article_continue() . '</a>';
 
-				if ( ! $use_excerpts || ! has_excerpt() ) {
+				if ( false === $use_excerpts || '0' === $use_excerpts || ! has_excerpt() ) {
 					$excerpt = wp_trim_words( wp_strip_all_tags( $content, true ), $this->get_excerpt_words(), $more );
 				} else {
 					$excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt( $query ), true ), $this->get_excerpt_words(), $more );
@@ -1628,7 +1708,26 @@ class Dailybrief {
 
 		// Output Footer.
 		if ( ! empty( $this->options['footer'] ) ) {
-			$this->output( $this->options['footer'], $buffer );
+			// Prepare macro subst / stats.
+			$footer = $this->options['footer'];
+
+			if ( false !== stripos( $footer, '{article_count}' ) ) {
+				$footer = str_replace( '{article_count}', $article_count, $footer );
+			}
+			if ( is_array( $article_categories ) && count( $article_categories ) > 0 ) {
+				$article_categories = array_unique( $article_categories );
+				if ( false !== stripos( $footer, '{article_categories}' ) ) {
+					$footer = str_replace( '{article_categories}', implode( ', ', $article_categories ), $footer );
+				}
+			}
+
+			if ( is_array( $article_tags ) && count( $article_tags ) > 0 ) {
+				$article_tags = array_unique( $article_tags );
+				if ( false !== stripos( $footer, '{article_tags}' ) ) {
+					$footer = str_replace( '{article_tags}', implode( ', ', $article_tags ), $footer );
+				}
+			}
+			$this->output( $footer, $buffer );
 		}
 		$this->wpclilog( '--- END POST ----' );
 
@@ -1676,7 +1775,7 @@ class Dailybrief {
 						try {
 							$test = new Steempress_sp_Admin( 'steempress_sp', '2.3' );
 							$test->Steempress_sp_publish( $this->post_id_created );
-							// Alt Steempress_sp_Admin::Steempress_sp_publish($this->post_id_created);.
+							// Alt Steempress_sp_Admin::Steempress_sp_publish( $this->post_id_created);.
 							$steempress_sp_permlink = get_post_meta( $this->post_id_created, 'steempress_sp_permlink' );
 							$steempress_sp_author   = get_post_meta( $this->post_id_created, 'steempress_sp_author' );
 							if ( ! empty( $steempress_sp_permlink ) && ! empty( $steempress_sp_author ) ) {

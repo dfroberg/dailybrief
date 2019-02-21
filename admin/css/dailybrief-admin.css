@@ -2,35 +2,48 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+@import url('https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css');
+
+.settings_page_dailybrief .settings-form {
+	line-height: 1.7;
+}
 .settings-header {
 	font-size: 120%;
 	line-height: 150%;
 	margin: 10px auto;
 }
 
-.dailybrief-preview-post {
-	font-family: 'Source Serif Pro', serif;
+#dailybrief-preview-post {
+	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 120%;
 	line-height: 150%;
 	padding: 1rem 1rem 2rem 1rem;
 	clear: left;
 	max-width: 40rem;
 	margin: 10px 10px 10px 10px;
-}
-
-.settings_page_dailybrief .dailybrief-preview-post {
-	max-width: 800px;
-	font-size: 120%;
 	background: #fefefe;
-	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: normal;
-	line-height: 1.6;
 	color: #333333;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.settings_page_dailybrief img {
+#dailybrief-preview-post #user-block {
+	overflow: hidden;
+	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 120%;
+	font-weight: 800;
+	line-height: 1;
+	text-align: left;
+	vertical-align: center;
+}
+
+#dailybrief-preview-post #steem-body > p {
+	font-size: 15pt !important;
+	line-height: 150%;
+	margin: 0 0 1.5rem 0;
+}
+.dailybrief-preview-post img {
 	max-width: 90%;
 	display: inline-block;
 	vertical-align: middle;
@@ -43,12 +56,52 @@
 	font-weight: 800;
 	line-height: 1.1;
 }
+.dailybrief-preview-post > h2 {
+	overflow: hidden;
+	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 200%;
+	font-weight: 800;
+	line-height: 1.1;
+}
 
-h1, h2, h3, h4, h5, h6 {
+.dailybrief-preview-post > h1, h2, h3, h4, h5, h6 {
 	line-height: 1.2 !important;
 }
 
-.theme-dark {
+.settings_page_dailybrief .dailybrief-preview-post .theme-dark {
 	background-color: #1C252B;
 	color: #fcfcfc;
 }
+.dailybrief {
+	width: 85%;
+}
+.dailybrief .settings_page_dailybrief .settings-form table {
+	vert-align: top;
+}
+.dailybrief .dailybrief-sidebar {
+	width: 15%;
+	float: right;
+	background: #efefef;
+	padding: 10px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+}
+.dailybrief .dailybrief-sidebar .major-publishing-actions {
+	padding: 15px;
+	clear: both;
+	border-top: 1px solid #e1e1e1;
+	background: #f7f7f7;
+}
+.dailybrief .dailybrief-sidebar .major-publishing-actions i {
+	opacity: 0.4;
+	margin: 0 2px 0 0;
+}
+
+.dailybrief td, th {
+	display: table-cell;
+	vertical-align: top;
+}
+
+.dailybrief input[type="radio"]:checked+label { font-weight: bold; }

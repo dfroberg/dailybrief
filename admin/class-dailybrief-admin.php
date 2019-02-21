@@ -74,6 +74,7 @@ class Dailybrief_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/dailybrief-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, 'https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -178,6 +179,7 @@ class Dailybrief_Admin {
 		$valid['focus']                   = ( isset( $input['focus'] ) && ! empty( $input['focus'] ) ) ? ( $input['focus'] ) : $options['focus'];
 		$valid['cron_publish']            = ( isset( $input['cron_publish'] ) && is_numeric( $input['cron_publish'] ) ) ? ( $input['cron_publish'] ) : $options['cron_publish'];
 		$valid['cron_pause']              = ( isset( $input['cron_pause'] ) && is_numeric( $input['cron_pause'] ) ) ? ( $input['cron_pause'] ) : $options['cron_pause'];
+		$valid['use_excerpts']            = ( isset( $input['use_excerpts'] ) && is_numeric( $input['use_excerpts'] ) ) ? ( $input['use_excerpts'] ) : $options['use_excerpts'];
 
 		return $valid;
 	}

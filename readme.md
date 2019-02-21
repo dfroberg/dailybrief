@@ -83,7 +83,18 @@ No, if it detects that there is nothing to summarize it will skip post creation.
 
 ## Changelog ##
 
+### 1.0.24 &mdash; 21 of February, 2019 ###
+Fix: Rework Admin GUI & Try getting the timezone to display properly.
+Add: Make sidebar display debug information of Debug option is on.
+
+### 1.0.23 &mdash; 20 of February, 2019 ###
+* Fix: Date selection for periods and single day to include hours
+* Fix: Reorder Period selection fields plus adding more verbose debug information.
+* Fix: Category exclusions
+* Fix: Add new options to Internal CRON job.
+
 ### 1.0.22 &mdash; 19 of February, 2019 ###
+* Fix: Admin GUI layout and position of options.
 * Fix: WP Cron activator / de-activator.
 * New: Make cron_pause an option, pause post creation, this will skip post creation entirely.
 
