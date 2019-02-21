@@ -20,16 +20,22 @@ class InvokationTest extends WP_UnitTestCase {
 	/**
 	 * Load plugin.
 	 */
-	public function test_instantiate_dailybrief() {
+	public function test_wpinc() {
 		// Test if WPINC is defined.
 		// If this file is called directly, abort.
 		if ( ! defined( 'WPINC' ) ) {
 			$this->assertTrue( true ); // Bail!
 		}
+		$this->assertTrue( true );
+	}
+	/**
+	 * Load plugin.
+	 */
+	public function test_instantiate_dailybrief() {
 		// Include class.
 		require_once '/builds/dfroberg/dailybrief/dailybrief.php';
 
-		if ( ! defined( DAILYBRIEF_VERSION ) ) {
+		if ( ! defined( Dailybrief::CRON_HOOK ) ) {
 			$this->assertTrue( false );
 		}
 		// Pass test.
