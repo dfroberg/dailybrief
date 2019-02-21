@@ -1702,7 +1702,26 @@ class Dailybrief {
 
 		// Output Footer.
 		if ( ! empty( $this->options['footer'] ) ) {
-			$this->output( $this->options['footer'], $buffer );
+			// Prepare macro subst / stats.
+			$footer = $this->options['footer'];
+
+			if ( false !== stripos( $footer, '{article_count}' ) ) {
+				$footer = str_replace( '{article_count}', $article_count, $footer );
+			}
+			if ( is_array( $article_categories ) && count( $article_categories ) > 0 ) {
+				$article_categories = array_unique( $article_categories );
+				if ( false !== stripos( $footer, '{article_categories}' ) ) {
+					$footer = str_replace( '{article_categories}', implode( ', ', $article_categories ), $footer );
+				}
+			}
+
+			if ( is_array( $article_tags ) && count( $article_tags ) > 0 ) {
+				$article_tags = array_unique( $article_tags );
+				if ( false !== stripos( $footer, '{article_tags}' ) ) {
+					$footer = str_replace( '{article_tags}', implode( ', ', $article_tags ), $footer );
+				}
+			}
+			$this->output( $footer, $buffer );
 		}
 		$this->wpclilog( '--- END POST ----' );
 
