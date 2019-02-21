@@ -13,7 +13,7 @@
 	margin: 10px auto;
 }
 
-.dailybrief .dailybrief-settings #dailybrief-preview-post {
+#dailybrief-preview-post {
 	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 120%;
 	line-height: 150%;
@@ -28,7 +28,7 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.dailybrief .settings_page_dailybrief #dailybrief-preview-post #user-block {
+#dailybrief-preview-post #user-block {
 	overflow: hidden;
 	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 120%;
@@ -38,25 +38,25 @@
 	vertical-align: center;
 }
 
-.dailybrief .settings_page_dailybrief #dailybrief-preview-post #steem-body > p {
+#dailybrief-preview-post #steem-body > p {
 	font-size: 15pt !important;
 	line-height: 150%;
 	margin: 0 0 1.5rem 0;
 }
-.dailybrief .settings_page_dailybrief .dailybrief-preview-post img {
+.dailybrief-preview-post img {
 	max-width: 90%;
 	display: inline-block;
 	vertical-align: middle;
 }
 
-.dailybrief .settings_page_dailybrief .dailybrief-preview-post > h1 {
+.dailybrief-preview-post > h1 {
 	overflow: hidden;
 	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 240%;
 	font-weight: 800;
 	line-height: 1.1;
 }
-.dailybrief .settings_page_dailybrief .dailybrief-preview-post > h2 {
+.dailybrief-preview-post > h2 {
 	overflow: hidden;
 	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 200%;
@@ -64,7 +64,7 @@
 	line-height: 1.1;
 }
 
-.dailybrief .settings_page_dailybrief .dailybrief-preview-post > h1, h2, h3, h4, h5, h6 {
+.dailybrief-preview-post > h1, h2, h3, h4, h5, h6 {
 	line-height: 1.2 !important;
 }
 
