@@ -47,7 +47,7 @@ codestyle:
     name: "${CI_BUILD_NAME}_${CI_BUILD_REF_NAME}_report"
     untracked: false
     paths:
-      - coverage-report/
+      - build/coverage-report/
   script:
     - composer global require "phpunit/phpunit=6.*" --no-progress
     - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
