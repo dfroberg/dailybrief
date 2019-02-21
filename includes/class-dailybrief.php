@@ -1073,6 +1073,7 @@ class Dailybrief {
 		$this->cron_publish            = $this->get_option_default( 'cron_publish', '1' );
 		$this->cron_pause              = $this->get_option_default( 'cron_pause', '0' );
 		$this->use_excerpts            = $this->get_option_default( 'use_excerpts', '0' );
+		$this->skip_categories         = $this->get_option_default( 'skip_categories', '-1' );
 
 	}
 
