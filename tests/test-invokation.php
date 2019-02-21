@@ -99,6 +99,8 @@ class InvokationTest extends WP_UnitTestCase {
 		require_once '/builds/dfroberg/dailybrief/dailybrief.php';
 		$dc = new Dailybrief();
 		$dc->update_globals();
+		$dc->set_post_category( 1 );
+		$dc->set_author_id( 1 );
 		$options = $dc->get_options();
 		$dc->create(
 			array(
