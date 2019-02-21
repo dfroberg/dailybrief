@@ -113,22 +113,26 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						<tr><td colspan="2"><h3>CRON Control</h3></td></tr>
 						<tr><td>CRON Publish</td><td><input type = "radio"
 									value = "1"
-									name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( '1' === $options['cron_publish'] ? 'checked' : '' ); ?> /><label>On (Default)</label> <input type = "radio"
+										id = "cron_publish_on"
+									name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( '1' === $options['cron_publish'] ? 'checked' : '' ); ?> /><label for="cron_publish_on">On (Default)</label> <input type = "radio"
 									value = "0"
-									name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( ( '0' === $options['cron_publish'] || empty( $options['cron_publish'] ) ) ? 'checked' : '' ); ?> /><label>Off</label>
+										id = "cron_publish_off"
+									name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( ( '0' === $options['cron_publish'] || empty( $options['cron_publish'] ) ) ? 'checked' : '' ); ?> /><label for="cron_publish_off">Off</label>
 								<br><em>( If on; create the post but do not publish it )</em> </td>
 						</tr>
 						<tr><td>CRON Pause</td><td><input type = "radio"
 										value = "1"
-										name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( '1' === $options['cron_pause'] ? 'checked' : '' ); ?> /><label>On</label> <input type = "radio"
+										id = "cron_pause_on"
+										name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( '1' === $options['cron_pause'] ? 'checked' : '' ); ?> /><label for="cron_pause_on">On</label> <input type = "radio"
 										value = "0"
-										name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( ( '0' === $options['cron_pause'] || empty( $options['cron_pause'] ) ) ? 'checked' : '' ); ?> /><label>Off (Default)</label>
+										id = "cron_pause_off"
+										name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( ( '0' === $options['cron_pause'] || empty( $options['cron_pause'] ) ) ? 'checked' : '' ); ?> /><label for="cron_pause_off">Off (Default)</label>
 								<br><em>( Will disable post creation by internal CRON )</em> </td>
 						</tr>
 						<tr><td colspan="2"><h3>Who, what & where?</h3></td></tr>
 						<tr>
 							<td>
-								User ID to Post as :
+								<label for="<?php echo $this->plugin_name; ?>-author_id">User ID to Post as :</label>
 							</td>
 							<td>
 								<select id = "<?php echo $this->plugin_name; ?>-author_id"
@@ -139,7 +143,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								Category to Post to :
+								<label for="<?php echo $this->plugin_name; ?>-post_category">Category to Post to :</label>
 							</td>
 							<td>
 								<select id = "<?php echo $this->plugin_name; ?>-post_category"
@@ -150,7 +154,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								Focus on a single Category :
+								<label for="<?php echo $this->plugin_name; ?>-focus">Focus on a single Category :</label>
 							</td>
 							<td>
 								<select id = "<?php echo $this->plugin_name; ?>-focus"
@@ -162,7 +166,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								Post Title :
+								<label for="<?php echo $this->plugin_name; ?>-post_title">Post Title :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -173,7 +177,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								Post Slug :
+								<label for="<?php echo $this->plugin_name; ?>-slug">Post Slug :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -184,7 +188,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								Post Tags :
+								<label for="<?php echo $this->plugin_name; ?>-post_tags">Post Tags :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -196,7 +200,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								Url Suffix :
+								<label for="<?php echo $this->plugin_name; ?>-url_suffix">Url Suffix :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -208,7 +212,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								Excerpt Words :
+								<label for="<?php echo $this->plugin_name; ?>-excerpt_words">Excerpt Words :</label>
 							</td>
 							<td>
 								<input type = "number" class = "regular-text" maxlength = "4"
@@ -225,18 +229,20 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 							<td>
 								<input type = "radio"
 										value = "1"
+										id = "use_excerpts_on"
 										name = "<?php echo $this->plugin_name; ?>[use_excerpts]" <?php echo( '1' === $dc->get_use_excerpts() ? 'checked' : '' ); ?>>
-								<label>On</label>
+								<label for="use_excerpts_on">On</label>
 								<input type = "radio"
 										value = "0"
+										id = "use_excerpts_off"
 										name = "<?php echo $this->plugin_name; ?>[use_excerpts]" <?php echo( ( '0' === $dc->get_use_excerpts() || empty( $dc->get_use_excerpts() ) ) ? 'checked' : '' ); ?>>
-								<label>Off (Default)</label>
+								<label for="use_excerpts_off">Off (Default)</label>
 								<br><em>( Use existing excerpts or generate our own (safest) )</em>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								Article delimiter :
+								<label for="<?php echo $this->plugin_name; ?>-article_delimiter">Article delimiter :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -247,7 +253,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								Article Continue Prompt :
+								<label for="<?php echo $this->plugin_name; ?>-article_continue">Article Continue Prompt :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -264,16 +270,18 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 							<td>
 								<input type = "radio"
 										value = "1"
-										name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( '1' === $options['debug'] ? 'checked' : '' ); ?>> <label>On</label>
+										id = "debug_on"
+										name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( '1' === $options['debug'] ? 'checked' : '' ); ?>> <label for="debug_on">On</label>
 								<input type = "radio"
 										value = "0"
-										name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( ( '0' === $options['debug'] || empty( $options['debug'] ) ) ? 'checked' : '' ); ?>> <label>Off (Default)</label>
+										id = "debug_off"
+										name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( ( '0' === $options['debug'] || empty( $options['debug'] ) ) ? 'checked' : '' ); ?>> <label for="debug_off">Off (Default)</label>
 							</td>
 						</tr>
 						<tr><td colspan="2"><h3>Table of Contents</h3></td></tr>
 						<tr>
 							<td>
-								Table of Contents Header :
+								<label for="<?php echo $this->plugin_name; ?>-toc_header">Table of Contents Header :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -289,12 +297,14 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 							<td>
 								<input type = "radio"
 										value = "1"
+										id = "toc_on"
 										name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( '1' === $dc->get_include_toc() ? 'checked' : '' ); ?>>
-								<label>On (Default)</label>
+								<label for="toc_on">On (Default)</label>
 								<input type = "radio"
 										value = "0"
+										id = "toc_off"
 										name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( ( '0' === $dc->get_include_toc() || empty( $dc->get_include_toc() ) ) ? 'checked' : '' ); ?>>
-								<label>Off</label>
+								<label for="toc_off">Off</label>
 							</td>
 						</tr>
 						<tr>
@@ -304,18 +314,20 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 							<td>
 								<input type = "radio"
 										value = "1"
+										id = "localhrefs_on"
 										name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( '1' === $dc->get_include_toc_local_hrefs() ? 'checked' : '' ); ?>>
-								<label>On (Default)</label>
+								<label for="localhrefs_on">On (Default)</label>
 								<input type = "radio"
 										value = "0"
+										id = "localhrefs_off"
 										name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( ( '0' === $dc->get_include_toc_local_hrefs() || empty( $dc->get_include_toc_local_hrefs() ) ) ? 'checked' : '' ); ?>>
-								<label>Off</label>
+								<label for="localhrefs_off">Off</label>
 							</td>
 						</tr>
 						<tr><td colspan="2"><h3>Statistics</h3><em>These section headers are used if you do not specify any of the replacement tags in the header or footer texts.</em></p></td></tr>
 						<tr>
 							<td>
-								Number of articles in Brief :
+								<label for="<?php echo $this->plugin_name; ?>-article_stats_txt">Number of articles in Brief :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -327,7 +339,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								Categories in Brief :
+								<label for="<?php echo $this->plugin_name; ?>-article_stats_cats_txt">Categories in Brief :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -339,7 +351,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								Tags in Brief :
+								<label for="<?php echo $this->plugin_name; ?>-article_stats_tags_txt">Tags in Brief :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -352,7 +364,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						<tr><td colspan="2"><h3>Header & Footer</h3></td></tr>
 						<tr>
 							<td colspan="2">
-								<strong>Header text :</strong><br>
+								<label for="headereditor"><strong>Header text :</strong></label><br>
 								<?php
 								$settings = array(
 									'textarea_rows' => 5,
@@ -365,7 +377,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td colspan="2">
-								<strong>Footer text :</strong><br>
+								<label for="footereditor"><strong>Footer text :</strong><br></label>
 								<?php
 								$settings = array(
 									'textarea_rows' => 5,
@@ -383,7 +395,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 								and <?php echo date( 'Y-m-d H:i:s', strtotime( $options['start_date'] ) ); ?>.</td></tr>
 						<tr>
 							<td>
-								Period :
+								<label for="<?php echo $this->plugin_name; ?>-period">Period :</label>
 							</td>
 							<td>
 								<select id = "<?php echo $this->plugin_name; ?>-period"
@@ -395,7 +407,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								Start Date :
+								<label for="<?php echo $this->plugin_name; ?>-start_date">Start Date :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -407,7 +419,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								End Date :
+								<label for="<?php echo $this->plugin_name; ?>-end_date">End Date :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
