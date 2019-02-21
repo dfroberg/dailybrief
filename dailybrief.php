@@ -44,6 +44,8 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 register_activation_hook( __FILE__, array( Dailybrief::class, 'activator' ) );
 register_deactivation_hook( __FILE__, array( Dailybrief::class, 'deactivator' ) );
 
+define( 'DAILYBRIEF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+
 /**
  * Helper class for getting correct Timezone in WordPress.
  */

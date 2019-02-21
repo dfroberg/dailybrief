@@ -22,7 +22,7 @@ class InvokationTest extends WP_UnitTestCase {
 	 */
 	public function test_instantiate_dailybrief() {
 		// Include class.
-		// require '/' . dirname( plugin_basename( __FILE__ ) ) . '/../dailybrief.php'; // .
+		require_once '/tmp/wordpress/wp-content/plugins/dailybrief/dailybrief.php'; // .
 		if ( ! defined( DAILYBRIEF_VERSION ) ) {
 			$this->assertTrue( false );
 		}
