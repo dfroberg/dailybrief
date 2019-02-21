@@ -15,40 +15,6 @@ class InvokationTest extends WP_UnitTestCase {
 	 */
 	function setUp() {
 		parent::setUp();
-		// Let's create a category.
-		$this->cat1 = $this->factory->term->create(
-			array(
-				'taxonomy' => 'category',
-			)
-		);
-		// Let's create some featured posts in a category.
-		$this->factory->post->create_many(
-			2,
-			array(
-				'post_category' => array( $this->cat1 ),
-				'tax_input'     => array(
-					'taxonomy'   => 'term',
-					'prominence' => 'taxonomy-featured',
-				),
-			)
-		);
-		$this->factory->post->create_many(
-			2,
-			array(
-				'post_category' => array( $this->cat1 ),
-				'tax_input'     => array(
-					'taxonomy'   => 'term',
-					'prominence' => 'taxonomy-secondary-featured',
-				),
-			)
-		);
-		// And some non-featured posts.
-		$this->cat1_no_prom = $this->factory->post->create_many(
-			2,
-			array(
-				'post_category' => array( $this->cat1 ),
-			)
-		);
 	}
 
 	/**
@@ -59,6 +25,25 @@ class InvokationTest extends WP_UnitTestCase {
 		$this->assertTrue( true );
 	}
 
+	/**
+	 * Create posts.
+	 */
+	function test_wp_count_posts_insert_invalidation() {
+		$post_ids             = $this->factory->post->create_many( 10 );
+		$initial_counts       = wp_count_posts();
+		$key                  = array_rand( $post_ids );
+		$_post                = get_post( $post_ids[ $key ], ARRAY_A );
+		$_post['post_status'] = 'draft';
+		wp_insert_post( $_post );
+		$post = get_post( $post_ids[ $key ] );
+		$this->assertEquals( 'draft', $post->post_status );
+		$this->assertNotEquals( 'publish', $post->post_status );
+
+		$after_draft_counts = wp_count_posts();
+		$this->assertEquals( 1, $after_draft_counts->draft );
+		$this->assertEquals( 9, $after_draft_counts->publish );
+		$this->assertNotEquals( $initial_counts->publish, $after_draft_counts->publish );
+	}
 	/**
 	 * Load plugin.
 	 */
