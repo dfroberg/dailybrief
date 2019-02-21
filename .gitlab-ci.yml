@@ -117,4 +117,5 @@ dailybrief:
     - bin/generate-markdown-readme
     - rsync -av --exclude-from='deploy-exclude-files.txt' . dailybrief/
     - rm -rf dailybrief/dailybrief # Just to make darn sure
+    - rm -rf dailybrief/build # Just to make darn sure
     - echo 'Deploying!'
