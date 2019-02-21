@@ -1051,7 +1051,7 @@ class Dailybrief {
 		$this->author_id               = $this->get_option_default( 'author_id', '1' );
 		$this->post_category           = $this->get_option_default( 'post_category', '1' ); // 1,2,8
 		$this->post_tags               = $this->get_option_default( 'post_tags', '' ); // life,blog,news.
-		$this->always_skip_category    = $this->get_option_default( 'always_skip_category', array( -$this->post_category ) ); // Always skip the category of Daily Brief Posts.
+		$this->always_skip_category    = $this->get_option_default( 'always_skip_category', -$this->post_category ); // Always skip the category of Daily Brief Posts.
 		$this->always_skip_tags        = $this->get_option_default( 'always_skip_tag', '0' );
 		$this->slug                    = $this->get_option_default( 'slug', 'the-daily-brief' ) . '-' . $this->date_suffix;
 		$this->comment_status          = $this->get_option_default( 'comment_status', 'open' );
