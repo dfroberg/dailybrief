@@ -17,4 +17,16 @@ class InvokationTest extends WP_UnitTestCase {
 		// Replace this with some actual testing code.
 		$this->assertTrue( true );
 	}
+	/**
+	 * Load plugin.
+	 */
+	public function test_instantiate_dailybrief() {
+		// Include class.
+		require '../dailybrief.php';
+		if ( ! defined( DAILYBRIEF_VERSION ) ) {
+			$this->assertTrue( false );
+		}
+		// Pass test.
+		$this->assertTrue( true );
+	}
 }
