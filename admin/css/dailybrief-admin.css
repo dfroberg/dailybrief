@@ -90,3 +90,8 @@
 	opacity: 0.4;
 	margin: 0 2px 0 0;
 }
+
+.dailybrief td, th {
+	display: table-cell;
+	vertical-align: top;
+}
