@@ -78,6 +78,16 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 					class = "nav-tab <?php echo 'support' === $active_tab ? 'nav-tab-active' : ''; ?>">Support</a>
 		</h2>
 		<?php
+		if ( 'publish' === $active_tab ) {
+			$dc_result = $dc->dailybrief_do_daily_event( true );
+			if ( ! isset( $dc_result['error'] ) ) {
+				echo '<h2>Your Daily Brief is done!</h2>';
+				echo '<h3>Published: ' . $dc_result['post_title'] . '</h3>';
+				echo '<a href = "options-general.php?page=dailybrief&tab=preview">Go back</a>';
+			} else {
+				echo '<h3>An Error occurred during Manual Publish:</h3><pre>' . print_r( $dc_result['error'], true ) . '</pre>';
+			}
+		} // end if manual publish.
 		if ( 'preview' === $active_tab ) {
 			// Generate preview.
 			$sample = $dc->create(
@@ -110,6 +120,11 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 					echo wpautop( $sample['content'] );
 					?>
 				</p>
+				</div>
+				<hr>
+				<div align="center">
+					<a <a href = "options-general.php?page=dailybrief&tab=publish"><button class="dailybrief_preview_generate">Manually Generate Brief Now!</button></a>
+					<p>This will create the Brief immediately with the contents in the preview.</p>
 				</div>
 			</div>
 
@@ -480,6 +495,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		<?php
 		if ( $options['debug'] ) {
 			?>
+			<h4>Debuging Information:</h4>
 			<p>Internal CRON is:
 				<br/><?php echo( wp_get_schedule( 'dailybrief_daily_event' ) ? 'Scheduled to run on ' . get_date_from_gmt( $date->format( 'Y-m-d H:m:s T' ) ) . ' ' . $timezone->getName() : '<strong>Not</strong> scheduled' ); ?>
 			</p>
