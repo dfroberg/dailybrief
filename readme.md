@@ -7,7 +7,7 @@ DailyBrief is a WordPress plugin that provides a post summary of all WordPress p
 **Contributors:** [dfroberg](http://profiles.wordpress.org/dfroberg)  
 **Tags:** [content+generation](http://wordpress.org/plugins/tags/content+generation), [generation](http://wordpress.org/plugins/tags/generation), [steem](http://wordpress.org/plugins/tags/steem), [blockchain](http://wordpress.org/plugins/tags/blockchain), [steemit](http://wordpress.org/plugins/tags/steemit), [briefs](http://wordpress.org/plugins/tags/briefs)  
 **Requires at least:** 4.7  
-**Tested up to:** 5.0.3  
+**Tested up to:** 5.1  
 **Stable tag:** trunk (master)  
 **License:** [GPLv2 or later](http://www.gnu.org/licenses/gpl-2.0.html)  
 **Donation Link:** https://steemit.com/@dfroberg  
@@ -32,25 +32,29 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 
 ## Screenshots ##
 
-### Automatic Preview 1
+### Automatic Preview gives you a pretty good overview on how your post will look on Steem.
 
-![Automatic Preview 1](assets/screenshot-1.png)
+![Automatic Preview gives you a pretty good overview on how your post will look on Steem.](assets/screenshot-1.png)
 
-### Automatic Preview 2
+### Table of Contents.
 
-![Automatic Preview 2](assets/screenshot-2.png)
+![Table of Contents.](assets/screenshot-2.png)
+
+### Footer and Manual Brief Generation button.
+
+![Footer and Manual Brief Generation button.](assets/screenshot-3.png)
 
 ### Options 1
 
-![Options 1](assets/screenshot-3.png)
+![Options 1](assets/screenshot-4.png)
 
 ### Options 2
 
-![Options 2](assets/screenshot-4.png)
+![Options 2](assets/screenshot-5.png)
 
 ### Options 3
 
-![Options 3](assets/screenshot-5.png)
+![Options 3](assets/screenshot-6.png)
 
 ## Languages ##
 
@@ -82,6 +86,12 @@ No, if it detects that there is nothing to summarize it will skip post creation.
 
 
 ## Changelog ##
+
+### 1.0.25 &mdash; 22 of February, 2019 ###
+Fix: Ensuring compatibility with Windows 5.1
+Fix: More preview window style fixes.
+New: Added generate manually now button to Preview window for those that really want to do things manually.
+Fix: An logical error in CRON pause resolved.
 
 ### 1.0.24 &mdash; 21 of February, 2019 ###
 Fix: Rework Admin GUI & Try getting the timezone to display properly.

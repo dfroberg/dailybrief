@@ -980,14 +980,18 @@ class Dailybrief {
 
 	/**
 	 * Do daily CRON job.
+	 *
+	 * @param bool $manual Enable override of pause.
+	 *
+	 * @return array
 	 */
-	function dailybrief_do_daily_event() {
+	function dailybrief_do_daily_event( $manual = false ) {
 		// do brief every day!
 		$dc = new Dailybrief();
 		$dc->update_globals();
 		$options = $dc->get_options();
 		// Dead end if CRON is paused.
-		if ( '1' === $options['cron_pause'] ) {
+		if ( true === $manual || '0' === $options['cron_pause'] ) {
 			// Generate post.
 			$dailybrief = $dc->create(
 				array(
@@ -1002,6 +1006,9 @@ class Dailybrief {
 					'publish'         => $options['cron_publish'],
 				)
 			);
+			return $dailybrief;
+		} else {
+			return array( 'error' => 'CRON Publishing is paused.' );
 		}
 	}
 
@@ -1571,6 +1578,18 @@ class Dailybrief {
 
 			$query = new WP_Query( $query_array );
 
+			if ( '' !== $wpdb->last_error ) :
+
+				$str   = htmlspecialchars( print_r( $wpdb->last_result, true ), ENT_QUOTES );
+				$query = htmlspecialchars( print_r( $wpdb->last_query, true ), ENT_QUOTES );
+
+				return array(
+					'error'      => '<div id="error"><p class="wpdberror"><strong>WordPress database error:</strong> [' . $str . ']<br /><code>' . $query . '</code></p></div>',
+					'post_title' => 'Error',
+					'content'    => 'Error',
+				);
+
+			endif;
 			while ( $query->have_posts() ) {
 				$query->the_post();
 				$id      = get_the_ID();
