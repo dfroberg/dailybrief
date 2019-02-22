@@ -23,10 +23,12 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 
 ---
 
+
 == Features ==
 
 * Daily automated brief generated for previous day (if any posts was published that day).
 * Automatic integration with your SteemPress installation.
+
 
 == Screenshots ==
 
@@ -42,6 +44,7 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 
 We plan to use GlotPress on WordPress.org, so if you want to translate DailyBrief to your language please [follow this guidelines](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/=translating-themes-plugins).
 
+
 == See room for improvement? ==
 
 Great! There are several ways you can get involved to help make Dailybrief better:
@@ -51,6 +54,7 @@ Great! There are several ways you can get involved to help make Dailybrief bette
 3. **Check out our Github:** Take a look at the code; [GitHub](https://github.com/dfroberg/dailybrief)
 
 Thank you for wanting to make DailyBrief better for everyone! [We salute you](https://www.youtube.com/watch?v=8fPf6L0XNvM).
+
 
 == Frequently Asked Questions ==
 
@@ -76,6 +80,9 @@ Yes, Set "CRON Pause" to on and use the preview windows "Generate Now" button to
 
 
 == Changelog ==
+
+= 1.0.26 &mdash; 22 of February, 2019 =
+* Fix: Add extra checks for missing CRON job, plugin not activated properly or upgraded without activate/deactivate.
 
 = 1.0.25 &mdash; 22 of February, 2019 =
 * Fix: Ensuring compatibility with Windows 5.1
