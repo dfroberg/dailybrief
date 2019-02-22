@@ -88,14 +88,14 @@ No, if it detects that there is nothing to summarize it will skip post creation.
 ## Changelog ##
 
 ### 1.0.25 &mdash; 22 of February, 2019 ###
-Fix: Ensuring compatibility with Windows 5.1
-Fix: More preview window style fixes.
-New: Added generate manually now button to Preview window for those that really want to do things manually.
-Fix: An logical error in CRON pause resolved.
+* Fix: Ensuring compatibility with Windows 5.1
+* Fix: More preview window style fixes.
+* New: Added generate manually now button to Preview window for those that really want to do things manually.
+* Fix: An logical error in CRON pause resolved.
 
 ### 1.0.24 &mdash; 21 of February, 2019 ###
-Fix: Rework Admin GUI & Try getting the timezone to display properly.
-Add: Make sidebar display debug information of Debug option is on.
+* Fix: Rework Admin GUI & Try getting the timezone to display properly.
+* Add: Make sidebar display debug information of Debug option is on.
 
 ### 1.0.23 &mdash; 20 of February, 2019 ###
 * Fix: Date selection for periods and single day to include hours
