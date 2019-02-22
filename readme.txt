@@ -3,7 +3,7 @@ Contributors:      dfroberg
 Donation Link:     https://steemit.com/@dfroberg
 Tags:              content+generation, generation, steem, blockchain, steemit, briefs
 Requires at least: 4.7
-Tested up to:      5.0.3
+Tested up to:      5.1
 Stable tag:        trunk
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
@@ -30,11 +30,12 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 
 == Screenshots ==
 
-1. Automatic Preview 1
-2. Automatic Preview 2
-3. Options 1
-4. Options 2
-5. Options 3
+1. Automatic Preview gives you a pretty good overview on how your post will look on Steem.
+2. Table of Contents.
+3. Footer and Manual Brief Generation button.
+4. Options 1
+5. Options 2
+6. Options 3
 
 
 == Languages ==
@@ -69,7 +70,18 @@ Yes, go to settings and set publish to No.
 
 No, if it detects that there is nothing to summarize it will skip post creation.
 
+= Can I create the Briefs manually and not rely on CRON jobs?
+
+Yes, Set "CRON Pause" to on and use the preview windows "Generate Now" button to create the briefs.
+
+
 == Changelog ==
+
+= 1.0.25 &mdash; 22 of February, 2019 =
+Fix: Ensuring compatibility with Windows 5.1
+Fix: More preview window style fixes.
+New: Added generate manually now button to Preview window for those that really want to do things manually.
+Fix: An logical error in CRON pause resolved.
 
 = 1.0.24 &mdash; 21 of February, 2019 =
 Fix: Rework Admin GUI & Try getting the timezone to display properly.
