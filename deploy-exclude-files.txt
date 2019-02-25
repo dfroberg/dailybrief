@@ -10,7 +10,7 @@ wordpress_description.txt
 .DS_Store
 Thumbs.db
 behat.yml
-bin
+bin/
 circle.yml
 composer.json
 composer.lock
@@ -22,11 +22,12 @@ multisite.xml
 multisite.xml.dist
 phpcs.xml
 phpcs.xml.dist
-README.md
 wp-cli.local.yml
-tests
-vendor
-node_modules
+composer.phar
+cghooks.lock
+tests/
+vendor/
+node_modules/
 /dailybrief
 /dailybrief/
 svn-url
