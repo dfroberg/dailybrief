@@ -119,7 +119,7 @@ cd $svn_repo_dir
 
 echo "Scrapping ignored files"
 # Delete any files from SVN that are no longer there
-svn status . | grep "^\!" | sed 's/^\! *//g' | xargs svn rm
+svn status . | grep "^\!" | sed 's/^\! *//g' | xargs svn rm | true
 
 echo "Adding everything left"
 # Add everything left to commit
