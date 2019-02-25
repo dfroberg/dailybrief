@@ -4,6 +4,6 @@
 # Make sure the readme.md never gets out of sync with the readme.txt, if it is staged for commit.
 
 MARKDOWN_README_PATH=$(bin/generate-markdown-readme)
-if [ -n "$MARKDOWN_README_PATH" ]; then
+if [[ -n "$MARKDOWN_README_PATH" ]]; then
 	git add $MARKDOWN_README_PATH
 fi
