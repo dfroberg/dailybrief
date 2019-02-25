@@ -97,11 +97,12 @@ cat <(
 	git ls-files --cached --full-name $git_root \
 	&
 	git ls-files --cached --full-name $git_root | xargs -I {} dirname {} | sort | uniq
-) | sort | rsync -avz --delete --delete-excluded -exclude='bin/' -exclude='.idea/' --exclude='.git/' --exclude='vendor/' --exclude='tests/'  --exclude='node_modules/' --exclude='.sass-cache/' ./ $svn_repo_dir/trunk/
+) | sort | rsync -avz --delete --delete-excluded -exclude-file="deploy-exclude-files.txt" -exclude='bin/' -exclude='.idea/' --exclude='.git/' --exclude='vendor/' --exclude='tests/'  --exclude='node_modules/' --exclude='.sass-cache/' ./ $svn_repo_dir/trunk/
 
 cd $svn_repo_dir/trunk
 
 # move assets directory to proper location in SVN
+echo "Fiddling with assets"
 if [ -d assets ]; then
 	rsync -avz --delete ./assets/ ../assets/
 	rm -r ./assets/
@@ -116,15 +117,17 @@ done
 
 cd $svn_repo_dir
 
+echo "Scrapping ignored files"
 # Delete any files from SVN that are no longer there
 svn status . | grep "^\!" | sed 's/^\! *//g' | xargs svn rm
 
+echo "Adding everything left"
 # Add everything left to commit
 if [ -d assets ]; then
 	svn add --force assets
 fi
 svn add --force trunk
-
+echo "Doing SVN commit"
 # Do SVN commit
 svn_commit_file=$svn_repo_dir/COMMIT_MSG
 last_pushed_commit=$(svn log -l 1 | grep -E -o '^commit ([0-9a-f]{5,})' | head -n 1 | cut -c8-)
