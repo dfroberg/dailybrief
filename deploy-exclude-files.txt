@@ -4,7 +4,6 @@ wordpress_description.txt
 .editorconfig
 .git
 .gitattributes
-.gitignore
 .gitlab-ci.yml
 .travis.yml
 .DS_Store
