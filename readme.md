@@ -93,6 +93,9 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 ## Changelog ##
 
+### 1.0.28 &mdash; 26 of February, 2019 ###
+* Fix: Filled out some more information on how to get support.
+
 ### 1.0.27 &mdash; 26 of February, 2019 ###
 * Fix: To avoid conflicts change the default url suffix from campaign to utm_campaign, there seems to conflicts where campaign parameter causes 404's.
 

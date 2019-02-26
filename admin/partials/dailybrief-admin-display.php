@@ -78,6 +78,13 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 					class = "nav-tab <?php echo 'support' === $active_tab ? 'nav-tab-active' : ''; ?>">Support</a>
 		</h2>
 		<?php
+		if ( 'support' === $active_tab ) {
+			?>
+			<p>For advice and some live support join <a href="https://discord.gg/W2KyAbm">https://discord.gg/W2KyAbm</a> and talk to Danny.</p>
+			<p>To open a support topic you can go either to <a href="https://wordpress.org/support/plugin/dailybrief/" target="_blank">WordPress Support Forum</a> and create a new topic, or <a href="https://github.com/dfroberg/dailybrief/issues" target="_blank">GitHub Issues</a> and create an Issue.</p>
+			<p>Make sure you're running the latest version before reporting issues.</p>
+			<?php
+		} // end if manual publish.
 		if ( 'publish' === $active_tab ) {
 			$dc_result = $dc->dailybrief_do_daily_event( true );
 			if ( ! isset( $dc_result['error'] ) ) {
