@@ -87,6 +87,9 @@ No, if it detects that there is nothing to summarize it will skip post creation.
 
 ## Changelog ##
 
+### 1.0.27 &mdash; 26 of February, 2019 ###
+* Fix: To avoid conflicts change the default url suffix from campaign to utm_campaign, there seems to conflicts where campaign parameter causes 404's.
+
 ### 1.0.26 &mdash; 22 of February, 2019 ###
 * Fix: Add extra checks for missing CRON job, plugin not activated properly or upgraded without activate/deactivate.
 

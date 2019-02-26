@@ -78,8 +78,15 @@ No, if it detects that there is nothing to summarize it will skip post creation.
 
 Yes, Set "CRON Pause" to on and use the preview windows "Generate Now" button to create the briefs.
 
+= How do I fix 404 / page not found when clicking on a post link in a brief?
+
+Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_campaign=xxxxxx' and see if it helps, there is a slew of reserved parameters that is a terrible idea to use; [Reserved Terms](https://codex.wordpress.org/Reserved_Terms), many plugins also take ownership of specific parameters, so a bit of trial and error might be required. **Test links in your Preview**.
+
 
 == Changelog ==
+
+= 1.0.27 &mdash; 26 of February, 2019 =
+* Fix: To avoid conflicts change the default url suffix from campaign to utm_campaign, there seems to conflicts where campaign parameter causes 404's.
 
 = 1.0.26 &mdash; 22 of February, 2019 =
 * Fix: Add extra checks for missing CRON job, plugin not activated properly or upgraded without activate/deactivate.
