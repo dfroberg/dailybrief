@@ -189,7 +189,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 							</td>
 							<td>
 								<select id = "<?php echo $this->plugin_name; ?>-focus"
-										name = "<?php echo $this->plugin_name; ?>[focus]">
+										name = "<?php echo $this->plugin_name; ?>[focus][]" multiple="multiple">
 									<option value = "-1">No Focus Category (Default)</option>
 									<?php echo $category_focus_select; ?>
 								</select>

@@ -52,6 +52,8 @@ class Dailybrief_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 
+		add_action( 'admin_head', 'Dailybrief_Admin::select2jquery_inline' );
+
 	}
 
 	/**
@@ -75,7 +77,8 @@ class Dailybrief_Admin {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/dailybrief-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, 'https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css', array(), $this->version, 'all' );
-
+		wp_register_style( 'select2css', '//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css', false, '1.0', 'all' );
+		wp_enqueue_style( 'select2css' );
 	}
 
 	/**
@@ -98,7 +101,8 @@ class Dailybrief_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dailybrief-admin.js', array( 'jquery' ), $this->version, false );
-
+		wp_register_script( 'select2', '//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.js', array( 'jquery' ), '1.0', true );
+		wp_enqueue_script( 'select2' );
 	}
 
 	/**
@@ -117,6 +121,35 @@ class Dailybrief_Admin {
 				'display_plugin_setup_page',
 			)
 		);
+	}
+
+	/**
+	 * Inline select2 for settings page for this plugin.
+	 *
+	 * @since    1.0.0
+	 */
+	public function select2jquery_inline() {
+		?>
+		<style type="text/css">
+			.select2-container {margin: 0 2px 0 2px; width: 100%;}
+			.tablenav.top #doaction, #doaction2, #post-query-submit {margin: 0px 4px 0 4px;}
+		</style>
+		<script type='text/javascript'>
+			jQuery(document).ready(function ($) {
+				if ($('select').length > 0) {
+					$('select').select2();
+					$(document.body).on("click", function () {
+						$('select').select2({
+							dropdownAutoWidth : true,
+							minimumResultsForSearch: -1,
+							width: '100%',
+							multiple: true
+						});
+					});
+				}
+			});
+		</script>
+		<?php
 	}
 
 	/**
