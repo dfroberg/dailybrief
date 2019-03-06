@@ -1023,7 +1023,7 @@ class Dailybrief {
 		if ( false == $timestamp ) {
 			// Lets schedule the next brief for tomorrow after midnight according to this sites Timezone.
 			try {
-				$date = new DateTime( 'tomorrow', WpDateTimeZone::getWpTimezone() );
+				$date = new DateTime( 'tomorrow 01:00:00', WpDateTimeZone::getWpTimezone() );
 			} catch ( Exception $e ) {
 				wp_die( $e->getMessage(), 'DailyBrief Exploded' );
 			}

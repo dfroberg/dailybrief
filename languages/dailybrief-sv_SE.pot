@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dailybrief 1.0.28\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/dailybrief\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Danny Froberg <danny@froberg.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,280 +20,280 @@ msgstr ""
 
 #. Plugin URI of the plugin
 msgid "https://github.com/dfroberg/dailybrief"
-msgstr ""
+msgstr "https://github.com/dfroberg/dailybrief"
 
 #. Description of the plugin
 msgid "WordPress plugin with WP-CLI support to generate a daily brief of a previous day or periods posts."
-msgstr ""
+msgstr "WordPress pluggin med WP-CLI stöd för att generera en sammanställning av inlägg skrivna dagen eller perioden innan."
 
 #. Author of the plugin
 msgid "Daniel Froberg"
-msgstr ""
+msgstr "Daniel Froberg"
 
 #. Author URI of the plugin
 msgid "https://www.froberg.org"
-msgstr ""
+msgstr "https://www.froberg.org"
 
 #: admin/class-dailybrief-admin.php:201
 msgid "Settings"
-msgstr ""
+msgstr "Inställningar"
 
 #: admin/partials/dailybrief-admin-display.php:115
 msgid "dailybrief (48) in news • 12 hours ago"
-msgstr ""
+msgstr "dailybrief (48) i nyheter • 12 timmar sedan"
 
 #: admin/partials/dailybrief-admin-display.php:132
 msgid "Manually Generate Brief Now!"
-msgstr ""
+msgstr "Generera Sammanställningen Nu!"
 
 #: admin/partials/dailybrief-admin-display.php:133
 msgid "This will create the Brief immediately with the contents in the preview."
-msgstr ""
+msgstr "Detta kommer att skapa sammanställningen omedelbart med infromationen som visas i ovanstående förhandsgranskning"
 
 #: admin/partials/dailybrief-admin-display.php:143
 msgid "CRON Control"
-msgstr ""
+msgstr "CRON Kontroll"
 
 #: admin/partials/dailybrief-admin-display.php:144
 msgid "CRON Publish"
-msgstr ""
+msgstr "CRON Publicering"
 
 #: admin/partials/dailybrief-admin-display.php:147
 #: admin/partials/dailybrief-admin-display.php:332
 #: admin/partials/dailybrief-admin-display.php:349
 msgid "On (Default)"
-msgstr ""
+msgstr "På (Standard)"
 
 #: admin/partials/dailybrief-admin-display.php:150
 #: admin/partials/dailybrief-admin-display.php:337
 #: admin/partials/dailybrief-admin-display.php:354
 msgid "Off"
-msgstr ""
+msgstr "Av"
 
 #: admin/partials/dailybrief-admin-display.php:151
 msgid "( If on; create the post but do not publish it )"
-msgstr ""
+msgstr "( Om på; skapa inlägget men publicera det inte )"
 
 #: admin/partials/dailybrief-admin-display.php:153
 msgid "CRON Pause"
-msgstr ""
+msgstr "CRON Paus"
 
 #: admin/partials/dailybrief-admin-display.php:156
 #: admin/partials/dailybrief-admin-display.php:264
 #: admin/partials/dailybrief-admin-display.php:304
 msgid "On"
-msgstr ""
+msgstr "På"
 
 #: admin/partials/dailybrief-admin-display.php:159
 #: admin/partials/dailybrief-admin-display.php:269
 #: admin/partials/dailybrief-admin-display.php:308
 msgid "Off (Default)"
-msgstr ""
+msgstr "Av (Standard)"
 
 #: admin/partials/dailybrief-admin-display.php:160
 msgid "( Will disable post creation by internal CRON )"
-msgstr ""
+msgstr "( Slår av inläggs skapandet av internt CRON schema )"
 
 #: admin/partials/dailybrief-admin-display.php:162
 msgid "Who, what & where?"
-msgstr ""
+msgstr "Vem, vad & vart?"
 
 #: admin/partials/dailybrief-admin-display.php:165
 msgid "User ID to Post as"
-msgstr ""
+msgstr "Användare att skapa inlägg som"
 
 #: admin/partials/dailybrief-admin-display.php:176
 msgid "Category to Post to"
-msgstr ""
+msgstr "Kategori att skapa inlägg i"
 
 #: admin/partials/dailybrief-admin-display.php:187
 msgid "Focus on a single Category"
-msgstr ""
+msgstr "Fokusera på en enskilld kategori"
 
 #: admin/partials/dailybrief-admin-display.php:192
 msgid "No Focus Category (Default)"
-msgstr ""
+msgstr "Ingen fokus kategori (standard)"
 
 #: admin/partials/dailybrief-admin-display.php:199
 msgid "Post Title"
-msgstr ""
+msgstr "Inläggstitel"
 
 #: admin/partials/dailybrief-admin-display.php:210
 msgid "Post Slug"
-msgstr ""
+msgstr "Inläggsslugg"
 
 #: admin/partials/dailybrief-admin-display.php:221
 msgid "Post Tags"
-msgstr ""
+msgstr "Inläggstaggar"
 
 #: admin/partials/dailybrief-admin-display.php:228
 msgid "Max 5"
-msgstr ""
+msgstr "Max 5"
 
 #: admin/partials/dailybrief-admin-display.php:233
 msgid "Url Suffix"
-msgstr ""
+msgstr "URL-ändelse"
 
 #: admin/partials/dailybrief-admin-display.php:240
 msgid "Append to outbound links in your post"
-msgstr ""
+msgstr "Lägg till efter utgående länkar i inlägget"
 
 #: admin/partials/dailybrief-admin-display.php:245
 msgid "Excerpt Words"
-msgstr ""
+msgstr "Utdragsord"
 
 #: admin/partials/dailybrief-admin-display.php:252
 msgid "How many words to include"
-msgstr ""
+msgstr "Hur många ord skall inkluderas"
 
 #: admin/partials/dailybrief-admin-display.php:257
 msgid "Use Excerpts"
-msgstr ""
+msgstr "Använd utdrag"
 
 #: admin/partials/dailybrief-admin-display.php:270
 msgid "Use existing excerpts or generate our own (safest)"
-msgstr ""
+msgstr "Använd existerande utdrag eller generera egna (säkrast)"
 
 #: admin/partials/dailybrief-admin-display.php:275
 msgid "Article delimiter"
-msgstr ""
+msgstr "Artikelavdelare"
 
 #: admin/partials/dailybrief-admin-display.php:286
 msgid "Article Continue Prompt"
-msgstr ""
+msgstr "Läs mer prompt"
 
 #: admin/partials/dailybrief-admin-display.php:295
 #: admin/partials/dailybrief-admin-display.php:298
 msgid "Debugging"
-msgstr ""
+msgstr "Debugging"
 
 #: admin/partials/dailybrief-admin-display.php:311
 msgid "Table of Contents"
-msgstr ""
+msgstr "Innehållsförteckning"
 
 #: admin/partials/dailybrief-admin-display.php:314
 msgid "Table of Contents Header"
-msgstr ""
+msgstr "Huvudet i innehållsförteckningen"
 
 #: admin/partials/dailybrief-admin-display.php:325
 msgid "Include Table of Contents"
-msgstr ""
+msgstr "Inkludera innehållsförteckningen"
 
 #: admin/partials/dailybrief-admin-display.php:342
 msgid "Local HREFs in TOC"
-msgstr ""
+msgstr "Lokala länkar i innehållsförteckningen"
 
 #: admin/partials/dailybrief-admin-display.php:357
 msgid "Statistics"
-msgstr ""
+msgstr "Statistik"
 
 #: admin/partials/dailybrief-admin-display.php:357
 msgid "These section headers are used if you do not specify any of the replacement tags in the header or footer texts."
-msgstr ""
+msgstr "Dessa sektionrubriker används om du inte använder ersättningstaggar i huvud eller fot texterna."
 
 #: admin/partials/dailybrief-admin-display.php:360
 msgid "Number of articles in Brief :"
-msgstr ""
+msgstr "Antal artiklar i sammanställningen"
 
 #: admin/partials/dailybrief-admin-display.php:367
 msgid "Replaced by {article_count}"
-msgstr ""
+msgstr "Ersätts av {article_count}"
 
 #: admin/partials/dailybrief-admin-display.php:372
 msgid "Categories in Brief"
-msgstr ""
+msgstr "Kategorier i sammanställningen"
 
 #: admin/partials/dailybrief-admin-display.php:379
 msgid "Replaced by {article_categories}"
-msgstr ""
+msgstr "Ersätts av {article_categories}"
 
 #: admin/partials/dailybrief-admin-display.php:384
 msgid "Tags in Brief"
-msgstr ""
+msgstr "Taggar i sammanställningen"
 
 #: admin/partials/dailybrief-admin-display.php:391
 msgid "Replaced by {article_tags}"
-msgstr ""
+msgstr "Ersätts av {article_tags}"
 
 #: admin/partials/dailybrief-admin-display.php:394
 msgid "Header & Footer"
-msgstr ""
+msgstr "Sidhuvud & sidfot"
 
 #: admin/partials/dailybrief-admin-display.php:397
 msgid "Header text"
-msgstr ""
+msgstr "Sidhuvudstext"
 
 #: admin/partials/dailybrief-admin-display.php:405
 #: admin/partials/dailybrief-admin-display.php:418
 msgid "The replacement tags {article_count}, {article_categories} and {article_tags} will be replaced by the count, categories and tags respectively covered by the articles included in the daily briefs."
-msgstr ""
+msgstr "Ersättningstaggarna {article_count}, {article_categories} och {article_tags} kommer att automatiskt ersättas med antal, kategorier och taggar som täcks av de artiklar í sammanställningen."
 
 #: admin/partials/dailybrief-admin-display.php:410
 msgid "Footer text"
-msgstr ""
+msgstr "Sidfotstext"
 
 #: admin/partials/dailybrief-admin-display.php:421
 msgid "Times"
-msgstr ""
+msgstr "Tider"
 
 #. translators: The three strings are dates, where the last two specifies a range.
 #: admin/partials/dailybrief-admin-display.php:424
 #: admin/partials/dailybrief-admin-display.php:512
 msgid "The below settings currently means that if you generated the brief now ( %1$s ) it would collect articles between; %2$s and %3$s."
-msgstr ""
+msgstr "De nedanstående instälningarna betyder att om du genererade en sammanställning nu ( %1$s ) skulle vi inkludera artiklar mellan; %2$s och %3$s."
 
 #: admin/partials/dailybrief-admin-display.php:429
 msgid "Period"
-msgstr ""
+msgstr "Period"
 
 #: admin/partials/dailybrief-admin-display.php:434
 msgid "Single day"
-msgstr ""
+msgstr "Enskild dag"
 
 #: admin/partials/dailybrief-admin-display.php:435
 msgid "Range of days"
-msgstr ""
+msgstr "En period"
 
 #: admin/partials/dailybrief-admin-display.php:441
 msgid "Start Date"
-msgstr ""
+msgstr "Startdatum"
 
 #: admin/partials/dailybrief-admin-display.php:448
 msgid "Include articles after this date"
-msgstr ""
+msgstr "Inkludera artiklar efter detta datum"
 
 #: admin/partials/dailybrief-admin-display.php:453
 msgid "End Date"
-msgstr ""
+msgstr "Slutdatum"
 
 #: admin/partials/dailybrief-admin-display.php:460
 msgid "Include articles before this date"
-msgstr ""
+msgstr "Inkludera artiklar före detta datum"
 
 #: admin/partials/dailybrief-admin-display.php:501
 msgid "Join us on the discord server"
-msgstr ""
+msgstr "Gå med oss på vår Discord chat server"
 
 #: admin/partials/dailybrief-admin-display.php:501
 msgid "and talk to"
-msgstr ""
+msgstr "och snacka med"
 
 #: admin/partials/dailybrief-admin-display.php:505
 msgid "Debuging Information"
-msgstr ""
+msgstr "Debuging Information"
 
 #: admin/partials/dailybrief-admin-display.php:506
 msgid "Internal CRON is"
-msgstr ""
+msgstr "Intern CRON är"
 
 #: admin/partials/dailybrief-admin-display.php:515
 msgid "Brief author"
-msgstr ""
+msgstr "Sammanställningsförfattare"
 
 #: admin/partials/dailybrief-admin-display.php:516
 msgid "Posted to category"
-msgstr ""
+msgstr "Publicerad till kategori"
 
 #: admin/partials/dailybrief-admin-display.php:517
 msgid "Focusing on category"
-msgstr ""
+msgstr "Fokuskategori"

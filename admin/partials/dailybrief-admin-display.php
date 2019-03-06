@@ -14,8 +14,14 @@
 // Grab all options.
 $dc = new Dailybrief();
 $dc->update_globals();
-$options = $dc->get_options(); // get_option( $this->plugin_name ); // .
-
+$options  = $dc->get_options(); // get_option( $this->plugin_name ); // .
+$date_now = get_date_from_gmt( date( 'Y-m-d H:i:s' ), 'Y-m-d H:i:s' );
+$date_one = date( 'Y-m-d H:i:s', strtotime( $options['start_date'] ) );
+if ( 'day' !== $options['period'] ) {
+	$date_two = date( 'Y-m-d H:i:s', strtotime( $options['end_date'] ) );
+} else {
+	$date_two = date( 'Y-m-d 23:59:59', strtotime( $options['start_date'] ) );
+}
 // Avoid undefined errors when running it for the first time.
 if ( ! isset( $options['test'] ) ) {
 	$options['test¨'] = '';
@@ -106,7 +112,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				<h1 style = "vertical-align: center; margin-bottom: 0;"><?php echo $sample['post_title'] . ' ' . $dc->get_date_suffix(); ?>
 					<img src = "<?php echo plugin_dir_url( __FILE__ ); ?>/images/steemit.png" width = "27" height = "27"></h1>
 				<div id="user-block" class="user-block">
-					<h2><img src = "<?php echo plugin_dir_url( __FILE__ ); ?>/images/white_icon_dailybrief.png" width = "70" height = "70"> dailybrief (48) in news • 12 hours ago </h2>
+					<h2><img src = "<?php echo plugin_dir_url( __FILE__ ); ?>/images/white_icon_dailybrief.png" width = "70" height = "70"> <?php _e( 'dailybrief (48) in news • 12 hours ago', 'dailybrief' ); ?>  </h2>
 				</div>
 				<p></p>
 				<div id="steem-body" class="steem-body">
@@ -123,8 +129,8 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				</div>
 				<hr>
 				<div align="center">
-					<a <a href = "options-general.php?page=dailybrief&tab=publish"><button class="dailybrief_preview_generate">Manually Generate Brief Now!</button></a>
-					<p>This will create the Brief immediately with the contents in the preview.</p>
+					<a <a href = "options-general.php?page=dailybrief&tab=publish"><button class="dailybrief_preview_generate"><?php _e( 'Manually Generate Brief Now!', 'dailybrief' ); ?></button></a>
+					<p><?php _e( 'This will create the Brief immediately with the contents in the preview.', 'dailybrief' ); ?></p>
 				</div>
 			</div>
 
@@ -134,29 +140,29 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				<?php settings_fields( $this->plugin_name ); ?>
 				<fieldset>
 					<table>
-						<tr><td colspan="2"><h3>CRON Control</h3></td></tr>
-						<tr><td>CRON Publish</td><td><input type = "radio"
+						<tr><td colspan="2"><h3><?php _e( 'CRON Control', 'dailybrief' ); ?></h3></td></tr>
+						<tr><td><?php _e( 'CRON Publish', 'dailybrief' ); ?></td><td><input type = "radio"
 									value = "1"
 										id = "cron_publish_on"
-									name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( '1' === $options['cron_publish'] ? 'checked' : '' ); ?> /><label for="cron_publish_on">On (Default)</label> <input type = "radio"
+									name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( '1' === $options['cron_publish'] ? 'checked' : '' ); ?> /><label for="cron_publish_on"><?php _e( 'On (Default)', 'dailybrief' ); ?></label> <input type = "radio"
 									value = "0"
 										id = "cron_publish_off"
-									name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( ( '0' === $options['cron_publish'] || empty( $options['cron_publish'] ) ) ? 'checked' : '' ); ?> /><label for="cron_publish_off">Off</label>
-								<br><em>( If on; create the post but do not publish it )</em> </td>
+									name = "<?php echo $this->plugin_name; ?>[cron_publish]" <?php echo( ( '0' === $options['cron_publish'] || empty( $options['cron_publish'] ) ) ? 'checked' : '' ); ?> /><label for="cron_publish_off"><?php _e( 'Off', 'dailybrief' ); ?></label>
+								<br><em><?php _e( '( If on; create the post but do not publish it )', 'dailybrief' ); ?></em> </td>
 						</tr>
-						<tr><td>CRON Pause</td><td><input type = "radio"
+						<tr><td><?php _e( 'CRON Pause', 'dailybrief' ); ?></td><td><input type = "radio"
 										value = "1"
 										id = "cron_pause_on"
-										name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( '1' === $options['cron_pause'] ? 'checked' : '' ); ?> /><label for="cron_pause_on">On</label> <input type = "radio"
+										name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( '1' === $options['cron_pause'] ? 'checked' : '' ); ?> /><label for="cron_pause_on"><?php _e( 'On', 'dailybrief' ); ?></label> <input type = "radio"
 										value = "0"
 										id = "cron_pause_off"
-										name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( ( '0' === $options['cron_pause'] || empty( $options['cron_pause'] ) ) ? 'checked' : '' ); ?> /><label for="cron_pause_off">Off (Default)</label>
-								<br><em>( Will disable post creation by internal CRON )</em> </td>
+										name = "<?php echo $this->plugin_name; ?>[cron_pause]" <?php echo( ( '0' === $options['cron_pause'] || empty( $options['cron_pause'] ) ) ? 'checked' : '' ); ?> /><label for="cron_pause_off"><?php _e( 'Off (Default)', 'dailybrief' ); ?></label>
+								<br><em><?php _e( '( Will disable post creation by internal CRON )', 'dailybrief' ); ?></em> </td>
 						</tr>
-						<tr><td colspan="2"><h3>Who, what & where?</h3></td></tr>
+						<tr><td colspan="2"><h3><?php _e( 'Who, what & where?', 'dailybrief' ); ?></h3></td></tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-author_id">User ID to Post as :</label>
+								<label for="<?php echo $this->plugin_name; ?>-author_id"><?php _e( 'User ID to Post as', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<select id = "<?php echo $this->plugin_name; ?>-author_id"
@@ -167,7 +173,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-post_category">Category to Post to :</label>
+								<label for="<?php echo $this->plugin_name; ?>-post_category"><?php _e( 'Category to Post to', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<select id = "<?php echo $this->plugin_name; ?>-post_category"
@@ -178,19 +184,19 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-focus">Focus on a single Category :</label>
+								<label for="<?php echo $this->plugin_name; ?>-focus"><?php _e( 'Focus on a single Category', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<select id = "<?php echo $this->plugin_name; ?>-focus"
 										name = "<?php echo $this->plugin_name; ?>[focus]">
-									<option value = "-1">No Focus Category (Default)</option>
+									<option value = "-1"><?php _e( 'No Focus Category (Default)', 'dailybrief' ); ?></option>
 									<?php echo $category_focus_select; ?>
 								</select>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-post_title">Post Title :</label>
+								<label for="<?php echo $this->plugin_name; ?>-post_title"><?php _e( 'Post Title', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -201,7 +207,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-slug">Post Slug :</label>
+								<label for="<?php echo $this->plugin_name; ?>-slug"><?php _e( 'Post Slug', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -212,61 +218,61 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-post_tags">Post Tags :</label>
+								<label for="<?php echo $this->plugin_name; ?>-post_tags"><?php _e( 'Post Tags', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
 										id = "<?php echo $this->plugin_name; ?>-post_tags"
 										name = "<?php echo $this->plugin_name; ?>[post_tags]"
 										value = "<?php echo htmlspecialchars( ( '' === $options['post_tags'] ? $dc->get_post_tags() : $options['post_tags'] ), ENT_QUOTES ); ?>"/>
-								<br><em>( Max 5 )</em>
+								<br><em>( <?php _e( 'Max 5', 'dailybrief' ); ?> )</em>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-url_suffix">Url Suffix :</label>
+								<label for="<?php echo $this->plugin_name; ?>-url_suffix"><?php _e( 'Url Suffix', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
 										id = "<?php echo $this->plugin_name; ?>-url_suffix"
 										name = "<?php echo $this->plugin_name; ?>[url_suffix]"
 										value = "<?php echo( '' === $options['url_suffix'] ? $dc->get_url_suffix() : $options['url_suffix'] ); ?>"/>
-								<br><em>( Append to outbound links in your post )</em>
+								<br><em>( <?php _e( 'Append to outbound links in your post', 'dailybrief' ); ?> )</em>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-excerpt_words">Excerpt Words :</label>
+								<label for="<?php echo $this->plugin_name; ?>-excerpt_words"><?php _e( 'Excerpt Words', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<input type = "number" class = "regular-text" maxlength = "4"
 										id = "<?php echo $this->plugin_name; ?>-excerpt_words"
 										name = "<?php echo $this->plugin_name; ?>[excerpt_words]"
 										value = "<?php echo htmlspecialchars( ( '' === $options['excerpt_words'] ? $dc->get_excerpt_words() : $options['excerpt_words'] ), ENT_QUOTES ); ?>"/>
-								<br><em>( How many words to include )</em>
+								<br><em>( <?php _e( 'How many words to include', 'dailybrief' ); ?> )</em>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								Use Excerpts :
+								<?php _e( 'Use Excerpts', 'dailybrief' ); ?> :
 							</td>
 							<td>
 								<input type = "radio"
 										value = "1"
 										id = "use_excerpts_on"
 										name = "<?php echo $this->plugin_name; ?>[use_excerpts]" <?php echo( '1' === $dc->get_use_excerpts() ? 'checked' : '' ); ?>>
-								<label for="use_excerpts_on">On</label>
+								<label for="use_excerpts_on"><?php _e( 'On', 'dailybrief' ); ?></label>
 								<input type = "radio"
 										value = "0"
 										id = "use_excerpts_off"
 										name = "<?php echo $this->plugin_name; ?>[use_excerpts]" <?php echo( ( '0' === $dc->get_use_excerpts() || empty( $dc->get_use_excerpts() ) ) ? 'checked' : '' ); ?>>
-								<label for="use_excerpts_off">Off (Default)</label>
-								<br><em>( Use existing excerpts or generate our own (safest) )</em>
+								<label for="use_excerpts_off"><?php _e( 'Off (Default)', 'dailybrief' ); ?></label>
+								<br><em>( <?php _e( 'Use existing excerpts or generate our own (safest)', 'dailybrief' ); ?> )</em>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-article_delimiter">Article delimiter :</label>
+								<label for="<?php echo $this->plugin_name; ?>-article_delimiter"><?php _e( 'Article delimiter', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -277,7 +283,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-article_continue">Article Continue Prompt :</label>
+								<label for="<?php echo $this->plugin_name; ?>-article_continue"><?php _e( 'Article Continue Prompt', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -286,26 +292,26 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 										value = "<?php echo htmlspecialchars( '' === $options['article_continue'] ? $dc->get_article_continue() : $options['article_continue'], ENT_COMPAT | ENT_HTML401, 'UTF-8', false ); ?>"/>
 							</td>
 						</tr>
-						<tr><td colspan="2"><h3>Debugging</h3></td></tr>
+						<tr><td colspan="2"><h3><?php _e( 'Debugging', 'dailybrief' ); ?></h3></td></tr>
 						<tr>
 							<td>
-								Debugging :
+								<?php _e( 'Debugging', 'dailybrief' ); ?> :
 							</td>
 							<td>
 								<input type = "radio"
 										value = "1"
 										id = "debug_on"
-										name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( '1' === $options['debug'] ? 'checked' : '' ); ?>> <label for="debug_on">On</label>
+										name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( '1' === $options['debug'] ? 'checked' : '' ); ?>> <label for="debug_on"><?php _e( 'On', 'dailybrief' ); ?></label>
 								<input type = "radio"
 										value = "0"
 										id = "debug_off"
-										name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( ( '0' === $options['debug'] || empty( $options['debug'] ) ) ? 'checked' : '' ); ?>> <label for="debug_off">Off (Default)</label>
+										name = "<?php echo $this->plugin_name; ?>[debug]" <?php echo( ( '0' === $options['debug'] || empty( $options['debug'] ) ) ? 'checked' : '' ); ?>> <label for="debug_off"><?php _e( 'Off (Default)', 'dailybrief' ); ?></label>
 							</td>
 						</tr>
-						<tr><td colspan="2"><h3>Table of Contents</h3></td></tr>
+						<tr><td colspan="2"><h3><?php _e( 'Table of Contents', 'dailybrief' ); ?></h3></td></tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-toc_header">Table of Contents Header :</label>
+								<label for="<?php echo $this->plugin_name; ?>-toc_header"><?php _e( 'Table of Contents Header', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
@@ -316,79 +322,79 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								Include Table of Contents :
+								<?php _e( 'Include Table of Contents', 'dailybrief' ); ?> :
 							</td>
 							<td>
 								<input type = "radio"
 										value = "1"
 										id = "toc_on"
 										name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( '1' === $dc->get_include_toc() ? 'checked' : '' ); ?>>
-								<label for="toc_on">On (Default)</label>
+								<label for="toc_on"><?php _e( 'On (Default)', 'dailybrief' ); ?></label>
 								<input type = "radio"
 										value = "0"
 										id = "toc_off"
 										name = "<?php echo $this->plugin_name; ?>[include_toc]" <?php echo( ( '0' === $dc->get_include_toc() || empty( $dc->get_include_toc() ) ) ? 'checked' : '' ); ?>>
-								<label for="toc_off">Off</label>
+								<label for="toc_off"><?php _e( 'Off', 'dailybrief' ); ?></label>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								Local HREFs in TOC :
+								<?php _e( 'Local HREFs in TOC', 'dailybrief' ); ?> :
 							</td>
 							<td>
 								<input type = "radio"
 										value = "1"
 										id = "localhrefs_on"
 										name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( '1' === $dc->get_include_toc_local_hrefs() ? 'checked' : '' ); ?>>
-								<label for="localhrefs_on">On (Default)</label>
+								<label for="localhrefs_on"><?php _e( 'On (Default)', 'dailybrief' ); ?></label>
 								<input type = "radio"
 										value = "0"
 										id = "localhrefs_off"
 										name = "<?php echo $this->plugin_name; ?>[include_toc_local_hrefs]" <?php echo( ( '0' === $dc->get_include_toc_local_hrefs() || empty( $dc->get_include_toc_local_hrefs() ) ) ? 'checked' : '' ); ?>>
-								<label for="localhrefs_off">Off</label>
+								<label for="localhrefs_off"><?php _e( 'Off', 'dailybrief' ); ?></label>
 							</td>
 						</tr>
-						<tr><td colspan="2"><h3>Statistics</h3><em>These section headers are used if you do not specify any of the replacement tags in the header or footer texts.</em></p></td></tr>
+						<tr><td colspan="2"><h3><?php _e( 'Statistics', 'dailybrief' ); ?></h3><em><?php _e( 'These section headers are used if you do not specify any of the replacement tags in the header or footer texts.', 'dailybrief' ); ?></em></p></td></tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-article_stats_txt">Number of articles in Brief :</label>
+								<label for="<?php echo $this->plugin_name; ?>-article_stats_txt"><?php _e( 'Number of articles in Brief :', 'dailybrief' ); ?></label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
 										id = "<?php echo $this->plugin_name; ?>-article_stats_txt"
 										name = "<?php echo $this->plugin_name; ?>[article_stats_txt]"
 										value = "<?php echo( '' === $options['article_stats_txt'] ? $dc->get_article_stats_txt() : $options['article_stats_txt'] ); ?>"/>
-								<br/><em>( Replaced by {article_count} )</em>
+								<br/><em>( <?php _e( 'Replaced by {article_count}', 'dailybrief' ); ?> )</em>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-article_stats_cats_txt">Categories in Brief :</label>
+								<label for="<?php echo $this->plugin_name; ?>-article_stats_cats_txt"><?php _e( 'Categories in Brief', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
 										id = "<?php echo $this->plugin_name; ?>-article_stats_cats_txt"
 										name = "<?php echo $this->plugin_name; ?>[article_stats_cats_txt]"
 										value = "<?php echo( '' === $options['article_stats_cats_txt'] ? $dc->get_article_stats_cats_txt() : $options['article_stats_cats_txt'] ); ?>"/>
-								<br/><em>( Replaced by {article_categories} )</em>
+								<br/><em>( <?php _e( 'Replaced by {article_categories}', 'dailybrief' ); ?> )</em>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-article_stats_tags_txt">Tags in Brief :</label>
+								<label for="<?php echo $this->plugin_name; ?>-article_stats_tags_txt"><?php _e( 'Tags in Brief', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
 										id = "<?php echo $this->plugin_name; ?>-article_stats_tags_txt"
 										name = "<?php echo $this->plugin_name; ?>[article_stats_tags_txt]"
 										value = "<?php echo( '' === $options['article_stats_tags_txt'] ? $dc->get_article_stats_tags_txt() : $options['article_stats_tags_txt'] ); ?>"/>
-								<br/><em>( Replaced by {article_tags} )</em>
+								<br/><em>( <?php _e( 'Replaced by {article_tags}', 'dailybrief' ); ?> )</em>
 							</td>
 						</tr>
-						<tr><td colspan="2"><h3>Header & Footer</h3></td></tr>
+						<tr><td colspan="2"><h3><?php _e( 'Header & Footer', 'dailybrief' ); ?></h3></td></tr>
 						<tr>
 							<td colspan="2">
-								<label for="headereditor"><strong>Header text :</strong></label><br>
+								<label for="headereditor"><strong><?php _e( 'Header text', 'dailybrief' ); ?> :</strong></label><br>
 								<?php
 								$settings = array(
 									'textarea_rows' => 5,
@@ -396,12 +402,12 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 								);
 								wp_editor( wpautop( '' === $options['header'] ? $dc->get_header() : $options['header'], true ), 'headereditor', $settings );
 								?>
-								<br> The replacement tags {article_count}, {article_categories} and {article_tags} will be replaced by the count, categories and tags respectively covered by the articles included in the daily briefs.
+								<br><?php _e( 'The replacement tags {article_count}, {article_categories} and {article_tags} will be replaced by the count, categories and tags respectively covered by the articles included in the daily briefs.', 'dailybrief' ); ?>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<label for="footereditor"><strong>Footer text :</strong><br></label>
+								<label for="footereditor"><strong><?php _e( 'Footer text', 'dailybrief' ); ?> :</strong><br></label>
 								<?php
 								$settings = array(
 									'textarea_rows' => 5,
@@ -409,48 +415,49 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 								);
 								wp_editor( wpautop( '' === $options['footer'] ? $dc->get_footer() : $options['footer'], true ), 'footereditor', $settings );
 								?>
-								<br> The replacement tags {article_count}, {article_categories} and {article_tags} will be replaced by the count, categories and tags respectively covered by the articles included in the daily briefs.
+								<br><?php _e( 'The replacement tags {article_count}, {article_categories} and {article_tags} will be replaced by the count, categories and tags respectively covered by the articles included in the daily briefs.', 'dailybrief' ); ?>
 							</td>
 						</tr>
-						<tr><td colspan="2" style="white-space: normal;"><h4>Times</h4>
-								The below settings currently means that if you generated the brief now
-								( <?php echo date( 'Y-m-d H:i:s' ); ?> ) it would collect articles
-								between; <?php echo date( 'Y-m-d H:i:s', strtotime( $options['end_date'] ) ); ?>
-								and <?php echo date( 'Y-m-d H:i:s', strtotime( $options['start_date'] ) ); ?>.</td></tr>
+						<tr><td colspan="2" style="white-space: normal;"><h4><?php _e( 'Times', 'dailybrief' ); ?></h4>
+								<?php
+								/* translators: The three strings are dates, where the last two specifies a range. */
+								printf( __( 'The below settings currently means that if you generated the brief now ( %1$s ) it would collect articles between; %2$s and %3$s.', 'dailybrief' ), $date_now, $date_one, $date_two );
+								?>
+							</td></tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-period">Period :</label>
+								<label for="<?php echo $this->plugin_name; ?>-period"><?php _e( 'Period', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<select id = "<?php echo $this->plugin_name; ?>-period"
 										name = "<?php echo $this->plugin_name; ?>[period]">
-									<option value = "day" <?php echo( 'day' === $options['period'] ? 'SELECTED' : '' ); ?>>Single day</option>
-									<option value = "range" <?php echo( 'range' === $options['period'] ? 'SELECTED' : '' ); ?>>Range of days</option>
+									<option value = "day" <?php echo( 'day' === $options['period'] ? 'SELECTED' : '' ); ?>><?php _e( 'Single day', 'dailybrief' ); ?></option>
+									<option value = "range" <?php echo( 'range' === $options['period'] ? 'SELECTED' : '' ); ?>><?php _e( 'Range of days', 'dailybrief' ); ?></option>
 								</select>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-start_date">Start Date :</label>
+								<label for="<?php echo $this->plugin_name; ?>-start_date"><?php _e( 'Start Date', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
 										id = "<?php echo $this->plugin_name; ?>-start_date"
 										name = "<?php echo $this->plugin_name; ?>[start_date]"
 										value = "<?php echo( '' === $options['start_date'] ? $dc->get_end_date() : $options['start_date'] ); ?>"/>
-								<br/><em>( Include articles after this date )</em>
+								<br/><em>( <?php _e( 'Include articles after this date', 'dailybrief' ); ?> )</em>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-end_date">End Date :</label>
+								<label for="<?php echo $this->plugin_name; ?>-end_date"><?php _e( 'End Date', 'dailybrief' ); ?> :</label>
 							</td>
 							<td>
 								<input type = "text" class = "regular-text" maxlength = "50"
 										id = "<?php echo $this->plugin_name; ?>-end_date"
 										name = "<?php echo $this->plugin_name; ?>[end_date]"
 										value = "<?php echo( '' === $options['end_date'] ? $dc->get_start_date() : $options['end_date'] ); ?>"/>
-								<br/><em>( Include articles before this date )</em>
+								<br/><em>( <?php _e( 'Include articles before this date', 'dailybrief' ); ?> )</em>
 							</td>
 						</tr>
 						<tr>
@@ -491,29 +498,23 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		$date->setTimestamp( $cron_run + $tz_offset );
 		?>
 		<h1>DailyBrief v&nbsp;<?php echo $this->version; ?></h1>
-		<p>Join us on the discord server : <a href="https://discord.gg/W2KyAbm">https://discord.gg/W2KyAbm</a> and talk to Danny</p>
+		<p><?php _e( 'Join us on the discord server', 'dailybrief' ); ?> : <a href="https://discord.gg/W2KyAbm">https://discord.gg/W2KyAbm</a> <?php _e( 'and talk to', 'dailybrief' ); ?> Danny</p>
 		<?php
 		if ( $options['debug'] ) {
 			?>
-			<h4>Debuging Information:</h4>
-			<p>Internal CRON is:
+			<h4><?php _e( 'Debuging Information', 'dailybrief' ); ?>:</h4>
+			<p><?php _e( 'Internal CRON is', 'dailybrief' ); ?>:
 				<br/><?php echo( wp_get_schedule( 'dailybrief_daily_event' ) ? 'Scheduled to run on ' . get_date_from_gmt( $date->format( 'Y-m-d H:m:s T' ) ) . ' ' . $timezone->getName() : '<strong>Not</strong> scheduled' ); ?>
 			</p>
-			<p>The current settings currently means that if you generated the brief now
-			( <?php echo get_date_from_gmt( date( 'Y-m-d H:i:s' ), 'Y-m-d H:i:s' ); ?> ) it would collect articles
-			between; <?php echo date( 'Y-m-d H:i:s', strtotime( $options['start_date'] ) ); ?>
-			and
-				<?php
-				if ( 'day' !== $options['period'] ) {
-					echo date( 'Y-m-d H:i:s', strtotime( $options['end_date'] ) );
-				} else {
-					echo date( 'Y-m-d 23:59:59', strtotime( $options['start_date'] ) );
-				}
-				?>
+			<p>
+			<?php
+			/* translators: The three strings are dates, where the last two specifies a range. */
+			printf( __( 'The below settings currently means that if you generated the brief now ( %1$s ) it would collect articles between; %2$s and %3$s.', 'dailybrief' ), $date_now, $date_one, $date_two );
+			?>
 			</p>
-			<p>Briefs author: <?php echo $debug_current_author_name; ?></p>
-			<p>Posted to catregory : <?php echo $debug_current_category_name; ?></p>
-			<p>Focusing on category : <?php echo( $debug_current_focus_category_name ?: 'None' ); ?></p>
+			<p><?php _e( 'Brief author', 'dailybrief' ); ?> : <?php echo $debug_current_author_name; ?></p>
+			<p><?php _e( 'Posted to category', 'dailybrief' ); ?> : <?php echo $debug_current_category_name; ?></p>
+			<p><?php _e( 'Focusing on category', 'dailybrief' ); ?> : <?php echo( $debug_current_focus_category_name ?: 'None' ); ?></p>
 			<?php
 		}
 		?>
