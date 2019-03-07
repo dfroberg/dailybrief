@@ -56,10 +56,14 @@ if ( ! empty( $categories ) && is_array( $categories ) ) {
 // The Focus on Categories loop.
 if ( ! empty( $categories ) && is_array( $categories ) ) {
 	foreach ( $categories as $category ) {
-		if ( $options['focus'] == $category->cat_ID ) {
-			$debug_current_focus_category_name = $category->name;
+		if ( 1 === $category->cat_ID ) {
+			break;
 		}
-		$category_focus_select .= '<option ' . ( $options['focus'] == $category->cat_ID ? 'SELECTED' : '' ) . ' value="' . $category->cat_ID . '">' . $category->name . '</option>';
+		if ( in_array( $category->cat_ID, explode( ',', $options['focus'] ) ) ) {
+			$debug_current_focus_category_name[] = $category->name;
+			$tmp_selected_current_focus_category = true;
+		}
+		$category_focus_select .= '<option ' . ( $tmp_selected_current_focus_category ? 'SELECTED' : '' ) . ' value="' . $category->cat_ID . '">' . $category->name . '</option>';
 	}
 }
 // Figure out what tab we're on.
@@ -185,7 +189,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-focus">Focus on a single Category :</label>
+								<label for="<?php echo $this->plugin_name; ?>-focus">Focus on Categories :</label>
 							</td>
 							<td>
 								<select id = "<?php echo $this->plugin_name; ?>-focus"
@@ -519,8 +523,16 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				?>
 			</p>
 			<p>Briefs author: <?php echo $debug_current_author_name; ?></p>
-			<p>Posted to catregory : <?php echo $debug_current_category_name; ?></p>
-			<p>Focusing on category : <?php echo( $debug_current_focus_category_name ?: 'None' ); ?></p>
+			<p>Posted to category : <?php echo $debug_current_category_name; ?></p>
+			<p>Focusing on categories :
+				<?php
+				if ( is_array( $debug_current_focus_category_name ) ) {
+					echo implode( ', ', $debug_current_focus_category_name );
+				} else {
+					echo 'None';
+				}
+				?>
+			</p>
 			<?php
 		}
 		?>

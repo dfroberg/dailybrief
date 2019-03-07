@@ -265,7 +265,11 @@ class Dailybrief {
 	 * @param string $focus Set focus category.
 	 */
 	public function set_focus( $focus ) {
-		$this->focus = $focus;
+		if ( ! is_array( $focus ) ) {
+			$this->focus = $focus;
+		} else {
+			$this->focus = implode( ',', $focus );
+		}
 	}
 
 	/**
@@ -1223,7 +1227,6 @@ class Dailybrief {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
-
 		// Add Settings link to the plugin.
 		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_name . '.php' );
 		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
@@ -1492,7 +1495,10 @@ class Dailybrief {
 		// Do you wish to focus on a particular category?
 		$focus = $this->parse_arguments( $arguments, 'focus', '' );
 		if ( ! empty( $focus ) ) {
-			$focus = explode( ',', $focus );
+			if ( ! is_array( $focus ) ) {
+				$focus = explode( ',', $focus );
+			}
+			// Already an array.
 		} else {
 			$focus = explode( ',', $this->get_focus() );
 		}

@@ -51,9 +51,6 @@ class Dailybrief_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-
-		add_action( 'admin_head', 'Dailybrief_Admin::select2jquery_inline' );
-
 	}
 
 	/**
@@ -111,7 +108,7 @@ class Dailybrief_Admin {
 	 * @since    1.0.0
 	 */
 	public function add_plugin_admin_menu() {
-		add_options_page(
+		$plugin_options_page = add_options_page(
 			'DailyBrief Options',
 			'DailyBrief',
 			'manage_options',
@@ -121,6 +118,7 @@ class Dailybrief_Admin {
 				'display_plugin_setup_page',
 			)
 		);
+		add_action( 'admin_head-' . $plugin_options_page, 'Dailybrief_Admin::select2jquery_inline' );
 	}
 
 	/**
@@ -209,7 +207,7 @@ class Dailybrief_Admin {
 		$valid['period']                  = ( isset( $input['period'] ) && ! empty( $input['period'] ) ) ? ( $input['period'] ) : $options['period'];
 		$valid['start_date']              = ( isset( $input['start_date'] ) && ! empty( $input['start_date'] ) ) ? ( $input['start_date'] ) : $options['start_date'];
 		$valid['end_date']                = ( isset( $input['end_date'] ) && ! empty( $input['end_date'] ) ) ? ( $input['end_date'] ) : $options['end_date'];
-		$valid['focus']                   = ( isset( $input['focus'] ) && ! empty( $input['focus'] ) ) ? ( $input['focus'] ) : $options['focus'];
+		$valid['focus']                   = ( isset( $input['focus'] ) && ! empty( $input['focus'] ) ) ? ( implode( ',', $input['focus'] ) ) : $options['focus'];
 		$valid['cron_publish']            = ( isset( $input['cron_publish'] ) && is_numeric( $input['cron_publish'] ) ) ? ( $input['cron_publish'] ) : $options['cron_publish'];
 		$valid['cron_pause']              = ( isset( $input['cron_pause'] ) && is_numeric( $input['cron_pause'] ) ) ? ( $input['cron_pause'] ) : $options['cron_pause'];
 		$valid['use_excerpts']            = ( isset( $input['use_excerpts'] ) && is_numeric( $input['use_excerpts'] ) ) ? ( $input['use_excerpts'] ) : $options['use_excerpts'];
