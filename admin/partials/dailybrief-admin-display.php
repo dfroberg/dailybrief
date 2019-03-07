@@ -47,18 +47,23 @@ $category_select = '';
 // The Categories loop.
 if ( ! empty( $categories ) && is_array( $categories ) ) {
 	foreach ( $categories as $category ) {
-		if ( $options['post_category'] == $category->cat_ID ) {
-			$debug_current_category_name = $category->name;
+		$tmp_selected_current_category = false;
+		if ( $dc->get_post_category() == $category->cat_ID ) {
+			$debug_current_category_name   = $category->name;
+			$debug_current_category_id     = $category->cat_ID;
+			$tmp_selected_current_category = true;
 		}
-		$category_select .= '<option ' . ( $options['post_category'] == $category->cat_ID ? 'SELECTED' : '' ) . ' value="' . $category->cat_ID . '">' . $category->name . '</option>';
+		$category_select .= '<option ' . ( $tmp_selected_current_category ? 'SELECTED' : '' ) . ' value="' . $category->cat_ID . '">' . $category->name . '</option>';
 	}
 }
 // The Focus on Categories loop.
+$category_focus_select = '';
 if ( ! empty( $categories ) && is_array( $categories ) ) {
 	foreach ( $categories as $category ) {
 		if ( 1 === $category->cat_ID ) {
 			break;
 		}
+		$tmp_selected_current_focus_category = false;
 		if ( in_array( $category->cat_ID, explode( ',', $options['focus'] ) ) ) {
 			$debug_current_focus_category_name[] = $category->name;
 			$tmp_selected_current_focus_category = true;
@@ -194,7 +199,6 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 							<td>
 								<select id = "<?php echo $this->plugin_name; ?>-focus"
 										name = "<?php echo $this->plugin_name; ?>[focus][]" multiple="multiple">
-									<option value = "-1">No Focus Category (Default)</option>
 									<?php echo $category_focus_select; ?>
 								</select>
 							</td>
