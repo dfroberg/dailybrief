@@ -93,6 +93,9 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 ## Changelog ##
 
+### 1.0.29 &mdash; 7 of March, 2019 ###
+* New: Enabled select2 & multiple focus categories.
+
 ### 1.0.28 &mdash; 26 of February, 2019 ###
 * Fix: Filled out some more information on how to get support.
 
