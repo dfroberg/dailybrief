@@ -265,7 +265,7 @@ class Dailybrief {
 	 * @param string $focus Set focus category.
 	 */
 	public function set_focus( $focus ) {
-		if( ! is_array( $focus ) ) {
+		if ( ! is_array( $focus ) ) {
 			$this->focus = $focus;
 		} else {
 			$this->focus = implode( ',', $focus );
@@ -1056,7 +1056,7 @@ class Dailybrief {
 		$this->include_toc             = $this->get_option_default( 'include_toc', '1' ); // 1 for on / 0 for off
 		$this->include_toc_local_hrefs = $this->get_option_default( 'include_toc_local_hrefs', '1' ); // 1 for on / 0 for off
 		$this->toc_header              = $this->get_option_default( 'toc_header', 'Table of Contents' );
-		$this->url_suffix              = $this->get_option_default( 'url_suffix', '?campaign=steempress&utm=dailybrief' ); // set ''.
+		$this->url_suffix              = $this->get_option_default( 'url_suffix', '?utm_campaign=steempress&utm=dailybrief' ); // set ''.
 		$this->excerpt_words           = $this->get_option_default( 'excerpt_words', '100' );
 		$this->post_title              = $this->get_option_default( 'post_title', 'The Daily Brief' ) . ' ' . $this->date_suffix;
 		$this->author_id               = $this->get_option_default( 'author_id', '1' );
@@ -1227,7 +1227,6 @@ class Dailybrief {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
-
 		// Add Settings link to the plugin.
 		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_name . '.php' );
 		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
@@ -1499,9 +1498,9 @@ class Dailybrief {
 			if ( ! is_array( $focus ) ) {
 				$focus = explode( ',', $focus );
 			}
-			// Is already array.
+			// Already an array.
 		} else {
-			$focus = array();
+			$focus = explode( ',', $this->get_focus() );
 		}
 		// Parse some flags.
 		$include_stats = $this->parse_arguments( $arguments, 'stats', true );

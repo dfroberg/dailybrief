@@ -47,19 +47,28 @@ $category_select = '';
 // The Categories loop.
 if ( ! empty( $categories ) && is_array( $categories ) ) {
 	foreach ( $categories as $category ) {
-		if ( $options['post_category'] == $category->cat_ID ) {
-			$debug_current_category_name = $category->name;
+		$tmp_selected_current_category = false;
+		if ( $dc->get_post_category() == $category->cat_ID ) {
+			$debug_current_category_name   = $category->name;
+			$debug_current_category_id     = $category->cat_ID;
+			$tmp_selected_current_category = true;
 		}
-		$category_select .= '<option ' . ( $options['post_category'] == $category->cat_ID ? 'SELECTED' : '' ) . ' value="' . $category->cat_ID . '">' . $category->name . '</option>';
+		$category_select .= '<option ' . ( $tmp_selected_current_category ? 'SELECTED' : '' ) . ' value="' . $category->cat_ID . '">' . $category->name . '</option>';
 	}
 }
 // The Focus on Categories loop.
+$category_focus_select = '';
 if ( ! empty( $categories ) && is_array( $categories ) ) {
 	foreach ( $categories as $category ) {
-		if ( $options['focus'] == $category->cat_ID ) {
-			$debug_current_focus_category_name = $category->name;
+		if ( 1 === $category->cat_ID ) {
+			break;
 		}
-		$category_focus_select .= '<option ' . ( $options['focus'] == $category->cat_ID ? 'SELECTED' : '' ) . ' value="' . $category->cat_ID . '">' . $category->name . '</option>';
+		$tmp_selected_current_focus_category = false;
+		if ( in_array( $category->cat_ID, explode( ',', $options['focus'] ) ) ) {
+			$debug_current_focus_category_name[] = $category->name;
+			$tmp_selected_current_focus_category = true;
+		}
+		$category_focus_select .= '<option ' . ( $tmp_selected_current_focus_category ? 'SELECTED' : '' ) . ' value="' . $category->cat_ID . '">' . $category->name . '</option>';
 	}
 }
 // Figure out what tab we're on.
@@ -78,6 +87,13 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 					class = "nav-tab <?php echo 'support' === $active_tab ? 'nav-tab-active' : ''; ?>">Support</a>
 		</h2>
 		<?php
+		if ( 'support' === $active_tab ) {
+			?>
+			<p>For advice and some live support join <a href="https://discord.gg/W2KyAbm">https://discord.gg/W2KyAbm</a> and talk to Danny.</p>
+			<p>To open a support topic you can go either to <a href="https://wordpress.org/support/plugin/dailybrief/" target="_blank">WordPress Support Forum</a> and create a new topic, or <a href="https://github.com/dfroberg/dailybrief/issues" target="_blank">GitHub Issues</a> and create an Issue.</p>
+			<p>Make sure you're running the latest version before reporting issues.</p>
+			<?php
+		} // end if manual publish.
 		if ( 'publish' === $active_tab ) {
 			$dc_result = $dc->dailybrief_do_daily_event( true );
 			if ( ! isset( $dc_result['error'] ) ) {
@@ -178,12 +194,11 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						</tr>
 						<tr>
 							<td>
-								<label for="<?php echo $this->plugin_name; ?>-focus">Focus on a single Category :</label>
+								<label for="<?php echo $this->plugin_name; ?>-focus">Focus on Categories :</label>
 							</td>
 							<td>
 								<select id = "<?php echo $this->plugin_name; ?>-focus"
-										name = "<?php echo $this->plugin_name; ?>[focus]">
-									<option value = "-1">No Focus Category (Default)</option>
+										name = "<?php echo $this->plugin_name; ?>[focus][]" multiple="multiple">
 									<?php echo $category_focus_select; ?>
 								</select>
 							</td>
@@ -512,8 +527,16 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				?>
 			</p>
 			<p>Briefs author: <?php echo $debug_current_author_name; ?></p>
-			<p>Posted to catregory : <?php echo $debug_current_category_name; ?></p>
-			<p>Focusing on category : <?php echo( $debug_current_focus_category_name ?: 'None' ); ?></p>
+			<p>Posted to category : <?php echo $debug_current_category_name; ?></p>
+			<p>Focusing on categories :
+				<?php
+				if ( is_array( $debug_current_focus_category_name ) ) {
+					echo implode( ', ', $debug_current_focus_category_name );
+				} else {
+					echo 'None';
+				}
+				?>
+			</p>
 			<?php
 		}
 		?>
