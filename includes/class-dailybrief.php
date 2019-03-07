@@ -265,7 +265,11 @@ class Dailybrief {
 	 * @param string $focus Set focus category.
 	 */
 	public function set_focus( $focus ) {
-		$this->focus = $focus;
+		if( ! is_array( $focus ) ) {
+			$this->focus = $focus;
+		} else {
+			$this->focus = implode( ',', $focus );
+		}
 	}
 
 	/**
@@ -1492,9 +1496,12 @@ class Dailybrief {
 		// Do you wish to focus on a particular category?
 		$focus = $this->parse_arguments( $arguments, 'focus', '' );
 		if ( ! empty( $focus ) ) {
-			$focus = explode( ',', $focus );
+			if ( ! is_array( $focus ) ) {
+				$focus = explode( ',', $focus );
+			}
+			// Is already array.
 		} else {
-			$focus = explode( ',', $this->get_focus() );
+			$focus = array();
 		}
 		// Parse some flags.
 		$include_stats = $this->parse_arguments( $arguments, 'stats', true );
