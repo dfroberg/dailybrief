@@ -77,21 +77,21 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 		<h2 class = "nav-tab-wrapper">
 			<a href = "options-general.php?page=dailybrief&tab=options"
-					class = "nav-tab <?php echo 'options' === $active_tab ? 'nav-tab-active' : ''; ?>">Options</a>
+					class = "nav-tab <?php echo 'options' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php _e( 'Options', 'dailybrief' ); ?></a>
 			<a href = "options-general.php?page=dailybrief&tab=preview"
-					class = "nav-tab <?php echo 'preview' === $active_tab ? 'nav-tab-active' : ''; ?>">Preview</a>
+					class = "nav-tab <?php echo 'preview' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php _e( 'Preview', 'dailybrief' ); ?></a>
 			<a href = "options-general.php?page=dailybrief&tab=support"
-					class = "nav-tab <?php echo 'support' === $active_tab ? 'nav-tab-active' : ''; ?>">Support</a>
+					class = "nav-tab <?php echo 'support' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php _e( 'Support', 'dailybrief' ); ?></a>
 		</h2>
 		<?php
 		if ( 'publish' === $active_tab ) {
 			$dc_result = $dc->dailybrief_do_daily_event( true );
 			if ( ! isset( $dc_result['error'] ) ) {
-				echo '<h2>Your Daily Brief is done!</h2>';
-				echo '<h3>Published: ' . $dc_result['post_title'] . '</h3>';
-				echo '<a href = "options-general.php?page=dailybrief&tab=preview">Go back</a>';
+				echo '<h2>' . _e( 'Your Daily Brief is done!', 'dailybrief' ) . '</h2>';
+				echo '<h3>' . _e( 'Published', 'dailybrief' ) . ': ' . $dc_result['post_title'] . '</h3>';
+				echo '<a href = "options-general.php?page=dailybrief&tab=preview">' . _e( 'Go back', 'dailybrief' ) . '</a>';
 			} else {
-				echo '<h3>An Error occurred during Manual Publish:</h3><pre>' . print_r( $dc_result['error'], true ) . '</pre>';
+				echo '<h3>' . _e( 'An error occurred during manual publish', 'dailybrief' ) . ':</h3><pre>' . print_r( $dc_result['error'], true ) . '</pre>';
 			}
 		} // end if manual publish.
 		if ( 'preview' === $active_tab ) {

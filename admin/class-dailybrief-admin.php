@@ -108,8 +108,8 @@ class Dailybrief_Admin {
 	 */
 	public function add_plugin_admin_menu() {
 		add_options_page(
-			'DailyBrief Options',
-			'DailyBrief',
+			__( 'DailyBrief Options', 'dailybrief' ),
+			__( 'DailyBrief', 'dailybrief' ),
 			'manage_options',
 			$this->plugin_name,
 			array(

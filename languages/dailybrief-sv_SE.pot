@@ -33,10 +33,45 @@ msgstr "Daniel Froberg"
 #. Author URI of the plugin
 msgid "https://www.froberg.org"
 msgstr "https://www.froberg.org"
+#: admin/class-dailybrief-admin.php:111
+msgid "DailyBrief Options"
+msgstr "DailyBrief Inställningar"
+
+#: admin/class-dailybrief-admin.php:112
+msgid "DailyBrief"
+msgstr "DailyBrief"
 
 #: admin/class-dailybrief-admin.php:201
 msgid "Settings"
 msgstr "Inställningar"
+
+#: admin/partials/dailybrief-admin-display.php:80
+msgid "Options"
+msgstr "Alternativ"
+
+#: admin/partials/dailybrief-admin-display.php:82
+msgid "Preview"
+msgstr "Förhandsgranska"
+
+#: admin/partials/dailybrief-admin-display.php:84
+msgid "Support"
+msgstr "Support"
+
+#: admin/partials/dailybrief-admin-display.php:90
+msgid "Your Daily Brief is done!"
+msgstr ""
+
+#: admin/partials/dailybrief-admin-display.php:91
+msgid "Published"
+msgstr "Publicerad"
+
+#: admin/partials/dailybrief-admin-display.php:92
+msgid "Go back"
+msgstr "Tillbaka"
+
+#: admin/partials/dailybrief-admin-display.php:94
+msgid "An error occurred during manual publish"
+msgstr "Ett fel inträffade under manuell publicering"
 
 #: admin/partials/dailybrief-admin-display.php:115
 msgid "dailybrief (48) in news • 12 hours ago"
