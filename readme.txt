@@ -85,6 +85,10 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 == Changelog ==
 
+= 1.0.30 &mdash; 18 of March, 2019 =
+* Fix: Debug aside covered options screens on small screen devices.
+* Fix: Fixed select2 JS error on multiple=true and removed it since it's not needed.
+
 = 1.0.29 &mdash; 7 of March, 2019 =
 * New: Enabled select2 & multiple focus categories.
 

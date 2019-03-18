@@ -140,8 +140,7 @@ class Dailybrief_Admin {
 						$('select').select2({
 							dropdownAutoWidth : true,
 							minimumResultsForSearch: -1,
-							width: '100%',
-							multiple: true
+							width: '100%'
 						});
 					});
 				}
