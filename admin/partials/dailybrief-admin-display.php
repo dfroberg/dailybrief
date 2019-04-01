@@ -226,6 +226,15 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 										value = "<?php echo htmlspecialchars( ( '' === $options['post_title'] ? $dc->get_post_title() : $options['post_title'] ), ENT_QUOTES ); ?>"/>
 							</td>
 						</tr>
+						<tr><td>Title Link</td><td><input type = "radio"
+										value = "1"
+										id = "title_link_on"
+										name = "<?php echo $this->plugin_name; ?>[title_link]" <?php echo( '1' === $options['title_link'] ? 'checked' : '' ); ?> /><label for="title_link_on">On (Default)</label> <input type = "radio"
+										value = "0"
+										id = "title_link_off"
+										name = "<?php echo $this->plugin_name; ?>[title_link]" <?php echo( ( '0' === $options['title_link'] || empty( $options['title_link'] ) ) ? 'checked' : '' ); ?> /><label for="title_link_off">Off</label>
+								<br><em>( Make post title linked to original article )</em> </td>
+						</tr>
 						<tr>
 							<td>
 								<label for="<?php echo $this->plugin_name; ?>-slug">Post Slug :</label>

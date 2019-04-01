@@ -210,6 +210,7 @@ class Dailybrief_Admin {
 		$valid['cron_publish']            = ( isset( $input['cron_publish'] ) && is_numeric( $input['cron_publish'] ) ) ? ( $input['cron_publish'] ) : $options['cron_publish'];
 		$valid['cron_pause']              = ( isset( $input['cron_pause'] ) && is_numeric( $input['cron_pause'] ) ) ? ( $input['cron_pause'] ) : $options['cron_pause'];
 		$valid['use_excerpts']            = ( isset( $input['use_excerpts'] ) && is_numeric( $input['use_excerpts'] ) ) ? ( $input['use_excerpts'] ) : $options['use_excerpts'];
+		$valid['title_link']              = ( isset( $input['title_link'] ) && is_numeric( $input['title_link'] ) ) ? ( $input['title_link'] ) : $options['title_link'];
 
 		return $valid;
 	}

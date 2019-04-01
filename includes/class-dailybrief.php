@@ -457,6 +457,7 @@ class Dailybrief {
 		return $this->toc_header;
 	}
 
+
 	/**
 	 * Set table of contents header.
 	 *
@@ -465,6 +466,30 @@ class Dailybrief {
 	public function set_toc_header( $toc_header ) {
 		$this->toc_header = $toc_header;
 	}
+	/**
+	 * Enable or disable linked title.
+	 *
+	 * @var string
+	 */
+	private $title_link = '1';
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_title_link() {
+		return $this->title_link;
+	}
+	/**
+	 * Set title link.
+	 *
+	 * @param string $title_link Set title links.
+	 */
+	public function set_title_link( $title_link ) {
+		$this->title_link = $title_link;
+	}
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -1085,6 +1110,7 @@ class Dailybrief {
 		$this->cron_pause              = $this->get_option_default( 'cron_pause', '0' );
 		$this->use_excerpts            = $this->get_option_default( 'use_excerpts', '0' );
 		$this->skip_categories         = $this->get_option_default( 'skip_categories', '-1' );
+		$this->title_link              = $this->get_option_default( 'title_link', '1' );
 
 	}
 
@@ -1663,10 +1689,16 @@ class Dailybrief {
 						$article .= ( '<img src="' . $post_thumbnail . '">' );
 					}
 				}
-				$article .= ( '<h2><a href="' . get_permalink( $id ) . $this->url_suffix . '" target="dailybrief">' . $title . '</a></h2>' );
-				$article .= ( 'Published <strong>' . $date . '</strong> by <strong>' . ( get_the_author() ?: 'Guest Author' ) . '</strong> in <strong>' . implode( ', ', $c_cats ) . '</strong>' );
-				$article .= ( '<p>' . $excerpt . '</p>' );
-				$article .= ( '<p>Tags: ' . implode( ', ', $t_tags ) . '</p>' );
+				$article .= '<h2>';
+				if ( 1 == $this->get_title_link() ) {
+					$article .= '<a href="' . get_permalink( $id ) . $this->url_suffix . '" target="dailybrief">' . $title . '</a>';
+				} else {
+					$article .= $title;
+				}
+				$article .= '</h2>';
+				$article .= 'Published <strong>' . $date . '</strong> by <strong>' . ( get_the_author() ?: 'Guest Author' ) . '</strong> in <strong>' . implode( ', ', $c_cats ) . '</strong>';
+				$article .= '<p>' . $excerpt . '</p>';
+				$article .= '<p>Tags: ' . implode( ', ', $t_tags ) . '</p>';
 				$article .= $this->article_delimiter;
 				$this->wpclilog( '+ Added: ' . $title );
 			}
