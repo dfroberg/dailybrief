@@ -1112,6 +1112,9 @@ class Dailybrief {
 	 * @return mixed post_id
 	 */
 	public function create_post() {
+		if ( _mb_strlen( $this->content_buffer ) > 65280 ) {
+			return new WP_Error( 'error', 'Make sure your text is smaller than 65280 characters.' );
+		}
 		$post_category = explode( ',', $this->post_category );
 		if ( empty( $post_category ) ) {
 			$post_category[] = 1; // "Uncategorized".
