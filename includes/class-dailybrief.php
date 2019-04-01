@@ -1602,9 +1602,9 @@ class Dailybrief {
 				$more    = '... <a href="' . get_permalink( $id ) . $this->get_url_suffix() . '" target="dailybrief">' . $this->get_article_continue() . '</a>';
 
 				if ( false === $use_excerpts || '0' === $use_excerpts || ! has_excerpt() ) {
-					$excerpt = wp_trim_words( wp_strip_all_tags( $content, true ), $this->get_excerpt_words(), $more );
+					$excerpt = wp_trim_words( wp_strip_all_tags( strip_shortcodes( $content ), true ), $this->get_excerpt_words(), $more );
 				} else {
-					$excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt( $query ), true ), $this->get_excerpt_words(), $more );
+					$excerpt = wp_trim_words( wp_strip_all_tags( strip_shortcodes( get_the_excerpt( $query ) ), true ), $this->get_excerpt_words(), $more );
 				}
 				$title = $query->post->post_title;
 				$date  = $query->post->post_date;
