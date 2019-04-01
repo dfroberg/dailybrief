@@ -1112,10 +1112,6 @@ class Dailybrief {
 	 * @return mixed post_id
 	 */
 	public function create_post() {
-		// Dead end if CRON is paused.
-		if ( '1' === $this->cron_pause ) {
-			return false;
-		}
 		$post_category = explode( ',', $this->post_category );
 		if ( empty( $post_category ) ) {
 			$post_category[] = 1; // "Uncategorized".
