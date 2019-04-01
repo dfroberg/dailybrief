@@ -139,7 +139,19 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				</div>
 				<hr>
 				<div align="center">
-					<a <a href = "options-general.php?page=dailybrief&tab=publish"><button class="dailybrief_preview_generate">Manually Generate Brief Now!</button></a>
+					<?php
+					if ( _mb_strlen( $sample['content'] ) < 65280 ) {
+						?>
+						<a href = "options-general.php?page=dailybrief&tab=publish">
+							<button class = "dailybrief_preview_generate">Manually Generate Brief Now!</button>
+						</a>
+						<?php
+					} else {
+						?>
+						<p>Make sure your text is smaller than <strong>65280</strong> characters.<br>It is now <?php echo _mb_strlen( $sample['content'] ); ?></p>
+						<?php
+					}
+					?>
 					<p>This will create the Brief immediately with the contents in the preview.</p>
 				</div>
 			</div>
