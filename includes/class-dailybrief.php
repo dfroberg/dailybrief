@@ -1722,6 +1722,8 @@ class Dailybrief {
 				$this->output( '</h3><ul>', $buffer );
 				$this->output( $toc_items, $buffer );
 				$this->output( '</ul></p><hr>', $buffer );
+			} else {
+				$this->output( '<hr><p> </p>', $buffer );
 			}
 		} else {
 			$this->output( '<center><h3>Currently No articles available to Brief about.<br>Check your settings.</h3>Do you have any posts during the specified period or do you have any Focus category set that interferes?</center>', $buffer );

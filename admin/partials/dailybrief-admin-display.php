@@ -144,15 +144,15 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 						?>
 						<a href = "options-general.php?page=dailybrief&tab=publish">
 							<button class = "dailybrief_preview_generate">Manually Generate Brief Now!</button>
+							<p>This will create the Brief immediately with the contents in the preview.</p>
 						</a>
 						<?php
 					} else {
 						?>
-						<p>Make sure your text is smaller than <strong>65280</strong> characters.<br>It is now <?php echo _mb_strlen( $sample['content'] ); ?></p>
+						<p>Make sure your text is smaller than <strong>65280</strong> characters.<br>It is now <?php echo _mb_strlen( $sample['content'] ); ?> characters.</p>
 						<?php
 					}
 					?>
-					<p>This will create the Brief immediately with the contents in the preview.</p>
 				</div>
 			</div>
 
