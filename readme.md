@@ -93,6 +93,11 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 ## Changelog ##
 
+### 1.0.31 &mdash; 1 of April, 2019 ###
+* Fix: Strip shortcodes from excerpts.
+* Fix: Some display fixes in preview and generated posts.
+* Fix: Make sure your text is smaller than 65280 characters.
+
 ### 1.0.30 &mdash; 18 of March, 2019 ###
 * Fix: Debug aside covered options screens on small screen devices.
 * Fix: Fixed select2 JS error on multiple=true and removed it since it's not needed.
