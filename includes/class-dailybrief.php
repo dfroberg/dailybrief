@@ -1824,7 +1824,7 @@ class Dailybrief {
 					wp_publish_post( $this->post_id_created );
 					$this->wpclilog( '* Post is now Published ' );
 
-					if ( ! class_exists( 'Steempress_sp_Admin' ) ) {
+					if ( ! defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) ) {
 						$this->wpcliwarn( '? SteemPress NOT available (did you install it?), can not post to steem. ' );
 					} else {
 						$this->wpclilog( '* SteemPress IS available, can post to steem, so trying that now ' );

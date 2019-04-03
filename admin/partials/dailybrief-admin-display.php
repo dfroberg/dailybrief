@@ -140,7 +140,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				<hr>
 				<div align="center">
 					<?php
-					if ( _mb_strlen( $sample['content'] ) < 65280 ) {
+					if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) && _mb_strlen( $sample['content'] ) < 65280 ) {
 						?>
 						<a href = "options-general.php?page=dailybrief&tab=publish">
 							<button class = "dailybrief_preview_generate">Manually Generate Brief Now!</button>
@@ -532,6 +532,20 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		if ( $options['debug'] ) {
 			?>
 			<h4>Debuging Information:</h4>
+			<?php
+			if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) && _mb_strlen( $sample['content'] ) < 65280 ) {
+				?>
+				<h3>Warning:</h3>
+				<p>This post will be larger than 65280 characters, and can't be published to steem.</p>
+				<?php
+			}
+			if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) ) {
+				?>
+				<p>SteemPress</p>
+				<p>Is installed.</p>
+				<?php
+			}
+			?>
 			<p>Internal CRON is:
 				<br/><?php echo( wp_get_schedule( 'dailybrief_daily_event' ) ? 'Scheduled to run on ' . get_date_from_gmt( $date->format( 'Y-m-d H:m:s T' ) ) . ' ' . $timezone->getName() : '<strong>Not</strong> scheduled' ); ?>
 			</p>
