@@ -533,16 +533,15 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 			?>
 			<h4>Debuging Information:</h4>
 			<?php
-			if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) && _mb_strlen( $sample['content'] ) < 65280 ) {
+			if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) && _mb_strlen( $sample['content'] ) > 65280 ) {
 				?>
-				<h3>Warning:</h3>
+				<strong>Warning:</strong>
 				<p>This post will be larger than 65280 characters, and can't be published to steem.</p>
 				<?php
 			}
 			if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) ) {
 				?>
-				<p>SteemPress</p>
-				<p>Is installed.</p>
+				<p>SteemPress: <strong>Is installed.</strong></p>
 				<?php
 			}
 			?>

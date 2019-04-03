@@ -85,6 +85,9 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 == Changelog ==
 
+= 1.0.32 &mdash; 3 of April, 2019 =
+* Fix: Show warning in debug screen if steempress is detected and post is too large.
+
 = 1.0.31 &mdash; 1 of April, 2019 =
 * Fix: Ensure character limit is only respected if SteemPress is installed and active, as there are other uses for DailyBrief.
 
