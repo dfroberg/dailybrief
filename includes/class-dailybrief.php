@@ -1665,7 +1665,9 @@ class Dailybrief {
 				}
 				// Pick a temporary featured image from the posts in the brief to use if featured_image_url is not set.
 				if ( '' === $this->get_temp_featured_image_url() && '' === $this->get_featured_image_url() ) {
-					$this->set_temp_featured_image_url( get_the_post_thumbnail_url( $id, 'full' ) );
+					$post_thumbnail_id  = get_post_thumbnail_id( $id );
+					$post_thumbnail_url = wp_get_attachment_url( $post_thumbnail_id );
+					$this->set_temp_featured_image_url( $post_thumbnail_url );
 				}
 				// Compile a TOC.
 				if ( '1' === $this->get_include_toc() ) {

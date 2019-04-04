@@ -93,6 +93,9 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 ## Changelog ##
 
+### 1.0.33 &mdash; 4 of April, 2019 ###
+* Fix: Workaround for catching and setting featured image of the post dynamically while using CDN etc.
+
 ### 1.0.32 &mdash; 3 of April, 2019 ###
 * Fix: Show warning in debug screen if steempress is detected and post is too large.
 
