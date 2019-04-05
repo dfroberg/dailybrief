@@ -139,8 +139,20 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				</div>
 				<hr>
 				<div align="center">
-					<a <a href = "options-general.php?page=dailybrief&tab=publish"><button class="dailybrief_preview_generate">Manually Generate Brief Now!</button></a>
-					<p>This will create the Brief immediately with the contents in the preview.</p>
+					<?php
+					if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) && _mb_strlen( $sample['content'] ) < 65280 ) {
+						?>
+						<a href = "options-general.php?page=dailybrief&tab=publish">
+							<button class = "dailybrief_preview_generate">Manually Generate Brief Now!</button>
+							<p>This will create the Brief immediately with the contents in the preview.</p>
+						</a>
+						<?php
+					} else {
+						?>
+						<p>Make sure your text is smaller than <strong>65280</strong> characters.<br>It is now <?php echo _mb_strlen( $sample['content'] ); ?> characters.</p>
+						<?php
+					}
+					?>
 				</div>
 			</div>
 
@@ -213,6 +225,15 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 										name = "<?php echo $this->plugin_name; ?>[post_title]"
 										value = "<?php echo htmlspecialchars( ( '' === $options['post_title'] ? $dc->get_post_title() : $options['post_title'] ), ENT_QUOTES ); ?>"/>
 							</td>
+						</tr>
+						<tr><td>Title Link</td><td><input type = "radio"
+										value = "1"
+										id = "title_link_on"
+										name = "<?php echo $this->plugin_name; ?>[title_link]" <?php echo( '1' === $options['title_link'] ? 'checked' : '' ); ?> /><label for="title_link_on">On (Default)</label> <input type = "radio"
+										value = "0"
+										id = "title_link_off"
+										name = "<?php echo $this->plugin_name; ?>[title_link]" <?php echo( ( '0' === $options['title_link'] || empty( $options['title_link'] ) ) ? 'checked' : '' ); ?> /><label for="title_link_off">Off</label>
+								<br><em>( Make post title linked to original article )</em> </td>
 						</tr>
 						<tr>
 							<td>
@@ -511,6 +532,19 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		if ( $options['debug'] ) {
 			?>
 			<h4>Debuging Information:</h4>
+			<?php
+			if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) && _mb_strlen( $sample['content'] ) > 65280 ) {
+				?>
+				<strong>Warning:</strong>
+				<p>This post will be larger than 65280 characters, and can't be published to steem.</p>
+				<?php
+			}
+			if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) ) {
+				?>
+				<p>SteemPress: <strong>Is installed.</strong></p>
+				<?php
+			}
+			?>
 			<p>Internal CRON is:
 				<br/><?php echo( wp_get_schedule( 'dailybrief_daily_event' ) ? 'Scheduled to run on ' . get_date_from_gmt( $date->format( 'Y-m-d H:m:s T' ) ) . ' ' . $timezone->getName() : '<strong>Not</strong> scheduled' ); ?>
 			</p>

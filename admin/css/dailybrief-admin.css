@@ -89,6 +89,21 @@
 	top: 0;
 	height: 100%;
 }
+/**
+ * Override on mobile or smaller screens.
+ */
+@media only screen and (max-width: 1024px) {
+	.dailybrief {
+		width: 100%;
+	}
+	.dailybrief .dailybrief-sidebar {
+		position: inherit;
+		float: left;
+		width: 100%;
+		min-width: 100%;
+	}
+}
+
 .dailybrief .dailybrief-sidebar .major-publishing-actions {
 	padding: 15px;
 	clear: both;

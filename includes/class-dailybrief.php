@@ -457,6 +457,7 @@ class Dailybrief {
 		return $this->toc_header;
 	}
 
+
 	/**
 	 * Set table of contents header.
 	 *
@@ -465,6 +466,30 @@ class Dailybrief {
 	public function set_toc_header( $toc_header ) {
 		$this->toc_header = $toc_header;
 	}
+	/**
+	 * Enable or disable linked title.
+	 *
+	 * @var string
+	 */
+	private $title_link = '1';
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_title_link() {
+		return $this->title_link;
+	}
+	/**
+	 * Set title link.
+	 *
+	 * @param string $title_link Set title links.
+	 */
+	public function set_title_link( $title_link ) {
+		$this->title_link = $title_link;
+	}
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -1085,6 +1110,7 @@ class Dailybrief {
 		$this->cron_pause              = $this->get_option_default( 'cron_pause', '0' );
 		$this->use_excerpts            = $this->get_option_default( 'use_excerpts', '0' );
 		$this->skip_categories         = $this->get_option_default( 'skip_categories', '-1' );
+		$this->title_link              = $this->get_option_default( 'title_link', '1' );
 
 	}
 
@@ -1112,9 +1138,8 @@ class Dailybrief {
 	 * @return mixed post_id
 	 */
 	public function create_post() {
-		// Dead end if CRON is paused.
-		if ( '1' === $this->cron_pause ) {
-			return false;
+		if ( _mb_strlen( $this->content_buffer ) > 65280 ) {
+			return new WP_Error( 'error', 'Make sure your text is smaller than 65280 characters.' );
 		}
 		$post_category = explode( ',', $this->post_category );
 		if ( empty( $post_category ) ) {
@@ -1138,7 +1163,7 @@ class Dailybrief {
 		} else {
 			$dailybrief_featured_image_id = attachment_url_to_postid( $this->temp_featured_image_url );
 		}
-		if ( false === $dailybrief_featured_image_id ) {
+		if ( 0 === $dailybrief_featured_image_id ) {
 			$this->wpcliwarn( 'Unable to set featured image, make sure you have uploaded the image you want to use to your sites media library and set the featured_image_url option with its complete URL.' );
 
 			return $post_id;
@@ -1603,9 +1628,9 @@ class Dailybrief {
 				$more    = '... <a href="' . get_permalink( $id ) . $this->get_url_suffix() . '" target="dailybrief">' . $this->get_article_continue() . '</a>';
 
 				if ( false === $use_excerpts || '0' === $use_excerpts || ! has_excerpt() ) {
-					$excerpt = wp_trim_words( wp_strip_all_tags( $content, true ), $this->get_excerpt_words(), $more );
+					$excerpt = wp_trim_words( wp_strip_all_tags( strip_shortcodes( $content ), true ), $this->get_excerpt_words(), $more );
 				} else {
-					$excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt( $query ), true ), $this->get_excerpt_words(), $more );
+					$excerpt = wp_trim_words( wp_strip_all_tags( strip_shortcodes( get_the_excerpt( $query ) ), true ), $this->get_excerpt_words(), $more );
 				}
 				$title = $query->post->post_title;
 				$date  = $query->post->post_date;
@@ -1640,7 +1665,9 @@ class Dailybrief {
 				}
 				// Pick a temporary featured image from the posts in the brief to use if featured_image_url is not set.
 				if ( '' === $this->get_temp_featured_image_url() && '' === $this->get_featured_image_url() ) {
-					$this->set_temp_featured_image_url( get_the_post_thumbnail_url( $id, 'full' ) );
+					$post_thumbnail_id  = get_post_thumbnail_id( $id );
+					$post_thumbnail_url = wp_get_attachment_url( $post_thumbnail_id );
+					$this->set_temp_featured_image_url( $post_thumbnail_url );
 				}
 				// Compile a TOC.
 				if ( '1' === $this->get_include_toc() ) {
@@ -1664,10 +1691,16 @@ class Dailybrief {
 						$article .= ( '<img src="' . $post_thumbnail . '">' );
 					}
 				}
-				$article .= ( '<h2><a href="' . get_permalink( $id ) . $this->url_suffix . '" target="dailybrief">' . $title . '</a></h2>' );
-				$article .= ( 'Published <strong>' . $date . '</strong> by <strong>' . ( get_the_author() ?: 'Guest Author' ) . '</strong> in <strong>' . implode( ', ', $c_cats ) . '</strong>' );
-				$article .= ( '<p>' . $excerpt . '</p>' );
-				$article .= ( '<p>Tags: ' . implode( ', ', $t_tags ) . '</p>' );
+				$article .= '<h2>';
+				if ( 1 == $this->get_title_link() ) {
+					$article .= '<a href="' . get_permalink( $id ) . $this->url_suffix . '" target="dailybrief">' . $title . '</a>';
+				} else {
+					$article .= $title;
+				}
+				$article .= '</h2>';
+				$article .= 'Published <strong>' . $date . '</strong> by <strong>' . ( get_the_author() ?: 'Guest Author' ) . '</strong> in <strong>' . implode( ', ', $c_cats ) . '</strong>';
+				$article .= '<p>' . $excerpt . '</p>';
+				$article .= '<p>Tags: ' . implode( ', ', $t_tags ) . '</p>';
 				$article .= $this->article_delimiter;
 				$this->wpclilog( '+ Added: ' . $title );
 			}
@@ -1723,6 +1756,8 @@ class Dailybrief {
 				$this->output( '</h3><ul>', $buffer );
 				$this->output( $toc_items, $buffer );
 				$this->output( '</ul></p><hr>', $buffer );
+			} else {
+				$this->output( '<hr><p> </p>', $buffer );
 			}
 		} else {
 			$this->output( '<center><h3>Currently No articles available to Brief about.<br>Check your settings.</h3>Do you have any posts during the specified period or do you have any Focus category set that interferes?</center>', $buffer );
@@ -1791,7 +1826,7 @@ class Dailybrief {
 					wp_publish_post( $this->post_id_created );
 					$this->wpclilog( '* Post is now Published ' );
 
-					if ( ! class_exists( 'Steempress_sp_Admin' ) ) {
+					if ( ! defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) ) {
 						$this->wpcliwarn( '? SteemPress NOT available (did you install it?), can not post to steem. ' );
 					} else {
 						$this->wpclilog( '* SteemPress IS available, can post to steem, so trying that now ' );

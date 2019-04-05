@@ -15,7 +15,7 @@
  * Plugin Name:       Dailybrief
  * Plugin URI:        https://github.com/dfroberg/dailybrief
  * Description:       WordPress plugin with WP-CLI support to generate a daily brief of a previous day or periods posts.
- * Version:           1.0.29
+ * Version:           1.0.33
  * Author:            Daniel Froberg
  * Author URI:        https://www.froberg.org
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'DAILYBRIEF_VERSION', '1.0.29' );
+define( 'DAILYBRIEF_VERSION', '1.0.33' );
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dailybrief-cli-command.php';
@@ -45,6 +45,13 @@ register_activation_hook( __FILE__, array( Dailybrief::class, 'activator' ) );
 register_deactivation_hook( __FILE__, array( Dailybrief::class, 'deactivator' ) );
 
 define( 'DAILYBRIEF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+
+/**
+ * Check if SteemPress is Installed.
+ */
+if ( ! class_exists( 'Steempress_sp_Admin' ) ) {
+	define( 'DAILYBRIEF_DETECTED_STEEMPRESS', true );
+}
 
 /**
  * Helper class for getting correct Timezone in WordPress.
