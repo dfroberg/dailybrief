@@ -69,6 +69,12 @@ class Dailybrief {
 	 */
 	private $temp_featured_image_url = '';
 	/**
+	 * Placeholder for the image id we got to use as featured image.
+	 *
+	 * @var string
+	 */
+	private $temp_featured_image_id = '';
+	/**
 	 * This contains the created WP Post ID if successfully generated.
 	 *
 	 * @var int
@@ -212,6 +218,12 @@ class Dailybrief {
 	 * @var string
 	 */
 	private $featured_image_url;
+	/**
+	 * Preset or collected featured image ID.
+	 *
+	 * @var string
+	 */
+	private $featured_image_id;
 	/**
 	 * Contains what should be sent to the post.
 	 *
@@ -550,6 +562,24 @@ class Dailybrief {
 	 */
 	public function set_temp_featured_image_url( $temp_featured_image_url ) {
 		$this->temp_featured_image_url = $temp_featured_image_url;
+	}
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
+	public function get_temp_featured_image_id() {
+		return $this->temp_featured_image_id;
+	}
+
+	/**
+	 * Setter.
+	 *
+	 * @param string $temp_featured_image_id Placeholder for temp featured image id.
+	 */
+	public function set_temp_featured_image_id( $temp_featured_image_id ) {
+		$this->temp_featured_image_id = $temp_featured_image_id;
 	}
 
 	/**
@@ -989,6 +1019,24 @@ class Dailybrief {
 	 *
 	 * @return string
 	 */
+	public function get_featured_image_id() {
+		return $this->featured_image_id;
+	}
+
+	/**
+	 * Setter.
+	 *
+	 * @param string $featured_image_id Featured Image ID to use.
+	 */
+	public function set_featured_image_id( $featured_image_id ) {
+		$this->featured_image_id = $featured_image_id;
+	}
+
+	/**
+	 * Getter.
+	 *
+	 * @return string
+	 */
 	public function get_content_buffer() {
 		return $this->content_buffer;
 	}
@@ -1158,14 +1206,13 @@ class Dailybrief {
 				'post_category'  => $post_category,
 			)
 		);
-		if ( '' !== $this->featured_image_url ) {
-			$dailybrief_featured_image_id = attachment_url_to_postid( $this->featured_image_url );
+		if ( '' !== $this->featured_image_id ) {
+			$dailybrief_featured_image_id = $this->featured_image_id;
 		} else {
-			$dailybrief_featured_image_id = attachment_url_to_postid( $this->temp_featured_image_url );
+			$dailybrief_featured_image_id = $this->temp_featured_image_id;
 		}
 		if ( 0 === $dailybrief_featured_image_id ) {
 			$this->wpcliwarn( 'Unable to set featured image, make sure you have uploaded the image you want to use to your sites media library and set the featured_image_url option with its complete URL.' );
-
 			return $post_id;
 		}
 		// Set Featured image if available.
@@ -1663,11 +1710,10 @@ class Dailybrief {
 						$article_tags[] = $article_tag;
 					}
 				}
-				// Pick a temporary featured image from the posts in the brief to use if featured_image_url is not set.
-				if ( '' === $this->get_temp_featured_image_url() && '' === $this->get_featured_image_url() ) {
-					$post_thumbnail_id  = get_post_thumbnail_id( $id );
-					$post_thumbnail_url = wp_get_attachment_url( $post_thumbnail_id );
-					$this->set_temp_featured_image_url( $post_thumbnail_url );
+				// Pick a temporary featured image from the posts in the brief to use if featured_image_id is not set.
+				if ( '' === $this->get_temp_featured_image_id() && '' === $this->get_featured_image_id() ) {
+					$post_thumbnail_id = get_post_thumbnail_id( $id );
+					$this->set_temp_featured_image_id( $post_thumbnail_id );
 				}
 				// Compile a TOC.
 				if ( '1' === $this->get_include_toc() ) {
