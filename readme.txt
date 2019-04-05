@@ -93,8 +93,6 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 = 1.0.31 &mdash; 1 of April, 2019 =
 * Fix: Ensure character limit is only respected if SteemPress is installed and active, as there are other uses for DailyBrief.
-
-= 1.0.31 &mdash; 1 of April, 2019 =
 * Add: Enable or Disable Article title links.
 * Fix: Strip shortcodes from excerpts.
 * Fix: Some display fixes in preview and generated posts.
