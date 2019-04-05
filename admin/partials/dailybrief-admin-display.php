@@ -127,7 +127,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				<p></p>
 				<div id="steem-body" class="steem-body">
 				<?php
-				echo '<center><img src="' . wp_get_attachment_image_src( $dc->get_temp_featured_image_id(), 'full' ) . '" width="640"></center>';
+				echo '<center><img src="' . wp_get_attachment_image_url( $dc->get_temp_featured_image_id(), 'full' ) . '" width="640"></center>';
 				?>
 				<br>
 				<p></p>
