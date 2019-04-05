@@ -1712,7 +1712,7 @@ class Dailybrief {
 				}
 				// Pick a temporary featured image from the posts in the brief to use if featured_image_id is not set.
 				if ( 0 == $this->get_temp_featured_image_id() && 0 == $this->get_featured_image_id() ) {
-					$post_thumbnail_id  = get_post_thumbnail_id( $id );
+					$post_thumbnail_id  = get_post_thumbnail_id( $id, 'full' );
 					$post_thumbnail_url = wp_get_attachment_url( $post_thumbnail_id );
 					$this->set_temp_featured_image_url( $post_thumbnail_url );
 					$this->set_temp_featured_image_id( $post_thumbnail_id );
