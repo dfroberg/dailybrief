@@ -93,6 +93,9 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 ## Changelog ##
 
+### 1.0.34 &mdash; 5 of April, 2019 ###
+* Fix: More workarounds setting featured image of the post dynamically while using CDN etc.
+
 ### 1.0.33 &mdash; 4 of April, 2019 ###
 * Fix: Workaround for catching and setting featured image of the post dynamically while using CDN etc.
 
