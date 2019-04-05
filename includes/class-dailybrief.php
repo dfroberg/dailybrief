@@ -1061,6 +1061,7 @@ class Dailybrief {
 	 * @param bool $manual Enable override of pause.
 	 *
 	 * @return array
+	 * @throws \WP_CLI\ExitException Explodes on Error.
 	 */
 	function dailybrief_do_daily_event( $manual = false ) {
 		// do brief every day!
@@ -1206,17 +1207,20 @@ class Dailybrief {
 				'post_category'  => $post_category,
 			)
 		);
-		if ( '' !== $this->featured_image_id ) {
+		if ( $this->featured_image_id > 0 ) {
 			$dailybrief_featured_image_id = $this->featured_image_id;
 		} else {
 			$dailybrief_featured_image_id = $this->temp_featured_image_id;
 		}
-		if ( 0 === $dailybrief_featured_image_id ) {
+		if ( $dailybrief_featured_image_id > 0 ) {
+			// Set Featured image if available.
+			$set_thumb_result = set_post_thumbnail( $post_id, $dailybrief_featured_image_id );
+			if ( ! $set_thumb_result ) {
+				return new WP_Error( 'error', 'Can not set thumbnail.' );
+			}
+		} else {
 			$this->wpcliwarn( 'Unable to set featured image, make sure you have uploaded the image you want to use to your sites media library and set the featured_image_url option with its complete URL.' );
-			return $post_id;
 		}
-		// Set Featured image if available.
-		set_post_thumbnail( $post_id, $dailybrief_featured_image_id );
 
 		return $post_id;
 	}
