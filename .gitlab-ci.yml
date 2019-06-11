@@ -48,7 +48,7 @@ mysql_build:
     - cluster
   stage: mysql_setup
   services:
-    - mysql
+    - mysql:5.6
   image: mysql:5.6
   before_script:
     - mysql --version
