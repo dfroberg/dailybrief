@@ -11,6 +11,7 @@ variables:
 #    - vendor/
 
 stages:
+  - mysql_build
   - codestyle
   - codecoverage
   - test
@@ -40,6 +41,18 @@ before_script:
   - composer global require "wp-coding-standards/wpcs=1.2.0" --no-progress
   - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
   - composer global require "dealerdirect/phpcodesniffer-composer-installer=0.4.1" --no-progress
+
+mysql_build:
+  tags:
+    - kubernetes
+    - cluster
+  services:
+    - mysql
+  image: mysql
+  before_script:
+    - mysql --version
+  script:
+    - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=mysql "${MYSQL_DATABASE}"
 
 codestyle:
   tags:
