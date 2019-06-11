@@ -48,12 +48,12 @@ mysql_build:
     - cluster
   stage: mysql_setup
   services:
-    - mysql:5.6
+    - mysql
   image: mysql:5.6
   before_script:
     - mysql --version
   script:
-    - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=localhost "${MYSQL_DATABASE}"
+    - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=mysql "${MYSQL_DATABASE}"
 
 codestyle:
   tags:
@@ -62,7 +62,7 @@ codestyle:
   stage: codestyle
   image: stayallive/php:7.2
   services:
-    - mysql:5.6
+    - mysql
   artifacts:
     name: "${CI_BUILD_NAME}_${CI_BUILD_REF_NAME}_report"
     untracked: false
@@ -83,7 +83,7 @@ PHPunit:PHP5.6:MySQL:
   retry: 2
   image: tetraweb/php:5.6
   services:
-    - mysql:5.6
+    - mysql
   script:
     - docker-php-ext-enable mcrypt
     - composer global require "phpunit/phpunit=4.*" --no-progress
@@ -96,7 +96,7 @@ PHPunit:PHP7.0:MySQL:
   stage: test
   image: stayallive/php:7.0
   services:
-    - mysql:5.6
+    - mysql
   script:
     - docker-php-ext-enable mcrypt
     - composer global require "phpunit/phpunit=6.*" --no-progress
@@ -109,7 +109,7 @@ PHPunit:PHP7.1:MySQL:
   stage: test
   image: stayallive/php:7.1
   services:
-    - mysql:5.6
+    - mysql
   script:
     - docker-php-ext-enable mcrypt
     - composer global require "phpunit/phpunit=6.*" --no-progress
@@ -123,7 +123,7 @@ PHPunit:PHP7.2:MySQL:
   stage: test
   image: stayallive/php:7.2
   services:
-    - mysql:5.6
+    - mysql
   script:
     - apt-get -yqq update && apt-get install -y libmcrypt-dev pkg-php-tools && pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
     - composer global require "phpunit/phpunit=6.*" --no-progress
