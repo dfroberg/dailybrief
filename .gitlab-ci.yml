@@ -42,6 +42,9 @@ before_script:
   - composer global require "dealerdirect/phpcodesniffer-composer-installer=0.4.1" --no-progress
 
 codestyle:
+  tags:
+    - kubernetes
+    - cluster
   stage: codestyle
   image: stayallive/php:7.2
   services:
@@ -59,6 +62,9 @@ codestyle:
     - chmod +x bin/generate-markdown-readme && bin/generate-markdown-readme
 
 PHPunit:PHP5.6:MySQL:
+  tags:
+    - kubernetes
+    - cluster
   stage: test
   retry: 2
   image: tetraweb/php:5.6
@@ -70,6 +76,9 @@ PHPunit:PHP5.6:MySQL:
     - $HOME/.composer/vendor/bin/phpunit
 
 PHPunit:PHP7.0:MySQL:
+  tags:
+    - kubernetes
+    - cluster
   stage: test
   image: stayallive/php:7.0
   services:
@@ -80,6 +89,9 @@ PHPunit:PHP7.0:MySQL:
     - $HOME/.composer/vendor/bin/phpunit
 
 PHPunit:PHP7.1:MySQL:
+  tags:
+    - kubernetes
+    - cluster
   stage: test
   image: stayallive/php:7.1
   services:
@@ -91,6 +103,9 @@ PHPunit:PHP7.1:MySQL:
 
 
 PHPunit:PHP7.2:MySQL:
+  tags:
+    - kubernetes
+    - cluster
   stage: test
   image: stayallive/php:7.2
   services:
@@ -101,6 +116,9 @@ PHPunit:PHP7.2:MySQL:
     - $HOME/.composer/vendor/bin/phpunit
 
 dailybrief:
+  tags:
+    - kubernetes
+    - cluster
   stage: build
   image: stayallive/php:7.2
   retry: 2

@@ -3,7 +3,7 @@ Contributors:      dfroberg
 Donation Link:     https://steemit.com/@dfroberg
 Tags:              content+generation, generation, steem, blockchain, steemit, briefs
 Requires at least: 4.7
-Tested up to:      5.1
+Tested up to:      5.2.1
 Stable tag:        trunk
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
@@ -85,6 +85,8 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 == Changelog ==
 
+= 1.0.35 &mdash; 10 of June, 2019 =
+* Compatibility check for WP 5.2.1 and SteemPress 2.4.1.
 
 = 1.0.34 &mdash; 5 of April, 2019 =
 * Fix: More workarounds setting featured image of the post dynamically while using CDN etc.

@@ -7,7 +7,7 @@ DailyBrief is a WordPress plugin that provides a post summary of all WordPress p
 **Contributors:** [dfroberg](http://profiles.wordpress.org/dfroberg)  
 **Tags:** [content+generation](http://wordpress.org/plugins/tags/content+generation), [generation](http://wordpress.org/plugins/tags/generation), [steem](http://wordpress.org/plugins/tags/steem), [blockchain](http://wordpress.org/plugins/tags/blockchain), [steemit](http://wordpress.org/plugins/tags/steemit), [briefs](http://wordpress.org/plugins/tags/briefs)  
 **Requires at least:** 4.7  
-**Tested up to:** 5.1  
+**Tested up to:** 5.2.1  
 **Stable tag:** trunk (master)  
 **License:** [GPLv2 or later](http://www.gnu.org/licenses/gpl-2.0.html)  
 **Donation Link:** https://steemit.com/@dfroberg  
@@ -92,6 +92,9 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 
 ## Changelog ##
+
+### 1.0.35 &mdash; 10 of June, 2019 ###
+* Compatibility check for WP 5.2.1 and SteemPress 2.4.1.
 
 ### 1.0.34 &mdash; 5 of April, 2019 ###
 * Fix: More workarounds setting featured image of the post dynamically while using CDN etc.
