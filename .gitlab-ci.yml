@@ -53,7 +53,7 @@ mysql_build:
   before_script:
     - mysql --version
   script:
-    - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=mysql "${MYSQL_DATABASE}"
+    - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=localhost "${MYSQL_DATABASE}"
 
 codestyle:
   tags:
