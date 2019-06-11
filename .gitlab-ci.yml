@@ -11,7 +11,7 @@ variables:
 #    - vendor/
 
 stages:
-  - mysql_build
+  - mysql_setup
   - codestyle
   - codecoverage
   - test
@@ -46,6 +46,7 @@ mysql_build:
   tags:
     - kubernetes
     - cluster
+  stage: mysql_setup
   services:
     - mysql
   image: mysql:5.6
