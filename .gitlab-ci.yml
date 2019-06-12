@@ -43,17 +43,21 @@ before_script:
   - composer global require "dealerdirect/phpcodesniffer-composer-installer=0.4.1" --no-progress
 
 mysql_build:
+  image: docker:latest
   tags:
     - kubernetes
     - cluster
   stage: mysql_setup
+  variables:
+    MYSQL_DATABASE: wordpress_tests
+    MYSQL_ROOT_PASSWORD: mysql
   services:
-    - mysql:5.6
-  image: stayallive/php:7.2
+    - mysql
   before_script:
+    - apk --no-cache add mysql-client
     - mysql --version
   script:
-    - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=localhost -P 3306 --protocol=tcp "${MYSQL_DATABASE}"
+    - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=127.0.0.1 "${MYSQL_DATABASE}"
 
 codestyle:
   tags:
