@@ -63,7 +63,7 @@ mysql_build:
     - cd '/usr' ; /usr/bin/mysqld_safe --datadir='/var/lib/mysql'
     - mysql --version
     - export
-    - mysql_install_db --host=127.0.0.1 --protocol=tcp --user=mysql --datadir=${DB_DATA_PATH}
+    - mysql_install_db --user=mysql --datadir=${DB_DATA_PATH}
     - /usr/bin/mysqladmin --host=127.0.0.1 --protocol=tcp -u root password "${MYSQL_ROOT_PASSWORD}"
   script:
     - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=127.0.0.1 --protocol=tcp "${MYSQL_DATABASE}"
