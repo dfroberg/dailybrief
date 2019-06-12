@@ -51,12 +51,18 @@ mysql_build:
   variables:
     MYSQL_DATABASE: wordpress_tests
     MYSQL_ROOT_PASSWORD: mysql
+    DB_DATA_PATH: "/var/lib/mysql"
+    DB_ROOT_PASS: "mysql"
+    DB_USER: "mariadb_user"
+    DB_PASS: "mariadb_user_password"
+    MAX_ALLOWED_PACKET: "200M"
   services:
     - mysql
   before_script:
-    - apk --no-cache add mysql-client
-    - apk --no-cache add mysql-server
+    - apk --no-cache mariadb mariadb-client
     - mysql --version
+    - mysql_install_db --user=mysql --datadir=${DB_DATA_PATH}
+    - rc-service mariadb start
   script:
     - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=127.0.0.1 "${MYSQL_DATABASE}"
 
