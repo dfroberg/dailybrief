@@ -53,6 +53,7 @@ mysql_build:
   before_script:
     - mysql --version
   script:
+    - ps wwaux | grep -i sql
     - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=localhost -P 3306 --protocol=tcp "${MYSQL_DATABASE}"
 
 codestyle:
