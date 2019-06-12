@@ -60,10 +60,10 @@ mysql_build:
   services:
     - mysql
   before_script:
-    - apk --no-cache add mariadb mariadb-client
+    - apk --no-cache add mariadb mariadb-client sed
     - cd '/usr' ; /usr/bin/mysqld_safe --datadir='/var/lib/mysql'
     - mysql --version
-    - echo "127.0.0.1 mysql" >> /etc/hosts
+    - sed -i 's/127.0.0.1	localhost/127.0.0.1	localhost mysql/g' /etc/hosts
     - cat /etc/hosts
     - export
     - mysql_install_db --user=mysql --datadir=${DB_DATA_PATH}
