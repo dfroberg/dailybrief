@@ -65,7 +65,7 @@ mysql_build:
     - mysql --version
     - cp /etc/hosts ~/hosts.new
     - sed -i 's/127.0.0.1	localhost/127.0.0.1	localhost mysql/g' ~/hosts.new
-    - cp -f ~/hosts.new /etc/hosts
+    - cat ~/hosts.new > /etc/hosts
     - cat /etc/hosts
     - export
     - mysql_install_db --user=mysql --datadir=${DB_DATA_PATH}
