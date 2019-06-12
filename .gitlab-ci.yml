@@ -60,9 +60,11 @@ mysql_build:
     - mysql
   before_script:
     - apk --no-cache add mariadb mariadb-client
+    - cd '/usr' ; /usr/bin/mysqld_safe --datadir='/var/lib/mysql'
+    - /usr/bin/mysqladmin -u root password "${MYSQL_ROOT_PASSWORD}"
     - mysql --version
     - mysql_install_db --user=mysql --datadir=${DB_DATA_PATH}
-    - rc-service mariadb start
+    - export
   script:
     - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=127.0.0.1 "${MYSQL_DATABASE}"
 
