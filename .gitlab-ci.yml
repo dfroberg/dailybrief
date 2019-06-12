@@ -48,8 +48,7 @@ mysql_build:
     - cluster
   stage: mysql_setup
   services:
-    name: mysql:5.6
-    alias: mysql
+    - mysql:5.6
   image: stayallive/php:7.2
   before_script:
     - mysql --version
