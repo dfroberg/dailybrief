@@ -55,6 +55,7 @@ mysql_build:
     - mysql
   before_script:
     - apk --no-cache add mysql-client
+    - apk --no-cache add mysql-server
     - mysql --version
   script:
     - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=127.0.0.1 "${MYSQL_DATABASE}"
