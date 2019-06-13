@@ -52,7 +52,7 @@ mysql_build:
     MYSQL_HOST: mysql
     MYSQL_DATABASE: wordpress_tests
     MYSQL_ROOT_PASSWORD: mysql
-    DB_DATA_PATH: "/var/lib/mysql"
+    DB_DATA_PATH: "/var/lib/mysql/data"
     DB_ROOT_PASS: "mysql"
     DB_USER: "mariadb_user"
     DB_PASS: "mariadb_user_password"
@@ -68,7 +68,7 @@ mysql_build:
     - cat ~/hosts.new > /etc/hosts
     - cat /etc/hosts
     - mysql_install_db --user=mysql --datadir=${DB_DATA_PATH}
-    - cd '/usr' ; /usr/bin/mysqld_safe --datadir='/var/lib/mysql'
+    - cd '/usr' ; /usr/bin/mysqld_safe --basedir=/usr --datadir='${DB_DATA_PATH}'
     - nslookup ${MYSQL_HOST}
     - /usr/bin/mysqladmin --host=${MYSQL_HOST} -P3306 --protocol=tcp -u root password "${MYSQL_ROOT_PASSWORD}"
     - /usr/bin/mysqladmin --host=${MYSQL_HOST} -P3306 --protocol=tcp -u root -h ${MYSQL_HOST} password "${MYSQL_ROOT_PASSWORD}"
