@@ -93,6 +93,9 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 ## Changelog ##
 
+### 1.0.36 &mdash; 30 of September, 2019 ###
+* Compatibility check for WP 5.2.3 and SteemPress 2.6.
+
 ### 1.0.35 &mdash; 10 of June, 2019 ###
 * Compatibility check for WP 5.2.1 and SteemPress 2.4.1.
 
