@@ -1,9 +1,9 @@
 === DailyBrief ===
 Contributors:      dfroberg
 Donation Link:     https://steemit.com/@dfroberg
-Tags:              content+generation, generation, steem, blockchain, steemit, briefs
+Tags:              content+generation, generation, steem, blockchain, hive, briefs, monetization
 Requires at least: 4.7
-Tested up to:      5.2.1
+Tested up to:      5.4.2
 Stable tag:        trunk
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,8 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 
 == Changelog ==
+= 1.0.38 &mdash; 11 of June, 2020 =
+* Compatibility check with WP 5.4.2 and SteemPress 2.6.3.
 
 = 1.0.37 &mdash; 8 of January, 2020 =
 * Compatibility check for WP 5.3 and SteemPress 2.6.
