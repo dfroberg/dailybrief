@@ -7,7 +7,7 @@ DailyBrief is a WordPress plugin that provides a post summary of all WordPress p
 **Contributors:** [dfroberg](http://profiles.wordpress.org/dfroberg)  
 **Tags:** [content+generation](http://wordpress.org/plugins/tags/content+generation), [generation](http://wordpress.org/plugins/tags/generation), [steem](http://wordpress.org/plugins/tags/steem), [blockchain](http://wordpress.org/plugins/tags/blockchain), [hive](http://wordpress.org/plugins/tags/hive), [briefs](http://wordpress.org/plugins/tags/briefs), [monetization](http://wordpress.org/plugins/tags/monetization)  
 **Requires at least:** 4.7  
-**Tested up to:** 5.4.2  
+**Tested up to:** 5.5  
 **Stable tag:** trunk (master)  
 **License:** [GPLv2 or later](http://www.gnu.org/licenses/gpl-2.0.html)  
 **Donation Link:** https://steemit.com/@dfroberg  
@@ -92,6 +92,9 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 
 ## Changelog ##
+
+### 1.0.39 &mdash; 11 of June, 2020 ###
+* Compatibility check with WP 5.4.2 and SteemPress 2.6.3.
 
 ### 1.0.38 &mdash; 11 of June, 2020 ###
 * Compatibility check with WP 5.4.2 and SteemPress 2.6.3.
