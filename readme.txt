@@ -84,8 +84,8 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 
 == Changelog ==
-= 1.0.39 &mdash; 11 of June, 2020 =
-* Compatibility check with WP 5.4.2 and SteemPress 2.6.3.
+= 1.0.39 &mdash; 24 of August, 2020 =
+* Compatibility check with WP 5.5 and SteemPress 2.6.3.
 
 = 1.0.38 &mdash; 11 of June, 2020 =
 * Compatibility check with WP 5.4.2 and SteemPress 2.6.3.
