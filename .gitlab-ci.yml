@@ -115,7 +115,7 @@ PHPunit:PHP5.6:MySQL:
     - mysql
   script:
     - docker-php-ext-enable mcrypt
-    - composer global require "phpunit/phpunit=4.*" --no-progress
+    - composer global require "phpunit/phpunit=5.*" --no-progress
     - $HOME/.composer/vendor/bin/phpunit
 
 PHPunit:PHP7.0:MySQL:
@@ -151,6 +151,32 @@ PHPunit:PHP7.2:MySQL:
     - cluster
   stage: test
   image: stayallive/php:7.2
+  services:
+    - mysql
+  script:
+    - apt-get -yqq update && apt-get install -y libmcrypt-dev pkg-php-tools && pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
+    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit
+
+PHPunit:PHP7.3:MySQL:
+  tags:
+    - kubernetes
+    - cluster
+  stage: test
+  image: stayallive/php:7.3
+  services:
+    - mysql
+  script:
+    - apt-get -yqq update && apt-get install -y libmcrypt-dev pkg-php-tools && pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
+    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit
+
+PHPunit:PHP7.4:MySQL:
+  tags:
+    - kubernetes
+    - cluster
+  stage: test
+  image: stayallive/php:7.4
   services:
     - mysql
   script:
