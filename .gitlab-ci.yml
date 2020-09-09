@@ -68,7 +68,11 @@ mysql_build:
     - mysql
   <<: *load_database
   script:
-      - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=${MYSQL_HOST} --protocol=tcp "${MYSQL_DATABASE}"
+    - cp /etc/hosts ~/hosts.new
+    - sed -i "s/runner/${MYSQL_HOST} runner/g" ~/hosts.new
+    - cat ~/hosts.new > /etc/hosts
+    - cat /etc/hosts
+    - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=${MYSQL_HOST} --protocol=tcp "${MYSQL_DATABASE}"
 
 codestyle:
   tags:
