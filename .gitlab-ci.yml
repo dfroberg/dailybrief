@@ -70,48 +70,6 @@ mysql_build:
   script:
       - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=${MYSQL_HOST} --protocol=tcp "${MYSQL_DATABASE}"
 
-mysql_build_xx:
-  image: docker:latest
-  tags:
-    - kubernetes
-    - cluster
-  stage: xx_mysql_setup
-  variables:
-    MYSQL_HOST: mysqltestserver
-    MYSQL_DATABASE: wordpress_tests
-    MYSQL_ROOT_PASSWORD: mysql
-    DB_DATA_PATH: "/var/lib/mysql/data"
-    DB_ROOT_PASS: "mysql"
-    DB_USER: "mariadb_user"
-    DB_PASS: "mariadb_user_password"
-    MAX_ALLOWED_PACKET: "200M"
-  services:
-    - mysql
-  before_script:
-    - apk --no-cache add mariadb mariadb-client sed
-    - mysql --version
-    - export
-    - cp /etc/hosts ~/hosts.new
-    - sed -i "s/runner/${MYSQL_HOST} runner/g" ~/hosts.new
-    - cat ~/hosts.new > /etc/hosts
-    - cat /etc/hosts
-    - mysql_install_db --user=mysql --datadir="/var/lib/mysql/data"
-    - cd '/usr' ; /usr/bin/mysqld_safe --basedir=/usr --datadir="/var/lib/mysql/data" && echo 'Launched';
-    # - nslookup ${MYSQL_HOST}
-    - /usr/bin/mysqladmin --host=${MYSQL_HOST} -P3306 --protocol=tcp -u root password "${MYSQL_ROOT_PASSWORD}"
-    - /usr/bin/mysqladmin --host=${MYSQL_HOST} -P3306 --protocol=tcp -u root -h ${MYSQL_HOST} password "${MYSQL_ROOT_PASSWORD}"
-    - echo "GRANT ALL ON *.* TO ${DB_USER}@'127.0.0.1' IDENTIFIED BY '${DB_PASS}' WITH GRANT OPTION;" > /tmp/sql
-    - echo "GRANT ALL ON *.* TO ${DB_USER}@'localhost' IDENTIFIED BY '${DB_PASS}' WITH GRANT OPTION;" >> /tmp/sql
-    - echo "GRANT ALL ON *.* TO ${DB_USER}@'::1' IDENTIFIED BY '${DB_PASS}' WITH GRANT OPTION;" >> /tmp/sql
-    - echo "GRANT ALL ON *.* TO ${DB_USER}@'${HOSTNAME}' IDENTIFIED BY '${DB_PASS}' WITH GRANT OPTION;" >> /tmp/sql
-    - echo "DELETE FROM mysql.user WHERE User='';" >> /tmp/sql
-    - echo "DROP DATABASE test;" >> /tmp/sql
-    - echo "FLUSH PRIVILEGES;" >> /tmp/sql
-    - cat /tmp/sql | mysql -u root --password="${DB_ROOT_PASS}" -h ${HOSTNAME}
-    - rm /tmp/sql
-  script:
-    - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=${MYSQL_HOST} --protocol=tcp "${MYSQL_DATABASE}"
-
 codestyle:
   tags:
     - kubernetes
