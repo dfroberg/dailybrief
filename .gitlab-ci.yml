@@ -58,7 +58,7 @@ mysql_build:
     DB_PASS: "mariadb_user_password"
     MAX_ALLOWED_PACKET: "200M"
   services:
-    - mysql
+    - mysqltestserver
   before_script:
     - apk --no-cache add mariadb mariadb-client sed
     - mysql --version
@@ -69,18 +69,18 @@ mysql_build:
     - cat /etc/hosts
     - mysql_install_db --user=mysql --datadir="/var/lib/mysql/data"
     - cd '/usr' ; /usr/bin/mysqld_safe --basedir=/usr --datadir="/var/lib/mysql/data"
-    - nslookup ${MYSQL_HOST}
+    # - nslookup ${MYSQL_HOST}
     - /usr/bin/mysqladmin --host=${MYSQL_HOST} -P3306 --protocol=tcp -u root password "${MYSQL_ROOT_PASSWORD}"
     - /usr/bin/mysqladmin --host=${MYSQL_HOST} -P3306 --protocol=tcp -u root -h ${MYSQL_HOST} password "${MYSQL_ROOT_PASSWORD}"
-    #- echo "GRANT ALL ON *.* TO ${DB_USER}@'127.0.0.1' IDENTIFIED BY '${DB_PASS}' WITH GRANT OPTION;" > /tmp/sql
-    #- echo "GRANT ALL ON *.* TO ${DB_USER}@'localhost' IDENTIFIED BY '${DB_PASS}' WITH GRANT OPTION;" >> /tmp/sql
-    #- echo "GRANT ALL ON *.* TO ${DB_USER}@'::1' IDENTIFIED BY '${DB_PASS}' WITH GRANT OPTION;" >> /tmp/sql
-    #- echo "GRANT ALL ON *.* TO ${DB_USER}@'${HOSTNAME}' IDENTIFIED BY '${DB_PASS}' WITH GRANT OPTION;" >> /tmp/sql
-    #- echo "DELETE FROM mysql.user WHERE User='';" >> /tmp/sql
-    #- echo "DROP DATABASE test;" >> /tmp/sql
-    #- echo "FLUSH PRIVILEGES;" >> /tmp/sql
-    #- cat /tmp/sql | mysql -u root --password="${DB_ROOT_PASS}" -h ${HOSTNAME}
-    #- rm /tmp/sql
+    - echo "GRANT ALL ON *.* TO ${DB_USER}@'127.0.0.1' IDENTIFIED BY '${DB_PASS}' WITH GRANT OPTION;" > /tmp/sql
+    - echo "GRANT ALL ON *.* TO ${DB_USER}@'localhost' IDENTIFIED BY '${DB_PASS}' WITH GRANT OPTION;" >> /tmp/sql
+    - echo "GRANT ALL ON *.* TO ${DB_USER}@'::1' IDENTIFIED BY '${DB_PASS}' WITH GRANT OPTION;" >> /tmp/sql
+    - echo "GRANT ALL ON *.* TO ${DB_USER}@'${HOSTNAME}' IDENTIFIED BY '${DB_PASS}' WITH GRANT OPTION;" >> /tmp/sql
+    - echo "DELETE FROM mysql.user WHERE User='';" >> /tmp/sql
+    - echo "DROP DATABASE test;" >> /tmp/sql
+    - echo "FLUSH PRIVILEGES;" >> /tmp/sql
+    - cat /tmp/sql | mysql -u root --password="${DB_ROOT_PASS}" -h ${HOSTNAME}
+    - rm /tmp/sql
   script:
     - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=${MYSQL_HOST} --protocol=tcp "${MYSQL_DATABASE}"
 
@@ -91,7 +91,7 @@ codestyle:
   stage: codestyle
   image: stayallive/php:7.2
   services:
-    - mysql
+    - mysqltestserver
   artifacts:
     name: "${CI_BUILD_NAME}_${CI_BUILD_REF_NAME}_report"
     untracked: false
@@ -112,7 +112,7 @@ PHPunit:PHP5.6:MySQL:
   retry: 2
   image: tetraweb/php:5.6
   services:
-    - mysql
+    - mysqltestserver
   script:
     - docker-php-ext-enable mcrypt
     - composer global require "phpunit/phpunit=5.*" --no-progress
@@ -125,7 +125,7 @@ PHPunit:PHP7.0:MySQL:
   stage: test
   image: stayallive/php:7.0
   services:
-    - mysql
+    - mysqltestserver
   script:
     - docker-php-ext-enable mcrypt
     - composer global require "phpunit/phpunit=6.*" --no-progress
@@ -138,7 +138,7 @@ PHPunit:PHP7.1:MySQL:
   stage: test
   image: stayallive/php:7.1
   services:
-    - mysql
+    - mysqltestserver
   script:
     - docker-php-ext-enable mcrypt
     - composer global require "phpunit/phpunit=6.*" --no-progress
@@ -152,7 +152,7 @@ PHPunit:PHP7.2:MySQL:
   stage: test
   image: stayallive/php:7.2
   services:
-    - mysql
+    - mysqltestserver
   script:
     - apt-get -yqq update && apt-get install -y libmcrypt-dev pkg-php-tools && pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
     - composer global require "phpunit/phpunit=6.*" --no-progress
@@ -165,7 +165,7 @@ PHPunit:PHP7.3:MySQL:
   stage: test
   image: stayallive/php:7.3
   services:
-    - mysql
+    - mysqltestserver
   script:
     - apt-get -yqq update && apt-get install -y libmcrypt-dev pkg-php-tools && pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
     - composer global require "phpunit/phpunit=6.*" --no-progress
@@ -178,7 +178,7 @@ PHPunit:PHP7.4:MySQL:
   stage: test
   image: stayallive/php:7.4
   services:
-    - mysql
+    - mysqltestserver
   script:
     - apt-get -yqq update && apt-get install -y libmcrypt-dev pkg-php-tools && pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
     - composer global require "phpunit/phpunit=6.*" --no-progress
@@ -189,7 +189,7 @@ dailybrief:
     - kubernetes
     - cluster
   stage: build
-  image: stayallive/php:7.2
+  image: stayallive/php:7.4
   retry: 2
   cache:
     untracked: true
