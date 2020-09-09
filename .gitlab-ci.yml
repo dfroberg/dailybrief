@@ -16,6 +16,12 @@ stages:
   - codecoverage
   - test
   - build
+
+.before_script_template: &load_database
+  before_script:
+  - mysql --version
+  - mysql --user=$MYSQL_USER --password=$MYSQL_PASSWORD --database=$MYSQL_DATABASE --host=$MYSQL_HOST --execute="SHOW DATABASES; ALTER USER '$MYSQL_USER'@'%' IDENTIFIED WITH mysql_native_password BY '$MYSQL_PASSWORD'"
+
 before_script:
   # Install dependencies
 
@@ -42,12 +48,34 @@ before_script:
   - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
   - composer global require "dealerdirect/phpcodesniffer-composer-installer=0.4.1" --no-progress
 
+
 mysql_build:
-  image: docker:latest
+  image: mysql:latest
   tags:
     - kubernetes
     - cluster
   stage: mysql_setup
+  variables:
+    MYSQL_HOST: mysqltestserver
+    MYSQL_DATABASE: wordpress_tests
+    MYSQL_ROOT_PASSWORD: mysql
+    DB_DATA_PATH: "/var/lib/mysql/data"
+    DB_ROOT_PASS: "mysql"
+    DB_USER: "mariadb_user"
+    DB_PASS: "mariadb_user_password"
+    MAX_ALLOWED_PACKET: "200M"
+  services:
+    - mysql
+  <<: *load_database
+  script:
+      - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=${MYSQL_HOST} --protocol=tcp "${MYSQL_DATABASE}"
+
+mysql_build_xx:
+  image: docker:latest
+  tags:
+    - kubernetes
+    - cluster
+  stage: xx_mysql_setup
   variables:
     MYSQL_HOST: mysqltestserver
     MYSQL_DATABASE: wordpress_tests
