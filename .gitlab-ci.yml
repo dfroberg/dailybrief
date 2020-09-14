@@ -46,6 +46,7 @@ mysql_build:
   tags:
     - kubernetes
     - cluster
+    - special
   stage: mysql_setup
   variables:
     MYSQL_HOST: mysqltestserver
@@ -69,6 +70,7 @@ codestyle:
   tags:
     - kubernetes
     - cluster
+    - special
   stage: codestyle
   image: stayallive/php:7.2
   services:
@@ -89,6 +91,7 @@ PHPunit:PHP5.6:MySQL:
   tags:
     - kubernetes
     - cluster
+    - special
   stage: test
   retry: 2
   image: tetraweb/php:5.6
@@ -103,6 +106,7 @@ PHPunit:PHP7.0:MySQL:
   tags:
     - kubernetes
     - cluster
+    - special
   stage: test
   image: stayallive/php:7.0
   services:
@@ -116,6 +120,7 @@ PHPunit:PHP7.1:MySQL:
   tags:
     - kubernetes
     - cluster
+    - special
   stage: test
   image: stayallive/php:7.1
   services:
@@ -130,6 +135,7 @@ PHPunit:PHP7.2:MySQL:
   tags:
     - kubernetes
     - cluster
+    - special
   stage: test
   image: stayallive/php:7.2
   services:
@@ -143,6 +149,7 @@ PHPunit:PHP7.3:MySQL:
   tags:
     - kubernetes
     - cluster
+    - special
   stage: test
   image: stayallive/php:7.3
   services:
@@ -156,6 +163,7 @@ PHPunit:PHP7.4:MySQL:
   tags:
     - kubernetes
     - cluster
+    - special
   stage: test
   image: stayallive/php:7.4
   services:
@@ -169,6 +177,7 @@ dailybrief:
   tags:
     - kubernetes
     - cluster
+    - special
   stage: build
   image: stayallive/php:7.4
   retry: 2
