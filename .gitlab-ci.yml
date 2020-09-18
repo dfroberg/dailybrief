@@ -6,7 +6,7 @@ variables:
   MYSQL_DATABASE: wordpress_tests
   MYSQL_ROOT_PASSWORD: mysql
   WITH_XDEBUG: 1
-  TIMEZONE: "America/New_York"
+  TIMEZONE: "Europe/Stockholm"
 
 stages:
   - mysql_setup
