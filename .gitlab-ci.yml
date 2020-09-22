@@ -32,7 +32,8 @@ before_script:
   - apt-get -yqqf install unzip subversion mysql-client rsync --fix-missing
 
   # PHP extensions
-  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
+  - php -m
+  # - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
 
   # Set up WordPress tests
   - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
