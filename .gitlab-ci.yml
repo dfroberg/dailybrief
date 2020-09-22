@@ -1,13 +1,14 @@
-# Testing services
-services:
-  - mysql:latest
-
 variables:
-  # Configure mysql service (https://hub.docker.com/_/mysql/)
-  MYSQL_DATABASE: wordpress_tests
-  MYSQL_ROOT_PASSWORD: mysql
   WITH_XDEBUG: 1
   TIMEZONE: "Europe/Stockholm"
+  MYSQL_HOST: mysql
+  MYSQL_DATABASE: wordpress_tests
+  MYSQL_ROOT_PASSWORD: mysql
+  DB_DATA_PATH: "/var/lib/mysql/data"
+  DB_ROOT_PASS: "mysql"
+  DB_USER: "mariadb_user"
+  DB_PASS: "mariadb_user_password"
+  MAX_ALLOWED_PACKET: "200M"
 
 stages:
   - mysql_setup
@@ -50,17 +51,10 @@ mysql_build:
     - kubernetes
     - cluster
   stage: mysql_setup
-  variables:
-    MYSQL_HOST: mysql
-    MYSQL_DATABASE: wordpress_tests
-    MYSQL_ROOT_PASSWORD: mysql
-    DB_DATA_PATH: "/var/lib/mysql/data"
-    DB_ROOT_PASS: "mysql"
-    DB_USER: "mariadb_user"
-    DB_PASS: "mariadb_user_password"
-    MAX_ALLOWED_PACKET: "200M"
+
   services:
-    - mysql
+    - name: mysql:8.0
+      command: ["--default-authentication-plugin=mysql_native_password"]
   script:
     - cp /etc/hosts ~/hosts.new
     - sed -i "s/mysql/nopemysql/g" ~/hosts.new
@@ -77,7 +71,8 @@ codestyle:
   stage: codestyle
   image: stayallive/php:7.2
   services:
-    - mysql
+    - name: mysql:8.0
+      command: ["--default-authentication-plugin=mysql_native_password"]
   artifacts:
     name: "${CI_BUILD_NAME}_${CI_BUILD_REF_NAME}_report"
     untracked: false
@@ -100,7 +95,8 @@ PHPunit:PHP5.6:MySQL:
   retry: 2
   image: tetraweb/php:5.6
   services:
-    - mysql
+    - name: mysql:8.0
+      command: ["--default-authentication-plugin=mysql_native_password"]
   before_script:
     - *job_before_script
   script:
@@ -115,7 +111,8 @@ PHPunit:PHP7.0:MySQL:
   stage: test
   image: stayallive/php:7.0
   services:
-    - mysql
+    - name: mysql:8.0
+      command: ["--default-authentication-plugin=mysql_native_password"]
   before_script:
     - *job_before_script
   script:
@@ -130,7 +127,8 @@ PHPunit:PHP7.1:MySQL:
   stage: test
   image: stayallive/php:7.1
   services:
-    - mysql
+    - name: mysql:8.0
+      command: ["--default-authentication-plugin=mysql_native_password"]
   before_script:
     - *job_before_script
   script:
@@ -146,7 +144,8 @@ PHPunit:PHP7.2:MySQL:
   stage: test
   image: stayallive/php:7.2
   services:
-    - mysql
+    - name: mysql:8.0
+      command: ["--default-authentication-plugin=mysql_native_password"]
   before_script:
     - *job_before_script
   script:
@@ -161,7 +160,8 @@ PHPunit:PHP7.3:MySQL:
   stage: test
   image: stayallive/php:7.3
   services:
-    - mysql
+    - name: mysql:8.0
+      command: ["--default-authentication-plugin=mysql_native_password"]
   before_script:
     - *job_before_script
   script:
@@ -176,7 +176,8 @@ PHPunit:PHP7.4:MySQL:
   stage: test
   image: stayallive/php:7.4
   services:
-    - mysql
+    - name: mysql:8.0
+      command: ["--default-authentication-plugin=mysql_native_password"]
   before_script:
     - *job_before_script
   script:
