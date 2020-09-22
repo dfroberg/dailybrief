@@ -46,7 +46,7 @@ stages:
 
 
 mysql_build:
-  image: mysql:latest
+  image: ubuntu:latest
   tags:
     - kubernetes
     - cluster
