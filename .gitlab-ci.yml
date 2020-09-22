@@ -62,10 +62,11 @@ mysql_build:
   services:
     - mysql
   script:
-    #- cp /etc/hosts ~/hosts.new
-    #- sed -i "s/runner/${MYSQL_HOST} runner/g" ~/hosts.new
-    #- cat ~/hosts.new > /etc/hosts
+    - cp /etc/hosts ~/hosts.new
+    - sed -i "s/runner/${MYSQL_HOST} runner/g" ~/hosts.new
+    - cat ~/hosts.new > /etc/hosts
     - cat /etc/hosts
+    - echo "SELECT 'OK';" | mysql --user=${DB_USER} --password="${DB_ROOT_PASS}" --host=${MYSQL_HOST} --protocol=tcp "${MYSQL_DATABASE}"
     - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=${MYSQL_HOST} --protocol=tcp "${MYSQL_DATABASE}"
 
 codestyle:
