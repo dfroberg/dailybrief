@@ -2,7 +2,7 @@ variables:
   WITH_XDEBUG: 1
   TIMEZONE: "Europe/Stockholm"
   MYSQL_HOST: mysql
-  MYSQL_PORT: "${{ job.services.mysql.ports['3306'] }}"
+  MYSQL_PORT: "3306" # ${{ job.services.mysql.ports['3306'] }}
   MYSQL_DATABASE: wordpress_tests
   MYSQL_ROOT_PASSWORD: mysql
   DB_DATA_PATH: "/var/lib/mysql/data"
