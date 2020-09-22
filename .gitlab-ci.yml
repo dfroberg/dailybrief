@@ -61,6 +61,8 @@ mysql_build:
     - sed -i "s/runner/${MYSQL_HOST} runner/g" ~/hosts.new
     - cat ~/hosts.new > /etc/hosts
     - cat /etc/hosts
+    - apt-get clean
+    - apt-get -yqq -o Acquire::Check-Valid-Until=false update
     - apt-get -yqqf install unzip subversion mysql-client-8.0 rsync --fix-missing
     - echo "SELECT 'OK';" | mysql --user=${DB_USER} --password="${DB_ROOT_PASS}" --host=127.0.0.1 --protocol=tcp "${MYSQL_DATABASE}"
     - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=${MYSQL_HOST} --protocol=tcp "${MYSQL_DATABASE}"
