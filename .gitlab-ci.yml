@@ -23,7 +23,7 @@ stages:
     # update the docker
     - apt-get clean
     - apt-get -yqq -o Acquire::Check-Valid-Until=false update
-    - apt-get -yqqf install curl --fix-missing
+    - apt-get -yqqf install curl apt-utils --fix-missing
     - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
     - echo "deb [check-valid-until=no] http://cdn-fastly.deb.debian.org/debian jessie main" > /etc/apt/sources.list.d/jessie.list
     - echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
@@ -65,8 +65,8 @@ mysql_build:
     - apt-get clean
     - apt-get -yqq -o Acquire::Check-Valid-Until=false update
     - apt-get -yqqf install unzip subversion mysql-client-8.0 rsync --fix-missing
-    - echo "SELECT 'OK';" | mysql --user=${DB_USER} --password="${DB_ROOT_PASS}" --host=${MYSQL_HOST} --port ${{ job.services.mysql.ports['3306'] }} --protocol=tcp "${MYSQL_DATABASE}"
-    - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=${MYSQL_HOST} --port ${{ job.services.mysql.ports['3306'] }} --protocol=tcp "${MYSQL_DATABASE}"
+    - echo "SELECT 'OK';" | mysql --user=${DB_USER} --password="${DB_ROOT_PASS}" --host=${MYSQL_HOST} --port ${MYSQL_PORT} --protocol=tcp "${MYSQL_DATABASE}"
+    - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=${MYSQL_HOST} --port ${MYSQL_PORT} --protocol=tcp "${MYSQL_DATABASE}"
 
 codestyle:
   tags:
