@@ -3,7 +3,7 @@ Contributors:      dfroberg
 Donation Link:     https://steemit.com/@dfroberg
 Tags:              content+generation, generation, steem, blockchain, hive, briefs, monetization
 Requires at least: 4.7
-Tested up to:      5.5
+Tested up to:      5.7
 Stable tag:        trunk
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,9 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 
 == Changelog ==
+= 1.0.40 &mdash; 3 of March, 2021 =
+* Compatibility check with WP 5.5
+
 = 1.0.39 &mdash; 24 of August, 2020 =
 * Compatibility check with WP 5.5 and SteemPress 2.6.3.
 
