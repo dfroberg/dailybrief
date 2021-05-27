@@ -4,7 +4,7 @@ wordpress_description.txt
 .editorconfig
 .git
 .gitattributes
-.gitlab-ci.yml
+.gitlab*
 .travis.yml
 .DS_Store
 Thumbs.db
