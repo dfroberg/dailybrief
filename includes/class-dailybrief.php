@@ -1130,7 +1130,7 @@ class Dailybrief {
 		$this->include_toc             = $this->get_option_default( 'include_toc', '1' ); // 1 for on / 0 for off
 		$this->include_toc_local_hrefs = $this->get_option_default( 'include_toc_local_hrefs', '1' ); // 1 for on / 0 for off
 		$this->toc_header              = $this->get_option_default( 'toc_header', 'Table of Contents' );
-		$this->url_suffix              = $this->get_option_default( 'url_suffix', '?utm_campaign=steempress&utm=dailybrief' ); // set ''.
+		$this->url_suffix              = $this->get_option_default( 'url_suffix', '?utm_campaign=hive&utm=dailybrief' ); // set ''.
 		$this->excerpt_words           = $this->get_option_default( 'excerpt_words', '100' );
 		$this->post_title              = $this->get_option_default( 'post_title', 'The Daily Brief' ) . ' ' . $this->date_suffix;
 		$this->author_id               = $this->get_option_default( 'author_id', '1' );
@@ -1870,36 +1870,40 @@ class Dailybrief {
 						$this->wpclierror( "*** Error - could not set the tags...\n" . $set_tags->get_error_message() );
 					}
 				} else {
-					$this->wpcliwarn( '! No tags to set. (This will cause issues if you have no default tags in SteemPress set) ' . implode( ', ', $post_tags ) );
+					$this->wpcliwarn( '! No tags to set. (This will cause issues if you have no default tags in Exxp set) ' . implode( ', ', $post_tags ) );
 				}
 				// Force the use of a --publish flag.
 				if ( $do_publish ) {
+					if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) ) {
+						$this->wpclilog( '! Publishing is disabled, SteemPress plugin is Not supported anomore! ' );
+					} else {
 					// Transition post to publish state.
 					wp_publish_post( $this->post_id_created );
 					$this->wpclilog( '* Post is now Published ' );
 
-					if ( ! defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) ) {
-						$this->wpcliwarn( '? SteemPress NOT available (did you install it?), can not post to steem. ' );
+					if ( ! defined( 'DAILYBRIEF_DETECTED_EXXP' ) ) {
+						$this->wpcliwarn( '? Exxp NOT available (did you install it?), can not post to steem. ' );
 					} else {
-						$this->wpclilog( '* SteemPress IS available, can post to steem, so trying that now ' );
+						$this->wpclilog( '* Exxp IS available, can post to steem, so trying that now ' );
 
 						// Since we're using another plugin directly we'll try and catch whatever goes wrong.
 						try {
-							$test = new Steempress_sp_Admin( 'steempress_sp', '2.3' );
-							$test->Steempress_sp_publish( $this->post_id_created );
-							// Alt Steempress_sp_Admin::Steempress_sp_publish( $this->post_id_created);.
-							$steempress_sp_permlink = get_post_meta( $this->post_id_created, 'steempress_sp_permlink' );
-							$steempress_sp_author   = get_post_meta( $this->post_id_created, 'steempress_sp_author' );
-							if ( ! empty( $steempress_sp_permlink ) && ! empty( $steempress_sp_author ) ) {
-								$this->wpclilog( '* Posted to SteemPress API with: ' . $steempress_sp_author . ' / ' . $steempress_sp_permlink );
+							$test = new Exxo_wp_Admin( 'exxp_wp', '2.3' );
+							$test->exxo_wp_publish( $this->post_id_created );
+							// Alt Exxo_wp_Admin::Exxo_wp_publish( $this->post_id_created);.
+							$exxo_wp_permlink = get_post_meta( $this->post_id_created, 'exxo_wp_permlink' );
+							$exxo_wp_author   = get_post_meta( $this->post_id_created, 'exxo_wp_author' );
+							if ( ! empty( $exxo_wp_permlink ) && ! empty( $exxo_wp_author ) ) {
+								$this->wpclilog( '* Posted to Exxp API with: ' . $exxo_wp_author . ' / ' . $exxo_wp_permlink );
 							} else {
-								$this->wpcliwarn( '? SteemPress API post failed for some reason :-( ' );
+								$this->wpcliwarn( '? Exxp API post failed for some reason :-( ' );
 							}
 						} catch ( Exception $e ) {
-							$this->wpclierror( '*** Error - SteemPress Call Blew up ' . $e->getMessage() );
+							$this->wpclierror( '*** Error - Exxp Call Blew up ' . $e->getMessage() );
 						}
 					}
 				}
+			}
 			} else {
 				$this->wpclierror( '*** Error - could not create the post...\n' . $wp_insert_post_result->get_error_message() );
 			}

@@ -69,7 +69,7 @@ That is it, the bare minimum is done. You probably want to personalize it more s
 | include_toc   | numeric    | 1                 | 1 = on / 0 = Off - Include a table of contents |
 | include_toc_localhrefs | numeric    | 1                 | 1 = on / 0 = Off - Include TOC local links (steemit bug) |
 | toc_header    | string     | "Table of Contents" | Table of Contents header text |
-| url_suffix    | string     | ""                | "?campaign=steempress&amp;utm=dailybrief" |
+| url_suffix    | string     | ""                | "?campaign=hive&amp;utm=dailybrief" |
 | excerpt_words | numeric    | 100               | Numer of words in excerpt                 |
 | post_title    | string     | "The Daily Brief" | A date 2018-11-15 will be suffixed to this|
 | author_id     | numeric    | 1                 | User ID that will be the author           |
@@ -143,12 +143,12 @@ Will generate one post with summaries of all articles from the day before using 
 
 `wp dailybrief brief --days='-1 day' --post --publish --no-use-excerpts`
  
-# Combining with SteemPress
-Although the dailybrief command can be used with any type of social media or newsletter plugin to distribute your Daily Brief it was written and intended to be use as a companion application to SteemPress, to enable high frequency Wordpress authors not to be hammered by numerous spambots and "holier than thau" self professed "I AM THE COMMUNITY!!!" steem cops and simply post ONE (or max 4) briefs per day.   
-## SteemPress specific setup
+# Combining with Exxp
+Although the dailybrief command can be used with any type of social media or newsletter plugin to distribute your Daily Brief it was written and intended to be use as a companion application to Exxp, to enable high frequency Wordpress authors not to be hammered by numerous spambots and "holier than thau" self professed "I AM THE COMMUNITY!!!" steem cops and simply post ONE (or max 4) briefs per day.   
+## Exxp specific setup
 * In Posts -> Categories
 : Create a new category named i.e. "Daily Brief", make a note of the ID once created.
-* In Settings -> SteemPress
+* In Settings -> Exxp
 : Select to ignore all categories but the newly created "Daily Brief" category and save the selection.
 * You can easily get the Category ID on command line run using WP CLI; 
 ```
@@ -172,10 +172,10 @@ General improvements planned for the plugin;
 * Pre-made styling templates.
 
 #### Steem / SteemPpress:
-Improvements planned specific to Steem & SteemPress integration;
+Improvements planned specific to Steem & Exxp integration;
 * A VERY high frequency version allowing for 4 posts a day splitting the day into 6 hour segments. (it will skip a segment if no articles has been produced or you have less than 
   `wp dailbrief set article_treshold X` ) where X is an integer representing the number of articles that is considered to few to publish in it's own segment.   
-* Create a brief for individual users posts and allow SteemPress to publish these to the individual steem accounts.
+* Create a brief for individual users posts and allow Exxp to publish these to the individual steem accounts.
 
   
   

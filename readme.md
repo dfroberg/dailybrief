@@ -14,11 +14,11 @@ DailyBrief is a WordPress plugin that provides a post summary of all WordPress p
 
 ## Description ##
 
-DailyBrief is designed to solve a fundamental problem many new WordPress users find themselves with when they first begin to publish on the steem blockchain using SteemPress; The dreaded SPAM label. Producing too many posts daily on steem hits a cultural bias many anti-abuse teams adhere to "More than 4 posts a day is always SPAM".
+DailyBrief is designed to solve a fundamental problem many new WordPress users find themselves with when they first begin to publish on the hive blockchain using Exxp; The dreaded SPAM label. Producing too many posts daily on steem hits a cultural bias many anti-abuse teams adhere to "More than 4 posts a day is always SPAM".
 
 DailyBrief compiles a summary of all posts made during a particular day complete with featured images, meta information, and excerpts. It also creates a table of contents, inserts headers and footers with optional macros that auto-fill in article counts, tags and categories used in the processed articles.
 
-> **Important: The plugin is primarily intended to be used alongside [SteemPress](https://wordpress.org/plugins/steempress/) the WordPress to Steem integration solution. If you want to publish your daily briefs to steem you need to install [SteemPress](https://wordpress.org/plugins/steempress/) first.**
+> **Important: The plugin is primarily intended to be used alongside [Exxp](https://wordpress.org/plugins/exxp_wp/) the WordPress to Hive integration solution. If you want to publish your daily briefs to steem you need to install [Exxp](https://wordpress.org/plugins/exxp_wp/) first.**
 > **Note: This plugin requires PHP 5.6 or higher to be activated.**
 > **Note: Automated tests for PHP 5.6, 7.0, 7.1, 7.2 are made on each commit.**
 > [![Build Status](https://gitlab.froberg.org/dfroberg/dailybrief/badges/master/build.svg)](https://github.com/dfroberg/dailybrief)
@@ -28,7 +28,7 @@ DailyBrief compiles a summary of all posts made during a particular day complete
 ## Features ##
 
 * Daily automated brief generated for previous day (if any posts was published that day).
-* Automatic integration with your SteemPress installation.
+* Automatic integration with your Exxp installation.
 
 ## Screenshots ##
 
@@ -93,8 +93,11 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 ## Changelog ##
 
+### 1.1.00 &mdash; 27 of May, 2021 ###
+* Replaced integration of SteemPress with Exxp plugin, plus added warnings if SteemPress plugin is still in use and disable publishing if that is the case.
+
 ### 1.0.40 &mdash; 3 of March, 2021 ###
-* Compatibility check with WP 5.7
+* Compatibility check with WP 5.5
 
 ### 1.0.39 &mdash; 24 of August, 2020 ###
 * Compatibility check with WP 5.5 and SteemPress 2.6.3.

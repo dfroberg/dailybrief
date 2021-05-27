@@ -140,17 +140,24 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				<hr>
 				<div align="center">
 					<?php
-					if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) && _mb_strlen( $sample['content'] ) < 65280 ) {
+					if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) ) {
 						?>
-						<a href = "options-general.php?page=dailybrief&tab=publish">
-							<button class = "dailybrief_preview_generate">Manually Generate Brief Now!</button>
-							<p>This will create the Brief immediately with the contents in the preview.</p>
-						</a>
+						<p>Please replace your SteemPress plugin with the <a href="https://wordpress.org/plugins/exxp-wp/" target="_blank">Exxp plugin!!</a></p>
+						<p>Due to internal changes the SteemPress plugin is no longer compatible with the backends that supports the blockchain infrastructure.</p>
 						<?php
 					} else {
-						?>
-						<p>Make sure your text is smaller than <strong>65280</strong> characters.<br>It is now <?php echo _mb_strlen( $sample['content'] ); ?> characters.</p>
-						<?php
+						if ( defined( 'DAILYBRIEF_DETECTED_EXXP' ) && _mb_strlen( $sample['content'] ) < 65280 ) {
+							?>
+							<a href = "options-general.php?page=dailybrief&tab=publish">
+								<button class = "dailybrief_preview_generate">Manually Generate Brief Now!</button>
+								<p>This will create the Brief immediately with the contents in the preview.</p>
+							</a>
+							<?php
+						} else {
+							?>
+							<p>Make sure your text is smaller than <strong>65280</strong> characters.<br>It is now <?php echo _mb_strlen( $sample['content'] ); ?> characters.</p>
+							<?php
+						}
 					}
 					?>
 				</div>
@@ -533,15 +540,21 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 			?>
 			<h4>Debuging Information:</h4>
 			<?php
-			if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) && _mb_strlen( $sample['content'] ) > 65280 ) {
+			if ( defined( 'DAILYBRIEF_DETECTED_EXXP' ) && _mb_strlen( $sample['content'] ) > 65280 ) {
 				?>
 				<strong>Warning:</strong>
 				<p>This post will be larger than 65280 characters, and can't be published to steem.</p>
 				<?php
 			}
+			if ( defined( 'DAILYBRIEF_DETECTED_EXXP' ) ) {
+				?>
+				<p>Exxp Plugin: <strong>Is installed.</strong></p>
+				<?php
+			}
 			if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) ) {
 				?>
-				<p>SteemPress: <strong>Is installed.</strong></p>
+				<strong>Warning:</strong>
+				<p>SteemPress: <strong>Is installed and is no longer supported.</strong></p>
 				<?php
 			}
 			?>
