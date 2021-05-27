@@ -1874,11 +1874,11 @@ class Dailybrief {
 				}
 				// Force the use of a --publish flag.
 				if ( $do_publish ) {
+					// Transition post to publish state.
+					wp_publish_post( $this->post_id_created );
 					if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) ) {
 						$this->wpclilog( '! Publishing is disabled, SteemPress plugin is Not supported anomore! ' );
 					} else {
-					// Transition post to publish state.
-					wp_publish_post( $this->post_id_created );
 					$this->wpclilog( '* Post is now Published ' );
 
 					if ( ! defined( 'DAILYBRIEF_DETECTED_EXXP' ) ) {
@@ -1888,7 +1888,7 @@ class Dailybrief {
 
 						// Since we're using another plugin directly we'll try and catch whatever goes wrong.
 						try {
-							$test = new Exxo_wp_Admin( 'exxp_wp', '2.3' );
+							$test = new Exxo_wp_Admin( 'exxp_wp', '2.6.8' );
 							$test->exxo_wp_publish( $this->post_id_created );
 							// Alt Exxo_wp_Admin::Exxo_wp_publish( $this->post_id_created);.
 							$exxo_wp_permlink = get_post_meta( $this->post_id_created, 'exxo_wp_permlink' );
