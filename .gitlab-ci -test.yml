@@ -1,0 +1,203 @@
+variables:
+  # Configure mysql service (https://hub.docker.com/_/mysql/)
+  MYSQL_DATABASE: wordpress_tests
+  MYSQL_ROOT_PASSWORD: mysql
+  WITH_XDEBUG: 1
+  TIMEZONE: "America/New_York"
+
+# Select what we should cache between builds
+#cache:
+#  paths:
+#    - vendor/
+
+stages:
+  - mysql_setup
+  - codestyle
+  - codecoverage
+  - test
+  - build
+
+.before_script_template: &load_database
+  before_script:
+  - mysql --version
+  - /usr/bin/mysqladmin --host=${MYSQL_HOST} -P3306 --protocol=tcp -u root password "${MYSQL_ROOT_PASSWORD}"
+  - /usr/bin/mysqladmin --host=${MYSQL_HOST} -P3306 --protocol=tcp -u root -h ${MYSQL_HOST} password "${MYSQL_ROOT_PASSWORD}"
+  - mysql --protocol=tcp --user=$MYSQL_USER --password=$MYSQL_PASSWORD --database=$MYSQL_DATABASE --host=$MYSQL_HOST --execute="SHOW DATABASES; ALTER USER '$MYSQL_USER'@'%' IDENTIFIED WITH mysql_native_password BY '$MYSQL_PASSWORD'"
+
+before_script:
+  # Install dependencies
+
+  # update the docker
+  - apt-get clean
+  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+  - echo "deb [check-valid-until=no] http://cdn-fastly.deb.debian.org/debian jessie main" > /etc/apt/sources.list.d/jessie.list
+  - echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
+  - sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
+  - apt-get -yqq -o Acquire::Check-Valid-Until=false update
+
+  # install the required packages for the running CI tests
+  - apt-get -yqqf install unzip subversion mysql-client rsync --fix-missing
+
+  # PHP extensions
+  - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
+
+  # Set up WordPress tests
+  - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
+
+  # Install PHPCS and WPCS
+  - composer global require "squizlabs/php_codesniffer=3.3.0" --no-progress
+  - composer global require "wp-coding-standards/wpcs=1.2.0" --no-progress
+  - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
+  - composer global require "dealerdirect/phpcodesniffer-composer-installer=0.4.1" --no-progress
+
+
+mysql_build:
+  image: mysql:latest
+  tags:
+    - kubernetes
+    - cluster
+  stage: mysql_setup
+  variables:
+    MYSQL_HOST: mysqltestserver
+    MYSQL_DATABASE: wordpress_tests
+    MYSQL_ROOT_PASSWORD: mysql
+    DB_DATA_PATH: "/var/lib/mysql/data"
+    DB_ROOT_PASS: "mysql"
+    DB_USER: "mariadb_user"
+    DB_PASS: "mariadb_user_password"
+    MAX_ALLOWED_PACKET: "200M"
+  services:
+    - mysql
+  <<: *load_database
+  script:
+    - cp /etc/hosts ~/hosts.new
+    - sed -i "s/runner/${MYSQL_HOST} runner/g" ~/hosts.new
+    - cat ~/hosts.new > /etc/hosts
+    - cat /etc/hosts
+    - echo "SELECT 'OK';" | mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" --host=${MYSQL_HOST} --protocol=tcp "${MYSQL_DATABASE}"
+
+codestyle:
+  tags:
+    - kubernetes
+    - cluster
+  stage: codestyle
+  image: stayallive/php:7.2
+  services:
+    - mysql
+  artifacts:
+    name: "${CI_BUILD_NAME}_${CI_BUILD_REF_NAME}_report"
+    untracked: false
+    paths:
+      - build/coverage-report/
+  script:
+    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
+    - phpcs -i
+    - phpcs
+    - chmod +x bin/generate-markdown-readme && bin/generate-markdown-readme
+
+PHPunit:PHP5.6:MySQL:
+  tags:
+    - kubernetes
+    - cluster
+  stage: test
+  retry: 2
+  image: tetraweb/php:5.6
+  services:
+    - mysql
+  script:
+    - docker-php-ext-enable mcrypt
+    - composer global require "phpunit/phpunit=5.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit
+
+PHPunit:PHP7.0:MySQL:
+  tags:
+    - kubernetes
+    - cluster
+  stage: test
+  image: stayallive/php:7.0
+  services:
+    - mysql
+  script:
+    - docker-php-ext-enable mcrypt
+    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit
+
+PHPunit:PHP7.1:MySQL:
+  tags:
+    - kubernetes
+    - cluster
+  stage: test
+  image: stayallive/php:7.1
+  services:
+    - mysql
+  script:
+    - docker-php-ext-enable mcrypt
+    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit
+
+
+PHPunit:PHP7.2:MySQL:
+  tags:
+    - kubernetes
+    - cluster
+  stage: test
+  image: stayallive/php:7.2
+  services:
+    - mysql
+  script:
+    - apt-get -yqq update && apt-get install -y libmcrypt-dev pkg-php-tools && pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
+    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit
+
+PHPunit:PHP7.3:MySQL:
+  tags:
+    - kubernetes
+    - cluster
+  stage: test
+  image: stayallive/php:7.3
+  services:
+    - mysql
+  script:
+    - apt-get -yqq update && apt-get install -y libmcrypt-dev pkg-php-tools && pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
+    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit
+
+PHPunit:PHP7.4:MySQL:
+  tags:
+    - kubernetes
+    - cluster
+  stage: test
+  image: stayallive/php:7.4
+  services:
+    - mysql
+  script:
+    - apt-get -yqq update && apt-get install -y libmcrypt-dev pkg-php-tools && pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
+    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - $HOME/.composer/vendor/bin/phpunit
+
+dailybrief:
+  tags:
+    - kubernetes
+    - cluster
+  stage: build
+  image: stayallive/php:7.4
+  retry: 2
+  cache:
+    untracked: true
+    key: ${CI_BUILD_REF_NAME}
+    paths:
+      - node_modules/
+      - vendor/
+  artifacts:
+    name: "${CI_BUILD_NAME}_${CI_BUILD_REF_NAME}"
+    untracked: false
+    paths:
+      - dailybrief/
+  script:
+    - mkdir -p dailybrief && chmod +x bin/generate-markdown-readme
+    - bin/generate-markdown-readme
+    - rsync -av --exclude-from='deploy-exclude-files.txt' . dailybrief/
+    - rm -rf dailybrief/dailybrief # Just to make darn sure
+    - rm -rf dailybrief/build # Just to make darn sure
+    - echo 'Deploying!'
