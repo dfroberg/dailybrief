@@ -41,7 +41,7 @@ codestyle:
     - kubernetes
     - cluster
   stage: codestyle
-  image: stayallive/php:7.2
+  image: stayallive/php:7.4
   artifacts:
     name: "${CI_BUILD_NAME}_${CI_BUILD_REF_NAME}_report"
     untracked: false
