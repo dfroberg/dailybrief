@@ -17,7 +17,8 @@ stages:
 
 before_script:
   # Install dependencies
-
+  - host gitlab.froberg.org
+  - host registry.froberg.org
   # update the docker
   - apt-get clean
   - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
