@@ -19,7 +19,6 @@ before_script:
   # Install dependencies
   # update the docker
   - apt-get clean
-  - apt-get update
   - apt-get install ca-certificates
   #- mkdir ~/.gnupg
   #- echo "hkp-cacert /usr/share/gnupg/sks-keyservers.netCA.pem" >> ~/.gnupg/dirmngr.conf
