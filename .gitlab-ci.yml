@@ -19,7 +19,9 @@ before_script:
   # Install dependencies
   # update the docker
   - apt-get clean
+  - apt-key adv --refresh-keys --keyserver keyserver.ubuntu.com
   - apt-key adv --fetch-keys https://dl.yarnpkg.com/debian/pubkey.gpg
+  # - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
   # - curl -k -sS https://dl.yarnpkg.com/debian/pubkey.gpg > pupkey.gpg
   # - apt-key add pupkey.gpg
   - echo "deb [check-valid-until=no] http://cdn-fastly.deb.debian.org/debian jessie main" > /etc/apt/sources.list.d/jessie.list
