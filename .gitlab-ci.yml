@@ -21,7 +21,7 @@ before_script:
   - apt-get clean
   - mkdir ~/.gnupg
   - echo "hkp-cacert /usr/share/gnupg/sks-keyservers.netCA.pem" >> ~/.gnupg/dirmngr.conf
-  - apt-key adv --refresh-keys --keyserver http://keyserver.ubuntu.com
+  - apt-key adv --refresh-keys --keyserver http://hkps.pool.sks-keyservers.net/
   # - apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
   # - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
   # - curl -k -sS https://dl.yarnpkg.com/debian/pubkey.gpg > pupkey.gpg
