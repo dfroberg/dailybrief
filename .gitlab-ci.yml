@@ -17,6 +17,8 @@ stages:
 
 before_script:
   # Install dependencies
+  - ping -n 3 1.1.1.1
+  - ping -n 3 cdn-fastly.deb.debian.org
   # update the docker
   - apt-get clean
   - touch /etc/apt/apt.conf.d/99verify-peer.conf \
