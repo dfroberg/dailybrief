@@ -17,8 +17,6 @@ stages:
 
 before_script:
   # Install dependencies
-  - ping -n 3 1.1.1.1
-  - ping -n 3 cdn-fastly.deb.debian.org
   # update the docker
   - apt-get clean
   - touch /etc/apt/apt.conf.d/99verify-peer.conf \
@@ -30,7 +28,7 @@ before_script:
   #- apt-key adv --refresh-keys --keyserver http://hkps.pool.sks-keyservers.net/
   # - apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
   # - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+  - curl -sS https://dl.yarnpkg.com./debian/pubkey.gpg | apt-key add -
   - echo "deb [check-valid-until=no] http://cdn-fastly.deb.debian.org/debian jessie main" > /etc/apt/sources.list.d/jessie.list
   - echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
   - sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
