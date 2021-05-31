@@ -19,14 +19,15 @@ before_script:
   # Install dependencies
   # update the docker
   - apt-get clean
+  - apt-get update
+  - apt-get install ca-certificates
   #- mkdir ~/.gnupg
   #- echo "hkp-cacert /usr/share/gnupg/sks-keyservers.netCA.pem" >> ~/.gnupg/dirmngr.conf
 
   #- apt-key adv --refresh-keys --keyserver http://hkps.pool.sks-keyservers.net/
   # - apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
   # - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-  - curl -k -sS https://dl.yarnpkg.com/debian/pubkey.gpg > pupkey.gpg
-  - apt-key add pupkey.gpg
+  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
   - echo "deb [check-valid-until=no] http://cdn-fastly.deb.debian.org/debian jessie main" > /etc/apt/sources.list.d/jessie.list
   - echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
   - sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
