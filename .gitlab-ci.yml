@@ -21,6 +21,7 @@ before_script:
   - apt-get clean
   - touch /etc/apt/apt.conf.d/99verify-peer.conf \
     && echo >>/etc/apt/apt.conf.d/99verify-peer.conf "Acquire { https::Verify-Peer false }"
+  - apt update
   #- mkdir ~/.gnupg
   #- echo "hkp-cacert /usr/share/gnupg/sks-keyservers.netCA.pem" >> ~/.gnupg/dirmngr.conf
 
