@@ -55,6 +55,7 @@ codestyle:
     paths:
       - build/coverage-report/
   script:
+    - bin/install-wp-tests.sh
     - composer global require "phpunit/phpunit=6.*" --no-progress
     - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
     - phpcs -i
