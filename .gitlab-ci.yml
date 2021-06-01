@@ -1,9 +1,9 @@
 variables:
   # Configure mysql service (https://hub.docker.com/_/mysql/)
-  MYSQL_DATABASE: dailybrief
-  MYSQL_HOST: gitlab-mariadb
-  MYSQL_ROOT_PASSWORD: js8ls2tG9N
-  WP_VERSION: 5.4
+  MYSQL_DATABASE: "dailybrief"
+  MYSQL_HOST: "gitlab-mariadb"
+  MYSQL_ROOT_PASSWORD: "js8ls2tG9N"
+  WP_VERSION: "5.4"
   WITH_XDEBUG: 1
   TIMEZONE: "America/New_York"
 
@@ -58,8 +58,8 @@ codestyle:
       - build/coverage-report/
   script:
     - /usr/bin/mysqladmin --host=${MYSQL_HOST} -P3306 --protocol=tcp -u root -h ${MYSQL_HOST} password "${MYSQL_ROOT_PASSWORD}"
-    - mysql --protocol=tcp --user=$MYSQL_USER --password=$MYSQL_PASSWORD --database=$MYSQL_DATABASE --host=$MYSQL_HOST --execute="DROP DATABASE $MYSQL_DATABASE;"
-    - bin/install-wp-tests.sh $MYSQL_DATABASE root $MYSQL_PASSWORD $MYSQL_HOST $WP_VERSION skip-database-creation
+    - mysql --protocol=tcp --user=$MYSQL_USER --password=$MYSQL_PASSWORD} --database=${MYSQL_DATABASE} --host=${MYSQL_HOST} --execute="DROP DATABASE ${MYSQL_DATABASE};"
+    - bin/install-wp-tests.sh ${MYSQL_DATABASE} root ${MYSQL_PASSWORD} ${MYSQL_HOST} ${WP_VERSION} 
     - composer global require "phpunit/phpunit=7.*" --no-progress
     - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
     - phpcs -i
