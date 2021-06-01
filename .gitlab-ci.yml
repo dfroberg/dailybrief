@@ -56,7 +56,7 @@ codestyle:
       - build/coverage-report/
   script:
     - bin/install-wp-tests.sh dailybrief root js8ls2tG9N gitlab-mariadb 5.4 
-    - composer global require "phpunit/phpunit=6.*" --no-progress
+    - composer global require "phpunit/phpunit=7.*" --no-progress
     - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
     - phpcs -i
     - phpcs
