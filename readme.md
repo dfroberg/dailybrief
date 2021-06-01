@@ -93,6 +93,9 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 ## Changelog ##
 
+### 1.1.01 &mdash; 1 of June, 2021 ###
+* Fixed typo in Helper plugin detection
+
 ### 1.1.00 &mdash; 27 of May, 2021 ###
 * Replaced integration of SteemPress with Exxp 2.6.8 plugin, plus added warnings if SteemPress plugin is still in use and disable publishing if that is the case.
 
