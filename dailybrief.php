@@ -49,14 +49,14 @@ define( 'DAILYBRIEF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 /**
  * Check if SteemPress is Installed.
  */
-if ( ! class_exists( 'Steempress_sp_Admin' ) ) {
+if ( class_exists( 'Steempress_sp_Admin' ) ) {
 	define( 'DAILYBRIEF_DETECTED_STEEMPRESS', true );
 }
 
 /**
  * Check if Exxp is Installed.
  */
-if ( ! class_exists( 'Exxp_wp_Admin' ) ) {
+if ( class_exists( 'Exxp_wp_Admin' ) ) {
 	define( 'DAILYBRIEF_DETECTED_EXXP', true );
 }
 
