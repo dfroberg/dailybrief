@@ -1879,31 +1879,31 @@ class Dailybrief {
 					if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) ) {
 						$this->wpclilog( '! Publishing is disabled, SteemPress plugin is Not supported anomore! ' );
 					} else {
-					$this->wpclilog( '* Post is now Published ' );
+						$this->wpclilog( '* Post is now Published ' );
 
-					if ( ! defined( 'DAILYBRIEF_DETECTED_EXXP' ) ) {
-						$this->wpcliwarn( '? Exxp NOT available (did you install it?), can not post to steem. ' );
-					} else {
-						$this->wpclilog( '* Exxp IS available, can post to steem, so trying that now ' );
+						if ( ! defined( 'DAILYBRIEF_DETECTED_EXXP' ) ) {
+							$this->wpcliwarn( '? Exxp NOT available (did you install it?), can not post to steem. ' );
+						} else {
+							$this->wpclilog( '* Exxp IS available, can post to steem, so trying that now ' );
 
-						// Since we're using another plugin directly we'll try and catch whatever goes wrong.
-						try {
-							$test = new Exxo_wp_Admin( 'exxp_wp', '2.6.8' );
-							$test->exxo_wp_publish( $this->post_id_created );
-							// Alt Exxo_wp_Admin::Exxo_wp_publish( $this->post_id_created);.
-							$exxo_wp_permlink = get_post_meta( $this->post_id_created, 'exxo_wp_permlink' );
-							$exxo_wp_author   = get_post_meta( $this->post_id_created, 'exxo_wp_author' );
-							if ( ! empty( $exxo_wp_permlink ) && ! empty( $exxo_wp_author ) ) {
-								$this->wpclilog( '* Posted to Exxp API with: ' . $exxo_wp_author . ' / ' . $exxo_wp_permlink );
-							} else {
-								$this->wpcliwarn( '? Exxp API post failed for some reason :-( ' );
+							// Since we're using another plugin directly we'll try and catch whatever goes wrong.
+							try {
+								$test = new Exxo_wp_Admin( 'exxp_wp', '2.6.8' );
+								$test->exxo_wp_publish( $this->post_id_created );
+								// Alt Exxo_wp_Admin::Exxo_wp_publish( $this->post_id_created);.
+								$exxo_wp_permlink = get_post_meta( $this->post_id_created, 'exxo_wp_permlink' );
+								$exxo_wp_author   = get_post_meta( $this->post_id_created, 'exxo_wp_author' );
+								if ( ! empty( $exxo_wp_permlink ) && ! empty( $exxo_wp_author ) ) {
+									$this->wpclilog( '* Posted to Exxp API with: ' . $exxo_wp_author . ' / ' . $exxo_wp_permlink );
+								} else {
+									$this->wpcliwarn( '? Exxp API post failed for some reason :-( ' );
+								}
+							} catch ( Exception $e ) {
+								$this->wpclierror( '*** Error - Exxp Call Blew up ' . $e->getMessage() );
 							}
-						} catch ( Exception $e ) {
-							$this->wpclierror( '*** Error - Exxp Call Blew up ' . $e->getMessage() );
 						}
 					}
 				}
-			}
 			} else {
 				$this->wpclierror( '*** Error - could not create the post...\n' . $wp_insert_post_result->get_error_message() );
 			}
