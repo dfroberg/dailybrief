@@ -55,7 +55,7 @@ codestyle:
     paths:
       - build/coverage-report/
   script:
-    - bin/install-wp-tests.sh test test test mysql.host 5.4 skip-database-creation
+    - bin/install-wp-tests.sh test test test gitlab-mariadb 5.4 
     - composer global require "phpunit/phpunit=6.*" --no-progress
     - $HOME/.composer/vendor/bin/phpunit --coverage-html build/coverage-report
     - phpcs -i
