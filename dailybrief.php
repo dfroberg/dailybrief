@@ -30,6 +30,9 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+// Since we use other plugins, ensure we can check for their existence.
+include_once(ABSPATH .'wp-admin/includes/plugin.php');
+
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
@@ -56,7 +59,8 @@ if ( class_exists( 'Steempress_sp_Admin' ) ) {
 /**
  * Detect if Exxp is active.
  */
-if ( class_exists( 'Exxp_wp' ) ) {
+
+if (is_plugin_active('exxp-wp/exxp_wp.php')) { 
 	define( 'DAILYBRIEF_DETECTED_EXXP', true );
 }
 
