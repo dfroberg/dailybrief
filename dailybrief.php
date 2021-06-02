@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Since we use other plugins, ensure we can check for their existence.
-include_once(ABSPATH .'wp-admin/includes/plugin.php');
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 /**
  * Currently plugin version.
