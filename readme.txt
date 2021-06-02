@@ -84,7 +84,7 @@ Take a look at the URL Suffix '?campaign=xxxxx' etc and prefix it i.e. '?utm_cam
 
 
 == Changelog ==
-= 1.1.03 &mdash; 2 of June, 2021 =
+= 1.1.04 &mdash; 2 of June, 2021 =
 * Fixed some stability issues in debug information.
 
 = 1.1.01 &mdash; 1 of June, 2021 =
