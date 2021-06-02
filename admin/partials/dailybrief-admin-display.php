@@ -527,7 +527,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 		<?php
 		$cron_run  = wp_next_scheduled( 'dailybrief_daily_event' );
 		$timezone  = WpDateTimeZone::getWpTimezone();
-		$date      = new DateTime( ( $cron_run > 0 ? '@' . $cron_run : time() ), $timezone );
+		$date      = new DateTime( ( $cron_run > 0 ? '@' . $cron_run : '@'.time() ), $timezone );
 		$tz        = $date->getTimezone();
 		$tz_name   = $tz->getName();
 		$tz_offset = $tz->getOffset( $date );
@@ -543,7 +543,7 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 			if ( defined( 'DAILYBRIEF_DETECTED_EXXP' ) && _mb_strlen( $sample['content'] ) > 65280 ) {
 				?>
 				<strong>Warning:</strong>
-				<p>This post will be larger than 65280 characters, and can't be published to steem.</p>
+				<p>This post will be larger than 65280 characters, and can't be published to blockchain.</p>
 				<?php
 			}
 			if ( defined( 'DAILYBRIEF_DETECTED_EXXP' ) ) {
