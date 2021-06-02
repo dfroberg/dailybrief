@@ -62,6 +62,9 @@ if ( class_exists( 'Steempress_sp_Admin' ) ) {
 
 if (is_plugin_active('exxp-wp/exxp_wp.php')) { 
 	define( 'DAILYBRIEF_DETECTED_EXXP', true );
+	if ( class_exists( 'Exxp_wp_Admin' ) ) {
+		define( 'DAILYBRIEF_DETECTED_EXXP_ADMIN', true );
+	}
 }
 
 /**

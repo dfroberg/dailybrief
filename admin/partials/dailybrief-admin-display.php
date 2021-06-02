@@ -551,6 +551,11 @@ $active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'preview';
 				<p>Exxp Plugin: <strong>Is installed.</strong></p>
 				<?php
 			}
+			if ( defined( 'DAILYBRIEF_DETECTED_EXXP_ADMIN' ) ) {
+				?>
+				<p>Exxp Admin: <strong>Is Available.</strong></p>
+				<?php
+			}
 			if ( defined( 'DAILYBRIEF_DETECTED_STEEMPRESS' ) ) {
 				?>
 				<strong>Warning:</strong>
