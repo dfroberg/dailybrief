@@ -1889,7 +1889,7 @@ class Dailybrief {
 							// Since we're using another plugin directly we'll try and catch whatever goes wrong.
 							try {
 								$test = new Exxo_wp_Admin( 'exxp_wp', '2.6.8' );
-								$test->exxo_wp_publish( $this->post_id_created );
+								$test->Exxp_wp_publish( $this->post_id_created );
 								// Alt Exxo_wp_Admin::Exxo_wp_publish( $this->post_id_created);.
 								$exxo_wp_permlink = get_post_meta( $this->post_id_created, 'exxo_wp_permlink' );
 								$exxo_wp_author   = get_post_meta( $this->post_id_created, 'exxo_wp_author' );
